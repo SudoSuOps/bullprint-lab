@@ -21,7 +21,13 @@ the site with no hand-patching to redo:
      last third-party request on the page and a privacy dependency the brand
      line does not sit well with. Same typefaces, same weights, served from the
      same origin — so the deployed CSP can forbid external hosts outright.
-  5. Nothing else. The <x-dc> template, the helmet block and every byte of the
+  5. Repoints the contact address. The design ships `bullish@bullprintlab.com`,
+     which is not a mailbox that exists; the real ones are `bull@` (general) and
+     `print@` (orders and print enquiries). The two "EMAIL THE LAB" buttons that
+     sit inside the custom-request and order flows go to `print@`, everything
+     else to `bull@`. Fix this at source in the design when convenient and this
+     step becomes a no-op.
+  6. Nothing else. The <x-dc> template, the helmet block and every byte of the
      markup are otherwise passed through untouched.
 
     python3 build.py
@@ -53,6 +59,13 @@ VENDOR_SRI = {
     "vendor/react-dom.production.min.js":
         "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1",
 }
+
+# The design's placeholder address -> the mailboxes that actually exist.
+DESIGN_EMAIL = "bullish@bullprintlab.com"
+EMAIL_GENERAL = "bull@bullprintlab.com"
+EMAIL_ORDERS = "print@bullprintlab.com"
+# Sections whose "EMAIL THE LAB" button is an order/print enquiry, not general contact.
+ORDER_SECTIONS = ("custom", "order")
 
 ASSETS = {
     "uploads/images-1786710197897-v7um.png": "assets/insert-macro-hero.webp",
@@ -116,6 +129,32 @@ def main() -> None:
         html = html.replace(old, new)
         print(f"  repointed  {old} -> {new}  ({n}x)")
 
+    # contact address: order flows -> print@, everything else -> bull@
+    n_before = html.count(DESIGN_EMAIL)
+    # 6: two order-flow buttons, the about block, two contact links and the
+    # "reply comes from ..." line in the contact form's success state.
+    if n_before != 6:
+        sys.exit(f"expected 6 references to {DESIGN_EMAIL}, found {n_before} — "
+                 "the design changed, re-check which buttons sit in which flow")
+    for sec in ORDER_SECTIONS:
+        if f'id="{sec}"' not in html:
+            sys.exit(f"section #{sec} not found in the design")
+    out, cursor, n_ord = [], 0, 0
+    for m in re.finditer(re.escape(DESIGN_EMAIL), html):
+        # which section does this mailto fall in? the last section id before it
+        sec_ids = re.findall(r'id="([a-z]+)"', html[:m.start()])
+        target = EMAIL_ORDERS if sec_ids and sec_ids[-1] in ORDER_SECTIONS else EMAIL_GENERAL
+        n_ord += target == EMAIL_ORDERS
+        out.append(html[cursor:m.start()])
+        out.append(target)
+        cursor = m.end()
+    out.append(html[cursor:])
+    html = "".join(out)
+    # the footer prints the address in caps as visible text
+    html = html.replace(DESIGN_EMAIL.upper(), EMAIL_GENERAL.upper())
+    print(f"  contact    {DESIGN_EMAIL} -> {EMAIL_ORDERS} ({n_ord}x), "
+          f"{EMAIL_GENERAL} ({n_before - n_ord}x)")
+
     # self-hosted fonts: drop the Google links, add the local stylesheet
     before = html
     html = re.sub(r'<link rel="preconnect" href="https://fonts\.gstatic\.com"[^>]*>\s*', "", html)
@@ -141,6 +180,8 @@ def main() -> None:
     for must in ("<x-dc>", "</x-dc>", "support.js", "react.production.min.js"):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
+    assert DESIGN_EMAIL not in html and DESIGN_EMAIL.upper() not in html, \
+        "the design's placeholder address survived the rewrite"
     assert "fonts.googleapis.com" not in html and "fonts.gstatic.com" not in html, \
         "a Google Fonts reference survived the rewrite"
     # Only SUBRESOURCES must be same-origin. Outbound links in the footer
