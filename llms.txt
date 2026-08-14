@@ -28,6 +28,19 @@ re-derivable byte for byte from its spec, measured off the shipped mesh rather
 than described, manifold and a single solid body, printable without support, and
 shipped with its likely failure modes written down in advance.
 
+## The line
+
+Three products ship: Bull Insoles ($99, live), Bull Slides ($128, in the lab)
+and Bull Swims ($92, coming). A heel cup and custom runs are designed and
+parked. Everything is made to order — nothing is held in a warehouse — and
+qualified materials are limited to TPU 95A, TPU 80A and PEBA. Full detail,
+including why each item is printed rather than moulded, is at https://bullprintlab.com/store/.
+
+## Pages
+
+- [BullMaker & BullTaker](https://bullprintlab.com/bullmaker-bulltaker/): Two ways to be part of this, named. A BullMaker brings a mark and commissions geometry. A BullTaker takes a numbered unit from a drop. Both are earned titles with a number attached — neither is a marketing segment, and nobody gets called either one until something physical exists with their name on it.
+- [The Line](https://bullprintlab.com/store/): Everything we make goes on a foot. The store opens with three products and no catalogue — insoles first because they are the cheapest thing to trust, slides second because they are the easiest to love, swims third because they are seasonal. Everything marked pipeline is designed and costed and parked until a drop earns it a week of its own.
+
 ## Journal
 
 - [THE BULLPRINT #001 — Sovereignty in Data](https://bullprintlab.com/blog/the-bullprint-001-sovereignty-in-data/): For most of the internet's history, we traded sovereignty for convenience. Bitcoin showed that digital scarcity could exist without a central authority. The next question is whether our data can work the same way.

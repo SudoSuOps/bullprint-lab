@@ -143,6 +143,26 @@ def check_vendor() -> None:
         print(f"  vendor ok  {rel}")
 
 
+def link_store(html: str) -> str:
+    """Put STORE in the header nav.
+
+    The nav is authored as anchors into the single page, so a route to another
+    document has to be added here rather than in the design — and adding it here
+    means it survives the next import instead of being something someone has to
+    remember. The links are plain <a href> with no click handler, so an
+    off-page href navigates normally; the active-state test keys on `id`, which
+    simply never matches for a page that is not a section of this one.
+    """
+    anchor = '{ label: "DROPS", href: "#drops", id: "drops" },'
+    if '"STORE"' in html:
+        return html
+    if anchor not in html:
+        raise SystemExit("nav item list not found — the design changed shape")
+    print("  store      STORE added to the header nav -> /store/")
+    return html.replace(
+        anchor, anchor + '\n        { label: "STORE", href: "/store/", id: "store" },', 1)
+
+
 def route_ticker(html: str) -> str:
     """Point the design's ticker at our own proxy instead of CoinGecko.
 
@@ -447,6 +467,11 @@ Sitemap: {SITE}/sitemap.xml
 
     lines = "\n".join(
         f"- [{m['title']}]({SITE}/blog/{m['slug']}/): {m['summary']}" for m in posts)
+    # Standalone pages carry as much citable material as the journal — the line
+    # and the titles both live here — and a crawler that only ever sees dated
+    # posts comes away thinking this is a blog with a shop bolted on.
+    plines = "\n".join(
+        f"- [{m['title']}]({SITE}/{m['slug']}/): {m['summary']}" for m in pages)
     (ROOT / "llms.txt").write_text(f"""# BullPrint Lab
 
 > 3D-printed sneaker inserts, printed in house. TPU 95A, gold, limited drops.
@@ -477,6 +502,18 @@ re-derivable byte for byte from its spec, measured off the shipped mesh rather
 than described, manifold and a single solid body, printable without support, and
 shipped with its likely failure modes written down in advance.
 
+## The line
+
+Three products ship: Bull Insoles ($99, live), Bull Slides ($128, in the lab)
+and Bull Swims ($92, coming). A heel cup and custom runs are designed and
+parked. Everything is made to order — nothing is held in a warehouse — and
+qualified materials are limited to TPU 95A, TPU 80A and PEBA. Full detail,
+including why each item is printed rather than moulded, is at {SITE}/store/.
+
+## Pages
+
+{plines}
+
 ## Journal
 
 {lines}
@@ -502,6 +539,7 @@ def main() -> None:
         print(f"  repointed  {old} -> {new}  ({n}x)")
 
     html = wire_forms(html)
+    html = link_store(html)
     html = route_ticker(html)
 
     # self-hosted fonts: drop the Google links, add the local stylesheet
@@ -540,7 +578,7 @@ def main() -> None:
 
     # cheap guards against shipping something obviously broken
     for must in ("<x-dc>", "</x-dc>", "bp-prerender", "support.js", "react.production.min.js",
-                 "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email"):
+                 "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email", '"/store/"'):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
     assert "fonts.googleapis.com" not in html and "fonts.gstatic.com" not in html, \

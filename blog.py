@@ -202,7 +202,7 @@ def shell(title, desc, canonical, body, jsonld, depth=1):
 <body>
 <header class="top"><div class="wrap">
   <a class="mark" href="{up}">BULLPRINT <span>LAB</span></a>
-  <nav class="nav"><a href="{up}">SITE</a><a href="{up}blog/">JOURNAL</a><a href="{up}#order">BUILD YOURS</a></nav>
+  <nav class="nav"><a href="{up}">SITE</a><a href="{up}store/">STORE</a><a href="{up}blog/">JOURNAL</a><a href="{up}#order">BUILD YOURS</a></nav>
 </div></header>
 {body}
 <footer class="foot"><div class="wrap">
