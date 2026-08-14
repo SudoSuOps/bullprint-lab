@@ -71,6 +71,34 @@
     });
   }
 
+  /* Stripe Checkout. Cards and USDC ride the same session — stablecoins appear
+   * automatically once the payment method is approved on the account, so there
+   * is no second integration and no second webhook. */
+  window.bpCheckout = function (data) {
+    return token()
+      .then(function (t) {
+        return fetch("/api/checkout", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ token: t, data: data }),
+        });
+      })
+      .then(function (r) { return r.json().then(function (b) { return { r: r, b: b }; }); })
+      .then(function (x) {
+        if (x.r.ok && x.b && x.b.ok && x.b.url) {
+          window.location.assign(x.b.url);
+          return true;
+        }
+        throw new Error((x.b && x.b.error) || "CHECKOUT IS DOWN — EMAIL THE LAB");
+      })
+      .catch(function (e) {
+        if (e && e.message === "net") {
+          throw new Error("CONNECTION DROPPED — RETRY, OR EMAIL BULLISH@BULLPRINTLAB.COM");
+        }
+        throw e;
+      });
+  };
+
   window.bpSend = function (kind, data) {
     return token()
       .then(function (t) {

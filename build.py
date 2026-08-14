@@ -228,11 +228,17 @@ def wire_forms(html: str) -> str:
         ('this.setState({ submitted: true, shoeError: "" });',
          'if (!/.+@.+\\..+/.test(s.email)) { this.setState({ emailError: "ADD AN EMAIL SO WE CAN REPLY" }); return; }\n'
          '      this.setState({ emailError: "", shoeError: "" });\n'
-         '      window.bpSend("order", { email: s.email, shoe: s.shoe, size: s.size, fit: s.fit,\n'
+         '      var bp = { email: s.email, shoe: s.shoe, size: s.size, fit: s.fit,\n'
          '        width: s.width, arch: s.arch, feel: s.feel, cell: s.cell, wall: s.wall,\n'
-         '        density: s.density, pay: s.pay, notes: s.notes })\n'
-         '        .then(() => this.setState({ submitted: true }))\n'
-         '        .catch((err) => this.setState({ emailError: err.message }));'),
+         '        density: s.density, pay: s.pay, notes: s.notes,\n'
+'        profileId: "BP-" + s.size + s.width.charAt(0) + s.arch.charAt(0) + "-001" };\n'
+         '      if (s.pay === "STRIPE") {\n'
+         '        window.bpCheckout(bp).catch((err) => this.setState({ emailError: err.message }));\n'
+         '      } else {\n'
+         '        window.bpSend("order", bp)\n'
+         '          .then(() => this.setState({ submitted: true }))\n'
+         '          .catch((err) => this.setState({ emailError: err.message }));\n'
+         '      }'),
         ('this.setState({ customSent: true, cError: "" });',
          'this.setState({ cError: "" });\n'
          '        window.bpSend("custom", { email: s.cEmail, brand: s.cBrand, qty: s.cQty,\n'
@@ -428,6 +434,7 @@ Sitemap: {SITE}/sitemap.xml
 """)
 
     urls = [(f"{SITE}/", "weekly", "1.0"), (f"{SITE}/blog/", "daily", "0.9")]
+    # /order/confirmed is a post-payment page; it should never be indexed
     urls += [(f"{SITE}/{m['slug']}/", "monthly", "0.8") for m in pages]
     urls += [(f"{SITE}/blog/{m['slug']}/", "monthly", "0.8") for m in posts]
     body = "".join(
@@ -550,6 +557,7 @@ def main() -> None:
                 # cannot be self-hosted, and the CSP names this host explicitly.
                 and not u.startswith("https://challenges.cloudflare.com/")]
     assert not external, f"external subresource(s) survived: {external}"
+    blog.build_order_confirmed(ROOT)
     posts = blog.build(ROOT)
     pages = blog.build_pages(ROOT)
     print(f"  journal    {len(posts)} post(s) -> blog/"

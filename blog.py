@@ -213,6 +213,56 @@ def shell(title, desc, canonical, body, jsonld, depth=1):
 </html>"""
 
 
+def build_order_confirmed(root: pathlib.Path) -> None:
+    """/order/confirmed — where Stripe returns a buyer after payment.
+
+    Deliberately says BULLTAKER PENDING and not a serial. The serial mints at
+    inspection, by a human, which is the whole guardrail: a title that arrives
+    at checkout is a receipt with a nicer font.
+    """
+    url = f"{SITE}/order/confirmed"
+    ld = ('{"@context":"https://schema.org","@type":"WebPage","name":"Order confirmed",'
+          f'"url":"{url}","inLanguage":"en",'
+          '"isPartOf":{"@type":"WebSite","@id":"https://bullprintlab.com/#site"}}')
+    body = """<main class="wrap">
+  <p class="kicker" style="margin-top:54px">Payment received</p>
+  <h1>The build is in<br>the queue.</h1>
+  <p class="lede">Your build sheet went to the lab the moment the payment
+  cleared. A confirmation is on its way to the address you paid with.</p>
+
+  <div class="titles" style="grid-template-columns:1fr">
+    <div>
+      <p class="role">Status</p>
+      <h2 style="font-size:28px">BULLTAKER PENDING</h2>
+      <p>You are not a BullTaker yet, and that is deliberate. The serial is
+      issued when the unit passes inspection — not at checkout. If it does not
+      pass, it does not ship and no number is ever assigned to it.</p>
+      <ul class="spec">
+        <li><b>Next</b><span>We cut the outline to your shoe and print</span></li>
+        <li><b>Then</b><span>Inspection — geometry, print, finish</span></li>
+        <li><b>On pass</b><span>Serial NNN / 100 assigned, cert card written, BEST IN BULL™ stamped</span></li>
+      </ul>
+      <p class="pull">"Numbered, not mass."</p>
+    </div>
+  </div>
+
+  <h2>Something wrong with the order?</h2>
+  <p>Reply to the confirmation email, or write to
+  <a href="mailto:bullish@bullprintlab.com">bullish@bullprintlab.com</a> with your
+  profile ID. A person from the lab answers — usually within a day.</p>
+
+  <p class="note">BullPrint Lab makes footwear inserts for comfort and fit
+  experimentation. Nothing here is a medical device and nothing here is medical
+  advice — no claim is made about treating, preventing or diagnosing anything.</p>
+</main>"""
+    d = root / "order" / "confirmed"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "index.html").write_text(
+        shell("Order confirmed — BullPrint Lab",
+              "Your build is in the queue. The serial is issued at inspection, not at checkout.",
+              url, body, ld, depth=2))
+
+
 def build_pages(root: pathlib.Path) -> list[dict]:
     """content/pages/<slug>.md -> /<slug>/index.html — undated, standalone.
 

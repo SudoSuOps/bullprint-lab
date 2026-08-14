@@ -2250,11 +2250,17 @@ class Component extends DCLogic {
       if (!s.shoe.trim()) { this.setState({ shoeError: "TELL US THE SHOE — WE CUT THE OUTLINE TO IT" }); return; }
       if (!/.+@.+\..+/.test(s.email)) { this.setState({ emailError: "ADD AN EMAIL SO WE CAN REPLY" }); return; }
       this.setState({ emailError: "", shoeError: "" });
-      window.bpSend("order", { email: s.email, shoe: s.shoe, size: s.size, fit: s.fit,
+      var bp = { email: s.email, shoe: s.shoe, size: s.size, fit: s.fit,
         width: s.width, arch: s.arch, feel: s.feel, cell: s.cell, wall: s.wall,
-        density: s.density, pay: s.pay, notes: s.notes })
-        .then(() => this.setState({ submitted: true }))
-        .catch((err) => this.setState({ emailError: err.message }));
+        density: s.density, pay: s.pay, notes: s.notes,
+        profileId: "BP-" + s.size + s.width.charAt(0) + s.arch.charAt(0) + "-001" };
+      if (s.pay === "STRIPE") {
+        window.bpCheckout(bp).catch((err) => this.setState({ emailError: err.message }));
+      } else {
+        window.bpSend("order", bp)
+          .then(() => this.setState({ submitted: true }))
+          .catch((err) => this.setState({ emailError: err.message }));
+      }
     };
 
     return {
