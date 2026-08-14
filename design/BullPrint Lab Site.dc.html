@@ -447,7 +447,7 @@
       </div>
       <div data-reveal style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px">
         <sc-for list="{{ labNotes }}" as="n" hint-placeholder-count="4">
-          <article style="border:1px solid {{ n.border }};background:#0B0B0D;transition:border-color 200ms cubic-bezier(.2,.8,.2,1)" style-hover="border-color:rgba(232,178,58,.34)">
+          <article style="border:1px {{ n.borderStyle }} {{ n.border }};background:#0B0B0D;transition:border-color 200ms cubic-bezier(.2,.8,.2,1)" style-hover="border-color:rgba(232,178,58,.34)">
             <div role="img" aria-label="{{ n.title }}" style="height:168px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08);position:relative;background-color:{{ n.thumbBg }};background-image:{{ n.thumbImg }};background-size:{{ n.thumbSize }};background-position:{{ n.pos }}">
               <div style="position:absolute;left:14px;bottom:12px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">{{ n.overlay }}</div>
             </div>
@@ -463,12 +463,85 @@
     </div>
   </section>
 
+  <!-- ============ BrAhMa ============ -->
+  <section id="brahma" style="position:relative;background:#000;border-top:1px solid rgba(255,255,255,.07);overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(54% 62% at 74% 32%,rgba(232,178,58,.11),transparent 74%)"></div>
+    <div style="position:relative;max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
+      <div data-two style="display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:center">
+        <div>
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">07 — THE AI IN THE LAB</div>
+          <h2 style="margin:0;font:900 clamp(34px,6vw,68px)/0.98 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">Br<span style="color:#E8B23A">A</span>h<span style="color:#E8B23A">M</span>a</h2>
+          <div style="margin-top:16px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.32em;color:#E8B23A">THE AI ON THE BULL.</div>
+          <p style="margin:24px 0 0;max-width:460px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The intelligence inside the lab. BrAhMa reads the inspection, calls the verdict, prescribes the change in millimetres and generates the next version. It runs the iteration — it does not decide what earns the bull.</p>
+          <p style="margin:18px 0 0;max-width:460px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Built to ride the iteration. A human still signs the stamp.</p>
+          <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px 26px;font:500 10.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">
+            <span>VERDICTS <span style="color:#F4F2ED">BULL ON / BULL OFF</span></span>
+            <span>OUTPUT <span style="color:#F4F2ED">GEOMETRY DELTAS IN MM</span></span>
+            <span>LIMIT <span style="color:#F4F2ED">NEVER AWARDS THE STAMP</span></span>
+          </div>
+        </div>
+
+        <div>
+          <sc-if value="{{ brahmaOff }}" hint-placeholder-val="{{ true }}">
+            <div style="border:1px solid rgba(255,255,255,.14);background:rgba(14,14,17,.82);backdrop-filter:blur(18px)">
+              <div style="padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+                <span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">PROTO 004 / TPU95A / V7</span>
+                <span style="padding:8px 12px;border:1px dashed rgba(255,255,255,.22);font:900 13px/1 Archivo,sans-serif;color:#5C5952">BULL OFF</span>
+              </div>
+              <div style="padding:24px">
+                <p style="margin:0;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A">Forefoot transition failed inspection. Failure localized at lattice-density boundary.</p>
+                <div style="margin-top:22px;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BrAhMa RECOMMENDS</div>
+                <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;gap:12px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 13px/1.5 'JetBrains Mono',monospace;letter-spacing:.03em;color:#F4F2ED">Increase transition length 12 mm</span></div>
+                  <div style="display:flex;gap:12px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 13px/1.5 'JetBrains Mono',monospace;letter-spacing:.03em;color:#F4F2ED">Move wall thickness 0.8 → 1.2 mm</span></div>
+                  <div style="display:flex;gap:12px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 13px/1.5 'JetBrains Mono',monospace;letter-spacing:.03em;color:#F4F2ED">Preserve ₿ geometry</span></div>
+                  <div style="display:flex;gap:12px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 13px/1.5 'JetBrains Mono',monospace;letter-spacing:.03em;color:#F4F2ED">Generate V8</span></div>
+                </div>
+                <div style="margin-top:26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+                  <button type="button" onClick="{{ onRideAgain }}" style="padding:15px 24px;border:none;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#0B0B0D;cursor:pointer;transition:filter 180ms" style-hover="filter:brightness(1.08)">RIDE AGAIN →</button>
+                  <span style="font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#5C5952">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</span>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ brahmaOn }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1px solid rgba(232,178,58,.38);background:rgba(14,14,17,.82);backdrop-filter:blur(18px)">
+              <div style="padding:18px 22px;border-bottom:1px solid rgba(232,178,58,.22);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+                <span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">PROTO 005 / TPU95A / V8</span>
+                <span style="display:inline-flex;align-items:center;gap:9px;padding:8px 12px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);font:900 13px/1 Archivo,sans-serif;color:#0B0B0D">
+                  <svg width="16" height="14" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="#0B0B0D" stroke-width="8"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="#0B0B0D" stroke-width="8"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="#0B0B0D" stroke-width="8"></path></svg>
+                  BULL ON
+                </span>
+              </div>
+              <div style="padding:24px">
+                <div style="display:flex;flex-wrap:wrap;gap:12px 28px;font:500 12.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#E8B23A">
+                  <span>GEOMETRY PASSED</span><span>PRINT PASSED</span><span>INSPECTION PASSED</span>
+                </div>
+                <p style="margin:22px 0 0;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A">Transition lengthened, wall at 1.2 mm, ₿ geometry intact. V8 held through 12,000 flex cycles.</p>
+                <div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:10px">
+                  <span style="padding:13px 17px;border:1px solid rgba(232,178,58,.45);font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">→ ASSIGN SERIAL</span>
+                  <span style="padding:13px 17px;border:1px solid rgba(232,178,58,.45);font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">→ GENERATE CERT</span>
+                  <span style="padding:13px 17px;border:1px solid rgba(232,178,58,.45);font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">→ SEND TO BEST IN BULL</span>
+                </div>
+                <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+                  <button type="button" onClick="{{ onResetBrahma }}" style="padding:13px 20px;border:1px solid rgba(255,255,255,.22);background:none;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#F4F2ED;cursor:pointer" style-hover="border-color:#E8B23A;color:#E8B23A">REPLAY V7</button>
+                  <span style="font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#5C5952">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</span>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ BEST IN BULL ============ -->
   <section id="bull" style="position:relative;background:#000;border-top:1px solid rgba(255,255,255,.07);overflow:hidden">
     <div style="position:absolute;inset:0;background:radial-gradient(58% 68% at 50% 46%,rgba(232,178,58,.14),transparent 72%)"></div>
     <div data-two data-reveal style="position:relative;max-width:1280px;margin:0 auto;padding:clamp(72px,10vw,116px) 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
       <div>
-        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:22px">07 — THE QUALITY MARK</div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:22px">08 — THE QUALITY MARK</div>
         <h2 style="margin:0;font:900 clamp(30px,5vw,58px)/1 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">NOT EVERYTHING<br>EARNS THE BULL.</h2>
         <p style="margin:26px 0 0;max-width:470px;font:400 16px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BullPrint Lab is free to experiment. BEST IN BULL™ isn't. It's our mark for the prints we believe represent the strongest combination of:</p>
         <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:14px 22px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">
@@ -500,7 +573,7 @@
     <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
       <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap">
         <div>
-          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">08 — DROPS</div>
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">09 — DROPS</div>
           <h2 style="margin:0;font:900 clamp(30px,4.8vw,56px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">BULLPRINT DROPS</h2>
         </div>
         <p style="margin:0;max-width:400px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A">Limited experiments worth releasing into the world. Status is the real status — we don't run countdowns.</p>
@@ -529,7 +602,7 @@
     <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
       <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap">
         <div>
-          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">09 — EDITORIAL</div>
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">10 — EDITORIAL</div>
           <h2 style="margin:0;font:900 clamp(30px,4.8vw,56px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THE BULLPRINT</h2>
           <p style="margin:14px 0 0;font:400 italic 17px/1.4 Archivo,sans-serif;color:#E8B23A">Ideas worth leaving a mark.</p>
         </div>
@@ -552,6 +625,10 @@
         </div>
       </article>
 
+      <div style="margin-top:34px;display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap">
+        <h3 style="margin:0;font:800 20px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">THE INDEX</h3>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">ONE ESSAY A MONTH · NO NEWSLETTER PITCH</span>
+      </div>
       <div data-reveal style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
         <sc-for list="{{ essays }}" as="e" hint-placeholder-count="3">
           <a href="#journal" style="display:flex;flex-direction:column;gap:10px;padding:22px;border:1px solid rgba(255,255,255,.09);background:#0B0B0D;transition:border-color 200ms" style-hover="border-color:rgba(232,178,58,.34)">
@@ -561,6 +638,15 @@
           </a>
         </sc-for>
       </div>
+
+      <a href="https://bestinbull.com" style="margin-top:18px;display:flex;align-items:center;gap:20px;padding:24px 26px;border:1px solid rgba(232,178,58,.28);background:#0B0B0D;flex-wrap:wrap;transition:border-color 200ms" style-hover="border-color:#E8B23A">
+        <svg width="44" height="44" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="4"></circle><g transform="translate(100,100) scale(1.28) translate(-60,-50)"><use href="#bsBullFill"></use></g></svg>
+        <div style="flex:1;min-width:260px">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">THE INSPECTION LOG · BESTINBULL.COM</div>
+          <p style="margin:10px 0 0;max-width:600px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Every verdict, published. What passed, what didn't, and the millimetre that made the difference — the running record behind the stamp, kept separately from the essays.</p>
+        </div>
+        <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">OPEN THE LOG →</span>
+      </a>
     </div>
   </section>
 
@@ -569,7 +655,7 @@
     <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
       <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
         <div>
-          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">10 — ORDER / FOOT PROFILE</div>
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">11 — ORDER / FOOT PROFILE</div>
           <h2 style="margin:0;font:900 clamp(30px,4.6vw,54px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">TELL US ABOUT<br>YOUR SHOES.</h2>
         </div>
         <p style="margin:0;max-width:440px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">We print each insert to a profile, not a shelf size. Six fields is all it takes — the lattice, the last and the arch geometry are derived from what you tell us here.</p>
@@ -715,7 +801,7 @@
   <section id="about" style="background:#0E0E11;border-top:1px solid rgba(255,255,255,.07)">
     <div data-two data-reveal style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,88px) 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
       <div>
-        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">11 — ABOUT</div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">12 — ABOUT</div>
         <h2 style="margin:0;font:900 clamp(26px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">A SMALL LAB THAT<br>TAKES PRINTING SERIOUSLY.</h2>
         <p style="margin:22px 0 0;max-width:480px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BullPrint Lab lives in the tension between fun and rigor. The idea might make you smile. The execution should make you look twice. We design in CAD, print in house, wear the prototypes ourselves, and put a number on everything that leaves the bench.</p>
         <p style="margin:18px 0 0;max-width:480px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Talk to us about a collaboration, a material, or a print you think should exist.</p>
@@ -738,7 +824,7 @@
     <div style="position:absolute;inset:0;background:radial-gradient(60% 70% at 78% 40%,rgba(232,178,58,.10),transparent 72%)"></div>
     <div data-two data-reveal style="position:relative;max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,100px) 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
       <div>
-        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">12 — CONTACT</div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">13 — CONTACT</div>
         <h2 style="margin:0;font:900 clamp(30px,4.8vw,54px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">CONTACT US.</h2>
         <p style="margin:22px 0 0;max-width:470px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Orders, custom runs, collaborations, materials, or a print you think should exist. A person from the lab answers — usually within a day.</p>
         <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.09)">
@@ -804,7 +890,7 @@
           <nav aria-label="Footer" style="margin-top:28px;display:flex;flex-wrap:wrap;gap:14px 26px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
             <a href="https://x.com/bestinbull">X / @BESTINBULL</a>
             <a href="mailto:bullish@bullprintlab.com">BULLISH@BULLPRINTLAB.COM</a>
-            <a href="#journal">THE BULLPRINT</a><a href="#drops">DROPS</a><a href="#custom">CUSTOM BULL</a><a href="#lab">LAB</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
+            <a href="#journal">THE BULLPRINT</a><a href="#drops">DROPS</a><a href="#custom">CUSTOM BULL</a><a href="#brahma">BrAhMa</a><a href="#lab">LAB</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
           </nav>
         </div>
         <div style="display:flex;align-items:center;gap:14px">
@@ -829,7 +915,7 @@ class Component extends DCLogic {
     cell: 7, wall: 1.2, density: "ZONED",
     size: "10", width: "MEDIUM", arch: "MEDIUM", fit: "MEN'S", feel: "95A FIRMER", shoe: "", notes: "",
     pay: "STRIPE", shoeError: "", submitted: false,
-    btcPrice: null, btcChange: null, btcOk: null, btcAt: null,
+    btcPrice: null, btcChange: null, btcOk: null, btcAt: null, brahmaStep: 0,
     explode: 34, view: "RENDER",
     cBrand: "", cEmail: "", cQty: "1–5", cFile: "", cNotes: "", cError: "", customSent: false,
     kEmail: "", kTopic: "ORDER", kMsg: "", kError: "", contactSent: false
@@ -866,7 +952,7 @@ class Component extends DCLogic {
     window.addEventListener("scroll", this.onScroll, { passive: true });
     this.onScroll();
 
-    const ids = ["hero", "bullprint", "honeycomb", "drop", "exploded", "custom", "lab", "bull", "drops", "journal", "order", "about", "contact"];
+    const ids = ["hero", "bullprint", "honeycomb", "drop", "exploded", "custom", "lab", "brahma", "bull", "drops", "journal", "order", "about", "contact"];
     this.sectionObs = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) this.setState({ active: e.target.id });
@@ -949,6 +1035,7 @@ class Component extends DCLogic {
         { label: "LAB", href: "#lab", id: "lab" },
         { label: "DROPS", href: "#drops", id: "drops" },
         { label: "CUSTOM", href: "#custom", id: "custom" },
+        { label: "BrAhMa", href: "#brahma", id: "brahma" },
         { label: "THE BULLPRINT", href: "#journal", id: "journal" },
         { label: "CONTACT", href: "#contact", id: "contact" }
       ].map(function (i) {
@@ -1021,32 +1108,37 @@ class Component extends DCLogic {
         { n: "05", name: "ITERATE", copy: "Version, number, archive. Most prototypes stop here. A few earn the bull." }
       ],
 
+      brahmaOn: s.brahmaStep === 1,
+      brahmaOff: s.brahmaStep !== 1,
+      onRideAgain: () => this.setState({ brahmaStep: 1 }),
+      onResetBrahma: () => this.setState({ brahmaStep: 0 }),
+
       labNotes: [
         {
-          id: "PROTO 001", date: "08.02.26", title: "Lattice density test", status: "ITERATED",
-          body: "Forefoot at 6 mm pitch collapsed under load. Closed the cells 18% and kept the heel open.",
+          id: "PROTO 001", date: "08.02.26", title: "Lattice density test", status: "BULL OFF · V2 CUT",
+          body: "Forefoot at 6 mm pitch collapsed under load. Closed the cells 18% and kept the heel open.", verdictOff: true,
           pos: "50% 45%", overlay: "MACRO · FOREFOOT", thumbBg: "#000", thumbImg: "url(uploads/images-1786710197897-v7um.png)", thumbSize: "auto 180%",
-          border: "rgba(255,255,255,.09)", titleColor: "#F4F2ED", bodyColor: "#8B8780", statusColor: "#E8B23A"
+          border: "rgba(255,255,255,.09)", titleColor: "#F4F2ED", bodyColor: "#8B8780", statusColor: "#5C5952"
         },
         {
-          id: "PROTO 002", date: "08.06.26", title: "Heel geometry", status: "ITERATED",
-          body: "Cup wall raised 3 mm. Better hold, but the top edge printed sharp — filleted for 003.",
+          id: "PROTO 002", date: "08.06.26", title: "Heel geometry", status: "BULL OFF · V3 CUT",
+          body: "Cup wall raised 3 mm. Better hold, but the top edge printed sharp — filleted for 003.", verdictOff: true,
           pos: "46% 40%", overlay: "SECTION · HEEL", thumbBg: "#000", thumbImg: "url(uploads/images-1786710214318-psa4.png)", thumbSize: "auto 250%",
-          border: "rgba(255,255,255,.09)", titleColor: "#F4F2ED", bodyColor: "#8B8780", statusColor: "#E8B23A"
+          border: "rgba(255,255,255,.09)", titleColor: "#F4F2ED", bodyColor: "#8B8780", statusColor: "#5C5952"
         },
         {
-          id: "PROTO 003", date: "08.11.26", title: "Material comparison", status: "IN TEST",
+          id: "PROTO 003", date: "08.11.26", title: "Material comparison", status: "IN TEST · NO VERDICT",
           body: "90A against 95A across the same lattice. The softer shore reads better underfoot, the firmer one holds the arch.",
           pos: "50% 50%", overlay: "TPU FLEX TEST · 12K CYCLES", thumbBg: "#101013", thumbImg: this.lattice(1), thumbSize: "22px 38px",
-          border: "rgba(255,255,255,.09)", titleColor: "#F4F2ED", bodyColor: "#8B8780", statusColor: "#E8B23A"
+          border: "rgba(255,255,255,.09)", titleColor: "#F4F2ED", bodyColor: "#8B8780", statusColor: "#A5A19A"
         },
         {
-          id: "PROTO 004", date: "08.13.26", title: "Drainage channels", status: "FAILED · ARCHIVED",
+          id: "PROTO 004", date: "08.13.26", title: "Drainage channels", status: "BULL OFF · ARCHIVED",
           body: "Channels cut too deep. Split at the midfoot on day three. Kept on the shelf as a reference.",
           pos: "50% 50%", overlay: "", thumbBg: "#0B0B0D", thumbImg: this.lattice(0.7, "#3A3630"), thumbSize: "30px 52px",
           border: "rgba(255,255,255,.09)", titleColor: "#8B8780", bodyColor: "#5C5952", statusColor: "#5C5952"
         }
-      ],
+      ].map(function (n) { n.borderStyle = n.verdictOff || n.status.indexOf("BULL OFF") === 0 ? "dashed" : "solid"; return n; }),
 
       drops: [
         {
@@ -1080,9 +1172,9 @@ class Component extends DCLogic {
       ],
 
       essays: [
-        { no: "#002", status: "IN DRAFT", title: "Why we print the layer lines instead of hiding them", teaser: "Finishing a print to look injection-moulded erases the only honest record of how it was made." },
-        { no: "#003", status: "IN DRAFT", title: "Personalization is a manufacturing problem", teaser: "Custom fit isn't a checkout option. It's a toolpath." },
-        { no: "#004", status: "OUTLINED", title: "Culture is a material property now", teaser: "What a product signals travels with it. Design it into the geometry or accept whatever sticks." }
+        { no: "#002", status: "IN DRAFT · MANUFACTURING · 9 MIN", title: "Why we print the layer lines instead of hiding them", teaser: "Finishing a print to look injection-moulded erases the only honest record of how it was made." },
+        { no: "#003", status: "IN DRAFT · DESIGN · 11 MIN", title: "Personalization is a manufacturing problem", teaser: "Custom fit isn't a checkout option. It's a toolpath." },
+        { no: "#004", status: "OUTLINED · CULTURE · 7 MIN", title: "Culture is a material property now", teaser: "What a product signals travels with it. Design it into the geometry or accept whatever sticks." }
       ],
 
       explode: s.explode,

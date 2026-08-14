@@ -381,6 +381,25 @@ ORG_LD = {
 }
 
 
+def check_brand(html: str) -> None:
+    """Guard the brand rules a future export could quietly regress.
+
+    BRAND.md calls `text-transform: uppercase` on BrAhMa a bug, not a style
+    choice — the capitals are the signature. And every BrAhMa surface has to
+    carry the AI disclosure, never in a tooltip. Both are cheap to check and
+    expensive to notice by eye three exports later.
+    """
+    for m in re.finditer(r'<[^>]*style="[^"]*text-transform:\s*uppercase[^"]*"[^>]*>([^<]{0,90})', html):
+        if "BrAhMa" in m.group(1):
+            sys.exit("BrAhMa is uppercased somewhere — BRAND.md 2 calls that a bug")
+    for wrong in ("BRAHMA", "Brahma"):
+        if re.search(rf"\b{wrong}\b", html):
+            sys.exit(f"'{wrong}' in copy — the only correct spelling is BrAhMa")
+    if "brahma" in html and "IS AN AI" not in html.upper():
+        sys.exit("a BrAhMa surface ships without the AI disclosure")
+    print("  brand      BrAhMa casing + AI disclosure ok")
+
+
 def write_geo(posts, pages=()) -> None:
     """robots, sitemap and llms.txt — the surface AI search actually reads."""
     (ROOT / "robots.txt").write_text(f"""User-agent: *
@@ -571,6 +590,7 @@ def main() -> None:
     print(f"  journal    {len(posts)} post(s) -> blog/"
           + (f", {len(pages)} page(s)" if pages else ""))
     write_geo(posts, pages)
+    check_brand(html)
     print("  checks     passed")
 
 
