@@ -86,14 +86,14 @@
       .then(function (x) {
         if (x.r.ok && x.b && x.b.ok) return true;
         throw new Error(
-          (x.b && x.b.error) || "COULDN'T SEND — EMAIL BULL@BULLPRINTLAB.COM"
+          (x.b && x.b.error) || "COULDN'T SEND — EMAIL BULLISH@BULLPRINTLAB.COM"
         );
       })
       .catch(function (e) {
         // A network or Turnstile failure must never read like a validation
         // error; the person did nothing wrong and needs a way through.
         if (e && e.message === "net") {
-          throw new Error("CONNECTION DROPPED — RETRY, OR EMAIL BULL@BULLPRINTLAB.COM");
+          throw new Error("CONNECTION DROPPED — RETRY, OR EMAIL BULLISH@BULLPRINTLAB.COM");
         }
         throw e;
       });

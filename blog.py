@@ -207,7 +207,7 @@ def shell(title, desc, canonical, body, jsonld, depth=1):
 {body}
 <footer class="foot"><div class="wrap">
   <span class="meta">BEST IN BULL™ · PRINTED IN HOUSE</span>
-  <span class="meta"><a href="mailto:bull@bullprintlab.com">BULL@BULLPRINTLAB.COM</a> · <a href="https://x.com/bestinbull">@BESTINBULL</a></span>
+  <span class="meta"><a href="mailto:bullish@bullprintlab.com">BULLISH@BULLPRINTLAB.COM</a> · <a href="https://x.com/bestinbull">@BESTINBULL</a></span>
 </div></footer>
 </body>
 </html>"""

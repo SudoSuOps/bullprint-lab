@@ -27,12 +27,12 @@ the site with no hand-patching to redo:
      sit inside the custom-request and order flows go to `print@`, everything
      else to `bull@`. Fix this at source in the design when convenient and this
      step becomes a no-op.
-  6. Wires the three forms to /api/submit, behind Turnstile. As exported they
+  5. Wires the three forms to /api/submit, behind Turnstile. As exported they
      only flipped a local "sent" flag — they looked like they worked and nothing
      ever left the browser. This also adds the order form's missing EMAIL field:
      it collected size, width, arch, fit, feel, shoe, notes and payment
      preference, and no way to reply to the person.
-  7. Inlines a pre-rendered copy of the page, when `prerender.html` is present.
+  6. Inlines a pre-rendered copy of the page, when `prerender.html` is present.
      The page is rendered by a client-side runtime, so a crawler that does not
      execute JavaScript sees 8.5k characters of template source with 80 raw
      {{ }} expressions in it instead of content. Google renders JS; GPTBot,
@@ -43,11 +43,11 @@ the site with no hand-patching to redo:
      <x-dc>. Same content either way — progressive enhancement, not cloaking.
      Regenerate with `python3 build.py --prerender` (needs a local browser);
      the result is committed so CI never needs one.
-  8. Builds the journal (blog.py) and the GEO surface: JSON-LD, llms.txt,
+  7. Builds the journal (blog.py) and the GEO surface: JSON-LD, llms.txt,
      sitemap, robots. The journal is plain static HTML with no runtime — it is
      the part of the site a non-executing crawler can read completely, and where
      the citable material lives.
-  9. Nothing else. The <x-dc> template, the helmet block and every byte of the
+  8. Nothing else. The <x-dc> template, the helmet block and every byte of the
      markup are otherwise passed through untouched.
 
     python3 build.py
@@ -85,13 +85,6 @@ VENDOR_SRI = {
     "vendor/react-dom.production.min.js":
         "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1",
 }
-
-# The design's placeholder address -> the mailboxes that actually exist.
-DESIGN_EMAIL = "bullish@bullprintlab.com"
-EMAIL_GENERAL = "bull@bullprintlab.com"
-EMAIL_ORDERS = "print@bullprintlab.com"
-# Sections whose "EMAIL THE LAB" button is an order/print enquiry, not general contact.
-ORDER_SECTIONS = ("custom", "order")
 
 TURNSTILE_SITEKEY = "0x4AAAAAAEQBxUgUlUeDfZjS"
 
@@ -325,7 +318,7 @@ ORG_LD = {
     "@context": "https://schema.org",
     "@graph": [
         {"@type": "Organization", "@id": f"{SITE}/#org", "name": "BullPrint Lab",
-         "url": f"{SITE}/", "email": "bull@bullprintlab.com",
+         "url": f"{SITE}/", "email": "bullish@bullprintlab.com",
          "telephone": "+1-561-532-7120",
          "logo": f"{SITE}/assets/insert-spec-sheet.png",
          "slogan": "We print what we're bullish on.",
@@ -482,8 +475,7 @@ shipped with its likely failure modes written down in advance.
 
 ## Contact
 
-- General: bull@bullprintlab.com
-- Orders and print enquiries: print@bullprintlab.com
+- bullish@bullprintlab.com
 - X: https://x.com/bestinbull
 """)
 
@@ -500,32 +492,6 @@ def main() -> None:
             sys.exit(f"asset reference not found in the design: {old}")
         html = html.replace(old, new)
         print(f"  repointed  {old} -> {new}  ({n}x)")
-
-    # contact address: order flows -> print@, everything else -> bull@
-    n_before = html.count(DESIGN_EMAIL)
-    # 6: two order-flow buttons, the about block, two contact links and the
-    # "reply comes from ..." line in the contact form's success state.
-    if n_before != 6:
-        sys.exit(f"expected 6 references to {DESIGN_EMAIL}, found {n_before} — "
-                 "the design changed, re-check which buttons sit in which flow")
-    for sec in ORDER_SECTIONS:
-        if f'id="{sec}"' not in html:
-            sys.exit(f"section #{sec} not found in the design")
-    out, cursor, n_ord = [], 0, 0
-    for m in re.finditer(re.escape(DESIGN_EMAIL), html):
-        # which section does this mailto fall in? the last section id before it
-        sec_ids = re.findall(r'id="([a-z]+)"', html[:m.start()])
-        target = EMAIL_ORDERS if sec_ids and sec_ids[-1] in ORDER_SECTIONS else EMAIL_GENERAL
-        n_ord += target == EMAIL_ORDERS
-        out.append(html[cursor:m.start()])
-        out.append(target)
-        cursor = m.end()
-    out.append(html[cursor:])
-    html = "".join(out)
-    # the footer prints the address in caps as visible text
-    html = html.replace(DESIGN_EMAIL.upper(), EMAIL_GENERAL.upper())
-    print(f"  contact    {DESIGN_EMAIL} -> {EMAIL_ORDERS} ({n_ord}x), "
-          f"{EMAIL_GENERAL} ({n_before - n_ord}x)")
 
     html = wire_forms(html)
     html = route_ticker(html)
@@ -569,8 +535,6 @@ def main() -> None:
                  "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email"):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
-    assert DESIGN_EMAIL not in html and DESIGN_EMAIL.upper() not in html, \
-        "the design's placeholder address survived the rewrite"
     assert "fonts.googleapis.com" not in html and "fonts.gstatic.com" not in html, \
         "a Google Fonts reference survived the rewrite"
     # Only SUBRESOURCES must be same-origin. Outbound links in the footer
