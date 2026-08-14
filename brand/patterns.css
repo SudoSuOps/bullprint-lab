@@ -1,0 +1,26 @@
+/* BullPrint Lab — pattern library. Four background recipes, no images. */
+
+/* 1. LATTICE FIELD — seamless pointy-top hex tile, circumradius 16 in a 27.712x48 tile.
+   Scale by changing background-size; keep the 27.712:48 ratio (w x w*1.732). */
+.bp-lattice{
+  background-color:#101013;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:28px 48px; /* cell pitch — 22x38 for dense, 40x69 for open */
+}
+
+/* 2. LAYER LINES — additive print texture, 0.12 mm read */
+.bp-layerlines{
+  background-color:#101013;
+  background-image:repeating-linear-gradient(0deg,rgba(232,178,58,.5) 0 1px,transparent 1px 6px);
+}
+
+/* 3. CAD GRID — hero and section underlay; 64px in hero, 14px in swatch scale */
+.bp-cadgrid{
+  background-color:#101013;
+  background-image:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
+  background-size:14px 14px;
+}
+
+/* 4. DIMENSION LINE — composed of absolutely positioned 1px rules + mono label.
+   See README "Pattern library" for the exact structure. */

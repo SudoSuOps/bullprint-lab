@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#08080A;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+</style>
+</helmet>
+
+<div style="padding:56px 60px 90px;display:flex;flex-direction:column;gap:34px">
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="bkBull" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".18" stop-color="#F5D07A"></stop><stop offset=".44" stop-color="#E8B23A"></stop><stop offset=".72" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop></linearGradient>
+    <linearGradient id="bkHorn" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop><stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop></linearGradient>
+    <g id="bkBullFill">
+      <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#bkHorn)"></path>
+      <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#bkHorn)"></path>
+      <path d="M74 34C82 36 86 42 84 47C79 45 75 41 73 38Z" fill="#A87F24"></path>
+      <path d="M46 34C38 36 34 42 36 47C41 45 45 41 47 38Z" fill="#A87F24"></path>
+      <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#bkBull)"></path>
+      <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="#8A6A1E" opacity=".55"></path>
+      <ellipse cx="55" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse><ellipse cx="65" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse>
+      <path d="M66 44L75 42L73.5 49L66 47.6Z" fill="#3A2C0C"></path><path d="M54 44L45 42L46.5 49L54 47.6Z" fill="#3A2C0C"></path>
+      <path d="M53 31H67L64 37H56Z" fill="#FBE9B0" opacity=".28"></path>
+    </g>
+  </defs></svg>
+
+  <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+    <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;padding:6px 9px;background:#E8B23A;color:#0B0B0D">BRAND KIT v1.0</span>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">BULLPRINT LAB × BEST IN BULL™ — full asset system</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#6E6B66">Cover + 18 sheets · marks, voice, taglines, storylines, naming, print, launch, the ticker and BrAhMa</span>
+  </div>
+
+  <!-- ============ SHEET 00 — COVER ============ -->
+  <div style="width:1240px;position:relative;background:#000;border:1px solid rgba(255,255,255,.1);overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:{{ latticeTile }};opacity:.42"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(64% 74% at 50% 46%,rgba(0,0,0,.6),#000 78%)"></div>
+    <div style="position:relative;padding:88px 64px 72px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:34px">
+      <svg width="230" height="192" viewBox="0 0 120 100" style="filter:drop-shadow(0 22px 48px rgba(232,178,58,.26))"><use href="#bkBullFill"></use></svg>
+      <div>
+        <div style="font:900 84px/0.86 Archivo,sans-serif;letter-spacing:-.04em;background:linear-gradient(115deg,#8A6A1E,#F5D07A 26%,#E8B23A 50%,#A87F24 74%,#F5D07A 100%);-webkit-background-clip:text;background-clip:text;color:transparent">BULLPRINT LAB</div>
+        <div style="margin-top:22px;font:700 15px/1 'JetBrains Mono',monospace;letter-spacing:.42em;color:#E8B23A">BEST IN BULL™</div>
+      </div>
+      <div style="max-width:640px;font:400 17px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The complete identity system. Marks, colour, type, pattern, voice, taglines, campaign storylines and print applications for an experimental additive-manufacturing brand that takes the joke seriously and the tolerances more seriously.</div>
+      <div style="display:flex;gap:34px;flex-wrap:wrap;justify-content:center;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#5C5952">
+        <span>BULLPRINTLAB.COM</span><span>BESTINBULL.COM</span><span>@BESTINBULL</span><span>REV 2026.08</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 01 — TWO MARKS, ONE SYSTEM ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 01</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">TWO MARKS. ONE SYSTEM.</h2>
+      <p style="margin:16px 0 0;max-width:720px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BullPrint Lab is who we are. BEST IN BULL™ is what we're willing to sign. Keeping them separate is the whole reason the second one means anything — a lab that stamps everything is just a factory with a logo.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:38px 48px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <svg width="52" height="44" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg>
+          <span style="font:800 24px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">BULLPRINT LAB</span>
+        </div>
+        <div style="margin-top:22px;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">THE MAKER</div>
+        <p style="margin:12px 0 0;font:400 14.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The lab, the experiments, the drops, the writing, the failures. Free to be playful, wrong, unfinished and loud. This mark goes on everything we make.</p>
+        <div style="margin-top:22px;display:flex;flex-direction:column;gap:9px;font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">
+          <span>USE ON — site, packaging, socials, prototypes, editorial</span>
+          <span>TONE — curious, technical, funny when it's earned</span>
+        </div>
+      </div>
+      <div style="background:#0B0B0D;padding:38px 48px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <svg width="48" height="48" viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="5"></circle><g transform="translate(100,100) scale(1.3) translate(-60,-50)"><use href="#bkBullFill"></use></g></svg>
+          <span style="font:800 22px/1 Archivo,sans-serif;letter-spacing:.02em;color:#F4F2ED">BEST IN BULL™</span>
+        </div>
+        <div style="margin-top:22px;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">THE STANDARD</div>
+        <p style="margin:12px 0 0;font:400 14.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">A quality mark applied per unit, after inspection. Not a logo, not a product line, not decoration. If it wears the bull, we stand behind the print — and we replace it if it fails.</p>
+        <div style="margin-top:22px;display:flex;flex-direction:column;gap:9px;font:500 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">
+          <span>USE ON — inspected units, their packaging, the guarantee</span>
+          <span>NEVER ON — concepts, renders, prototypes, merch, ads</span>
+        </div>
+      </div>
+    </div>
+    <div style="padding:26px 48px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">THE RULE</span>
+      <span style="font:700 17px/1.4 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">Everything can carry the lab. Only inspected units carry the bull.</span>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 02 — LOGO SYSTEM ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 02</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">LOGO SYSTEM</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:38px 48px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:26px">A · WORDMARKS</div>
+        <div style="font:900 54px/0.9 Archivo,sans-serif;letter-spacing:-.035em;background:linear-gradient(115deg,#8A6A1E,#F5D07A 26%,#E8B23A 50%,#A87F24 76%,#F5D07A 100%);-webkit-background-clip:text;background-clip:text;color:transparent">BULLPRINT<br>LAB</div>
+        <div style="margin-top:12px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#5C5952">A1 STACKED / GRADIENT — HERO, FOOTER, COVER</div>
+        <div style="margin-top:34px;font:800 30px/1 Archivo,sans-serif;letter-spacing:-.015em;color:#F4F2ED">BULLPRINT <span style="color:#E8B23A">LAB</span></div>
+        <div style="margin-top:12px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#5C5952">A2 HORIZONTAL / TWO-TONE — NAV, DOCUMENTS</div>
+        <div style="margin-top:34px;display:inline-flex;align-items:center;gap:13px;padding:12px 16px;border:1px solid rgba(232,178,58,.4)">
+          <svg width="30" height="25" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="#E8B23A" stroke-width="5"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="#E8B23A" stroke-width="5"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="#E8B23A" stroke-width="5"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke="#E8B23A" stroke-width="5"></path><path d="M66 44L75 42.5M54 44L45 42.5" stroke="#E8B23A" stroke-width="5"></path></svg>
+          <span style="font:800 19px/1 Archivo,sans-serif;letter-spacing:.02em;color:#F4F2ED">BULLPRINT LAB</span>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#5C5952">A3 LOCKUP / BOXED — STAMPS, LABELS, SIGN-OFFS</div>
+      </div>
+      <div style="background:#0B0B0D;padding:38px 48px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:26px">B · CLEAR SPACE + MINIMUMS</div>
+        <div style="position:relative;padding:44px;border:1px dashed rgba(232,178,58,.35);display:grid;place-items:center">
+          <div style="position:absolute;inset:22px;border:1px dashed rgba(232,178,58,.18)"></div>
+          <svg width="120" height="100" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg>
+          <div style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font:500 9px/1 'JetBrains Mono',monospace;color:#8A6A1E">X</div>
+          <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font:500 9px/1 'JetBrains Mono',monospace;color:#8A6A1E">X</div>
+        </div>
+        <p style="margin:16px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A">Clear space on all sides = <strong style="color:#F4F2ED;font-weight:700">X</strong>, where X is the height of the bull's muzzle plate (¼ of the mark height). Nothing enters it — not type, not a photo edge, not another logo.</p>
+        <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px;font:500 10.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">
+          <div style="display:flex;justify-content:space-between"><span>MODELLED MASTER</span><span style="color:#F4F2ED">≥ 40 PX / 12 MM</span></div>
+          <div style="display:flex;justify-content:space-between"><span>LINE CUT</span><span style="color:#F4F2ED">≥ 16 PX / 4 MM</span></div>
+          <div style="display:flex;justify-content:space-between"><span>SEAL WITH HASH RING</span><span style="color:#F4F2ED">≥ 280 PX / 40 MM</span></div>
+          <div style="display:flex;justify-content:space-between"><span>SEAL WITHOUT HASH</span><span style="color:#F4F2ED">≥ 28 PX / 8 MM</span></div>
+          <div style="display:flex;justify-content:space-between"><span>SEAL INNER BULL</span><span style="color:#F4F2ED">EXEMPT — RING CARRIES IT</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:38px 48px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:26px">C · FINISHES — SAME SILHOUETTE, FOUR SUBSTRATES</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+        <div style="background:#101013;height:170px;display:grid;place-items:center"><svg width="130" height="108" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg></div>
+        <div style="background:#E8B23A;height:170px;display:grid;place-items:center"><svg width="130" height="108" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="#0B0B0D" stroke-width="3.4"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="#0B0B0D" stroke-width="3.4"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="#0B0B0D" stroke-width="3.4"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke="#0B0B0D" stroke-width="3.4"></path><path d="M66 44L75 42.5M54 44L45 42.5" stroke="#0B0B0D" stroke-width="3.4"></path></svg></div>
+        <div style="background:linear-gradient(140deg,#1D1D21,#0C0C0F);height:170px;display:grid;place-items:center">
+          <svg width="130" height="108" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round">
+            <g transform="translate(0,1.6)"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="rgba(0,0,0,.7)" stroke-width="3.2"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="rgba(0,0,0,.7)" stroke-width="3.2"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="rgba(0,0,0,.7)" stroke-width="3.2"></path></g>
+            <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="rgba(255,255,255,.4)" stroke-width="3.2"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="rgba(255,255,255,.4)" stroke-width="3.2"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="rgba(255,255,255,.4)" stroke-width="3.2"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke="rgba(255,255,255,.4)" stroke-width="3.2"></path>
+          </svg>
+        </div>
+        <div style="background:#F4F2ED;height:170px;display:grid;place-items:center"><svg width="130" height="108" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg></div>
+      </div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;font:500 9.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">
+        <span>C1 GOLD ON GRAPHITE — DIGITAL DEFAULT</span><span>C2 KNOCKOUT — GOLD SUBSTRATE, FOIL</span><span>C3 DEBOSS — MOULD, PACKAGING, LEATHER</span><span>C4 ON LIGHT — PAPER, INVOICES, PRESS</span>
+      </div>
+    </div>
+
+    <div style="padding:38px 48px">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:26px">D · MISUSE — ALL OF THESE ARE WRONG</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+        <div><div style="height:120px;display:grid;place-items:center;border:1px solid rgba(247,147,26,.3);background:#101013"><svg width="94" height="78" viewBox="0 0 120 100" style="transform:scaleX(1.5)"><use href="#bkBullFill"></use></svg></div><div style="margin-top:9px;font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#F7931A">D1 STRETCHED</div></div>
+        <div><div style="height:120px;display:grid;place-items:center;border:1px solid rgba(247,147,26,.3);background:#101013"><svg width="94" height="78" viewBox="0 0 120 100" style="filter:hue-rotate(150deg) saturate(1.6)"><use href="#bkBullFill"></use></svg></div><div style="margin-top:9px;font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#F7931A">D2 RECOLOURED</div></div>
+        <div><div style="height:120px;display:grid;place-items:center;border:1px solid rgba(247,147,26,.3);background:#101013"><svg width="94" height="78" viewBox="0 0 120 100" style="transform:rotate(-12deg)"><use href="#bkBullFill"></use></svg></div><div style="margin-top:9px;font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#F7931A">D3 ROTATED</div></div>
+        <div><div style="height:120px;display:grid;place-items:center;border:1px solid rgba(247,147,26,.3);background:#101013;position:relative"><svg width="94" height="78" viewBox="0 0 120 100" style="filter:drop-shadow(0 0 14px #E8B23A)"><use href="#bkBullFill"></use></svg></div><div style="margin-top:9px;font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#F7931A">D4 GLOW / NEON</div></div>
+        <div><div style="height:120px;display:grid;place-items:center;border:1px solid rgba(247,147,26,.3);background:#101013"><div style="display:flex;align-items:center;gap:4px"><svg width="52" height="43" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg><span style="font:800 13px/1 Archivo,sans-serif;color:#F4F2ED">LAB</span></div></div><div style="margin-top:9px;font:500 9.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#F7931A">D5 CROWDED LOCKUP</div></div>
+      </div>
+      <p style="margin:20px 0 0;max-width:820px;font:400 13.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Also wrong, and not worth illustrating: outlining the modelled master, placing the mark on a busy photo without a plate, using the seal as a decorative badge on something uninspected, and adding a drop shadow to make it "pop". The mark is a stamp. Stamps are flat and confident.</p>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 03 — THE SEAL ============ -->
+  <div style="width:1240px;background:#000;border:1px solid rgba(255,255,255,.1);display:grid;grid-template-columns:1fr 1fr">
+    <div style="padding:38px 48px">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 03</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THE SEAL</h2>
+      <p style="margin:18px 0 0;max-width:460px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Three rings. The outer track is the Bitcoin genesis block hash — the oldest verifiable receipt there is, wrapped around the mark that says we verified this one too. Inside it, the name. Inside that, the bull.</p>
+      <div style="margin-top:26px;display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+        <div style="background:#0B0B0D;padding:15px 18px;display:flex;justify-content:space-between;gap:16px;font:500 10.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em"><span style="color:#6E6B66">OUTER RING</span><span style="color:#F4F2ED;text-align:right">GENESIS HASH · 7.2PX · LS .62EM</span></div>
+        <div style="background:#0B0B0D;padding:15px 18px;display:flex;justify-content:space-between;gap:16px;font:500 10.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em"><span style="color:#6E6B66">NAME RING</span><span style="color:#F4F2ED;text-align:right">11PX · LS .5EM · R64</span></div>
+        <div style="background:#0B0B0D;padding:15px 18px;display:flex;justify-content:space-between;gap:16px;font:500 10.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em"><span style="color:#6E6B66">CENTRE</span><span style="color:#F4F2ED;text-align:right">MODELLED BULL · SCALE .78</span></div>
+        <div style="background:#0B0B0D;padding:15px 18px;display:flex;justify-content:space-between;gap:16px;font:500 10.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em"><span style="color:#6E6B66">DIE (PHYSICAL)</span><span style="color:#F4F2ED;text-align:right">≥ 40 MM FOR HASH · 0.4 MM DEPTH</span></div>
+      </div>
+      <p style="margin:20px 0 0;max-width:460px;font:400 13px/1.7 Archivo,sans-serif;color:#6E6B66">Below 120px the hash turns to mush — drop the outer ring entirely and use the plain ring with the line cut inside. Never fake the hash with placeholder characters.</p>
+      <div style="margin-top:26px;display:flex;align-items:center;gap:22px">
+        <svg width="66" height="66" viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="5"></circle><g transform="translate(100,100) scale(1.3) translate(-60,-50)"><use href="#bkBullFill"></use></g></svg>
+        <div style="display:inline-flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid rgba(232,178,58,.4)">
+          <svg width="20" height="17" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="#E8B23A" stroke-width="7"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="#E8B23A" stroke-width="7"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="#E8B23A" stroke-width="7"></path></svg>
+          <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BEST IN BULL™</span>
+        </div>
+        <span style="font:500 9.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5C5952">SMALL SEAL<br>INLINE STAMP</span>
+      </div>
+    </div>
+    <div style="position:relative;display:grid;place-items:center;padding:48px;border-left:1px solid rgba(255,255,255,.08)">
+      <div style="position:absolute;inset:0;background:radial-gradient(58% 62% at 50% 50%,rgba(232,178,58,.13),transparent 74%)"></div>
+      <svg viewBox="0 0 200 200" style="position:relative;width:420px;filter:drop-shadow(0 24px 60px rgba(232,178,58,.18))">
+        <defs>
+          <path id="bkHashRing" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"></path>
+          <path id="bkNameRing" d="M100,100 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"></path>
+        </defs>
+        <circle cx="100" cy="100" r="98" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".5"></circle>
+        <text fill="#8A6A1E" style="font:500 7.2px 'JetBrains Mono',monospace;letter-spacing:.62em"><textPath href="#bkHashRing" startOffset="0.4%">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</textPath></text>
+        <circle cx="100" cy="100" r="81" fill="none" stroke="url(#bkHorn)" stroke-width="3"></circle>
+        <circle cx="100" cy="100" r="52" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"></circle>
+        <text fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.5em"><textPath href="#bkNameRing" startOffset="1.5%">BEST IN BULL™ · BULLPRINT LAB · </textPath></text>
+        <g transform="translate(100,94) scale(0.78) translate(-60,-50)"><use href="#bkBullFill"></use></g>
+        <text x="100" y="134" text-anchor="middle" fill="#8A6A1E" style="font:500 7.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 04 — COLOUR ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 04</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">COLOUR</h2>
+      <p style="margin:16px 0 0;max-width:720px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A">Roughly 85% black and graphite, 10% gold, 5% everything else. Gold is a metal, not a highlighter — it marks what matters and stays off everything that doesn't.</p>
+    </div>
+    <div style="padding:38px 48px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+      <div><div style="height:110px;background:#0B0B0D;border:1px solid rgba(255,255,255,.14)"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">VOID<br><span style="color:#6E6B66">#0B0B0D · PAGE</span></div></div>
+      <div><div style="height:110px;background:#0E0E11"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">GRAPHITE<br><span style="color:#6E6B66">#0E0E11 · ALT SECTION</span></div></div>
+      <div><div style="height:110px;background:#141418"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">PANEL<br><span style="color:#6E6B66">#141418 · CARD / HOVER</span></div></div>
+      <div><div style="height:110px;background:#2A2A31"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">TITANIUM<br><span style="color:#6E6B66">#2A2A31 · INERT</span></div></div>
+      <div><div style="height:110px;background:linear-gradient(140deg,#8A6A1E,#F5D07A 34%,#E8B23A 62%,#A87F24)"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">GOLD LEAF<br><span style="color:#6E6B66">GRADIENT · MARKS ONLY</span></div></div>
+      <div><div style="height:110px;background:#E8B23A"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">GOLD<br><span style="color:#6E6B66">#E8B23A · ACCENT</span></div></div>
+      <div><div style="height:110px;background:#8A6A1E"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">DEEP GOLD<br><span style="color:#6E6B66">#8A6A1E · EYEBROWS</span></div></div>
+      <div><div style="height:110px;background:#F7931A"></div><div style="margin-top:10px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.08em;color:#F4F2ED">₿ ORANGE<br><span style="color:#6E6B66">#F7931A · 5% MAX</span></div></div>
+    </div>
+    <div style="padding:0 48px 38px;display:grid;grid-template-columns:1fr 1fr;gap:22px">
+      <div style="padding:22px;border:1px solid rgba(232,178,58,.3)">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">DO</div>
+        <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A">Let black carry the page. Use gold for one thing per view: the mark, the CTA, the number that matters. Print gold as metallic foil or a spot ink where the budget allows — a flat CMYK build reads as mustard.</p>
+      </div>
+      <div style="padding:22px;border:1px solid rgba(247,147,26,.28)">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">DON'T</div>
+        <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A">No purple-to-blue gradients. No neon. No gold on gold. Bitcoin orange never outranks the brand gold — it appears where Bitcoin is literally the subject, and nowhere else.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 05 — TYPE ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 05</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">TYPE</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:38px 48px">
+        <div style="font:900 76px/0.92 Archivo,sans-serif;letter-spacing:-.04em;color:#F4F2ED">ARCHIVO<br>900</div>
+        <div style="margin-top:16px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">DISPLAY · ALL HEADLINES · UPPERCASE · TRACK −3 TO −4%</div>
+        <div style="margin-top:34px;font:400 17px/1.75 Archivo,sans-serif;color:#A5A19A;max-width:520px">Archivo 400 carries body copy at 15–17px with 1.75 leading and a measure under 68 characters. Sentence case, never uppercase — the shouting is reserved for headlines and the mono.</div>
+        <div style="margin-top:34px;font:500 20px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em;color:#E8B23A">JetBrains Mono 500</div>
+        <div style="margin-top:12px;font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">TECHNICAL · EVERY NUMERIC, ID, STATUS, EYEBROW, CTA<br>001 / 100 · TPU / PEBA · 0.12 MM · 157,006 SATS · BP-10MM-001</div>
+      </div>
+      <div style="background:#0B0B0D;padding:38px 48px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:24px">SCALE</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.08em">
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">DISPLAY XL</span><span style="color:#F4F2ED">76–116 / 900</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">H1</span><span style="color:#F4F2ED">40–76 / 900</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">H2</span><span style="color:#F4F2ED">30–56 / 900</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">H3</span><span style="color:#F4F2ED">17–24 / 800</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">BODY</span><span style="color:#F4F2ED">15–17 / 400</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">CARD BODY</span><span style="color:#F4F2ED">12.5–13 / 400</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">EYEBROW (MONO)</span><span style="color:#F4F2ED">10 / 500 · LS .24EM</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">CTA / NAV (MONO)</span><span style="color:#F4F2ED">11–12 / 700 · LS .16EM</span></div>
+          <div style="background:#0B0B0D;padding:13px 16px;display:flex;justify-content:space-between"><span style="color:#6E6B66">META (MONO)</span><span style="color:#F4F2ED">9.5–10 / 500 · LS .14EM</span></div>
+        </div>
+        <p style="margin:20px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#6E6B66">Square corners everywhere. No border radius in the brand system at all — the only rounded thing we make is the part itself.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 06 — PATTERN ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 06</div>
+        <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">PATTERN LIBRARY</h2>
+      </div>
+      <p style="margin:0;max-width:420px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A">Four textures, all generated — no image files. The lattice is the brand's fingerprint; use it at low opacity behind content, at full strength as a field.</p>
+    </div>
+    <div style="padding:38px 48px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+      <div>
+        <div style="height:190px;background-color:#101013;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:{{ latticeTile }};border:1px solid rgba(255,255,255,.08)"></div>
+        <div style="margin-top:10px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">P1 LATTICE FIELD<br><span style="color:#5C5952">TILE {{ latticeTile }} · RATIO 1:1.732</span></div>
+      </div>
+      <div>
+        <div style="height:190px;background-color:#101013;background-image:repeating-linear-gradient(0deg,rgba(232,178,58,.5) 0 1px,transparent 1px 6px);border:1px solid rgba(255,255,255,.08)"></div>
+        <div style="margin-top:10px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">P2 LAYER LINES<br><span style="color:#5C5952">0.12 MM READ · EDITORIAL</span></div>
+      </div>
+      <div>
+        <div style="height:190px;background-color:#101013;background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:16px 16px;border:1px solid rgba(255,255,255,.08)"></div>
+        <div style="margin-top:10px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">P3 CAD GRID<br><span style="color:#5C5952">16–64 PX · UNDERLAY</span></div>
+      </div>
+      <div>
+        <div style="height:190px;background:#101013;border:1px solid rgba(255,255,255,.08);position:relative">
+          <div style="position:absolute;left:18px;right:18px;top:70px;height:1px;background:rgba(232,178,58,.55)"></div>
+          <div style="position:absolute;left:18px;top:62px;width:1px;height:17px;background:rgba(232,178,58,.55)"></div>
+          <div style="position:absolute;right:18px;top:62px;width:1px;height:17px;background:rgba(232,178,58,.55)"></div>
+          <div style="position:absolute;left:0;right:0;top:80px;text-align:center;font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">284.00 MM</div>
+          <div style="position:absolute;left:18px;bottom:16px;font:500 9px/1.8 'JetBrains Mono',monospace;color:#5C5952">X 128.4 · Y 41.9 · Z 6.7</div>
+        </div>
+        <div style="margin-top:10px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">P4 DIMENSION<br><span style="color:#5C5952">SPEC CALLOUTS · PACKAGING</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 07 — VOICE ============ -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 07</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">VOICE</h2>
+      <p style="margin:16px 0 0;max-width:760px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The humour gets attention. The quality earns the customer. Both of those are true at once, and the order matters — we open with the joke and close with the spec, never the reverse.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">01</div><div style="margin-top:12px;font:800 17px/1.2 Archivo,sans-serif;color:#F4F2ED">SHOW THE NUMBER</div><p style="margin:10px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Every claim carries a figure, a material or a tolerance. "Comfortable" is not a claim. "95A at 5.5 mm mid cell" is.</p></div>
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">02</div><div style="margin-top:12px;font:800 17px/1.2 Archivo,sans-serif;color:#F4F2ED">ONE JOKE, THEN WORK</div><p style="margin:10px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Roughly one funny line per section. Stack two and the whole thing reads as a meme account with a Shopify.</p></div>
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">03</div><div style="margin-top:12px;font:800 17px/1.2 Archivo,sans-serif;color:#F4F2ED">PUBLISH THE FAILURES</div><p style="margin:10px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Archived prototypes get the same typographic treatment as shipped ones. Credibility is cheaper to earn than to claim.</p></div>
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">04</div><div style="margin-top:12px;font:800 17px/1.2 Archivo,sans-serif;color:#F4F2ED">NEVER OVERSELL</div><p style="margin:10px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">No medical claims, no fake scarcity, no countdowns, no invented stock numbers. If we can't back it, we don't print it.</p></div>
+    </div>
+    <div style="padding:34px 48px;display:grid;grid-template-columns:1fr 1fr;gap:22px">
+      <div style="padding:24px;border:1px solid rgba(232,178,58,.3)">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">WE SAY</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 Archivo,sans-serif;color:#F4F2ED">
+          <span>"Zoned lattice, 5.5 mm mid cell, printed in one part."</span>
+          <span>"Prototype 004 split at the midfoot on day three."</span>
+          <span>"It started as a joke. The tooling didn't."</span>
+        </div>
+      </div>
+      <div style="padding:24px;border:1px solid rgba(247,147,26,.28)">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">WE DON'T</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;font:400 14px/1.6 Archivo,sans-serif;color:#8B8780">
+          <span>"Revolutionary comfort technology."</span>
+          <span>"Only 3 left — don't miss out!"</span>
+          <span>"Cures foot pain / improves posture / heals arches."</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 08 — TAGLINES ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 08</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">TAGLINES</h2>
+      <p style="margin:16px 0 0;max-width:720px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A">Locked lines never change. Rotating lines are the working set — pick one per surface, never two.</p>
+    </div>
+    <div style="padding:38px 48px 10px">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:22px">LOCKED — DO NOT REWRITE</div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08)"><div style="font:900 40px/1.02 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">WE PRINT WHAT WE'RE BULLISH ON.</div><div style="margin-top:10px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952">MASTER LINE · HERO, FOOTER, PACKAGING</div></div>
+        <div style="padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08)"><div style="font:700 30px/1.1 Archivo,sans-serif;letter-spacing:-.02em;color:#E8B23A">VibePrints with real utility.</div><div style="margin-top:10px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952">DESCRIPTOR · ALWAYS FOLLOWS THE MASTER LINE</div></div>
+        <div style="padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08)"><div style="font:900 30px/1.1 Archivo,sans-serif;letter-spacing:-.025em;color:#F4F2ED">ONLY THE BEST EARN THE STAMP.</div><div style="margin-top:10px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952">QUALITY LINE · PAIRS WITH THE SEAL</div></div>
+      </div>
+    </div>
+    <div style="padding:28px 48px 38px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:26px 24px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">PRODUCT / ENGINEERING</div>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px;font:800 17px/1.25 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">
+          <span>EXPRESSION, ENGINEERED.</span><span>GEOMETRY IS THE MATERIAL.</span><span>EVERY CELL EARNS ITS PLACE.</span><span>LATTICE OVER LOGOS.</span><span>TOLERANCES ARE A LOVE LANGUAGE.</span>
+        </div>
+      </div>
+      <div style="background:#0B0B0D;padding:26px 24px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">QUALITY / THE MARK</div>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px;font:800 17px/1.25 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">
+          <span>NOT EVERYTHING EARNS THE BULL.</span><span>IF IT WEARS THE BULL, WE STAND BEHIND THE PRINT.</span><span>THE JOKE IS THE HOOK. THE PRINT IS THE POINT.</span><span>NUMBERED, NOT MASS.</span><span>SOFT ON THE FOOT. HARD ON THE SPEC.</span>
+        </div>
+      </div>
+      <div style="background:#0B0B0D;padding:26px 24px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">CULTURE / SOCIAL</div>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px;font:800 17px/1.25 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">
+          <span>STAY BULLISH.</span><span>BUILT DIFFERENT. PRINTED DIFFERENT.</span><span>PRINT WHAT YOU BELIEVE.</span><span>FROM THE LAB.</span><span>MADE IN THE LAB. WORN IN THE WILD.</span><span>FOLLOW THE BULLPRINT.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 09 — BULL ON / BULL OFF ============ -->
+  <div style="width:1240px;position:relative;background:#000;border:1px solid rgba(255,255,255,.1);overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(60% 70% at 22% 40%,rgba(232,178,58,.12),transparent 72%)"></div>
+    <div style="position:relative;padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 09 · SIGNATURE DEVICE</div>
+      <h2 style="margin:14px 0 0;font:900 52px/1 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">BULL ON <span style="color:#5C5952">/</span> BULL OFF</h2>
+      <p style="margin:18px 0 0;max-width:760px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">One binary that runs through the entire brand: every print is either bull on or bull off. It's the switch on the lab bench, the verdict on a prototype, the stamp on a box, and the punchline in a post — and because it can go either way in public, people believe it when it's on.</p>
+    </div>
+    <div style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:40px 48px">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="width:64px;height:34px;background:#E8B23A;display:flex;align-items:center;justify-content:flex-end;padding:0 5px;box-sizing:border-box"><div style="width:24px;height:24px;background:#0B0B0D"></div></div>
+          <span style="font:900 34px/1 Archivo,sans-serif;letter-spacing:-.02em;color:#E8B23A">BULL ON</span>
+        </div>
+        <p style="margin:22px 0 0;max-width:400px;font:400 14.5px/1.7 Archivo,sans-serif;color:#A5A19A">Inspected, numbered, stamped, shipping. The geometry did what we said it would. Gold type, seal present, serial assigned.</p>
+        <div style="margin-top:24px;display:flex;flex-direction:column;gap:9px;font:500 11px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">
+          <span>USE — drops that ship, passed prototypes, guarantees</span>
+          <span>COLOUR — gold on black, seal visible</span>
+          <span>POST FORM — "PROTO 003. BULL ON." + the spec</span>
+        </div>
+      </div>
+      <div style="background:#0B0B0D;padding:40px 48px">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="width:64px;height:34px;border:1px solid #3A3630;display:flex;align-items:center;padding:0 5px;box-sizing:border-box"><div style="width:24px;height:24px;background:#3A3630"></div></div>
+          <span style="font:900 34px/1 Archivo,sans-serif;letter-spacing:-.02em;color:#5C5952">BULL OFF</span>
+        </div>
+        <p style="margin:22px 0 0;max-width:400px;font:400 14.5px/1.7 Archivo,sans-serif;color:#8B8780">Archived. It failed, or it wasn't good enough, and we're showing it anyway. Grey type, no seal, dashed border, the reason stated in one sentence.</p>
+        <div style="margin-top:24px;display:flex;flex-direction:column;gap:9px;font:500 11px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#5C5952">
+          <span>USE — failed prototypes, killed concepts, recalls</span>
+          <span>COLOUR — #5C5952 on black, dashed rules</span>
+          <span>POST FORM — "PROTO 004. BULL OFF." + what broke</span>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;padding:30px 48px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+      <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">WHY IT WORKS</span>
+      <span style="font:700 17px/1.4 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">A brand that publishes its own bull-offs gets believed about its bull-ons.</span>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 10 — STORYLINES ============ -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 10</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">STORYLINES</h2>
+      <p style="margin:16px 0 0;max-width:760px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A">Five arcs to run on X and in the editorial. Each one opens with a hook, proves something in the middle, and ends somewhere a person can buy or follow.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <sc-for list="{{ storylines }}" as="s" hint-placeholder-count="5">
+        <div style="background:#0B0B0D;padding:32px 34px;display:flex;flex-direction:column;gap:14px;grid-column:{{ s.span }}">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">{{ s.no }}</span>
+            <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5C5952">{{ s.channel }}</span>
+          </div>
+          <div style="font:900 24px/1.08 Archivo,sans-serif;letter-spacing:-.025em;color:#F4F2ED">{{ s.title }}</div>
+          <p style="margin:0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">{{ s.premise }}</p>
+          <div style="margin-top:4px;display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+            <sc-for list="{{ s.beats }}" as="b" hint-placeholder-count="4">
+              <div style="background:#0E0E11;padding:12px 14px;display:flex;gap:12px;align-items:flex-start">
+                <span style="margin-top:5px;width:5px;height:5px;background:#8A6A1E;display:block;flex:none"></span>
+                <span style="font:400 13px/1.6 Archivo,sans-serif;color:#8B8780">{{ b }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:auto;padding-top:12px;font:700 10.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">ENDS ON — {{ s.cta }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 11 — POSTERS ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 11</div>
+        <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">POSTERS — A2 SET</h2>
+      </div>
+      <p style="margin:0;max-width:420px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A">420 × 594 mm, black stock, gold foil or spot metallic. Shown at 1:3.4. Type-led on purpose — the product photograph appears on exactly one of the three.</p>
+    </div>
+    <div style="padding:38px 48px;display:flex;gap:26px;flex-wrap:wrap">
+
+      <div>
+        <div style="width:340px;height:481px;background:#000;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1)">
+          <sc-if value="{{ printMarks }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;left:0;top:14px;width:10px;height:1px;background:#5C5952"></div>
+            <div style="position:absolute;right:0;top:14px;width:10px;height:1px;background:#5C5952"></div>
+            <div style="position:absolute;left:0;bottom:14px;width:10px;height:1px;background:#5C5952"></div>
+            <div style="position:absolute;right:0;bottom:14px;width:10px;height:1px;background:#5C5952"></div>
+          </sc-if>
+          <div style="position:absolute;inset:0;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:20px 35px;opacity:.22"></div>
+          <div style="position:relative;padding:30px 28px;height:100%;box-sizing:border-box;display:flex;flex-direction:column">
+            <div style="font:700 8px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">BULLPRINT LAB · DROP 001</div>
+            <div style="margin-top:auto;font:900 58px/0.9 Archivo,sans-serif;letter-spacing:-.04em;color:#F4F2ED">WE<br>PRINT<br>WHAT<br>WE'RE<br><span style="background:linear-gradient(115deg,#F5D07A,#E8B23A 50%,#A87F24);-webkit-background-clip:text;background-clip:text;color:transparent">BULLISH</span><br>ON.</div>
+            <div style="margin-top:26px;display:flex;justify-content:space-between;align-items:flex-end">
+              <div style="font:500 8px/1.8 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952">BULLPRINTLAB.COM<br>@BESTINBULL</div>
+              <svg width="34" height="28" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="4.6"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="4.6"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="4.6"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="4.6"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="4.6"></path></g></svg>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">POSTER A — MANIFESTO<br><span style="color:#5C5952">TYPE ONLY · FOIL ON BLACK</span></div>
+      </div>
+
+      <div>
+        <div style="width:340px;height:481px;background:#000;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1)">
+          <img src="uploads/images-1786710197897-v7um.png" alt="Drop 001 insert" style="position:absolute;left:-14%;top:20%;width:130%;filter:drop-shadow(0 20px 50px rgba(0,0,0,.9))">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.94) 6%,transparent 42%,rgba(0,0,0,.92) 84%)"></div>
+          <div style="position:relative;padding:30px 28px;height:100%;box-sizing:border-box;display:flex;flex-direction:column">
+            <div style="font:900 34px/0.96 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">BULLPRINT<br>₿ EDITION</div>
+            <div style="margin-top:12px;font:700 8.5px/1.9 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">GOLD TPU / PEBA<br>LIMITED EXPERIMENTAL RUN</div>
+            <div style="margin-top:auto;display:flex;flex-direction:column;gap:7px;font:500 8px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">
+              <div style="display:flex;justify-content:space-between"><span>MATERIAL</span><span style="color:#F4F2ED">TPU / PEBA · 90A / 95A</span></div>
+              <div style="display:flex;justify-content:space-between"><span>LAYER</span><span style="color:#F4F2ED">0.12 MM</span></div>
+              <div style="display:flex;justify-content:space-between"><span>MID CELL</span><span style="color:#F4F2ED">5.5 – 8.0 MM</span></div>
+              <div style="display:flex;justify-content:space-between"><span>EDITION</span><span style="color:#E8B23A">001 / 100</span></div>
+            </div>
+            <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(232,178,58,.3);display:flex;justify-content:space-between;align-items:center">
+              <span style="font:700 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BEST IN BULL™</span>
+              <span style="font:500 8px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952">BULLPRINTLAB.COM</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">POSTER B — PRODUCT SPEC<br><span style="color:#5C5952">RENDER + SPEC BLOCK</span></div>
+      </div>
+
+      <div>
+        <div style="width:340px;height:481px;background:#000;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);display:grid;place-items:center">
+          <div style="position:absolute;inset:0;background:radial-gradient(58% 50% at 50% 42%,rgba(232,178,58,.14),transparent 72%)"></div>
+          <div style="position:relative;padding:30px 28px;height:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;text-align:center">
+            <div style="font:700 8px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">QUALITY MARK</div>
+            <div style="margin-top:auto"></div>
+            <svg viewBox="0 0 200 200" style="width:210px">
+              <defs><path id="bkPosterRing" d="M100,100 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"></path></defs>
+              <circle cx="100" cy="100" r="88" fill="none" stroke="url(#bkHorn)" stroke-width="3"></circle>
+              <circle cx="100" cy="100" r="52" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"></circle>
+              <text fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.5em"><textPath href="#bkPosterRing" startOffset="1.5%">BEST IN BULL™ · BULLPRINT LAB · </textPath></text>
+              <g transform="translate(100,96) scale(0.8) translate(-60,-50)"><use href="#bkBullFill"></use></g>
+            </svg>
+            <div style="margin-top:30px;font:900 30px/1.04 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">NOT EVERYTHING<br>EARNS THE BULL.</div>
+            <div style="margin-top:auto;font:500 8px/1.8 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952">BESTINBULL.COM</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">POSTER C — THE MARK<br><span style="color:#5C5952">SEAL LED · SHOP / STUDIO WALL</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 12 — PACKAGING ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 12</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">PACKAGING &amp; PRINT</h2>
+      <p style="margin:16px 0 0;max-width:760px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A">Black board, one gold foil hit, mono type everywhere. The unboxing should feel like receiving a machined part, not a sneaker collab.</p>
+    </div>
+    <div style="padding:38px 48px;display:flex;gap:24px;flex-wrap:wrap">
+
+      <div>
+        <div style="width:300px;height:190px;background:#0E0E11;border:1px solid rgba(255,255,255,.12);padding:22px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <svg width="40" height="33" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg>
+            <span style="font:500 8px/1.7 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952;text-align:right">DROP 001<br>001 / 100</span>
+          </div>
+          <div>
+            <div style="font:800 19px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">BULLPRINT LAB</div>
+            <div style="margin-top:8px;font:500 8px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">WE PRINT WHAT WE'RE BULLISH ON.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">BOX LID — 300 × 190 MM<br><span style="color:#5C5952">FOIL + BLIND DEBOSS BULL</span></div>
+      </div>
+
+      <div>
+        <div style="width:190px;height:300px;background:#000;border:1px solid rgba(255,255,255,.12);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:18px 31px;opacity:.3"></div>
+          <div style="position:relative;font:700 8px/1.8 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">CERTIFICATE<br>OF PRINT</div>
+          <div style="position:relative;display:grid;place-items:center">
+            <svg width="96" height="96" viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="4"></circle><g transform="translate(100,100) scale(1.3) translate(-60,-50)"><use href="#bkBullFill"></use></g></svg>
+          </div>
+          <div style="position:relative;display:flex;flex-direction:column;gap:6px;font:500 7.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">
+            <div style="display:flex;justify-content:space-between"><span>SERIAL</span><span style="color:#F4F2ED">001 / 100</span></div>
+            <div style="display:flex;justify-content:space-between"><span>PROFILE</span><span style="color:#F4F2ED">BP-10MM-001</span></div>
+            <div style="display:flex;justify-content:space-between"><span>MATERIAL</span><span style="color:#F4F2ED">TPU / PEBA 95A</span></div>
+            <div style="display:flex;justify-content:space-between"><span>INSPECTED</span><span style="color:#E8B23A">BULL ON</span></div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">CERTIFICATE CARD — A6<br><span style="color:#5C5952">SERIAL HANDWRITTEN OR LASERED</span></div>
+      </div>
+
+      <div>
+        <div style="width:150px;height:300px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12);padding:18px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px">
+          <div style="width:100%;height:1px;background:rgba(255,255,255,.1)"></div>
+          <div style="font:700 8px/1.8 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">CARE</div>
+          <div style="display:flex;flex-direction:column;gap:12px;font:400 10.5px/1.5 Archivo,sans-serif;color:#A5A19A">
+            <span>Rinse with soap and cool water.</span>
+            <span>Air dry. No tumble dryer, no radiator.</span>
+            <span>No solvents, no bleach.</span>
+            <span>Reprint when worn — send us the serial.</span>
+          </div>
+          <div style="margin-top:auto;font:500 7.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5C5952">TPU / PEBA<br>NOT A MEDICAL DEVICE<br>BULLPRINTLAB.COM</div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">CARE CARD — 150 × 300<br><span style="color:#5C5952">UNCOATED STOCK</span></div>
+      </div>
+
+      <div>
+        <div style="width:300px;height:190px;background:#000;border:1px solid rgba(255,255,255,.12);padding:0;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px">
+          <div style="background:#0E0E11;display:grid;place-items:center"><svg width="52" height="43" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg></div>
+          <div style="background:#E8B23A;display:grid;place-items:center"><span style="font:900 15px/1.1 Archivo,sans-serif;letter-spacing:-.02em;color:#0B0B0D;text-align:center">STAY<br>BULLISH.</span></div>
+          <div style="background:#0E0E11;display:grid;place-items:center"><span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BEST IN BULL™</span></div>
+          <div style="background:#0E0E11;display:grid;place-items:center;border:1px dashed rgba(255,255,255,.14)"><span style="font:900 13px/1.1 Archivo,sans-serif;letter-spacing:-.01em;color:#5C5952;text-align:center">BULL<br>OFF</span></div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">STICKER SHEET — DIE CUT<br><span style="color:#5C5952">INCLUDES THE BULL OFF JOKE STICKER</span></div>
+      </div>
+
+      <div>
+        <div style="width:300px;height:120px;background:#0E0E11;border:1px solid rgba(255,255,255,.12);padding:18px 20px;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font:800 15px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">BULLPRINT LAB</div>
+            <div style="margin-top:9px;font:500 8px/1.8 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">BULLISH@BULLPRINTLAB.COM<br>@BESTINBULL · BULLPRINTLAB.COM</div>
+          </div>
+          <svg width="42" height="35" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">CARD — 85 × 55 MM<br><span style="color:#5C5952">BLACK BOARD · GOLD FOIL</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 13 — BULLMAKER / BULLTAKER ============ -->
+  <div style="width:1240px;position:relative;background:#000;border:1px solid rgba(255,255,255,.1);overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(50% 60% at 20% 30%,rgba(232,178,58,.1),transparent 70%),radial-gradient(50% 60% at 80% 70%,rgba(232,178,58,.08),transparent 70%)"></div>
+    <div style="position:relative;padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 13 · AUDIENCE SYSTEM</div>
+      <h2 style="margin:14px 0 0;font:900 52px/1 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">BULLMAKER <span style="color:#5C5952">&amp;</span> BULLTAKER</h2>
+      <p style="margin:18px 0 0;max-width:780px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Two ways to be part of this, named. A BullMaker brings a mark and commissions geometry. A BullTaker takes a numbered unit from a drop. Both are earned titles with a number attached — neither is a marketing segment, and nobody gets called either one until something physical exists with their name on it.</p>
+    </div>
+    <div style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:40px 46px">
+        <div style="display:inline-flex;align-items:center;gap:11px;padding:11px 15px;border:1px solid #E8B23A">
+          <svg width="26" height="22" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="#E8B23A" stroke-width="5.6"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="#E8B23A" stroke-width="5.6"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="#E8B23A" stroke-width="5.6"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke="#E8B23A" stroke-width="5.6"></path></svg>
+          <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">BULLMAKER</span>
+        </div>
+        <div style="margin-top:26px;font:900 34px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THEY BRING<br>THE MARK.</div>
+        <p style="margin:18px 0 0;max-width:420px;font:400 14.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Custom Bull clients. A team, a shop, a brand or one person with a symbol worth engineering into a lattice. The title lands when their sample is approved and the run starts — their mark is now geometry that gets walked on.</p>
+        <div style="margin-top:26px;display:flex;flex-direction:column;gap:10px;font:500 11px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">
+          <span>EARNED AT — SAMPLE APPROVED, RUN STARTED</span>
+          <span>CARRIES — BULLMAKER NO. + THEIR MARK IN THE LATTICE</span>
+          <span>BADGE — OUTLINE LOZENGE, GOLD RULE ON BLACK</span>
+          <span>APPEARS ON — CUSTOM CERT CARD, REQUEST CONFIRMATION</span>
+        </div>
+        <div style="margin-top:26px;padding:18px 20px;border-left:1px solid rgba(232,178,58,.4);font:400 italic 15px/1.6 Archivo,sans-serif;color:#F4F2ED">"You didn't buy a print. You made one exist."</div>
+      </div>
+      <div style="background:#0B0B0D;padding:40px 46px">
+        <div style="display:inline-flex;align-items:center;gap:11px;padding:11px 15px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24)">
+          <svg width="26" height="22" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="#0B0B0D" stroke-width="5.6"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="#0B0B0D" stroke-width="5.6"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="#0B0B0D" stroke-width="5.6"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke="#0B0B0D" stroke-width="5.6"></path></svg>
+          <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#0B0B0D">BULLTAKER</span>
+        </div>
+        <div style="margin-top:26px;font:900 34px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THEY TAKE<br>THE NUMBER.</div>
+        <p style="margin:18px 0 0;max-width:420px;font:400 14.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Drop owners. One of a hundred, serialized, inspected, stamped. The title lands when the unit ships with their serial — not at checkout, because until it passes inspection there is nothing to be a taker of.</p>
+        <div style="margin-top:26px;display:flex;flex-direction:column;gap:10px;font:500 11px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">
+          <span>EARNED AT — UNIT INSPECTED AND SHIPPED</span>
+          <span>CARRIES — SERIAL NNN / 100 + PROFILE ID</span>
+          <span>BADGE — SOLID GOLD LOZENGE, KNOCKOUT BULL</span>
+          <span>APPEARS ON — CERT CARD, ORDER CONFIRMATION, REPRINTS</span>
+        </div>
+        <div style="margin-top:26px;padding:18px 20px;border-left:1px solid rgba(232,178,58,.4);font:400 italic 15px/1.6 Archivo,sans-serif;color:#F4F2ED">"Number 037 of 100. It's yours and it says so."</div>
+      </div>
+    </div>
+    <div style="position:relative;padding:32px 48px;border-top:1px solid rgba(255,255,255,.08);display:grid;grid-template-columns:1fr 1fr;gap:34px">
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">HOW IT PAIRS WITH BULL ON / BULL OFF</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Bull on / bull off is the verdict on a <strong style="color:#F4F2ED;font-weight:700">print</strong>. Maker and taker are the roles around a <strong style="color:#F4F2ED;font-weight:700">person</strong>. A BullMaker's run can still come back bull off — and if it does, they hear it first and nothing ships.</p>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">GUARDRAIL</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">These are not loyalty tiers, points, referral levels or a token. No leaderboard, no ranks above them, nothing to buy your way into. The moment either title can be purchased rather than earned, it becomes the thing this brand was built to avoid.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 14 — NAMING ARCHITECTURE ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 14</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">NAMING ARCHITECTURE</h2>
+      <p style="margin:16px 0 0;max-width:800px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Four levels, each with a job. The system exists so the tenth drop names itself without a meeting — and so the word "bull" doesn't end up in every slot until it stops meaning anything.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:30px 26px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">LEVEL 01 · HOUSE</div>
+        <div style="margin-top:14px;font:800 22px/1.1 Archivo,sans-serif;letter-spacing:-.02em;color:#F4F2ED">BULLPRINT LAB</div>
+        <p style="margin:12px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">The company. Never versioned, never modified, never joined to a product name with a hyphen.</p>
+      </div>
+      <div style="background:#0B0B0D;padding:30px 26px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">LEVEL 02 · FAMILY <span style="color:#5C5952">· TBC</span></div>
+        <div style="margin-top:14px;font:800 22px/1.1 Archivo,sans-serif;letter-spacing:-.02em;color:#F4F2ED">THE FOOTBED LINE</div>
+        <p style="margin:12px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Unnamed until drop 003 — a family needs three members before it earns a name. Breeds are the naming pool, minus BrAhMa, which belongs to the AI.</p>
+      </div>
+      <div style="background:#0B0B0D;padding:30px 26px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">LEVEL 03 · DROP</div>
+        <div style="margin-top:14px;font:800 22px/1.1 Archivo,sans-serif;letter-spacing:-.02em;color:#F4F2ED">DROP 001<br>₿ EDITION</div>
+        <p style="margin:12px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Number first, always three digits. The edition name describes what makes this run different — material, mark or collaborator.</p>
+      </div>
+      <div style="background:#0B0B0D;padding:30px 26px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">LEVEL 04 · UNIT</div>
+        <div style="margin-top:14px;font:800 22px/1.1 Archivo,sans-serif;letter-spacing:-.02em;color:#F4F2ED">037 / 100<br>BP-10MM-001</div>
+        <p style="margin:12px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Serial and profile ID. The serial belongs to the object; the profile belongs to the foot and can be reprinted forever.</p>
+      </div>
+    </div>
+    <div style="padding:34px 48px;display:grid;grid-template-columns:1.1fr 1fr;gap:38px">
+      <div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:20px">WRITTEN OUT</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+          <div style="background:#0E0E11;padding:15px 18px;font:500 11.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;color:#F4F2ED">BullPrint Lab · Drop 001 <span style="color:#E8B23A">₿ Edition</span> · 037 / 100</div>
+          <div style="background:#0E0E11;padding:15px 18px;font:500 11.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;color:#6E6B66">FULL FORM — CERTIFICATE, PRESS, INVOICE</div>
+          <div style="background:#0E0E11;padding:15px 18px;font:500 11.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;color:#F4F2ED">Drop 001 <span style="color:#E8B23A">₿ Edition</span></div>
+          <div style="background:#0E0E11;padding:15px 18px;font:500 11.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;color:#6E6B66">SHORT FORM — SITE, SOCIAL, CONVERSATION</div>
+          <div style="background:#0E0E11;padding:15px 18px;font:500 11.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;color:#F4F2ED">bullprintlab.com<span style="color:#E8B23A">/drops/001</span> · <span style="color:#E8B23A">brahma.</span>bullprintlab.com</div>
+          <div style="background:#0E0E11;padding:15px 18px;font:500 11.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;color:#6E6B66">URL — CONTENT ON PATHS, TOOLS ON SUBDOMAINS</div>
+        </div>
+        <p style="margin:18px 0 0;max-width:520px;font:400 13px/1.7 Archivo,sans-serif;color:#6E6B66;text-wrap:pretty">Marketing content stays on paths so the search authority compounds in one place. A tool is different: BrAhMa is an application with its own deploy, its own auth and nothing to rank for, so brahma.bullprintlab.com is right — the split is the point.</p>
+      </div>
+      <div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:20px">RULES FOR NAMING THE NEXT ONE</div>
+        <div style="display:flex;flex-direction:column;gap:14px;font:400 14px/1.65 Archivo,sans-serif;color:#A5A19A">
+          <div style="display:flex;gap:12px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>Families are <strong style="color:#F4F2ED;font-weight:700">cattle breeds</strong> — Angus, Hereford, Charolais, Simmental. Real, physical, ownable. BrAhMa is taken.</span></div>
+          <div style="display:flex;gap:12px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>Editions are <strong style="color:#F4F2ED;font-weight:700">what changed</strong> — a material, a mark, a collaborator. Never an adjective like "Pro" or "Elite".</span></div>
+          <div style="display:flex;gap:12px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>One "bull" per name, maximum. The house has it; the family shouldn't.</span></div>
+          <div style="display:flex;gap:12px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>Drop numbers never reset and never skip, including for runs that die. A missing 004 is a question we'd rather answer than avoid.</span></div>
+          <div style="display:flex;gap:12px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>If a name needs explaining in the same sentence it appears, it isn't the name.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 15 — LAUNCH KIT ============ -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 15</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">LAUNCH KIT — FIRST 30 DAYS</h2>
+      <p style="margin:16px 0 0;max-width:800px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Everything above is inert until something gets posted. This is the order to spend it in — four weeks, each one earning the right to the next, ending on a drop rather than opening with one.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ launch }}" as="w" hint-placeholder-count="4">
+        <div style="background:#0B0B0D;padding:30px 26px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">{{ w.week }}</span>
+            <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5C5952">{{ w.goal }}</span>
+          </div>
+          <div style="font:800 19px/1.15 Archivo,sans-serif;letter-spacing:-.015em;color:#F4F2ED">{{ w.title }}</div>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <sc-for list="{{ w.posts }}" as="p" hint-placeholder-count="4">
+              <div style="display:flex;gap:11px"><span style="margin-top:6px;width:4px;height:4px;background:#8A6A1E;display:block;flex:none"></span><span style="font:400 12.5px/1.6 Archivo,sans-serif;color:#8B8780">{{ p }}</span></div>
+            </sc-for>
+          </div>
+          <div style="margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#6E6B66">ASSETS — {{ w.assets }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:32px 48px;display:grid;grid-template-columns:1fr 1fr;gap:34px">
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">CADENCE</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Three posts a week, one of them a bull on / bull off verdict. Nothing scheduled for a day the lab didn't actually do something — an empty week posted honestly beats a filler post, and the archive is proof of work.</p>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">DON'T</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Don't open with the product. Don't run a countdown. Don't announce a waitlist you haven't built. Don't post a render as if it were a photograph — label renders as renders, every time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 16 — THE BULL TICKER ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 16 · COMPONENT</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THE BULL TICKER</h2>
+      <p style="margin:16px 0 0;max-width:800px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">A live BTC spot strip above the nav, with the current drop priced in sats. It earns its place because this brand prices in two currencies and says so — not because a moving number looks busy. It never becomes a chart, never becomes a widget, and never predicts anything.</p>
+    </div>
+
+    <div style="padding:34px 48px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:22px">ANATOMY — DESKTOP, FULL WIDTH</div>
+      <div style="border:1px solid rgba(255,255,255,.1);background:rgba(14,14,17,.6);padding:9px 22px;display:flex;align-items:center;gap:8px 20px;white-space:nowrap;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
+        <span style="display:flex;align-items:center;gap:9px;color:#E8B23A"><span style="width:5px;height:5px;background:#E8B23A;display:block;border-radius:50%"></span>₿ BTC</span>
+        <span style="color:#F4F2ED;font-variant-numeric:tabular-nums">$63,055</span>
+        <span style="color:#E8B23A;font-variant-numeric:tabular-nums">▲ 1.24%</span>
+        <span style="color:#5C5952">SPOT 12:32 PM</span>
+        <span style="margin-left:auto;display:flex;gap:11px;color:#6E6B66">DROP 001<span style="color:#E8B23A;font-variant-numeric:tabular-nums">157,006 SATS</span></span>
+      </div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#5C5952">
+        <span>01 STATUS DOT<br><span style="color:#6E6B66">FEED HEALTH</span></span>
+        <span>02 SPOT PRICE<br><span style="color:#6E6B66">TABULAR NUMS</span></span>
+        <span>03 24H CHANGE<br><span style="color:#6E6B66">GOLD ↑ / DEEP GOLD ↓</span></span>
+        <span>04 TIMESTAMP<br><span style="color:#6E6B66">PROOF, NOT DECOR</span></span>
+        <span>05 DROP IN SATS<br><span style="color:#6E6B66">DISPLAY ONLY</span></span>
+      </div>
+    </div>
+
+    <div style="padding:34px 48px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:22px">STATES</div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div style="width:520px;border:1px solid rgba(255,255,255,.1);background:#0E0E11;padding:9px 18px;display:flex;align-items:center;gap:18px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
+            <span style="display:flex;align-items:center;gap:9px;color:#E8B23A"><span style="width:5px;height:5px;background:#E8B23A;display:block;border-radius:50%"></span>₿ BTC</span>
+            <span style="color:#F4F2ED">$63,055</span><span style="color:#E8B23A">▲ 1.24%</span>
+          </div>
+          <span style="font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">UP — CHANGE IN <span style="color:#E8B23A">#E8B23A</span>, TRIANGLE UP</span>
+        </div>
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div style="width:520px;border:1px solid rgba(255,255,255,.1);background:#0E0E11;padding:9px 18px;display:flex;align-items:center;gap:18px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
+            <span style="display:flex;align-items:center;gap:9px;color:#E8B23A"><span style="width:5px;height:5px;background:#E8B23A;display:block;border-radius:50%"></span>₿ BTC</span>
+            <span style="color:#F4F2ED">$61,402</span><span style="color:#8A6A1E">▼ 0.68%</span>
+          </div>
+          <span style="font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">DOWN — <span style="color:#8A6A1E">#8A6A1E</span>, NEVER RED</span>
+        </div>
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div style="width:520px;border:1px solid rgba(255,255,255,.1);background:#0E0E11;padding:9px 18px;display:flex;align-items:center;gap:18px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
+            <span style="display:flex;align-items:center;gap:9px;color:#6E6B66"><span style="width:5px;height:5px;background:#5C5952;display:block;border-radius:50%"></span>₿ BTC</span>
+            <span style="color:#6E6B66">RATE OFFLINE</span><span style="color:#5C5952">— SATS</span>
+          </div>
+          <span style="font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">OFFLINE — DEAD DOT, NO NUMBER INVENTED</span>
+        </div>
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <div style="width:290px;border:1px solid rgba(255,255,255,.1);background:#0E0E11;padding:9px 16px;display:flex;align-items:center;gap:14px;font:600 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em">
+            <span style="display:flex;align-items:center;gap:8px;color:#E8B23A"><span style="width:5px;height:5px;background:#E8B23A;display:block;border-radius:50%"></span>₿ BTC</span>
+            <span style="color:#F4F2ED">$63,055</span><span style="color:#E8B23A">▲1.24%</span><span style="margin-left:auto;color:#E8B23A">157K</span>
+          </div>
+          <span style="font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">MOBILE &lt; 600PX — TIMESTAMP AND LABEL DROP</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:34px 48px;display:grid;grid-template-columns:1fr 1fr;gap:34px">
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">RULES</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;font:400 13.5px/1.65 Archivo,sans-serif;color:#A5A19A">
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>Green and red are not in this palette. Up is gold, down is deep gold — the market moves, the brand doesn't.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>The timestamp is mandatory. A price with no time is a claim with no receipt.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>Sats are display only. Checkout charges USD unless we ship spot pricing with a quote expiry.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span>Proxy the feed through our own cache. A first paint that depends on someone else's API is a dependency we didn't agree to.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span><span><code style="font:600 12px 'JetBrains Mono',monospace;color:#F4F2ED">aria-live="off"</code> — it is ambient, not an announcement. It must never interrupt someone filling in the build sheet.</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">NEVER</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;font:400 13.5px/1.65 Archivo,sans-serif;color:#8B8780">
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#F7931A;display:block;flex:none"></span><span>No sparkline, no candles, no chart of any kind. We sell parts, not exposure.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#F7931A;display:block;flex:none"></span><span>No other assets. One line, one asset, the one we price in.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#F7931A;display:block;flex:none"></span><span>No commentary, no arrows implying a forecast, no "to the moon" copy anywhere near it.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#F7931A;display:block;flex:none"></span><span>No flashing, pulsing or ticking animation on price change. It updates silently.</span></div>
+          <div style="display:flex;gap:11px"><span style="margin-top:6px;width:5px;height:5px;background:#F7931A;display:block;flex:none"></span><span>Never show a stale price as if it were live. Offline is a state we display, not one we hide.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 17 — BrAhMa ============ -->
+  <div style="width:1240px;position:relative;background:#000;border:1px solid rgba(255,255,255,.1);overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(56% 64% at 74% 30%,rgba(232,178,58,.12),transparent 72%)"></div>
+    <div style="position:relative;padding:38px 48px 32px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 17 · AI IDENTITY</div>
+      <h2 style="margin:14px 0 0;font:900 60px/1 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">Br<span style="color:#E8B23A">A</span>h<span style="color:#E8B23A">M</span>a</h2>
+      <div style="margin-top:14px;font:700 13px/1 'JetBrains Mono',monospace;letter-spacing:.34em;color:#E8B23A">THE AI ON THE BULL.</div>
+      <p style="margin:20px 0 0;max-width:820px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The intelligence operating inside BullPrint Lab. Not another consumer brand and not a chat window bolted to a shop — BrAhMa has authority over a workflow. It reads the inspection, calls the verdict, prescribes the change and generates the next version. Built to ride the iteration.</p>
+    </div>
+
+    <div style="position:relative;padding:34px 48px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:22px">WHERE IT SITS</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+        <sc-for list="{{ hierarchy }}" as="h" hint-placeholder-count="7">
+          <div style="background:{{ h.bg }};padding:22px 18px;display:flex;flex-direction:column;gap:11px">
+            <span style="font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8A6A1E">{{ h.n }}</span>
+            <span style="font:800 15px/1.15 Archivo,sans-serif;letter-spacing:-.01em;color:{{ h.fg }}">{{ h.name }}</span>
+            <span style="font:400 12px/1.55 Archivo,sans-serif;color:#8B8780">{{ h.role }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="position:relative;display:grid;grid-template-columns:1fr 1.25fr;gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:36px 44px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66">THE SPELLING IS THE SIGNATURE</div>
+        <div style="margin-top:22px;padding:26px;border:1px solid rgba(232,178,58,.34);text-align:center">
+          <div style="font:900 46px/1 Archivo,sans-serif;letter-spacing:-.02em;color:#5C5952">Br<span style="color:#E8B23A">A</span>h<span style="color:#E8B23A">M</span>a</div>
+          <div style="margin-top:16px;font:700 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">A · I · INSIDE THE BREED</div>
+        </div>
+        <div style="margin-top:22px;display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+          <div style="background:#0E0E11;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px"><span style="font:800 19px/1 Archivo,sans-serif;color:#E8B23A">BrAhMa</span><span style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">ONLY FORM</span></div>
+          <div style="background:#0E0E11;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px"><span style="font:800 19px/1 Archivo,sans-serif;color:#5C5952">BRAHMA</span><span style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#F7931A">WRONG</span></div>
+          <div style="background:#0E0E11;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px"><span style="font:800 19px/1 Archivo,sans-serif;color:#5C5952">Brahma</span><span style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#F7931A">WRONG</span></div>
+        </div>
+        <p style="margin:20px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Capitals on positions 3 and 5. <strong style="color:#F4F2ED;font-weight:700">BrAhMa is exempt from the all-caps rule</strong> that governs every other name in this system — uppercasing it destroys the reveal. Slug stays lowercase: <span style="color:#A5A19A">brahma.bullprintlab.com</span>.</p>
+      </div>
+
+      <div style="background:#0B0B0D;padding:36px 44px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:22px">VERDICT CARDS — THE INTERFACE</div>
+
+        <div style="border:1px solid rgba(255,255,255,.12);background:#0E0E11">
+          <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;gap:14px">
+            <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">PROTO 004 / TPU95A / V7</span>
+            <span style="display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px dashed rgba(255,255,255,.2);font:900 12px/1 Archivo,sans-serif;letter-spacing:.02em;color:#5C5952">BULL OFF</span>
+          </div>
+          <div style="padding:20px">
+            <div style="font:400 14px/1.65 Archivo,sans-serif;color:#A5A19A">Forefoot transition failed inspection. Failure localized at lattice-density boundary.</div>
+            <div style="margin-top:18px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BrAhMa RECOMMENDS</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px">
+              <div style="display:flex;gap:11px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 12.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">Increase transition length 12 mm</span></div>
+              <div style="display:flex;gap:11px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 12.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">Move wall thickness 0.8 → 1.2 mm</span></div>
+              <div style="display:flex;gap:11px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 12.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">Preserve ₿ geometry</span></div>
+              <div style="display:flex;gap:11px"><span style="margin-top:6px;width:4px;height:4px;background:#E8B23A;display:block;flex:none"></span><span style="font:500 12.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">Generate V8</span></div>
+            </div>
+            <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:14px">
+              <span style="padding:13px 20px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#0B0B0D">RIDE AGAIN →</span>
+              <span style="font:500 9px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#5C5952">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;border:1px solid rgba(232,178,58,.36);background:#0E0E11">
+          <div style="padding:16px 20px;border-bottom:1px solid rgba(232,178,58,.22);display:flex;justify-content:space-between;align-items:center;gap:14px">
+            <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">PROTO 005 / TPU95A / V8</span>
+            <span style="display:inline-flex;align-items:center;gap:9px;padding:7px 11px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);font:900 12px/1 Archivo,sans-serif;letter-spacing:.02em;color:#0B0B0D">
+              <svg width="15" height="13" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke="#0B0B0D" stroke-width="8"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke="#0B0B0D" stroke-width="8"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke="#0B0B0D" stroke-width="8"></path></svg>
+              BULL ON
+            </span>
+          </div>
+          <div style="padding:20px">
+            <div style="display:flex;flex-wrap:wrap;gap:10px 26px;font:500 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;color:#E8B23A">
+              <span>GEOMETRY PASSED</span><span>PRINT PASSED</span><span>INSPECTION PASSED</span>
+            </div>
+            <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:9px">
+              <span style="padding:12px 16px;border:1px solid rgba(232,178,58,.45);font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">→ ASSIGN SERIAL</span>
+              <span style="padding:12px 16px;border:1px solid rgba(232,178,58,.45);font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">→ GENERATE CERT</span>
+              <span style="padding:12px 16px;border:1px solid rgba(232,178,58,.45);font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">→ SEND TO BEST IN BULL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:32px 34px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">IT DOES</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px;font:400 13.5px/1.6 Archivo,sans-serif;color:#A5A19A">
+          <span>Reads the inspection and calls bull on or bull off, with the reason.</span>
+          <span>Prescribes the geometry change in millimetres, then generates the next version.</span>
+          <span>Fills a customer's build sheet from a plain description of their foot.</span>
+          <span>Says "I don't know" and hands to a human.</span>
+        </div>
+      </div>
+      <div style="background:#0B0B0D;padding:32px 34px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">IT NEVER</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px;font:400 13.5px/1.6 Archivo,sans-serif;color:#8B8780">
+          <span>Diagnoses anything or answers a medical question.</span>
+          <span>Assigns the stamp itself — BrAhMa recommends, a human signs.</span>
+          <span>Quotes a price, date or stock level it can't verify from the system.</span>
+          <span>Pretends to be a person, or hides that it's a model.</span>
+        </div>
+      </div>
+      <div style="background:#0B0B0D;padding:32px 34px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">VOICE</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px;font:400 13.5px/1.6 Archivo,sans-serif;color:#A5A19A">
+          <span>Brand voice, shorter. Verdict first, then the millimetres, then the action.</span>
+          <span>Two sentences beats six. No preamble, no "great question".</span>
+          <span>Funny only when the situation already is — never performing.</span>
+          <span>Three exchanges without resolution → <a href="mailto:bullish@bullprintlab.com">bullish@bullprintlab.com</a>.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;padding:28px 48px;border-top:1px solid rgba(255,255,255,.08);display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+      <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">WHY IT LANDS</span>
+      <span style="font:700 17px/1.4 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">People understand an AI with authority over a workflow. Nobody needs another chat window.</span>
+    </div>
+  </div>
+
+  <!-- ============ SHEET 18 — SOCIAL + ASSET INDEX ============ -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 18</div>
+      <h2 style="margin:14px 0 0;font:900 40px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">SOCIAL &amp; ASSET INDEX</h2>
+    </div>
+    <div style="padding:38px 48px;display:flex;gap:24px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div>
+        <div style="width:400px;height:134px;background:#000;border:1px solid rgba(255,255,255,.12);position:relative;overflow:hidden;display:flex;align-items:center;padding:0 26px;box-sizing:border-box">
+          <div style="position:absolute;inset:0;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:22px 38px;opacity:.28"></div>
+          <div style="position:relative">
+            <div style="font:900 26px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">WE PRINT WHAT<br>WE'RE BULLISH ON.</div>
+            <div style="margin-top:9px;font:700 8px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">BULLPRINT LAB · BEST IN BULL™</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">X HEADER — 1500 × 500<br><span style="color:#5C5952">KEEP RIGHT 30% CLEAR OF TYPE</span></div>
+      </div>
+      <div>
+        <div style="width:134px;height:134px;background:#000;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center">
+          <svg width="98" height="82" viewBox="0 0 120 100"><use href="#bkBullFill"></use></svg>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">AVATAR — 400 × 400<br><span style="color:#5C5952">MARK ONLY, NEVER THE WORDMARK</span></div>
+      </div>
+      <div>
+        <div style="width:250px;height:250px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12);padding:22px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between">
+          <div style="font:700 8px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">PROTO 004 · 08.13.26</div>
+          <div>
+            <div style="font:900 34px/0.98 Archivo,sans-serif;letter-spacing:-.03em;color:#5C5952">BULL<br>OFF.</div>
+            <p style="margin:12px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:#8B8780">Drainage channels cut too deep. Split at the midfoot on day three.</p>
+          </div>
+          <div style="font:500 8px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#3A3630">ARCHIVED · BULLPRINTLAB.COM</div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">POST CARD — 1080 × 1080<br><span style="color:#5C5952">BULL OFF TEMPLATE</span></div>
+      </div>
+      <div>
+        <div style="width:250px;height:250px;background:#000;border:1px solid rgba(232,178,58,.34);padding:22px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:radial-gradient(60% 60% at 70% 40%,rgba(232,178,58,.16),transparent 72%)"></div>
+          <div style="position:relative;font:700 8px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">DROP 001 · LIVE</div>
+          <div style="position:relative">
+            <div style="font:900 34px/0.98 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">BULL<br><span style="color:#E8B23A">ON.</span></div>
+            <p style="margin:12px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:#A5A19A">Gold TPU / PEBA. 001 / 100. Inspected, stamped, shipping today.</p>
+          </div>
+          <div style="position:relative;display:flex;justify-content:space-between;align-items:center">
+            <span style="font:500 8px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#5C5952">BULLPRINTLAB.COM</span>
+            <svg width="30" height="25" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="5"></path></g></svg>
+          </div>
+        </div>
+        <div style="margin-top:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">POST CARD — 1080 × 1080<br><span style="color:#5C5952">BULL ON TEMPLATE</span></div>
+      </div>
+    </div>
+    <div style="padding:38px 48px">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66;margin-bottom:22px">ASSET INDEX — FILE NAMING FOR THE REPO</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+        <sc-for list="{{ assets }}" as="a" hint-placeholder-count="10">
+          <div style="background:#0B0B0D;padding:14px 18px;display:flex;justify-content:space-between;gap:16px;font:500 10.5px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em">
+            <span style="color:#E8B23A">{{ a.file }}</span><span style="color:#6E6B66;text-align:right">{{ a.note }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:20px 0 0;max-width:820px;font:400 13px/1.7 Archivo,sans-serif;color:#6E6B66;text-wrap:pretty">All marks are vector and generated in code — copy them from <span style="color:#A5A19A">assets/marks.svg.txt</span> in the handoff bundle rather than exporting screenshots. Patterns are data-URIs; nothing in the identity system needs a raster file except the three product renders.</p>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400},&quot;latticeScale&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:16,&quot;max&quot;:44,&quot;step&quot;:2,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Pattern&quot;},&quot;printMarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Print&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const d = this.props.latticeScale ?? 28;
+    return {
+      latticeTile: d + "px " + Math.round(d * 48 / 27.712) + "px",
+      printMarks: this.props.printMarks ?? true,
+
+      storylines: [
+        {
+          no: "ARC 01", channel: "X THREAD + DROP PAGE", title: "THE JOKE THAT GOT ENGINEERED",
+          premise: "Start where it actually started: someone said \"gold Bitcoin insoles\" as a bit, and then we couldn't stop thinking about the lattice.",
+          beats: [
+            "Post the original stupid idea, unedited.",
+            "Post the first CAD lattice next to it — same joke, now with cell walls.",
+            "Post the failure: proto 001 collapsing under load.",
+            "Post the shipping unit with its serial and the stamp."
+          ],
+          cta: "DROP 001, LIVE"
+        },
+        {
+          no: "ARC 02", channel: "ONGOING · WEEKLY", title: "BULL ON / BULL OFF",
+          premise: "The permanent series. Every prototype gets a public verdict, and the bull-offs post as often as the bull-ons.",
+          beats: [
+            "One prototype, one photo, one sentence on what happened.",
+            "State the verdict as the headline: BULL ON or BULL OFF.",
+            "Never soften a bull off — the reason is the content.",
+            "Quarterly: the archive shelf, everything that didn't make it."
+          ],
+          cta: "FOLLOW THE BULLPRINT"
+        },
+        {
+          no: "ARC 03", channel: "SITE SECTION + THREAD", title: "GEOMETRY IS THE MATERIAL",
+          premise: "The education arc. Teach the one idea that makes everything else make sense: with printing, how a thing is made is what it's made of.",
+          beats: [
+            "Same filament, two cell sizes, two completely different parts.",
+            "Wall thickness as a dial: soft trainer to rigid plate.",
+            "Where the ₿ lives — a stiffness zone that happens to be a symbol.",
+            "Invite people to move the sliders themselves on the site."
+          ],
+          cta: "THE LIVE LATTICE"
+        },
+        {
+          no: "ARC 04", channel: "EDITORIAL · THE BULLPRINT", title: "IDEAS WORTH LEAVING A MARK",
+          premise: "Long-form under the BullPrint masthead. Sovereignty, ownership, personalization and manufacturing — the reasons a lab like this exists at all.",
+          beats: [
+            "#001 Sovereignty in data — the convenience trade.",
+            "#002 Why we print the layer lines instead of hiding them.",
+            "#003 Personalization is a manufacturing problem.",
+            "Each essay ends on a physical object, never a newsletter pitch."
+          ],
+          cta: "READ, THEN LOOK AT THE PART"
+        },
+        {
+          no: "ARC 05", channel: "B2B · DM AND EMAIL", title: "CUSTOM BULL BY DESIGN",
+          premise: "Someone else's mark, built into the lattice. The clearest demonstration that a BullPrint is geometry, not a graphic.",
+          beats: [
+            "Show a client mark going from vector to closed cells.",
+            "Show the sample the client approved before the run.",
+            "Show the run, numbered, in their colour.",
+            "Name the constraint honestly: not every mark survives being walked on."
+          ],
+          cta: "REQUEST A CUSTOM BULL"
+        }
+      ].map(function (s, i, all) {
+        // last card spans both columns so the odd count leaves no empty hairline cell
+        s.span = i === all.length - 1 && all.length % 2 ? "1 / -1" : "auto";
+        return s;
+      }),
+
+      hierarchy: [
+        { n: "01", name: "BULLPRINT LAB", role: "Builds the things.", bg: "#0B0B0D", fg: "#F4F2ED" },
+        { n: "02", name: "BrAhMa", role: "Intelligence inside the Lab.", bg: "#141005", fg: "#E8B23A" },
+        { n: "03", name: "BULL ON / OFF", role: "BrAhMa's verdict system.", bg: "#0B0B0D", fg: "#F4F2ED" },
+        { n: "04", name: "BEST IN BULL™", role: "Finished quality mark.", bg: "#0B0B0D", fg: "#F4F2ED" },
+        { n: "05", name: "THE BULLPRINT", role: "Publishes the story.", bg: "#0B0B0D", fg: "#F4F2ED" },
+        { n: "06", name: "BULLMAKER", role: "Commissioned creator.", bg: "#0B0B0D", fg: "#F4F2ED" },
+        { n: "07", name: "BULLTAKER", role: "Owner of the numbered object.", bg: "#0B0B0D", fg: "#F4F2ED" }
+      ],
+
+      launch: [
+        {
+          week: "WEEK 01", goal: "EXIST", title: "SHOW THE BENCH",
+          posts: [
+            "The original stupid idea, unedited, as the first post.",
+            "One macro of the lattice with no product context.",
+            "PROTO 001 · BULL OFF — the collapse under load."
+          ],
+          assets: "ARC 01 · BULL OFF TEMPLATE"
+        },
+        {
+          week: "WEEK 02", goal: "TEACH", title: "GEOMETRY IS THE MATERIAL",
+          posts: [
+            "Same filament, two cell sizes, two different parts.",
+            "Wall thickness as a dial — soft trainer to rigid plate.",
+            "Link the live lattice on site; ask people what they'd set it to."
+          ],
+          assets: "ARC 03 · LIVE LATTICE SECTION"
+        },
+        {
+          week: "WEEK 03", goal: "EARN IT", title: "THE MARK, EXPLAINED",
+          posts: [
+            "Why the ₿ is structure and not a graphic.",
+            "The seal, and what the outer ring actually is.",
+            "PROTO 003 · BULL ON — the one that passed, with its spec."
+          ],
+          assets: "POSTER C · SEAL · BULL ON TEMPLATE"
+        },
+        {
+          week: "WEEK 04", goal: "SELL", title: "DROP 001",
+          posts: [
+            "Drop 001 ₿ Edition, live, with the price and the edition size.",
+            "The build sheet — profile in, lattice out, in one clip.",
+            "First BullTaker serial, photographed on the bench."
+          ],
+          assets: "POSTER A + B · CERT CARD · ORDER FLOW"
+        }
+      ],
+
+      assets: [
+        { file: "bull-master.svg", note: "MODELLED · ≥40PX" },
+        { file: "bull-line.svg", note: "LINE CUT · ≤32PX" },
+        { file: "seal-genesis.svg", note: "FULL SEAL · ≥280PX" },
+        { file: "seal-plain.svg", note: "SMALL SEAL · ≥28PX" },
+        { file: "wordmark-stacked.svg", note: "GRADIENT LOCKUP" },
+        { file: "wordmark-horizontal.svg", note: "TWO-TONE" },
+        { file: "lockup-boxed.svg", note: "MARK + WORDMARK" },
+        { file: "stamp-inline.svg", note: "BEST IN BULL™ LOZENGE" },
+        { file: "pattern-lattice.css", note: "DATA-URI · TILE 1:1.732" },
+        { file: "pattern-layerlines.css", note: "DATA-URI" },
+        { file: "favicon.svg", note: "LINE CUT · 16PX SW 8" },
+        { file: "og-card.png", note: "1200 × 630 · FROM POSTER A" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

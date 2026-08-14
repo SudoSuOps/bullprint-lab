@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#0B0B0D;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  @keyframes bpDrift{from{background-position:0 0}to{background-position:0 96px}}
+</style>
+</helmet>
+
+<section style="padding:52px 56px 70px;border-bottom:1px solid rgba(255,255,255,.07)">
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t3" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">3</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">TELL US ABOUT YOUR SHOES — foot profile + checkout</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#6E6B66">live: every selection updates the print spec</span>
+  </div>
+  <p style="max-width:820px;margin:0 0 34px;font:400 13px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Framed as a build sheet rather than a checkout form — you're specifying a print, not picking a variant. Selections drive a live spec panel on the right, so the customer sees their profile resolve into a lattice and a print time before they pay. Dual rail at the end: Stripe for card, Coinbase Commerce for BTC. Price is left blank until you give me the number.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start">
+
+    <div id="3a" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#3a" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">3a</a>Desktop — the build sheet
+      </div>
+      <div style="width:1280px;background:#0B0B0D;border:1px solid rgba(255,255,255,.09);border-radius:10px;overflow:hidden">
+        <div style="padding:80px 40px 90px;background:#0E0E11">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
+            <div>
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">05 — ORDER / FOOT PROFILE</div>
+              <h2 style="margin:0;font:900 54px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">TELL US ABOUT<br>YOUR SHOES.</h2>
+            </div>
+            <p style="margin:0;max-width:430px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">We print each insert to a profile, not a shelf size. Five fields is all it takes — the lattice, the last and the arch geometry are derived from what you tell us here.</p>
+          </div>
+
+          <div style="margin-top:54px;display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:start">
+
+            <div style="display:flex;flex-direction:column;gap:34px">
+              <div>
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+                  <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">01 · SIZE (US)</span>
+                  <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">HALF SIZES → ROUND UP</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:8px">
+                  <sc-for list="{{ sizeOpts }}" as="opt" hint-placeholder-count="9">
+                    <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px">
+                <div>
+                  <div style="margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">02 · WIDTH</div>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                    <sc-for list="{{ widthOpts }}" as="opt" hint-placeholder-count="3">
+                      <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div>
+                  <div style="margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">03 · ARCH</div>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                    <sc-for list="{{ archOpts }}" as="opt" hint-placeholder-count="3">
+                      <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px">
+                <div>
+                  <div style="margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">04 · FIT PROFILE</div>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                    <sc-for list="{{ fitOpts }}" as="opt" hint-placeholder-count="3">
+                      <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div>
+                  <div style="margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">05 · SNEAKER</div>
+                  <input type="text" value="{{ shoe }}" onChange="{{ onShoe }}" placeholder="MAKE / MODEL — E.G. AF1 '07" style="width:100%;box-sizing:border-box;padding:13px 14px;background:#101013;border:1px solid rgba(255,255,255,.14);color:#F4F2ED;font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.1em;outline:none" style-focus="border-color:#E8B23A">
+                </div>
+              </div>
+
+              <div>
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
+                  <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">06 · SPECIAL NOTES</span>
+                  <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">{{ notesCount }}</span>
+                </div>
+                <textarea maxlength="240" value="{{ notes }}" onChange="{{ onNotes }}" placeholder="Anything the print should account for — hotspots, orthotic you currently wear, how you lace, what you do in them." style="width:100%;box-sizing:border-box;height:104px;resize:none;padding:14px;background:#101013;border:1px solid rgba(255,255,255,.14);color:#F4F2ED;font:400 13.5px/1.6 Archivo,sans-serif;outline:none" style-focus="border-color:#E8B23A"></textarea>
+                <p style="margin:12px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:#6E6B66;max-width:520px">We read every note. We don't diagnose anything — if you're managing a medical condition, talk to a clinician first and tell us what they recommended.</p>
+              </div>
+
+              <div style="padding-top:30px;border-top:1px solid rgba(255,255,255,.09)">
+                <div style="margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">07 · CHECKOUT</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:440px">
+                  <sc-for list="{{ payOpts }}" as="opt" hint-placeholder-count="2">
+                    <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+                  </sc-for>
+                </div>
+                <div style="margin-top:12px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8A6A1E">{{ payNote }}</div>
+              </div>
+            </div>
+
+            <div style="border:1px solid rgba(232,178,58,.28);background:rgba(16,16,19,.72);backdrop-filter:blur(18px)">
+              <div style="padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.09);display:flex;justify-content:space-between;align-items:center">
+                <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">PRINT SPEC</span>
+                <span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#F4F2ED">{{ profileId }}</span>
+              </div>
+              <div style="height:150px;background-color:#101013;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:{{ specSize }};border-bottom:1px solid rgba(255,255,255,.09);position:relative">
+                <div style="position:absolute;left:0;right:0;bottom:0;height:52px;background:linear-gradient(to top,rgba(11,11,13,.94),transparent)"></div>
+                <div style="position:absolute;left:16px;bottom:12px;display:flex;gap:10px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em"><span style="color:#E8B23A">DERIVED LATTICE</span><span style="color:#A5A19A">MID CELL {{ specPitch }}</span></div>
+              </div>
+              <div style="padding:22px;display:flex;flex-direction:column;gap:14px;font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em">
+                <div style="display:flex;justify-content:space-between;gap:14px"><span style="color:#6E6B66">FIT</span><span style="color:#F4F2ED;text-align:right">{{ fitSpec }}</span></div>
+                <div style="display:flex;justify-content:space-between;gap:14px"><span style="color:#6E6B66">LAST</span><span style="color:#F4F2ED;text-align:right">{{ widthSpec }}</span></div>
+                <div style="display:flex;justify-content:space-between;gap:14px"><span style="color:#6E6B66">ARCH</span><span style="color:#F4F2ED;text-align:right">{{ archSpec }}</span></div>
+                <div style="display:flex;justify-content:space-between;gap:14px"><span style="color:#6E6B66">SHOE</span><span style="color:#F4F2ED;text-align:right">{{ shoeSpec }}</span></div>
+                <div style="display:flex;justify-content:space-between;gap:14px"><span style="color:#6E6B66">PRINT</span><span style="color:#F4F2ED;text-align:right">{{ printSpec }}</span></div>
+                <div style="display:flex;justify-content:space-between;gap:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.09)"><span style="color:#6E6B66">EDITION</span><span style="color:#E8B23A;text-align:right">DROP 001 · 001 / 100</span></div>
+                <div style="display:flex;justify-content:space-between;gap:14px;align-items:baseline"><span style="color:#6E6B66">PRICE</span><span style="font:800 22px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">$—— <span style="font:500 10px 'JetBrains Mono',monospace;color:#6E6B66">USD</span></span></div>
+              </div>
+              <div style="padding:0 22px 22px;display:flex;flex-direction:column;gap:12px">
+                <div style="padding:16px;text-align:center;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;cursor:pointer">{{ payCta }}</div>
+                <div style="display:flex;align-items:center;gap:10px;padding-top:6px">
+                  <svg width="22" height="18" viewBox="0 0 120 100"><use href="#bpBullFill"></use></svg>
+                  <span style="font:700 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">BEST IN BULL™<br><span style="font-weight:500;color:#6E6B66">INSPECTED BEFORE IT SHIPS</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="3b" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#3b" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">3b</a>Mobile — same profile, stacked
+      </div>
+      <div style="width:390px;height:844px;background:#0E0E11;border:1px solid rgba(255,255,255,.12);border-radius:26px;overflow:hidden;position:relative">
+        <div style="padding:24px 18px 0">
+          <div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#8A6A1E;margin-bottom:14px">05 — FOOT PROFILE</div>
+          <h2 style="margin:0;font:900 34px/0.98 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">TELL US ABOUT<br>YOUR SHOES.</h2>
+        </div>
+        <div style="padding:26px 18px 0;display:flex;flex-direction:column;gap:22px">
+          <div>
+            <div style="margin-bottom:11px;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">01 · SIZE (US)</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px">
+              <sc-for list="{{ sizeOpts }}" as="opt" hint-placeholder-count="9">
+                <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="margin-bottom:11px;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">02 · WIDTH</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
+              <sc-for list="{{ widthOpts }}" as="opt" hint-placeholder-count="3">
+                <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="margin-bottom:11px;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">03 · ARCH</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">
+              <sc-for list="{{ archOpts }}" as="opt" hint-placeholder-count="3">
+                <div style="{{ opt.style }}" onClick="{{ opt.onClick }}">{{ opt.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="padding:14px 16px;border:1px solid rgba(232,178,58,.28);background:#101013;display:flex;flex-direction:column;gap:10px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em">
+            <div style="display:flex;justify-content:space-between"><span style="color:#6E6B66">PROFILE</span><span style="color:#E8B23A">{{ profileId }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#6E6B66">ARCH</span><span style="color:#F4F2ED;text-align:right">{{ archSpec }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#6E6B66">PRINT</span><span style="color:#F4F2ED;text-align:right">{{ printSpec }}</span></div>
+          </div>
+          <div style="font:400 12px/1.6 Archivo,sans-serif;color:#6E6B66">Sneaker, notes and checkout follow — 04 through 07 continue down the page.</div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 18px 20px;border-top:1px solid rgba(255,255,255,.09);background:#0B0B0D;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66"><span>DROP 001 · 001 / 100</span><span style="font:800 18px/1 Archivo,sans-serif;color:#F4F2ED">$——</span></div>
+          <div style="padding:16px;text-align:center;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em">CONTINUE TO CHECKOUT →</div>
+          <div style="text-align:center;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">STRIPE · CARD &nbsp;|&nbsp; COINBASE COMMERCE · BTC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin:28px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:rgba(255,255,255,.45)">Try next: "price is $X, put it in" · "add a photo upload for the foot / insole" · "design the confirmation + serial-number screen"</p>
+</section>
+
+<section style="padding:52px 56px 70px;border-bottom:1px solid rgba(255,255,255,.07)">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="bpBullGold" x1="0" y1="0" x2=".8" y2="1">
+        <stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".18" stop-color="#F5D07A"></stop>
+        <stop offset=".44" stop-color="#E8B23A"></stop><stop offset=".72" stop-color="#A87F24"></stop>
+        <stop offset="1" stop-color="#7A5C18"></stop>
+      </linearGradient>
+      <linearGradient id="bpHornGold" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop>
+        <stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop>
+      </linearGradient>
+      <g id="bpBullFill">
+        <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#bpHornGold)"></path>
+        <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#bpHornGold)"></path>
+        <path d="M74 34C82 36 86 42 84 47C79 45 75 41 73 38Z" fill="#A87F24"></path>
+        <path d="M46 34C38 36 34 42 36 47C41 45 45 41 47 38Z" fill="#A87F24"></path>
+        <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#bpBullGold)"></path>
+        <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="#8A6A1E" opacity=".55"></path>
+        <ellipse cx="55" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse>
+        <ellipse cx="65" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse>
+        <path d="M66 44L75 42L73.5 49L66 47.6Z" fill="#3A2C0C"></path>
+        <path d="M54 44L45 42L46.5 49L54 47.6Z" fill="#3A2C0C"></path>
+        <path d="M53 31H67L64 37H56Z" fill="#FBE9B0" opacity=".28"></path>
+      </g>
+    </defs>
+  </svg>
+
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t2" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">2</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">THE GOLDEN BULL — mark development</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#6E6B66">replaces the flat mark in <a href="#1a">1a</a></span>
+  </div>
+  <p style="max-width:820px;margin:0 0 34px;font:400 13px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Real horns this time — a longhorn sweep, forehead crest, muzzle plane and cut eyes, drawn on one symmetric path set so it mirrors exactly. Two masters: the modelled golden bull for hero, packaging and emboss, and a single-weight line cut for nav, favicon and anywhere under 32px. Same silhouette, so they read as one mark.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start">
+
+    <div id="2a" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#2a" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">2a</a>The golden bull — modelled master
+      </div>
+      <div style="width:420px;padding:38px;background:#000;border:1px solid rgba(255,255,255,.09);border-radius:10px;text-align:center">
+        <div style="position:relative;display:grid;place-items:center;padding:10px 0 22px">
+          <div style="position:absolute;width:250px;height:250px;background:radial-gradient(circle,rgba(232,178,58,.18),transparent 68%)"></div>
+          <svg width="300" height="250" viewBox="0 0 120 100" style="filter:drop-shadow(0 18px 34px rgba(232,178,58,.22))"><use href="#bpBullFill"></use></svg>
+        </div>
+        <div style="font:900 30px/1 Archivo,sans-serif;letter-spacing:-.02em;background:linear-gradient(115deg,#8A6A1E,#F5D07A 28%,#E8B23A 52%,#A87F24 82%);-webkit-background-clip:text;background-clip:text;color:transparent">BULLPRINT LAB</div>
+        <div style="margin-top:12px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#6E6B66">PRIMARY LOCKUP / VERTICAL</div>
+      </div>
+    </div>
+
+    <div id="2b" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#2b" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">2b</a>Line cut, finishes, size ladder
+      </div>
+      <div style="width:640px;background:#0B0B0D;border:1px solid rgba(255,255,255,.09);border-radius:10px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.09)">
+          <div style="background:#101013;height:150px;display:grid;place-items:center"><svg width="120" height="100" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="2.2"></path></g></svg></div>
+          <div style="background:#E8B23A;height:150px;display:grid;place-items:center"><svg width="120" height="100" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#0B0B0D" stroke-width="2.6"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#0B0B0D" stroke-width="2.6"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#0B0B0D" stroke-width="2.6"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#0B0B0D" stroke-width="2.6"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#0B0B0D" stroke-width="2.6"></path></g></svg></div>
+          <div style="background:linear-gradient(140deg,#1B1B1F,#0D0D10);height:150px;display:grid;place-items:center">
+            <svg width="120" height="100" viewBox="0 0 120 100">
+              <g transform="translate(0,1.4)"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="rgba(0,0,0,.65)" stroke-width="2.4"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="rgba(0,0,0,.65)" stroke-width="2.4"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="rgba(0,0,0,.65)" stroke-width="2.4"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="rgba(0,0,0,.65)" stroke-width="2.4"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="rgba(0,0,0,.65)" stroke-width="2.4"></path></g></g>
+              <g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="2.4"></path></g>
+            </svg>
+          </div>
+          <div style="background:#F4F2ED;height:150px;display:grid;place-items:center"><svg width="120" height="100" viewBox="0 0 120 100"><use href="#bpBullFill"></use></svg></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.09);font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">
+          <div style="background:#0B0B0D;padding:12px 14px">01 GOLD LINE</div>
+          <div style="background:#0B0B0D;padding:12px 14px">02 KNOCKOUT</div>
+          <div style="background:#0B0B0D;padding:12px 14px">03 DEBOSS</div>
+          <div style="background:#0B0B0D;padding:12px 14px">04 ON LIGHT</div>
+        </div>
+        <div style="padding:30px 26px;border-top:1px solid rgba(255,255,255,.09);display:flex;align-items:flex-end;gap:30px">
+          <div style="display:flex;align-items:flex-end;gap:26px">
+            <div style="text-align:center"><svg width="96" height="80" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="2.2"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="2.2"></path></g></svg><div style="font:500 9px/1 'JetBrains Mono',monospace;color:#6E6B66">96</div></div>
+            <div style="text-align:center"><svg width="48" height="40" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="3.4"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="3.4"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="3.4"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="3.4"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="3.4"></path></g></svg><div style="font:500 9px/1 'JetBrains Mono',monospace;color:#6E6B66">48</div></div>
+            <div style="text-align:center"><svg width="24" height="20" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="6"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="6"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="6"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="6"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="6"></path></g></svg><div style="font:500 9px/1 'JetBrains Mono',monospace;color:#6E6B66">24</div></div>
+            <div style="text-align:center"><svg width="16" height="14" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="8"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="8"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="8"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="8"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="8"></path></g></svg><div style="font:500 9px/1 'JetBrains Mono',monospace;color:#6E6B66">16</div></div>
+          </div>
+          <p style="margin:0;flex:1;font:400 12px/1.65 Archivo,sans-serif;color:#8B8780">Stroke weight scales with size — 2.2 at 96px up to 8 at 16px — so the horns stay open and the muzzle never fills in.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="2c" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#2c" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">2c</a>Seal + horizontal lockup, rebuilt on the golden bull
+      </div>
+      <div style="width:640px;background:#0B0B0D;border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:34px;display:flex;gap:34px;align-items:center">
+        <div style="position:relative;display:grid;place-items:center">
+          <svg width="230" height="230" viewBox="0 0 200 200" style="filter:drop-shadow(0 18px 40px rgba(232,178,58,.16))">
+            <defs><path id="bpSealRing3" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"></path></defs>
+            <circle cx="100" cy="100" r="96" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"></circle>
+            <circle cx="100" cy="100" r="87" fill="none" stroke="url(#bpHornGold)" stroke-width="3.4"></circle>
+            <circle cx="100" cy="100" r="58" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".7"></circle>
+            <text fill="#E8B23A" style="font:700 13.5px 'JetBrains Mono',monospace;letter-spacing:.34em"><textPath href="#bpSealRing3" startOffset="2%">BEST IN BULL™ · BULLPRINT LAB · </textPath></text>
+            <g transform="translate(100,96) scale(0.86) translate(-60,-50)"><use href="#bpBullFill"></use></g>
+            <text x="100" y="156" text-anchor="middle" fill="#8A6A1E" style="font:500 8.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED · SERIALIZED</text>
+          </svg>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:26px">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:12px">
+              <svg width="46" height="38" viewBox="0 0 120 100"><use href="#bpBullFill"></use></svg>
+              <span style="font:800 22px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">BULLPRINT <span style="color:#E8B23A">LAB</span></span>
+            </div>
+            <div style="margin-top:10px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66">HORIZONTAL LOCKUP / GOLD BULL</div>
+          </div>
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid rgba(232,178,58,.4)">
+              <svg width="20" height="17" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="4"></path></g></svg>
+              <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BEST IN BULL™</span>
+            </div>
+            <div style="margin-top:10px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66">INLINE STAMP</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:#101013;border:1px solid rgba(255,255,255,.08)">
+            <svg width="22" height="18" viewBox="0 0 120 100"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="4"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="4"></path></g></svg>
+            <span style="font:800 13px/1 Archivo,sans-serif;color:#F4F2ED">BULLPRINT LAB</span>
+            <span style="margin-left:auto;font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">NAV · 22PX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin:28px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:rgba(255,255,255,.45)">Try next: "swap the new bull into <a href="#1b">1b</a> everywhere" · "horns wider / tips higher" · "add the bull as a mould emboss on the insert"</p>
+</section>
+
+<section style="padding:52px 56px 70px">
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t1" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">1</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">BULLPRINT LAB — brand kit, homepage, mobile</span>
+  </div>
+  <p style="max-width:820px;margin:0 0 36px;font:400 13px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Black and gold leads; the technical density, mono-numeric labelling and glass panels come from the attached system. Your three renders are placed as-is — the FOOTLAB master lockup sits in the kit, the macro insole carries the hero, the spec sheet does the work in the Lab. Marks, seal, lattice fields and CAD overlays are drawn in code so they can be re-cut at any size. Sections built out: Hero · What is a BullPrint · The Lab · BEST IN BULL™, plus nav and footer.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start">
+
+    <!-- ============ 1a  BRAND KIT ============ -->
+    <div id="1a" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#1a" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">1a</a>Asset &amp; branding kit
+      </div>
+      <div style="width:1180px;background:#0B0B0D;border:1px solid rgba(255,255,255,.09);border-radius:10px;overflow:hidden">
+
+        <div style="padding:44px 48px 40px;border-bottom:1px solid rgba(255,255,255,.07);background:radial-gradient(120% 150% at 10% 0%,rgba(232,178,58,.10),transparent 62%)">
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:28px">SHEET 01 — IDENTITY</div>
+          <div style="display:flex;align-items:flex-end;gap:48px;flex-wrap:wrap">
+            <div>
+              <div style="font:800 64px/0.88 Archivo,sans-serif;letter-spacing:-.03em;background:linear-gradient(115deg,#8A6A1E 0%,#F5D07A 24%,#E8B23A 48%,#A87F24 70%,#F5D07A 100%);-webkit-background-clip:text;background-clip:text;color:transparent">BULLPRINT<br>LAB</div>
+              <div style="margin-top:18px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66">PRIMARY WORDMARK / STACKED</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:24px;padding-left:48px;border-left:1px solid rgba(255,255,255,.08)">
+              <div>
+                <div style="font:800 26px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">BULLPRINT <span style="color:#E8B23A">LAB</span></div>
+                <div style="margin-top:10px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66">HORIZONTAL / TWO-TONE</div>
+              </div>
+              <div>
+                <div style="display:inline-flex;align-items:center;gap:12px;padding:10px 15px;border:1px solid rgba(232,178,58,.38)">
+                  <svg width="26" height="26" viewBox="0 0 64 64" fill="none" stroke="#E8B23A" stroke-width="2.4" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"></path><rect x="26.6" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"></rect><rect x="34.2" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"></rect></svg>
+                  <span style="font:800 17px/1 Archivo,sans-serif;letter-spacing:.02em;color:#F4F2ED">BULLPRINT LAB</span>
+                </div>
+                <div style="margin-top:10px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#6E6B66">LOCKUP / MARK + WORDMARK</div>
+              </div>
+            </div>
+            <div style="margin-left:auto">
+              <div style="width:190px;height:190px;background:#000;border:1px solid rgba(255,255,255,.08);display:grid;place-items:center;overflow:hidden">
+                <img src="uploads/images-1786710189133-vqjp.png" alt="FOOTLAB master lockup" style="width:100%;height:100%;object-fit:contain">
+              </div>
+              <div style="margin-top:10px;font:500 10px/1.6 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">SUPPLIED MASTER<br>FOOTLAB / BEST IN BULL</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.07)">
+          <div style="padding:38px 48px;border-right:1px solid rgba(255,255,255,.07)">
+            <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:26px">BULL MARK — STAMP / EMBOSS GEOMETRY</div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap">
+              <div style="width:124px;height:124px;display:grid;place-items:center;background:#101013;border:1px solid rgba(255,255,255,.08)">
+                <svg width="82" height="82" viewBox="0 0 64 64" fill="none" stroke="#E8B23A" stroke-width="1.6" stroke-linejoin="round"><path d="M32 3.5L57 18V46L32 60.5L7 46V18Z" opacity=".4"></path><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"></path><rect x="26.6" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"></rect><rect x="34.2" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"></rect></svg>
+              </div>
+              <div style="width:124px;height:124px;display:grid;place-items:center;background:linear-gradient(140deg,#1B1B1F,#0D0D10);border:1px solid rgba(255,255,255,.08)">
+                <svg width="82" height="82" viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linejoin="round"><g transform="translate(0,1.4)" stroke="rgba(0,0,0,.6)"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15"></path></g><g stroke="rgba(255,255,255,.38)"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15"></path></g></svg>
+              </div>
+              <div style="width:124px;height:124px;display:grid;place-items:center;background:#E8B23A">
+                <svg width="82" height="82" viewBox="0 0 64 64" fill="none" stroke="#0B0B0D" stroke-width="2.4" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"></path></svg>
+              </div>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:24px;font:500 10px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">
+              <span>01 GOLD / GRAPHITE</span><span>02 DEBOSS</span><span>03 KNOCKOUT</span>
+            </div>
+            <p style="margin:16px 0 0;max-width:430px;font:400 12.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Six straight cuts, two horn ticks, a hex containment field. It reads at 4 mm as a printed emboss, as a mould insert, and as a favicon — the sketch version of the supplied FOOTLAB bull, built for tooling.</p>
+          </div>
+
+          <div style="padding:38px 48px">
+            <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:26px">QUALITY SEAL — BEST IN BULL™</div>
+            <div style="display:flex;gap:32px;align-items:center;flex-wrap:wrap">
+              <svg width="168" height="168" viewBox="0 0 200 200">
+                <defs>
+                  <path id="bpSealRing" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"></path>
+                  <linearGradient id="bpGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".32" stop-color="#F5D07A"></stop><stop offset=".6" stop-color="#E8B23A"></stop><stop offset="1" stop-color="#A87F24"></stop></linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="95" fill="none" stroke="url(#bpGold)" stroke-width="1" opacity=".5"></circle>
+                <circle cx="100" cy="100" r="87" fill="none" stroke="url(#bpGold)" stroke-width="3"></circle>
+                <circle cx="100" cy="100" r="57" fill="none" stroke="url(#bpGold)" stroke-width="1" opacity=".55"></circle>
+                <text fill="#E8B23A" style="font:700 13.5px 'JetBrains Mono',monospace;letter-spacing:.34em"><textPath href="#bpSealRing" startOffset="2%">BEST IN BULL™ · BULLPRINT LAB · </textPath></text>
+                <g transform="translate(100,100) scale(1.15) translate(-32,-30)" fill="none" stroke="url(#bpGold)" stroke-width="2.4" stroke-linejoin="round">
+                  <path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"></path>
+                </g>
+                <text x="100" y="152" text-anchor="middle" fill="#8A6A1E" style="font:500 8.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED</text>
+              </svg>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="display:inline-flex;align-items:center;gap:9px;padding:7px 11px;border:1px solid rgba(232,178,58,.4);align-self:flex-start">
+                  <svg width="14" height="14" viewBox="0 0 64 64" fill="none" stroke="#E8B23A" stroke-width="4" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15"></path></svg>
+                  <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BEST IN BULL™</span>
+                </div>
+                <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#6E6B66">INLINE STAMP / MIN 96PX WIDE</div>
+                <p style="margin:0;max-width:250px;font:400 12.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Applied per unit, not per product line. A drop can ship without it. Nothing wears it twice by default.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.15fr 1fr;border-bottom:1px solid rgba(255,255,255,.07)">
+          <div style="padding:38px 48px;border-right:1px solid rgba(255,255,255,.07)">
+            <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:24px">PALETTE</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+              <div><div style="height:78px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12)"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">VOID<br><span style="color:#6E6B66">#0B0B0D</span></div></div>
+              <div><div style="height:78px;background:#141418;border:1px solid rgba(255,255,255,.08)"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">GRAPHITE<br><span style="color:#6E6B66">#141418</span></div></div>
+              <div><div style="height:78px;background:#2A2A31"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">TITANIUM<br><span style="color:#6E6B66">#2A2A31</span></div></div>
+              <div><div style="height:78px;background:#F4F2ED"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">BONE<br><span style="color:#6E6B66">#F4F2ED</span></div></div>
+              <div><div style="height:78px;background:linear-gradient(140deg,#8A6A1E,#F5D07A 40%,#E8B23A 70%,#A87F24)"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">GOLD LEAF<br><span style="color:#6E6B66">GRADIENT</span></div></div>
+              <div><div style="height:78px;background:#E8B23A"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">GOLD<br><span style="color:#6E6B66">#E8B23A</span></div></div>
+              <div><div style="height:78px;background:#8A6A1E"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">DEEP GOLD<br><span style="color:#6E6B66">#8A6A1E</span></div></div>
+              <div><div style="height:78px;background:#F7931A"></div><div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A">₿ ORANGE<br><span style="color:#6E6B66">#F7931A · 5% MAX</span></div></div>
+            </div>
+          </div>
+          <div style="padding:38px 48px">
+            <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:24px">TYPE</div>
+            <div style="font:900 44px/1 Archivo,sans-serif;letter-spacing:-.025em;color:#F4F2ED">Archivo 900</div>
+            <div style="margin-top:6px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#6E6B66">DISPLAY / HEADLINES / -2.5% TRACK / UPPERCASE</div>
+            <div style="margin-top:22px;font:400 17px/1.6 Archivo,sans-serif;color:#A5A19A">Archivo 400 sets body copy at 16–18px, 1.7 leading, never over 68 characters.</div>
+            <div style="margin-top:22px;font:500 15px/1.5 'JetBrains Mono',monospace;letter-spacing:.05em;color:#E8B23A">JetBrains Mono 500</div>
+            <div style="margin-top:6px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.18em;color:#6E6B66">TECHNICAL / 001 / 100 · TPU 95A · 0.12MM LAYER<br>ALL NUMERICS, IDS, COORDINATES, STATUS</div>
+          </div>
+        </div>
+
+        <div style="padding:38px 48px">
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:24px">PATTERN LIBRARY</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+            <div>
+              <div style="height:112px;background-color:#101013;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:28px 48px;opacity:.85;border:1px solid rgba(255,255,255,.08)"></div>
+              <div style="margin-top:8px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">LATTICE FIELD</div>
+            </div>
+            <div>
+              <div style="height:112px;background-color:#101013;background-image:repeating-linear-gradient(0deg,rgba(232,178,58,.5) 0 1px,transparent 1px 6px);border:1px solid rgba(255,255,255,.08)"></div>
+              <div style="margin-top:8px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">LAYER LINES / 0.12MM</div>
+            </div>
+            <div>
+              <div style="height:112px;background-color:#101013;background-image:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);background-size:14px 14px;border:1px solid rgba(255,255,255,.08)"></div>
+              <div style="margin-top:8px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">CAD GRID</div>
+            </div>
+            <div>
+              <div style="height:112px;background:#101013;border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden">
+                <div style="position:absolute;left:14px;right:14px;top:38px;height:1px;background:rgba(232,178,58,.55)"></div>
+                <div style="position:absolute;left:14px;top:30px;width:1px;height:16px;background:rgba(232,178,58,.55)"></div>
+                <div style="position:absolute;right:14px;top:30px;width:1px;height:16px;background:rgba(232,178,58,.55)"></div>
+                <div style="position:absolute;left:0;right:0;top:46px;text-align:center;font:500 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">284.00 MM</div>
+                <div style="position:absolute;left:14px;bottom:16px;font:500 8.5px/1.7 'JetBrains Mono',monospace;color:#6E6B66">X 128.4 · Y 41.9 · Z 6.2</div>
+              </div>
+              <div style="margin-top:8px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">DIMENSION / COORDINATE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b  DESKTOP HOMEPAGE ============ -->
+    <div id="1b" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#1b" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">1b</a>Homepage — desktop 1280
+      </div>
+      <div style="width:1280px;background:#0B0B0D;border:1px solid rgba(255,255,255,.09);border-radius:10px;overflow:hidden">
+
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid rgba(255,255,255,.07);position:relative;z-index:3;background:rgba(11,11,13,.86)">
+          <div style="display:flex;align-items:center;gap:11px">
+            <svg width="22" height="22" viewBox="0 0 64 64" fill="none" stroke="#E8B23A" stroke-width="2.6" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"></path></svg>
+            <span style="font:800 15px/1 Archivo,sans-serif;letter-spacing:.02em;color:#F4F2ED">BULLPRINT LAB</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:34px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#A5A19A">
+            <a href="#1b" style="color:#F4F2ED">LAB</a><a href="#1b" style="color:#A5A19A">DROPS</a><a href="#1b" style="color:#A5A19A">THE BULLPRINT</a><a href="#1b" style="color:#A5A19A">ABOUT</a>
+            <a href="#1b" style="padding:9px 15px;border:1px solid #E8B23A;color:#E8B23A;letter-spacing:.14em">LATEST DROP →</a>
+          </div>
+        </div>
+
+        <!-- HERO -->
+        <div style="position:relative;height:790px;overflow:hidden;background:#000">
+          <img src="uploads/images-1786710197897-v7um.png" alt="Gold TPU honeycomb insert" style="position:absolute;right:-60px;top:150px;width:860px;object-fit:contain;filter:drop-shadow(0 40px 80px rgba(0,0,0,.9))">
+          <div style="position:absolute;inset:0;background:radial-gradient(70% 90% at 8% 40%,rgba(11,11,13,.96) 0%,rgba(11,11,13,.7) 42%,transparent 72%)"></div>
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px"></div>
+          <div style="position:absolute;left:40px;top:96px;width:600px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px">
+              <span style="width:6px;height:6px;background:#E8B23A;display:block"></span>
+              <span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">DROP 001 · GOLD TPU · IN THE LAB</span>
+            </div>
+            <h1 style="margin:0;font:900 74px/0.94 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED;text-wrap:balance">WE PRINT WHAT WE'RE BULLISH ON.</h1>
+            <div style="margin-top:22px;font:600 21px/1.3 Archivo,sans-serif;color:#E8B23A">VibePrints with real utility.</div>
+            <p style="margin:20px 0 0;max-width:470px;font:400 15.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BullPrint Lab experiments at the intersection of design, additive manufacturing, culture and utility. Every object starts as a question about geometry and ends as something you can wear out of the house.</p>
+            <div style="margin-top:34px;display:flex;align-items:center;gap:14px">
+              <a href="#1b" style="padding:15px 26px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em">EXPLORE THE LAB</a>
+              <a href="#1b" style="padding:15px 26px;border:1px solid rgba(255,255,255,.22);color:#F4F2ED;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em">SEE THE LATEST DROP</a>
+            </div>
+          </div>
+          <div style="position:absolute;left:40px;bottom:38px;display:flex;align-items:center;gap:16px">
+            <svg width="52" height="52" viewBox="0 0 200 200" opacity=".9">
+              <circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="4"></circle>
+              <g transform="translate(100,100) scale(1.9) translate(-32,-30)" fill="none" stroke="#E8B23A" stroke-width="2.6" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15"></path></g>
+            </svg>
+            <div style="font:700 10.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">BEST IN BULL™<br><span style="font-weight:500;color:#6E6B66">ONLY THE BEST EARN THE STAMP</span></div>
+          </div>
+          <div style="position:absolute;right:40px;bottom:38px;text-align:right;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">
+            MATERIAL TPU 95A<br>LAYER 0.12 MM<br>EDITION 001 / 100
+          </div>
+        </div>
+
+        <!-- WHAT IS A BULLPRINT -->
+        <div style="padding:96px 40px;border-top:1px solid rgba(255,255,255,.07);background:#0B0B0D">
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:38px">02 — WHAT IS A BULLPRINT?</div>
+          <h2 style="margin:0;max-width:1000px;font:900 52px/1.05 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">NOT A STICKER.<br>NOT A LOGO SLAPPED ON A PRODUCT.<br><span style="color:#E8B23A">THE EXPRESSION IS BUILT INTO THE PRINT.</span></h2>
+          <div style="margin-top:54px;display:grid;grid-template-columns:1.1fr 1fr;gap:44px;align-items:start">
+            <div>
+              <p style="margin:0;max-width:520px;font:400 16px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">A BullPrint integrates expression directly into geometry, material, texture and function. The ₿ is not printed on the insert — it is a region of the lattice where the cells close up, stiffen and become a symbol. Remove the graphic and you remove structure.</p>
+              <p style="margin:20px 0 0;max-width:520px;font:400 16px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The identity should feel native to the object. Nothing peels, nothing wears off, and nothing about it reads as decoration bolted onto a part that was finished without it.</p>
+              <div style="margin-top:34px;display:flex;align-items:center;gap:14px;padding-top:24px;border-top:1px solid rgba(255,255,255,.09)">
+                <span style="font:700 22px/1.2 Archivo,sans-serif;letter-spacing:-.015em;color:#E8B23A">Expression engineered into the print.</span>
+              </div>
+              <div style="margin-top:36px;display:flex;align-items:center;gap:18px">
+                <div style="flex:1;height:150px;background-color:#101013;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:{{ combSize }};border:1px solid rgba(255,255,255,.08);position:relative">
+                  <div style="position:absolute;left:12px;bottom:10px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">CELL PITCH {{ combLabel }}</div>
+                </div>
+                <div style="width:120px;font:500 9.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.12em;color:#6E6B66">ZONED DENSITY<br>FOREFOOT OPEN<br>HEEL CLOSED</div>
+              </div>
+            </div>
+            <div style="border:1px solid rgba(255,255,255,.09);background:#000;padding:14px">
+              <img src="uploads/images-1786710214318-psa4.png" alt="BullPrint insert — Bitcoin Edition spec views" style="width:100%;display:block">
+              <div style="margin-top:12px;display:flex;justify-content:space-between;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">
+                <span>FIG. 02 — EMBEDDED GEOMETRY</span><span style="color:#E8B23A">001 / 100</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- THE LAB -->
+        <div style="padding:96px 40px;background:#0E0E11;border-top:1px solid rgba(255,255,255,.07)">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
+            <div>
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">03 — THE LAB</div>
+              <h2 style="margin:0;font:900 56px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">WELCOME TO THE LAB.</h2>
+            </div>
+            <p style="margin:0;max-width:430px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">We don't expect every experiment to work. That's why it's called a Lab. We prototype aggressively, test what matters and keep improving the things worth making.</p>
+          </div>
+
+          <div style="margin-top:56px;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.09)">
+            <div style="background:#0B0B0D;padding:26px 22px 30px" style-hover="background:#141418">
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">01</div>
+              <div style="margin-top:14px;font:800 20px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">IDEA</div>
+              <p style="margin:12px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780">Usually a joke with a load path. It gets written down only if someone can name the function.</p>
+            </div>
+            <div style="background:#0B0B0D;padding:26px 22px 30px" style-hover="background:#141418">
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">02</div>
+              <div style="margin-top:14px;font:800 20px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">DESIGN</div>
+              <p style="margin:12px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780">CAD, lattice fields, zoned densities. Expression is placed in the geometry here or not at all.</p>
+            </div>
+            <div style="background:#0B0B0D;padding:26px 22px 30px" style-hover="background:#141418">
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">03</div>
+              <div style="margin-top:14px;font:800 20px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">PRINT</div>
+              <p style="margin:12px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780">TPU 95A at 0.12 mm. Layer orientation is a design decision, not a slicer default.</p>
+            </div>
+            <div style="background:#0B0B0D;padding:26px 22px 30px" style-hover="background:#141418">
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">04</div>
+              <div style="margin-top:14px;font:800 20px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">TEST</div>
+              <p style="margin:12px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780">Flex cycles, compression set, wash, wear. Worn daily by whoever pushed for it.</p>
+            </div>
+            <div style="background:#0B0B0D;padding:26px 22px 30px" style-hover="background:#141418">
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">05</div>
+              <div style="margin-top:14px;font:800 20px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">ITERATE</div>
+              <p style="margin:12px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780">Version, number, archive. Most prototypes stop here. A few earn the bull.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:44px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+            <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
+              <div style="height:168px;background:#000;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08)">
+                <img src="uploads/images-1786710197897-v7um.png" alt="Prototype 001" style="width:150%;object-fit:cover">
+              </div>
+              <div style="padding:16px 18px 20px">
+                <div style="display:flex;justify-content:space-between;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66"><span>PROTO 001</span><span>08.02.26</span></div>
+                <div style="margin-top:10px;font:700 14px/1.3 Archivo,sans-serif;color:#F4F2ED">Lattice density test</div>
+                <p style="margin:8px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#8B8780">Forefoot at 6 mm pitch collapsed under load. Closed the cells 18% and kept the heel open.</p>
+                <div style="margin-top:14px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">ITERATED</div>
+              </div>
+            </div>
+            <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
+              <div style="height:168px;background:#000;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.08)">
+                <img src="uploads/images-1786710214318-psa4.png" alt="Prototype 002" style="width:100%;height:100%;object-fit:cover;object-position:48% 42%;transform:scale(2.1)">
+              </div>
+              <div style="padding:16px 18px 20px">
+                <div style="display:flex;justify-content:space-between;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66"><span>PROTO 002</span><span>08.06.26</span></div>
+                <div style="margin-top:10px;font:700 14px/1.3 Archivo,sans-serif;color:#F4F2ED">Heel geometry</div>
+                <p style="margin:8px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#8B8780">Cup wall raised 3 mm. Better hold, but the top edge printed sharp — filleted for 003.</p>
+                <div style="margin-top:14px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">ITERATED</div>
+              </div>
+            </div>
+            <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
+              <div style="height:168px;background-color:#101013;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27.712' height='48' viewBox='0 0 27.712 48'%3E%3Cg fill='none' stroke='%23E8B23A' stroke-width='1'%3E%3Cpath d='M13.856,8 L27.712,16 L27.712,32 L13.856,40 L0,32 L0,16 Z'/%3E%3Cpath d='M0,-16 L13.856,-8 L13.856,8 L0,16 L-13.856,8 L-13.856,-8 Z'/%3E%3Cpath d='M0,32 L13.856,40 L13.856,56 L0,64 L-13.856,56 L-13.856,40 Z'/%3E%3Cpath d='M27.712,-16 L41.568,-8 L41.568,8 L27.712,16 L13.856,8 L13.856,-8 Z'/%3E%3Cpath d='M27.712,32 L41.568,40 L41.568,56 L27.712,64 L13.856,56 L13.856,40 Z'/%3E%3C/g%3E%3C/svg%3E&quot;);background-size:22px 38px;border-bottom:1px solid rgba(255,255,255,.08);position:relative">
+                <div style="position:absolute;left:14px;bottom:12px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">TPU FLEX TEST · 12K CYCLES</div>
+              </div>
+              <div style="padding:16px 18px 20px">
+                <div style="display:flex;justify-content:space-between;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66"><span>PROTO 003</span><span>08.11.26</span></div>
+                <div style="margin-top:10px;font:700 14px/1.3 Archivo,sans-serif;color:#F4F2ED">Material comparison</div>
+                <p style="margin:8px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#8B8780">95A against 85A across the same lattice. Softer shore lost the arch after two weeks.</p>
+                <div style="margin-top:14px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">IN TEST</div>
+              </div>
+            </div>
+            <div style="border:1px dashed rgba(255,255,255,.16);background:#0B0B0D;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:26px 22px;gap:12px">
+              <div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">PROTO 004</div>
+              <div style="font:800 18px/1.15 Archivo,sans-serif;letter-spacing:-.01em;color:#5C5952">FAILED —<br>ARCHIVED</div>
+              <p style="margin:0;font:400 12.5px/1.65 Archivo,sans-serif;color:#5C5952">Drainage channels cut too deep. Split at the midfoot on day three. Kept on the shelf.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BEST IN BULL -->
+        <div style="position:relative;padding:110px 40px 100px;background:#000;border-top:1px solid rgba(255,255,255,.07);overflow:hidden">
+          <div style="position:absolute;inset:0;background:radial-gradient(60% 70% at 50% 46%,rgba(232,178,58,.14),transparent 70%)"></div>
+          <div style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center">
+            <div>
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:22px">04 — THE QUALITY MARK</div>
+              <h2 style="margin:0;font:900 58px/1 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">NOT EVERYTHING<br>EARNS THE BULL.</h2>
+              <p style="margin:26px 0 0;max-width:470px;font:400 16px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BullPrint Lab is free to experiment. BEST IN BULL™ isn't. It's our mark for the prints we believe represent the strongest combination of:</p>
+              <div style="margin-top:30px;display:grid;grid-template-columns:repeat(5,auto);gap:22px;justify-content:start;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">
+                <span>DESIGN</span><span>UTILITY</span><span>PRINT QUALITY</span><span>MATERIAL</span><span>EXECUTION</span>
+              </div>
+              <div style="margin-top:38px;padding-top:26px;border-top:1px solid rgba(232,178,58,.28);font:800 24px/1.25 Archivo,sans-serif;letter-spacing:-.015em;color:#F4F2ED">IF IT WEARS THE BULL,<br>WE STAND BEHIND THE PRINT.</div>
+              <div style="margin-top:22px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">MORE AT <a href="https://bestinbull.com">BESTINBULL.COM</a></div>
+            </div>
+            <div style="display:grid;place-items:center">
+              <svg width="380" height="380" viewBox="0 0 200 200" style="filter:drop-shadow(0 24px 60px rgba(232,178,58,.16))">
+                <defs>
+                  <path id="bpSealRing2" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"></path>
+                  <linearGradient id="bpGold2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A5C18"></stop><stop offset=".3" stop-color="#F7D68C"></stop><stop offset=".58" stop-color="#E8B23A"></stop><stop offset="1" stop-color="#8A6A1E"></stop></linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="96" fill="none" stroke="url(#bpGold2)" stroke-width="1" opacity=".45"></circle>
+                <circle cx="100" cy="100" r="87" fill="none" stroke="url(#bpGold2)" stroke-width="3.4"></circle>
+                <circle cx="100" cy="100" r="57" fill="none" stroke="url(#bpGold2)" stroke-width="1" opacity=".5"></circle>
+                <text fill="#E8B23A" style="font:700 13.5px 'JetBrains Mono',monospace;letter-spacing:.34em"><textPath href="#bpSealRing2" startOffset="2%">BEST IN BULL™ · BULLPRINT LAB · </textPath></text>
+                <g transform="translate(100,100) scale(1.3) translate(-32,-30)" fill="none" stroke="url(#bpGold2)" stroke-width="2.2" stroke-linejoin="round">
+                  <path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"></path>
+                  <rect x="26.6" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"></rect><rect x="34.2" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"></rect>
+                </g>
+                <text x="100" y="154" text-anchor="middle" fill="#8A6A1E" style="font:500 8.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED · SERIALIZED</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div style="padding:80px 40px 40px;background:#0B0B0D;border-top:1px solid rgba(255,255,255,.07)">
+          <div style="font:900 108px/0.86 Archivo,sans-serif;letter-spacing:-.04em;background:linear-gradient(115deg,#8A6A1E,#F5D07A 30%,#E8B23A 55%,#A87F24 90%);-webkit-background-clip:text;background-clip:text;color:transparent">BULLPRINT LAB</div>
+          <div style="margin-top:18px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
+            <div>
+              <div style="font:700 17px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">WE PRINT WHAT WE'RE BULLISH ON.</div>
+              <div style="margin-top:30px;display:flex;gap:28px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
+                <a href="https://x.com/bestinbull">X / @BESTINBULL</a><a href="mailto:bullish@bullprintlab.com">BULLISH@BULLPRINTLAB.COM</a><a href="#1b">THE BULLPRINT</a><a href="#1b">DROPS</a><a href="#1b">LAB</a><a href="#1b">ABOUT</a>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <svg width="44" height="44" viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="4"></circle><g transform="translate(100,100) scale(1.9) translate(-32,-30)" fill="none" stroke="#E8B23A" stroke-width="2.6" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15"></path></g></svg>
+              <div style="font:700 10.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">BEST IN BULL™<br><span style="font-weight:500;color:#6E6B66">STAY BULLISH</span></div>
+            </div>
+          </div>
+          <div style="margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5C5952">
+            <span><a href="https://bullprintlab.com" style="color:#5C5952">BULLPRINTLAB.COM</a> · <a href="https://x.com/bestinbull" style="color:#5C5952">@BESTINBULL</a> · <a href="mailto:bullish@bullprintlab.com" style="color:#5C5952">BULLISH@BULLPRINTLAB.COM</a></span><span>BUILT DIFFERENT. PRINTED DIFFERENT.</span><span>© 2026 BULLPRINT LAB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c  MOBILE ============ -->
+    <div id="1c" style="flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+      <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+        <a href="#1c" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">1c</a>Mobile — first viewport 390×844
+      </div>
+      <div style="width:390px;height:844px;background:#000;border:1px solid rgba(255,255,255,.12);border-radius:26px;overflow:hidden;position:relative">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="18" height="18" viewBox="0 0 64 64" fill="none" stroke="#E8B23A" stroke-width="3" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15"></path></svg>
+            <span style="font:800 12.5px/1 Archivo,sans-serif;color:#F4F2ED">BULLPRINT LAB</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="width:20px;height:1.5px;background:#E8B23A;display:block"></span>
+            <span style="width:20px;height:1.5px;background:#E8B23A;display:block"></span>
+          </div>
+        </div>
+        <div style="padding:22px 18px 0">
+          <div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A;margin-bottom:16px">DROP 001 · GOLD TPU</div>
+          <h1 style="margin:0;font:900 40px/0.96 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED">WE PRINT WHAT WE'RE BULLISH ON.</h1>
+          <div style="margin-top:14px;font:600 16px/1.3 Archivo,sans-serif;color:#E8B23A">VibePrints with real utility.</div>
+        </div>
+        <div style="margin-top:18px;position:relative;height:300px;background:#000;overflow:hidden">
+          <img src="uploads/images-1786710197897-v7um.png" alt="Gold TPU honeycomb insert" style="position:absolute;left:-6%;top:0;width:118%;object-fit:contain;filter:drop-shadow(0 24px 50px rgba(0,0,0,.9))">
+          <div style="position:absolute;left:18px;bottom:14px;font:500 9px/1.8 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">TPU 95A · 0.12 MM · 001 / 100</div>
+        </div>
+        <div style="padding:16px 18px 0;display:flex;flex-direction:column;gap:10px">
+          <a href="#1c" style="padding:16px;text-align:center;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em">EXPLORE THE LAB</a>
+          <a href="#1c" style="padding:16px;text-align:center;border:1px solid rgba(255,255,255,.22);color:#F4F2ED;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em">SEE THE LATEST DROP</a>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 18px 20px;border-top:1px solid rgba(255,255,255,.09);display:flex;align-items:center;gap:10px;background:#0B0B0D">
+          <svg width="28" height="28" viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="5"></circle><g transform="translate(100,100) scale(1.9) translate(-32,-30)" fill="none" stroke="#E8B23A" stroke-width="3" stroke-linejoin="round"><path d="M22 22H42V32L32 43L22 32Z"></path><path d="M22 22L14 15M42 22L50 15"></path></g></svg>
+          <div style="font:700 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BEST IN BULL™<br><span style="font-weight:500;color:#6E6B66">FROM THE LAB</span></div>
+          <a href="https://x.com/bestinbull" style="margin-left:auto;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">@BESTINBULL</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin:30px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:rgba(255,255,255,.45)">Try next: "build out Drop 001 and the Drops grid" · "add Why Honeycomb with the scroll interaction" · "give me <a href="#1a">1a</a> as a standalone brand sheet for print"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;cellPitch&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:28,&quot;min&quot;:14,&quot;max&quot;:48,&quot;step&quot;:2,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Lattice&quot;}}">
+class Component extends DCLogic {
+  state = { size: "10", width: "MEDIUM", arch: "MEDIUM", fit: "MEN'S", shoe: "", notes: "", pay: "STRIPE" };
+
+  chips(key, list, big) {
+    return list.map(function (o) {
+      const on = this.state[key] === o;
+      return {
+        label: o,
+        onClick: () => this.setState({ [key]: o }),
+        style: "padding:" + (big ? "13px 16px" : "11px 13px") + ";text-align:center;cursor:pointer;user-select:none;"
+          + "font:700 " + (big ? "12.5px" : "11.5px") + "/1 'JetBrains Mono',monospace;letter-spacing:.12em;"
+          + "border:1px solid " + (on ? "#E8B23A" : "rgba(255,255,255,.14)") + ";"
+          + "background:" + (on ? "linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24)" : "#101013") + ";"
+          + "color:" + (on ? "#0B0B0D" : "#A5A19A") + ";transition:all 160ms cubic-bezier(.2,.8,.2,1)"
+      };
+    }, this);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const pitch = this.props.cellPitch ?? 28;
+    const archMap = {
+      LOW: { tile: 32, mm: "8.0 MM", name: "FLAT" },
+      MEDIUM: { tile: 28, mm: "7.0 MM", name: "STANDARD" },
+      HIGH: { tile: 22, mm: "5.5 MM", name: "RAISED" }
+    };
+    const a = archMap[s.arch];
+    const wid = { NARROW: "STOCK LAST −4 MM", MEDIUM: "STOCK LAST", WIDE: "STOCK LAST +6 MM" };
+    const mins = 180 + parseInt(s.size, 10) * 7;
+    const archTile = a.tile;
+    return {
+      combSize: pitch + "px " + Math.round(pitch * 48 / 27.712) + "px",
+      combLabel: (pitch / 4).toFixed(1) + " MM",
+      specSize: archTile + "px " + Math.round(archTile * 48 / 27.712) + "px",
+      specPitch: a.mm,
+      sizeOpts: this.chips("size", ["6", "7", "8", "9", "10", "11", "12", "13", "14"]),
+      widthOpts: this.chips("width", ["NARROW", "MEDIUM", "WIDE"], true),
+      archOpts: this.chips("arch", ["LOW", "MEDIUM", "HIGH"], true),
+      fitOpts: this.chips("fit", ["MEN'S", "WOMEN'S", "UNISEX"], true),
+      payOpts: this.chips("pay", ["STRIPE", "COINBASE COMMERCE"], true),
+      shoe: s.shoe,
+      notes: s.notes,
+      onShoe: (e) => this.setState({ shoe: e.target.value }),
+      onNotes: (e) => this.setState({ notes: e.target.value }),
+      notesCount: s.notes.length + " / 240",
+      profileId: "BP-" + s.size + s.width.charAt(0) + s.arch.charAt(0) + "-001",
+      archSpec: a.name + " · MID CELL " + a.mm,
+      widthSpec: wid[s.width],
+      fitSpec: s.fit + " LAST · US " + s.size,
+      shoeSpec: s.shoe ? s.shoe.toUpperCase() : "NOT SPECIFIED",
+      printSpec: "EST " + Math.floor(mins / 60) + "H " + (mins % 60) + "M · TPU 95A",
+      payNote: s.pay === "STRIPE" ? "CARD · USD · STRIPE CHECKOUT" : "BTC · LIGHTNING OR ON-CHAIN · COINBASE COMMERCE",
+      payCta: s.pay === "STRIPE" ? "CHECKOUT WITH CARD →" : "PAY WITH BITCOIN →"
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -64,11 +64,22 @@ footer.foot .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;justify-content:spac
 .tags{margin:26px 0 0}
 .tag{display:inline-block;margin:0 6px 6px 0;padding:5px 10px;border:1px solid var(--line);font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--dim)}
 article img{display:block;width:100%;height:auto;margin:30px 0;border:1px solid var(--line);background:#000}
+.titles{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin:38px 0}
+.titles>div{background:var(--bg);padding:30px 26px}
+.titles h2{margin:0 0 4px;font-size:clamp(28px,4vw,40px);line-height:1.02}
+.titles .role{font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:var(--gold);margin:0 0 16px}
+.titles p{color:#D9D5CC;font-size:15.5px}
+.spec{list-style:none;padding:0;margin:22px 0 0;border-top:1px solid var(--line)}
+.spec li{display:grid;grid-template-columns:112px 1fr;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);margin:0;font-size:13.5px}
+.spec b{font:700 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--dim);font-weight:700}
+.pull{margin:22px 0 0;padding:16px 18px;border:1px solid var(--gold);color:var(--gold);font:600 15px/1.45 Archivo,sans-serif}
+.lozenge{display:inline-block;padding:7px 16px;border:1px solid var(--gold);border-radius:999px;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:var(--gold)}
+@media(max-width:720px){.titles{grid-template-columns:1fr}}
 .note{margin:46px 0 0;padding:16px 18px;border:1px solid var(--line);background:#101013;color:var(--dim);font-size:14px}
 """
 
 
-def parse(path: pathlib.Path) -> dict:
+def parse(path: pathlib.Path, required=("title", "date", "summary")) -> dict:
     raw = path.read_text()
     meta, body = {}, raw
     if raw.startswith("---"):
@@ -79,7 +90,7 @@ def parse(path: pathlib.Path) -> dict:
                 meta[k.strip()] = v.strip()
     meta["slug"] = path.stem
     meta["body"] = body.strip()
-    for req in ("title", "date", "summary"):
+    for req in required:
         if req not in meta:
             raise SystemExit(f"{path.name} is missing front matter: {req}")
     return meta
@@ -132,6 +143,16 @@ def md(src: str) -> str:
         if ln.strip() == "---":
             out.append("<hr>")
             i += 1
+            continue
+        # Raw HTML block: pass it through untouched. A post that needs a real
+        # layout should be able to write one, and escaping it into visible <div>
+        # soup is worse than not supporting it at all.
+        if re.match(r"^<(div|section|figure|table|aside|details|iframe|svg|picture|video)\b", ln.strip()):
+            buf = []
+            while i < len(lines) and lines[i].strip():
+                buf.append(lines[i])
+                i += 1
+            out.append("\n".join(buf))
             continue
         if not ln.strip():
             i += 1
@@ -190,6 +211,41 @@ def shell(title, desc, canonical, body, jsonld, depth=1):
 </div></footer>
 </body>
 </html>"""
+
+
+def build_pages(root: pathlib.Path) -> list[dict]:
+    """content/pages/<slug>.md -> /<slug>/index.html — undated, standalone.
+
+    Same shell as the journal so a page reads as the same object, but WebPage
+    rather than BlogPosting: these are not dated entries and should not show up
+    in a feed pretending to be.
+    """
+    src = root / "content" / "pages"
+    if not src.exists():
+        return []
+    out = []
+    for f in sorted(src.glob("*.md")):
+        m = parse(f, required=("title", "summary"))
+        url = f"{SITE}/{m['slug']}/"
+        ld = (
+            '{"@context":"https://schema.org","@type":"WebPage",'
+            f'"name":{_json(m["title"])},"description":{_json(m["summary"])},'
+            f'"url":"{url}","inLanguage":"en",'
+            '"isPartOf":{"@type":"WebSite","@id":"https://bullprintlab.com/#site"},'
+            '"publisher":{"@type":"Organization","@id":"https://bullprintlab.com/#org"}}'
+        )
+        body = f"""<main class="wrap">
+  <p class="kicker" style="margin-top:54px">{_html.escape(m.get('kicker', 'BullPrint Lab'))}</p>
+  <h1>{_html.escape(m['title'])}</h1>
+  <p class="lede">{inline(m['summary'])}</p>
+  {md(m['body'])}
+</main>"""
+        d = root / m["slug"]
+        d.mkdir(exist_ok=True)
+        (d / "index.html").write_text(
+            shell(f"{m['title']} — {BRAND}", m["summary"], url, body, ld, depth=1))
+        out.append(m)
+    return out
 
 
 def build(root: pathlib.Path) -> list[dict]:

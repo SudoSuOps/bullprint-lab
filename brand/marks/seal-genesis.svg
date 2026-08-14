@@ -1,0 +1,29 @@
+<!-- BEST IN BULL™ seal, genesis ring. Use at >=280px.
+     The outer track is the Bitcoin genesis block hash (03 Jan 2009).
+     letter-spacing .62em is what closes 64 characters into a full ring on
+     r=90 — changing the font size means re-tuning it (target computed text
+     length ~562 of the 565-unit path).
+     Below ~120px drop the hash ring entirely: 64 hex characters turn to mush.
+     Use a plain r=94 ring at stroke-width 4 with the line cut inside.
+     The ids must be unique per instance if more than one is on a page. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img"
+     aria-label="Best in Bull, inspected">
+  <defs>
+    <path id="bpHashRing" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/>
+    <path id="bpNameRing" d="M100,100 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"/>
+    <linearGradient id="bpSealGold" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#8A6A1E"/><stop offset=".4" stop-color="#E8B23A"/>
+      <stop offset=".7" stop-color="#FBE9B0"/><stop offset="1" stop-color="#C39A2C"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".5"/>
+  <text fill="#8A6A1E" style="font:500 7.2px 'JetBrains Mono',monospace;letter-spacing:.62em">
+    <textPath href="#bpHashRing" startOffset="0.4%">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</textPath>
+  </text>
+  <circle cx="100" cy="100" r="81" fill="none" stroke="url(#bpSealGold)" stroke-width="3"/>
+  <circle cx="100" cy="100" r="52" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"/>
+  <text fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.5em">
+    <textPath href="#bpNameRing" startOffset="1.5%">BEST IN BULL™ · BULLPRINT LAB · </textPath>
+  </text>
+  <text x="100" y="134" text-anchor="middle" fill="#8A6A1E" style="font:500 7.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED</text>
+</svg>

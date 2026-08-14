@@ -101,9 +101,11 @@ ASSETS = {
 }
 
 # The mark, as a favicon: the ₿ in brand gold on the brand near-black.
+# Square — BRAND.md is explicit that there is no border radius anywhere in the
+# system; the only rounded thing the brand makes is the part itself.
 FAVICON = (
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
-    '<rect width="64" height="64" rx="12" fill="#0B0B0D"/>'
+    '<rect width="64" height="64" fill="#0B0B0D"/>'
     '<text x="32" y="45" font-family="Archivo,Helvetica,Arial,sans-serif"'
     ' font-size="42" font-weight="800" fill="#E8B23A"'
     ' text-anchor="middle">₿</text></svg>'
@@ -146,6 +148,39 @@ def check_vendor() -> None:
             sys.exit(f"{rel} does not match the SRI support.js pins\n"
                      f"  want {want}\n  got  {got}")
         print(f"  vendor ok  {rel}")
+
+
+def route_ticker(html: str) -> str:
+    """Point the design's ticker at our own proxy instead of CoinGecko.
+
+    Calling a third-party price API from every visitor's browser rate-limits by
+    IP, makes first paint depend on someone else's uptime, and would need a hole
+    in `connect-src 'self'`. /api/btc is one edge-cached response for everyone,
+    with the same two upstreams and the same honest failure state.
+    """
+    start = html.find("  fetchBtc() {")
+    if start < 0:
+        sys.exit("fetchBtc() not found — did the design's ticker change?")
+    end = html.find("\n  }", html.find("api.coinbase.com", start))
+    if end < 0:
+        sys.exit("could not find the end of fetchBtc()")
+    end = html.index("\n  }", end) + len("\n  }")
+    new = """  fetchBtc() {
+    fetch("/api/btc", { headers: { accept: "application/json" } })
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((j) => {
+        if (!j || !j.ok || typeof j.usd !== "number") throw new Error("shape");
+        this.setState({
+          btcPrice: j.usd,
+          btcChange: typeof j.change24h === "number" ? j.change24h : null,
+          btcOk: true,
+          btcAt: new Date(j.at || Date.now())
+        });
+      })
+      .catch(() => this.setState({ btcOk: false }));
+  }"""
+    print("  ticker     coingecko/coinbase in-browser -> /api/btc (edge cached)")
+    return html[:start] + new + html[end:]
 
 
 def wire_forms(html: str) -> str:
@@ -346,7 +381,7 @@ ORG_LD = {
 }
 
 
-def write_geo(posts) -> None:
+def write_geo(posts, pages=()) -> None:
     """robots, sitemap and llms.txt — the surface AI search actually reads."""
     (ROOT / "robots.txt").write_text(f"""User-agent: *
 Allow: /
@@ -380,6 +415,7 @@ Sitemap: {SITE}/sitemap.xml
 """)
 
     urls = [(f"{SITE}/", "weekly", "1.0"), (f"{SITE}/blog/", "daily", "0.9")]
+    urls += [(f"{SITE}/{m['slug']}/", "monthly", "0.8") for m in pages]
     urls += [(f"{SITE}/blog/{m['slug']}/", "monthly", "0.8") for m in posts]
     body = "".join(
         f"  <url><loc>{u}</loc><changefreq>{c}</changefreq>"
@@ -473,6 +509,7 @@ def main() -> None:
           f"{EMAIL_GENERAL} ({n_before - n_ord}x)")
 
     html = wire_forms(html)
+    html = route_ticker(html)
 
     # self-hosted fonts: drop the Google links, add the local stylesheet
     before = html
@@ -530,8 +567,10 @@ def main() -> None:
                 and not u.startswith("https://challenges.cloudflare.com/")]
     assert not external, f"external subresource(s) survived: {external}"
     posts = blog.build(ROOT)
-    print(f"  journal    {len(posts)} post(s) -> blog/")
-    write_geo(posts)
+    pages = blog.build_pages(ROOT)
+    print(f"  journal    {len(posts)} post(s) -> blog/"
+          + (f", {len(pages)} page(s)" if pages else ""))
+    write_geo(posts, pages)
     print("  checks     passed")
 
 

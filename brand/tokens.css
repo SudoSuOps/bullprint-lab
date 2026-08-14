@@ -1,0 +1,33 @@
+:root{
+  /* BullPrint Lab — design tokens (derived from swarm&bee structure, black/gold palette) */
+  --void:#0B0B0D;          /* page background */
+  --graphite:#0E0E11;      /* alt section background */
+  --panel:#141418;         /* card base */
+  --panel-2:#101013;       /* pattern field base */
+  --titanium:#2A2A31;      /* dividers, inert chips */
+  --bone:#F4F2ED;          /* primary foreground */
+  --fg-2:#A5A19A;          /* body copy */
+  --fg-3:#8B8780;          /* card body copy */
+  --fg-4:#6E6B66;          /* mono labels */
+  --fg-5:#5C5952;          /* archived / footer meta */
+  --gold:#E8B23A;          /* primary accent */
+  --gold-light:#F5D07A;    /* highlight stop */
+  --gold-deep:#8A6A1E;     /* section eyebrows, deep stop */
+  --gold-shadow:#A87F24;   /* gradient shade stop */
+  --btc:#F7931A;           /* Bitcoin orange — 5% max usage */
+
+  --hairline:rgba(255,255,255,.07);
+  --hairline-2:rgba(255,255,255,.09);
+  --hairline-3:rgba(255,255,255,.12);
+  --gold-hairline:rgba(232,178,58,.38);
+
+  --grad-gold-text:linear-gradient(115deg,#8A6A1E 0%,#F5D07A 24%,#E8B23A 48%,#A87F24 70%,#F5D07A 100%);
+  --grad-gold-cta:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);
+  --grad-hero-scrim:radial-gradient(70% 90% at 8% 40%,rgba(11,11,13,.96) 0%,rgba(11,11,13,.7) 42%,transparent 72%);
+  --grad-seal-glow:radial-gradient(60% 70% at 50% 46%,rgba(232,178,58,.14),transparent 70%);
+
+  --font-display:Archivo,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+
+  --dur-fast:140ms; --dur-base:200ms; --ease-out:cubic-bezier(.2,.8,.2,1);
+}

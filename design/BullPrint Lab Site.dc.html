@@ -20,6 +20,10 @@
   :focus-visible{outline:2px solid #E8B23A;outline-offset:3px}
   input::placeholder,textarea::placeholder{color:#5C5952}
   @keyframes bpTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  @media (max-width:600px){
+    [data-tickmeta]{display:none!important}
+  }
   @media (max-width:900px){
     [data-navdesk]{display:none!important}
     [data-navmobile]{display:flex!important}
@@ -55,6 +59,15 @@
 
   <!-- ============ NAV ============ -->
   <header style="position:sticky;top:0;z-index:40;background:{{ headerBg }};border-bottom:1px solid {{ headerLine }};backdrop-filter:blur(16px);transition:background 200ms cubic-bezier(.2,.8,.2,1),border-color 200ms">
+    <div style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(14,14,17,.6)">
+      <div aria-live="off" aria-label="Bitcoin spot price" style="max-width:1280px;margin:0 auto;padding:7px 24px;display:flex;align-items:center;gap:8px 18px;white-space:nowrap;font:600 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
+        <span style="display:flex;align-items:center;gap:8px;color:#E8B23A"><span style="width:5px;height:5px;background:{{ btcDotColor }};display:block;border-radius:50%"></span>₿ BTC</span>
+        <span style="color:#F4F2ED;font-variant-numeric:tabular-nums">{{ btcLabel }}</span>
+        <span style="color:{{ btcChangeColor }};font-variant-numeric:tabular-nums">{{ btcChangeLabel }}</span>
+        <span data-tickmeta style="color:#5C5952">{{ btcStamp }}</span>
+        <span style="margin-left:auto;display:flex;gap:10px;color:#6E6B66"><span data-tickmeta>DROP 001</span><span style="color:#E8B23A;font-variant-numeric:tabular-nums">{{ satsLabel }}</span></span>
+      </div>
+    </div>
     <nav aria-label="Primary" style="max-width:1280px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px">
       <a href="#hero" aria-label="BullPrint Lab home" style="display:flex;align-items:center;gap:10px;flex:none">
         <svg width="30" height="25" viewBox="0 0 120 100" aria-hidden="true"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="5"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="5"></path></g></svg>
@@ -328,7 +341,7 @@
           <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">05 — SPECIAL ORDERS</div>
           <h2 style="margin:0;font:900 clamp(30px,4.8vw,56px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">CUSTOM BULL<br>BY DESIGN.</h2>
         </div>
-        <p style="margin:0;max-width:440px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Send us your mark and we build it into the lattice the same way we built the ₿ — as closed cells and changed density, not a graphic laid on top. Teams, shops, brands, one-offs and gifts.</p>
+        <p style="margin:0;max-width:440px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Send us your mark and we build it into the lattice the same way we built the ₿ — as closed cells and changed density, not a graphic laid on top. Teams, shops, brands, one-offs and gifts. Approve the sample and you are a BullMaker.</p>
       </div>
 
       <div data-two data-reveal style="margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start">
@@ -346,7 +359,7 @@
           </div>
           <div style="margin-top:20px;position:relative;height:210px;border:1px solid rgba(255,255,255,.09);background-color:#101013;background-image:{{ specUri }};background-size:30px 52px;display:grid;place-items:center">
             <div style="position:absolute;inset:0;background:radial-gradient(58% 62% at 50% 50%,rgba(11,11,13,.9),transparent 76%)"></div>
-            <div style="position:relative;padding:26px 34px;border:1px dashed rgba(232,178,58,.55);text-align:center">
+            <div style="position:relative;padding:26px 34px;border:1px dashed rgba(232,178,58,.55);text-align:center;background:#0B0B0D">
               <div style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">YOUR MARK HERE</div>
               <div style="margin-top:10px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">CELLS CLOSE TO FORM THE SHAPE<br>VECTOR PREFERRED · SVG / AI / PDF</div>
             </div>
@@ -391,12 +404,13 @@
 
         <sc-if value="{{ customSent }}" hint-placeholder-val="{{ false }}">
           <div style="border:1px solid rgba(232,178,58,.34);background:#0E0E11;padding:clamp(26px,4vw,42px)">
-            <div style="display:flex;align-items:center;gap:14px">
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
               <svg width="42" height="35" viewBox="0 0 120 100" aria-hidden="true"><use href="#bsBullFill"></use></svg>
               <span style="font:700 10.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">REQUEST RECEIVED<br><span style="font-weight:500;color:#6E6B66">{{ cSummary }}</span></span>
+              <span style="margin-left:auto;padding:9px 13px;border:1px solid #E8B23A;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BULLMAKER PENDING</span>
             </div>
             <h3 style="margin:26px 0 0;font:900 clamp(22px,3.2vw,32px)/1.06 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">WE'LL COME BACK<br>WITH A SAMPLE PLAN.</h3>
-            <p style="margin:18px 0 0;max-width:430px;font:400 15px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Expect a reply from the lab with what the mark needs to become printable geometry, a suggested material, and a price for the run.</p>
+            <p style="margin:18px 0 0;max-width:430px;font:400 15px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Expect a reply from the lab with what the mark needs to become printable geometry, a suggested material, and a price for the run. Approve the sample and the run starts — that is the point you become a BullMaker.</p>
             <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:12px">
               <button type="button" onClick="{{ onCustomEdit }}" style="padding:15px 24px;border:1px solid rgba(255,255,255,.22);background:none;color:#F4F2ED;font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;cursor:pointer" style-hover="border-color:#E8B23A;color:#E8B23A">EDIT REQUEST</button>
               <a href="mailto:bullish@bullprintlab.com" style="padding:15px 24px;border:1px solid rgba(232,178,58,.4);color:#E8B23A;font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em">EMAIL THE LAB</a>
@@ -649,12 +663,13 @@
 
         <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
           <div style="border:1px solid rgba(232,178,58,.34);background:#0E0E11;padding:clamp(26px,4vw,42px)">
-            <div style="display:flex;align-items:center;gap:14px">
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
               <svg width="42" height="35" viewBox="0 0 120 100" aria-hidden="true"><use href="#bsBullFill"></use></svg>
               <span style="font:700 10.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">PROFILE LOGGED<br><span style="font-weight:500;color:#6E6B66">{{ profileId }}</span></span>
+              <span style="margin-left:auto;padding:9px 13px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#0B0B0D">BULLTAKER PENDING</span>
             </div>
             <h3 style="margin:26px 0 0;font:900 clamp(24px,3.4vw,36px)/1.05 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">YOUR PRINT IS<br>IN THE QUEUE.</h3>
-            <p style="margin:18px 0 0;max-width:460px;font:400 15px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Next: {{ payHandoff }} Once payment clears we cut the geometry to your profile, print it, inspect it, and email you the serial before it ships.</p>
+            <p style="margin:18px 0 0;max-width:460px;font:400 15px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Next: {{ payHandoff }} Once payment clears we cut the geometry to your profile, print it, inspect it, and email you the serial before it ships. The serial is what makes you a BullTaker — it is issued at inspection, not at checkout.</p>
             <div style="margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.09)">
               <div style="background:#0B0B0D;padding:16px"><div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">PROFILE</div><div style="margin-top:8px;font:700 13px/1.4 'JetBrains Mono',monospace;color:#F4F2ED">{{ profileId }}</div></div>
               <div style="background:#0B0B0D;padding:16px"><div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#6E6B66">LATTICE</div><div style="margin-top:8px;font:700 13px/1.4 'JetBrains Mono',monospace;color:#F4F2ED">{{ specPitch }}</div></div>
@@ -685,6 +700,7 @@
             <div style="display:flex;justify-content:space-between;gap:14px"><span style="color:#6E6B66">PRINT</span><span style="color:#F4F2ED;text-align:right">{{ printSpec }}</span></div>
             <div style="display:flex;justify-content:space-between;gap:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.09)"><span style="color:#6E6B66">EDITION</span><span style="color:#E8B23A;text-align:right">DROP 001 · 001 / 100</span></div>
             <div style="display:flex;justify-content:space-between;gap:14px;align-items:baseline"><span style="color:#6E6B66">PRICE</span><span style="font:800 22px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ priceLabel }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px"><span style="color:#6E6B66">IN SATS</span><span style="color:#E8B23A;text-align:right">{{ satsLabel }}</span></div>
             <div style="display:flex;align-items:center;gap:10px;padding-top:12px;border-top:1px solid rgba(255,255,255,.09)">
               <svg width="22" height="18" viewBox="0 0 120 100" aria-hidden="true"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="6.5"></path><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="6.5"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="6.5"></path><path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="6.5"></path><path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="6.5"></path></g></svg>
               <span style="font:700 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">BEST IN BULL™<br><span style="font-weight:500;color:#6E6B66">INSPECTED BEFORE IT SHIPS</span></span>
@@ -813,38 +829,42 @@ class Component extends DCLogic {
     cell: 7, wall: 1.2, density: "ZONED",
     size: "10", width: "MEDIUM", arch: "MEDIUM", fit: "MEN'S", feel: "95A FIRMER", shoe: "", notes: "",
     pay: "STRIPE", shoeError: "", submitted: false,
+    btcPrice: null, btcChange: null, btcOk: null, btcAt: null,
     explode: 34, view: "RENDER",
     cBrand: "", cEmail: "", cQty: "1–5", cFile: "", cNotes: "", cError: "", customSent: false,
     kEmail: "", kTopic: "ORDER", kMsg: "", kError: "", contactSent: false
   };
 
+  fetchBtc() {
+    fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true")
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((j) => {
+        const b = j && j.bitcoin;
+        if (!b || typeof b.usd !== "number") throw new Error("shape");
+        this.setState({ btcPrice: b.usd, btcChange: b.usd_24h_change, btcOk: true, btcAt: new Date() });
+      })
+      .catch(() => {
+        fetch("https://api.coinbase.com/v2/prices/BTC-USD/spot")
+          .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+          .then((j) => {
+            const p = parseFloat(j && j.data && j.data.amount);
+            if (!p) throw new Error("shape");
+            this.setState({ btcPrice: p, btcChange: null, btcOk: true, btcAt: new Date() });
+          })
+          .catch(() => this.setState({ btcOk: false }));
+      });
+  }
+
   componentDidMount() {
+    this.fetchBtc();
+    this.btcTimer = setInterval(() => this.fetchBtc(), 60000);
+
     this.onScroll = () => {
       const s = window.scrollY > 24;
       if (s !== this.state.scrolled) this.setState({ scrolled: s });
     };
     window.addEventListener("scroll", this.onScroll, { passive: true });
     this.onScroll();
-
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduce) {
-      const els = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
-      els.forEach(function (el) {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(16px)";
-        el.style.transition = "opacity 420ms cubic-bezier(.2,.8,.2,1), transform 420ms cubic-bezier(.2,.8,.2,1)";
-      });
-      this.revealObs = new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.style.opacity = "1";
-            e.target.style.transform = "none";
-            obs.unobserve(e.target);
-          }
-        });
-      }, { rootMargin: "0px 0px -12% 0px", threshold: 0.05 });
-      els.forEach((el) => this.revealObs.observe(el));
-    }
 
     const ids = ["hero", "bullprint", "honeycomb", "drop", "exploded", "custom", "lab", "bull", "drops", "journal", "order", "about", "contact"];
     this.sectionObs = new IntersectionObserver((entries) => {
@@ -859,8 +879,9 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
+    clearInterval(this.btcTimer);
+
     window.removeEventListener("scroll", this.onScroll);
-    if (this.revealObs) this.revealObs.disconnect();
     if (this.sectionObs) this.sectionObs.disconnect();
   }
 
@@ -966,6 +987,12 @@ class Component extends DCLogic {
         "Ventilation and drainage architecture"
       ],
       priceLabel: "$" + (this.props.priceUsd ?? 99) + " USD / PAIR",
+      btcLabel: s.btcOk === false ? "RATE OFFLINE" : s.btcPrice ? "$" + Math.round(s.btcPrice).toLocaleString() : "FETCHING…",
+      btcChangeLabel: typeof s.btcChange === "number" ? (s.btcChange >= 0 ? "▲ " : "▼ ") + Math.abs(s.btcChange).toFixed(2) + "%" : "24H —",
+      btcChangeColor: typeof s.btcChange !== "number" ? "#6E6B66" : s.btcChange >= 0 ? "#E8B23A" : "#8A6A1E",
+      btcDotColor: s.btcOk ? "#E8B23A" : "#5C5952",
+      satsLabel: s.btcPrice ? Math.round((this.props.priceUsd ?? 99) / s.btcPrice * 1e8).toLocaleString() + " SATS" : "— SATS",
+      btcStamp: s.btcAt ? "SPOT " + s.btcAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "SPOT —",
 
       quality: [
         { n: "01", bull: true, title: "A SURFACE THAT DOESN'T HOLD SWEAT", copy: "Printed TPU has a closed skin. It doesn't absorb and store moisture the way an open-cell foam footbed does, so it doesn't carry the smell of last week with it." },
