@@ -265,8 +265,9 @@ PRERENDER = ROOT / "prerender.html"
 # read all 80 {{ }} expressions as if they were copy.
 TEMPLATE_PARK = (
     '<template id="bp-tpl">{tpl}</template>\n'
-    '<script>(function(){var t=document.getElementById("bp-tpl");'
-    't.parentNode.insertBefore(t.content.cloneNode(true),t);t.remove();})();</script>'
+    # external, not inline: the site's own CSP has no 'unsafe-inline', and an
+    # inline block here took production down until it was moved to a file
+    '<script src="./bp-boot.js"></script>'
 )
 
 
