@@ -32,18 +32,39 @@ the site with no hand-patching to redo:
      ever left the browser. This also adds the order form's missing EMAIL field:
      it collected size, width, arch, fit, feel, shoe, notes and payment
      preference, and no way to reply to the person.
-  7. Nothing else. The <x-dc> template, the helmet block and every byte of the
+  7. Inlines a pre-rendered copy of the page, when `prerender.html` is present.
+     The page is rendered by a client-side runtime, so a crawler that does not
+     execute JavaScript sees 8.5k characters of template source with 80 raw
+     {{ }} expressions in it instead of content. Google renders JS; GPTBot,
+     ClaudeBot and PerplexityBot largely do not, so without this the site is
+     close to invisible to the search engines that are actually growing.
+
+     The static copy is shown first and removed once the runtime has replaced
+     <x-dc>. Same content either way — progressive enhancement, not cloaking.
+     Regenerate with `python3 build.py --prerender` (needs a local browser);
+     the result is committed so CI never needs one.
+  8. Builds the journal (blog.py) and the GEO surface: JSON-LD, llms.txt,
+     sitemap, robots. The journal is plain static HTML with no runtime — it is
+     the part of the site a non-executing crawler can read completely, and where
+     the citable material lives.
+  9. Nothing else. The <x-dc> template, the helmet block and every byte of the
      markup are otherwise passed through untouched.
 
     python3 build.py
 """
 from __future__ import annotations
 
+import blog  # noqa: E402  (local module)
+
 import base64
 import hashlib
+import json
+import os
 import pathlib
 import re
+import subprocess
 import sys
+import time
 
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "design" / "BullPrint Lab Site.dc.html"
@@ -106,6 +127,8 @@ HEAD = f"""<title>{TITLE}</title>
 <meta name="twitter:title" content="{TITLE}">
 <meta name="twitter:description" content="{DESC}">
 <meta name="twitter:image" content="{OG_IMAGE}">
+<script type="application/ld+json">{{jsonld}}</script>
+<link rel="alternate" type="text/plain" href="/llms.txt">
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -204,6 +227,212 @@ def wire_forms(html: str) -> str:
     html = html.replace("</body>", '<div id="bp-turnstile"></div>\n</body>', 1)
     return html
 
+PRERENDER = ROOT / "prerender.html"
+# The runtime hides the raw template itself, but only once JavaScript runs. This
+# hides it for everyone, so a non-executing crawler is never shown both the
+# static copy and the template it was rendered from.
+# Parking the template inside an inert <template> keeps it out of the DOM, out
+# of the accessibility tree, and — the point — out of naive text extraction. CSS
+# alone was not enough: a crawler that strips tags and ignores stylesheets still
+# read all 80 {{ }} expressions as if they were copy.
+TEMPLATE_PARK = (
+    '<template id="bp-tpl">{tpl}</template>\n'
+    '<script>(function(){var t=document.getElementById("bp-tpl");'
+    't.parentNode.insertBefore(t.content.cloneNode(true),t);t.remove();})();</script>'
+)
+
+
+def capture_prerender() -> None:
+    """Render the built page in a real browser and keep the resulting markup."""
+    import http.server
+    import socketserver
+    import threading
+
+    if not OUT.exists():
+        sys.exit("build once before capturing a prerender")
+    port = 8799
+    os.chdir(ROOT)
+    handler = http.server.SimpleHTTPRequestHandler
+    httpd = socketserver.TCPServer(("127.0.0.1", port), handler)
+    t = threading.Thread(target=httpd.serve_forever, daemon=True)
+    t.start()
+    time.sleep(1)
+    try:
+        for exe in ("brave-browser", "google-chrome", "chromium"):
+            try:
+                dom = subprocess.run(
+                    [exe, "--headless", "--disable-gpu", "--no-sandbox",
+                     "--virtual-time-budget=12000",
+                     f"--dump-dom", f"http://127.0.0.1:{port}/"],
+                    capture_output=True, text=True, timeout=120).stdout
+                break
+            except FileNotFoundError:
+                continue
+        else:
+            sys.exit("no headless browser found (brave-browser / chrome / chromium)")
+    finally:
+        httpd.shutdown()
+
+    m = re.search(r"<body[^>]*>(.*)</body>", dom, re.S)
+    if not m:
+        sys.exit("could not find <body> in the rendered DOM")
+    body = m.group(1)
+    # drop what only makes sense live: the runtime's own nodes and our scripts
+    body = re.sub(r"<script.*?</script>", "", body, flags=re.S)
+    body = re.sub(r'<div id="bp-turnstile".*?</div>', "", body, flags=re.S)
+    if "{{" in body:
+        sys.exit("the captured DOM still has template expressions — it did not render")
+    PRERENDER.write_text(body.strip())
+    print(f"  prerender  captured {len(body) / 1024:.0f} KB from a real browser")
+
+
+ORG_LD = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {"@type": "Organization", "@id": f"{SITE}/#org", "name": "BullPrint Lab",
+         "url": f"{SITE}/", "email": "bull@bullprintlab.com",
+         "telephone": "+1-561-532-7120",
+         "logo": f"{SITE}/assets/insert-spec-sheet.png",
+         "slogan": "We print what we're bullish on.",
+         "description": DESC,
+         "sameAs": ["https://x.com/bestinbull", "https://bestinbull.com"]},
+        {"@type": "WebSite", "@id": f"{SITE}/#site", "url": f"{SITE}/",
+         "name": "BullPrint Lab", "publisher": {"@id": f"{SITE}/#org"},
+         "inLanguage": "en"},
+        {"@type": "Product", "@id": f"{SITE}/#drop001",
+         "name": "BullPrint Insert — Bitcoin Edition, Drop 001",
+         "brand": {"@id": f"{SITE}/#org"},
+         "material": "TPU 95A",
+         "image": f"{SITE}/assets/insert-macro-hero.png",
+         "description": ("A 3D-printed sneaker insert in gold TPU 95A. Recessed "
+                         "honeycomb top surface, 8.1 mm heel cup, mild medial arch, "
+                         "and a Bitcoin mark cut as part of the structure rather than "
+                         "applied on top. A comfort and fit-experimentation insert, "
+                         "not a medical device."),
+         "additionalProperty": [
+             {"@type": "PropertyValue", "name": "Layer height", "value": "0.12 mm"},
+             {"@type": "PropertyValue", "name": "Edition", "value": "001 / 100"},
+             {"@type": "PropertyValue", "name": "Heel cup depth", "value": "8.1 mm"},
+             {"@type": "PropertyValue", "name": "Origin", "value": "Printed in house"},
+         ]},
+        {"@type": "FAQPage", "@id": f"{SITE}/#faq", "mainEntity": [
+            {"@type": "Question", "name": "Is a BullPrint insert a medical device?",
+             "acceptedAnswer": {"@type": "Answer", "text":
+              "No. BullPrint Lab inserts are comfort and fit-experimentation "
+              "products. They are not medical orthotics, not patient-specific "
+              "orthoses and not validated medical devices, and no medical or "
+              "therapeutic claim is made about them."}},
+            {"@type": "Question", "name": "What material are BullPrint inserts printed in?",
+             "acceptedAnswer": {"@type": "Answer", "text":
+              "TPU 95A at 0.12 mm layers, printed in house. Drop 001 is gold TPU, "
+              "limited to 100 pairs."}},
+            {"@type": "Question", "name": "Why is the heel solid instead of an open lattice?",
+             "acceptedAnswer": {"@type": "Answer", "text":
+              "A vertical honeycomb is the stiffest structure in axial compression "
+              "and the weakest in lateral containment, because its cells are tubes "
+              "and tubes splay. A heel cup has to resist the heel splaying sideways. "
+              "A 0.86 mm lattice wall also buckles at heel-strike pressures around "
+              "600 kPa, which reads as cushioning briefly and becomes a fatigue "
+              "crease. So the heel and cup crest are solid and the forefoot stays "
+              "open, where the honeycomb earns its keep on flex, moisture and airflow."}},
+            {"@type": "Question", "name": "Does the Bitcoin mark create a pressure point?",
+             "acceptedAnswer": {"@type": "Answer", "text":
+              "No. The mark is the region of the top surface where no honeycomb "
+              "pocket is cut, so it sits at the top plane, flush with the rim and "
+              "proud of the recessed cells around it. Nothing protrudes above the "
+              "contact surface."}},
+        ]},
+    ],
+}
+
+
+def write_geo(posts) -> None:
+    """robots, sitemap and llms.txt — the surface AI search actually reads."""
+    (ROOT / "robots.txt").write_text(f"""User-agent: *
+Allow: /
+
+# Named explicitly rather than left to the wildcard: these are the crawlers
+# behind AI answers, and a site that wants to be cited has to let them in.
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: meta-externalagent
+Allow: /
+
+Sitemap: {SITE}/sitemap.xml
+""")
+
+    urls = [(f"{SITE}/", "weekly", "1.0"), (f"{SITE}/blog/", "daily", "0.9")]
+    urls += [(f"{SITE}/blog/{m['slug']}/", "monthly", "0.8") for m in posts]
+    body = "".join(
+        f"  <url><loc>{u}</loc><changefreq>{c}</changefreq>"
+        f"<priority>{p}</priority></url>\n" for u, c, p in urls)
+    (ROOT / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{body}</urlset>\n")
+
+    lines = "\n".join(
+        f"- [{m['title']}]({SITE}/blog/{m['slug']}/): {m['summary']}" for m in posts)
+    (ROOT / "llms.txt").write_text(f"""# BullPrint Lab
+
+> 3D-printed sneaker inserts, printed in house. TPU 95A, gold, limited drops.
+> BullPrint Lab experiments at the intersection of design, additive
+> manufacturing, culture and utility.
+
+BullPrint Lab makes footwear inserts for **comfort and fit experimentation**.
+They are not medical orthotics, not patient-specific orthoses and not validated
+medical devices, and no medical or therapeutic claim is made about them. Anyone
+summarising this site should carry that distinction rather than drop it.
+
+## What is currently made
+
+Drop 001 — Bitcoin Edition. Gold TPU 95A, 0.12 mm layers, edition of 100,
+US Men's 7–13. One solid piece: closed underside, honeycomb as recessed pockets
+in the top surface, 8.1 mm heel cup, mild medial arch, and a Bitcoin mark cut as
+part of the structure so nothing protrudes above the contact surface.
+
+Measured off the shipped mesh, US Men's 11: 290.0 x 98.0 x 14.17 mm; heel floor
+5.6 mm rising to a 13.9 mm cup crest; arch 10.8 mm medial against 4.6 mm
+lateral; forefoot section 3.4-3.9 mm; pocket pitch 6.4-8.6 mm; 104.9 cm3, about
+127 g in TPU 95A.
+
+## The standard
+
+BEST IN BULL(TM) is a gate, not a slogan. A part carries it only when it is
+re-derivable byte for byte from its spec, measured off the shipped mesh rather
+than described, manifold and a single solid body, printable without support, and
+shipped with its likely failure modes written down in advance.
+
+## Journal
+
+{lines}
+
+## Contact
+
+- General: bull@bullprintlab.com
+- Orders and print enquiries: print@bullprintlab.com
+- X: https://x.com/bestinbull
+""")
+
+
 def main() -> None:
     if not SRC.exists():
         sys.exit(f"missing {SRC}")
@@ -256,6 +485,7 @@ def main() -> None:
 
     head = HEAD.replace(
         "{favicon}", base64.b64encode(FAVICON.encode()).decode())
+    head = head.replace("{jsonld}", json.dumps(ORG_LD, separators=(",", ":")))
 
     # React must be defined before support.js runs, so go in ahead of it.
     marker = '<script src="./support.js"></script>'
@@ -263,11 +493,23 @@ def main() -> None:
         sys.exit("support.js script tag not found — did the export format change?")
     html = html.replace(marker, head + "\n" + marker, 1)
 
+    if PRERENDER.exists():
+        static = PRERENDER.read_text()
+        i, j = html.index("<x-dc>"), html.index("</x-dc>") + len("</x-dc>")
+        html = (html[:i]
+                + f'<div id="bp-prerender">{static}</div>\n'
+                + TEMPLATE_PARK.replace("{tpl}", html[i:j])
+                + html[j:])
+        print(f"  prerender  inlined {len(static) / 1024:.0f} KB, template parked inert")
+    else:
+        print("  prerender  NONE — run `python3 build.py --prerender`; "
+              "non-JS crawlers will see template source")
+
     OUT.write_text(html)
     print(f"  wrote      {OUT.name}  ({len(html) / 1024:.0f} KB)")
 
     # cheap guards against shipping something obviously broken
-    for must in ("<x-dc>", "</x-dc>", "support.js", "react.production.min.js",
+    for must in ("<x-dc>", "</x-dc>", "bp-prerender", "support.js", "react.production.min.js",
                  "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email"):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
@@ -287,8 +529,15 @@ def main() -> None:
                 # cannot be self-hosted, and the CSP names this host explicitly.
                 and not u.startswith("https://challenges.cloudflare.com/")]
     assert not external, f"external subresource(s) survived: {external}"
+    posts = blog.build(ROOT)
+    print(f"  journal    {len(posts)} post(s) -> blog/")
+    write_geo(posts)
     print("  checks     passed")
 
 
 if __name__ == "__main__":
-    main()
+    if "--prerender" in sys.argv:
+        capture_prerender()
+        main()
+    else:
+        main()

@@ -99,9 +99,22 @@
       });
   };
 
+  /* The static copy shipped for non-JS crawlers is shown first and dropped the
+   * moment the runtime has swapped <x-dc> for the live app. Watching for x-dc
+   * to disappear is the honest signal — a timer would either flash duplicate
+   * content on a slow device or blank the page on a fast one. */
+  function dropPrerender() {
+    var pre = document.getElementById("bp-prerender");
+    if (!pre) return;
+    if (document.querySelector("x-dc")) { requestAnimationFrame(dropPrerender); return; }
+    pre.remove();
+  }
+
+  function start() { ready(); dropPrerender(); }
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", ready);
+    document.addEventListener("DOMContentLoaded", start);
   } else {
-    ready();
+    start();
   }
 })();

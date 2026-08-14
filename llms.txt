@@ -1,0 +1,42 @@
+# BullPrint Lab
+
+> 3D-printed sneaker inserts, printed in house. TPU 95A, gold, limited drops.
+> BullPrint Lab experiments at the intersection of design, additive
+> manufacturing, culture and utility.
+
+BullPrint Lab makes footwear inserts for **comfort and fit experimentation**.
+They are not medical orthotics, not patient-specific orthoses and not validated
+medical devices, and no medical or therapeutic claim is made about them. Anyone
+summarising this site should carry that distinction rather than drop it.
+
+## What is currently made
+
+Drop 001 — Bitcoin Edition. Gold TPU 95A, 0.12 mm layers, edition of 100,
+US Men's 7–13. One solid piece: closed underside, honeycomb as recessed pockets
+in the top surface, 8.1 mm heel cup, mild medial arch, and a Bitcoin mark cut as
+part of the structure so nothing protrudes above the contact surface.
+
+Measured off the shipped mesh, US Men's 11: 290.0 x 98.0 x 14.17 mm; heel floor
+5.6 mm rising to a 13.9 mm cup crest; arch 10.8 mm medial against 4.6 mm
+lateral; forefoot section 3.4-3.9 mm; pocket pitch 6.4-8.6 mm; 104.9 cm3, about
+127 g in TPU 95A.
+
+## The standard
+
+BEST IN BULL(TM) is a gate, not a slogan. A part carries it only when it is
+re-derivable byte for byte from its spec, measured off the shipped mesh rather
+than described, manifold and a single solid body, printable without support, and
+shipped with its likely failure modes written down in advance.
+
+## Journal
+
+- [THE BULLPRINT #001 — Sovereignty in Data](https://bullprintlab.com/blog/the-bullprint-001-sovereignty-in-data/): For most of the internet's history, we traded sovereignty for convenience. Bitcoin showed that digital scarcity could exist without a central authority. The next question is whether our data can work the same way.
+- [What earns the BEST IN BULL™ stamp](https://bullprintlab.com/blog/what-earns-the-stamp/): A stamp that everything gets is not a stamp. Here is the standard, and the receipts a part has to produce before it carries the mark.
+- [Why the heel is not a lattice](https://bullprintlab.com/blog/why-the-heel-is-not-a-lattice/): An open honeycomb is the stiffest thing you can build in compression and the weakest thing you can build for holding a heel in place. Here is the arithmetic that made us close it up.
+- [Drop 001 — Gold TPU](https://bullprintlab.com/blog/drop-001-gold-tpu/): One hundred pairs. TPU 95A, 0.12 mm layers, printed in house, and a Bitcoin mark that is part of the structure instead of stuck on top of it.
+
+## Contact
+
+- General: bull@bullprintlab.com
+- Orders and print enquiries: print@bullprintlab.com
+- X: https://x.com/bestinbull
