@@ -27,7 +27,12 @@ the site with no hand-patching to redo:
      sit inside the custom-request and order flows go to `print@`, everything
      else to `bull@`. Fix this at source in the design when convenient and this
      step becomes a no-op.
-  6. Nothing else. The <x-dc> template, the helmet block and every byte of the
+  6. Wires the three forms to /api/submit, behind Turnstile. As exported they
+     only flipped a local "sent" flag — they looked like they worked and nothing
+     ever left the browser. This also adds the order form's missing EMAIL field:
+     it collected size, width, arch, fit, feel, shoe, notes and payment
+     preference, and no way to reply to the person.
+  7. Nothing else. The <x-dc> template, the helmet block and every byte of the
      markup are otherwise passed through untouched.
 
     python3 build.py
@@ -67,6 +72,8 @@ EMAIL_ORDERS = "print@bullprintlab.com"
 # Sections whose "EMAIL THE LAB" button is an order/print enquiry, not general contact.
 ORDER_SECTIONS = ("custom", "order")
 
+TURNSTILE_SITEKEY = "0x4AAAAAAEQBxUgUlUeDfZjS"
+
 ASSETS = {
     "uploads/images-1786710197897-v7um.png": "assets/insert-macro-hero.webp",
     "uploads/images-1786710214318-psa4.png": "assets/insert-spec-sheet.webp",
@@ -100,7 +107,9 @@ HEAD = f"""<title>{TITLE}</title>
 <meta name="twitter:description" content="{DESC}">
 <meta name="twitter:image" content="{OG_IMAGE}">
 <script src="./vendor/react.production.min.js"></script>
-<script src="./vendor/react-dom.production.min.js"></script>"""
+<script src="./vendor/react-dom.production.min.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="./bp-forms.js" defer></script>"""
 
 
 def check_vendor() -> None:
@@ -115,6 +124,85 @@ def check_vendor() -> None:
                      f"  want {want}\n  got  {got}")
         print(f"  vendor ok  {rel}")
 
+
+def wire_forms(html: str) -> str:
+    """Give the three forms somewhere to send, and the order form an address."""
+
+    # -- the order form has no email field. Add one, as its own numbered step,
+    #    and push the steps after it along.
+    for old, new in (("08 · CHECKOUT RAIL", "09 · CHECKOUT RAIL"),
+                     ("07 · FEEL", "08 · FEEL"),
+                     ("06 · SPECIAL NOTES", "07 · SPECIAL NOTES")):
+        if old not in html:
+            sys.exit(f"order-form step '{old}' not found — the design changed")
+        html = html.replace(old, new, 1)
+
+    anchor = '<div id="bs-shoe-err"'
+    i = html.find(anchor)
+    if i < 0:
+        sys.exit("order form's shoe field not found — the design changed")
+    close = html.index("</div>", i) + len("</div>")
+    field = (
+        '\n                <label for="bs-email" style="display:block;margin:22px 0 14px;'
+        "font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED\">"
+        '06 · EMAIL</label>'
+        '\n                <input id="bs-email" type="email" inputmode="email" '
+        'autocomplete="email" value="{{ email }}" onChange="{{ onEmail }}" '
+        'aria-describedby="bs-email-err" placeholder="WHERE THE BUILD SHEET LANDS" '
+        'style="width:100%;box-sizing:border-box;padding:14px;background:#101013;'
+        'border:1px solid {{ emailBorder }};color:#F4F2ED;'
+        "font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.1em;outline:none;"
+        'transition:border-color 180ms" style-focus="border-color:#E8B23A">'
+        '\n                <div id="bs-email-err" role="status" style="margin-top:9px;'
+        "font:600 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em;"
+        'color:#F7931A;min-height:15px">{{ emailError }}</div>'
+    )
+    html = html[:close] + field + html[close:]
+    print("  order      added the missing 06 · EMAIL field, steps renumbered")
+
+    # -- state and bindings for it
+    html = html.replace(
+        'pay: "STRIPE", shoeError: "", submitted: false,',
+        'pay: "STRIPE", shoeError: "", submitted: false, email: "", emailError: "",', 1)
+    html = html.replace(
+        '      onShoe: (e) => this.setState({ shoe: e.target.value, shoeError: "" }),',
+        '      onShoe: (e) => this.setState({ shoe: e.target.value, shoeError: "" }),\n'
+        '      email: s.email, emailError: s.emailError,\n'
+        '      emailBorder: s.emailError ? "#F7931A" : "rgba(255,255,255,.14)",\n'
+        '      onEmail: (e) => this.setState({ email: e.target.value, emailError: "" }),', 1)
+
+    # -- send, then flip the "sent" flag. Not the other way round: a form that
+    #    says SENT when nothing was sent is the failure mode worth avoiding.
+    sends = [
+        ('this.setState({ submitted: true, shoeError: "" });',
+         'if (!/.+@.+\\..+/.test(s.email)) { this.setState({ emailError: "ADD AN EMAIL SO WE CAN REPLY" }); return; }\n'
+         '      this.setState({ emailError: "", shoeError: "" });\n'
+         '      window.bpSend("order", { email: s.email, shoe: s.shoe, size: s.size, fit: s.fit,\n'
+         '        width: s.width, arch: s.arch, feel: s.feel, cell: s.cell, wall: s.wall,\n'
+         '        density: s.density, pay: s.pay, notes: s.notes })\n'
+         '        .then(() => this.setState({ submitted: true }))\n'
+         '        .catch((err) => this.setState({ emailError: err.message }));'),
+        ('this.setState({ customSent: true, cError: "" });',
+         'this.setState({ cError: "" });\n'
+         '        window.bpSend("custom", { email: s.cEmail, brand: s.cBrand, qty: s.cQty,\n'
+         '          file: s.cFile, notes: s.cNotes })\n'
+         '          .then(() => this.setState({ customSent: true }))\n'
+         '          .catch((err) => this.setState({ cError: err.message }));'),
+        ('this.setState({ contactSent: true, kError: "" });',
+         'this.setState({ kError: "" });\n'
+         '        window.bpSend("contact", { email: s.kEmail, topic: s.kTopic, msg: s.kMsg })\n'
+         '          .then(() => this.setState({ contactSent: true }))\n'
+         '          .catch((err) => this.setState({ kError: err.message }));'),
+    ]
+    for old, new in sends:
+        if html.count(old) != 1:
+            sys.exit(f"expected exactly one: {old[:44]}... — the design changed")
+        html = html.replace(old, new, 1)
+    print("  forms      order / custom / contact -> POST /api/submit via Turnstile")
+
+    # Turnstile mounts here, outside <x-dc>, so a React re-render cannot eat it.
+    html = html.replace("</body>", '<div id="bp-turnstile"></div>\n</body>', 1)
+    return html
 
 def main() -> None:
     if not SRC.exists():
@@ -155,6 +243,8 @@ def main() -> None:
     print(f"  contact    {DESIGN_EMAIL} -> {EMAIL_ORDERS} ({n_ord}x), "
           f"{EMAIL_GENERAL} ({n_before - n_ord}x)")
 
+    html = wire_forms(html)
+
     # self-hosted fonts: drop the Google links, add the local stylesheet
     before = html
     html = re.sub(r'<link rel="preconnect" href="https://fonts\.gstatic\.com"[^>]*>\s*', "", html)
@@ -177,7 +267,8 @@ def main() -> None:
     print(f"  wrote      {OUT.name}  ({len(html) / 1024:.0f} KB)")
 
     # cheap guards against shipping something obviously broken
-    for must in ("<x-dc>", "</x-dc>", "support.js", "react.production.min.js"):
+    for must in ("<x-dc>", "</x-dc>", "support.js", "react.production.min.js",
+                 "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email"):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
     assert DESIGN_EMAIL not in html and DESIGN_EMAIL.upper() not in html, \
@@ -191,7 +282,10 @@ def main() -> None:
     sub += re.findall(r'url\((["\']?)(https?://[^)"\']+)', html)
     external = [u for u in sub if isinstance(u, str)
                 and u.startswith(("http://", "https://"))
-                and not u.startswith("https://bullprintlab.com")]
+                and not u.startswith("https://bullprintlab.com")
+                # Turnstile is a deliberate, documented exception: a captcha
+                # cannot be self-hosted, and the CSP names this host explicitly.
+                and not u.startswith("https://challenges.cloudflare.com/")]
     assert not external, f"external subresource(s) survived: {external}"
     print("  checks     passed")
 

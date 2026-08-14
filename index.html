@@ -23,6 +23,8 @@
 <meta name="twitter:image" content="https://bullprintlab.com/assets/insert-spec-sheet.png">
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="./bp-forms.js" defer></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -627,12 +629,15 @@
                 <label for="bs-shoe" style="display:block;margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">05 · SNEAKER</label>
                 <input id="bs-shoe" type="text" value="{{ shoe }}" onChange="{{ onShoe }}" aria-describedby="bs-shoe-err" placeholder="MAKE / MODEL — E.G. AF1 '07" style="width:100%;box-sizing:border-box;padding:14px;background:#101013;border:1px solid {{ shoeBorder }};color:#F4F2ED;font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.1em;outline:none;transition:border-color 180ms" style-focus="border-color:#E8B23A">
                 <div id="bs-shoe-err" role="status" style="margin-top:9px;font:600 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em;color:#F7931A;min-height:15px">{{ shoeError }}</div>
+                <label for="bs-email" style="display:block;margin:22px 0 14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">06 · EMAIL</label>
+                <input id="bs-email" type="email" inputmode="email" autocomplete="email" value="{{ email }}" onChange="{{ onEmail }}" aria-describedby="bs-email-err" placeholder="WHERE THE BUILD SHEET LANDS" style="width:100%;box-sizing:border-box;padding:14px;background:#101013;border:1px solid {{ emailBorder }};color:#F4F2ED;font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.1em;outline:none;transition:border-color 180ms" style-focus="border-color:#E8B23A">
+                <div id="bs-email-err" role="status" style="margin-top:9px;font:600 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em;color:#F7931A;min-height:15px">{{ emailError }}</div>
               </div>
             </div>
 
             <div>
               <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px">
-                <label for="bs-notes" style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">06 · SPECIAL NOTES</label>
+                <label for="bs-notes" style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">07 · SPECIAL NOTES</label>
                 <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">{{ notesCount }}</span>
               </div>
               <textarea id="bs-notes" maxlength="240" value="{{ notes }}" onChange="{{ onNotes }}" placeholder="Anything the print should account for — hotspots, an orthotic you currently wear, how you lace, what you do in them." style="width:100%;box-sizing:border-box;height:112px;resize:vertical;padding:14px;background:#101013;border:1px solid rgba(255,255,255,.14);color:#F4F2ED;font:400 13.5px/1.6 Archivo,sans-serif;outline:none;transition:border-color 180ms" style-focus="border-color:#E8B23A"></textarea>
@@ -641,7 +646,7 @@
 
             <fieldset style="margin:0;padding:0;border:none">
               <legend style="padding:0;display:flex;width:100%;justify-content:space-between;align-items:baseline;margin-bottom:14px">
-                <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">07 · FEEL</span>
+                <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">08 · FEEL</span>
                 <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">MATERIAL SELECTED TO SUIT</span>
               </legend>
               <div role="radiogroup" aria-label="Feel" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;max-width:460px">
@@ -653,7 +658,7 @@
             </fieldset>
 
             <fieldset style="margin:0;padding:30px 0 0;border:none;border-top:1px solid rgba(255,255,255,.09)">
-              <legend style="padding:0;margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">08 · CHECKOUT RAIL</legend>
+              <legend style="padding:0;margin-bottom:14px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#F4F2ED">09 · CHECKOUT RAIL</legend>
               <div role="radiogroup" aria-label="Payment rail" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;max-width:460px">
                 <sc-for list="{{ payOpts }}" as="opt" hint-placeholder-count="2">
                   <div role="radio" tabindex="0" aria-checked="{{ opt.checked }}" onClick="{{ opt.onClick }}" onKeyDown="{{ opt.onKey }}" style="{{ opt.style }}">{{ opt.label }}</div>
@@ -831,7 +836,7 @@ class Component extends DCLogic {
     navOpen: false, scrolled: false, active: "hero",
     cell: 7, wall: 1.2, density: "ZONED",
     size: "10", width: "MEDIUM", arch: "MEDIUM", fit: "MEN'S", feel: "95A FIRMER", shoe: "", notes: "",
-    pay: "STRIPE", shoeError: "", submitted: false,
+    pay: "STRIPE", shoeError: "", submitted: false, email: "", emailError: "",
     explode: 34, view: "RENDER",
     cBrand: "", cEmail: "", cQty: "1–5", cFile: "", cNotes: "", cError: "", customSent: false,
     kEmail: "", kTopic: "ORDER", kMsg: "", kError: "", contactSent: false
@@ -933,7 +938,13 @@ class Component extends DCLogic {
     const submit = (e) => {
       if (e && e.preventDefault) e.preventDefault();
       if (!s.shoe.trim()) { this.setState({ shoeError: "TELL US THE SHOE — WE CUT THE OUTLINE TO IT" }); return; }
-      this.setState({ submitted: true, shoeError: "" });
+      if (!/.+@.+\..+/.test(s.email)) { this.setState({ emailError: "ADD AN EMAIL SO WE CAN REPLY" }); return; }
+      this.setState({ emailError: "", shoeError: "" });
+      window.bpSend("order", { email: s.email, shoe: s.shoe, size: s.size, fit: s.fit,
+        width: s.width, arch: s.arch, feel: s.feel, cell: s.cell, wall: s.wall,
+        density: s.density, pay: s.pay, notes: s.notes })
+        .then(() => this.setState({ submitted: true }))
+        .catch((err) => this.setState({ emailError: err.message }));
     };
 
     return {
@@ -1110,7 +1121,11 @@ class Component extends DCLogic {
       onCustomSubmit: (e) => {
         if (e && e.preventDefault) e.preventDefault();
         if (!/.+@.+\..+/.test(s.cEmail)) { this.setState({ cError: "WE NEED AN EMAIL TO SEND THE SAMPLE PLAN" }); return; }
-        this.setState({ customSent: true, cError: "" });
+        this.setState({ cError: "" });
+        window.bpSend("custom", { email: s.cEmail, brand: s.cBrand, qty: s.cQty,
+          file: s.cFile, notes: s.cNotes })
+          .then(() => this.setState({ customSent: true }))
+          .catch((err) => this.setState({ cError: err.message }));
       },
       onCustomEdit: () => this.setState({ customSent: false }),
       cSummary: (s.cBrand ? s.cBrand.toUpperCase() : "UNNAMED MARK") + " · " + s.cQty + " PAIRS" + (s.cFile ? " · ARTWORK ATTACHED" : ""),
@@ -1126,7 +1141,10 @@ class Component extends DCLogic {
       onContactSubmit: (e) => {
         if (e && e.preventDefault) e.preventDefault();
         if (!/.+@.+\..+/.test(s.kEmail)) { this.setState({ kError: "ADD AN EMAIL SO WE CAN REPLY" }); return; }
-        this.setState({ contactSent: true, kError: "" });
+        this.setState({ kError: "" });
+        window.bpSend("contact", { email: s.kEmail, topic: s.kTopic, msg: s.kMsg })
+          .then(() => this.setState({ contactSent: true }))
+          .catch((err) => this.setState({ kError: err.message }));
       },
       onContactEdit: () => this.setState({ contactSent: false, kMsg: "" }),
 
@@ -1139,6 +1157,9 @@ class Component extends DCLogic {
       payOpts: this.chips("pay", ["STRIPE", "COINBASE COMMERCE"], true),
       shoe: s.shoe, notes: s.notes,
       onShoe: (e) => this.setState({ shoe: e.target.value, shoeError: "" }),
+      email: s.email, emailError: s.emailError,
+      emailBorder: s.emailError ? "#F7931A" : "rgba(255,255,255,.14)",
+      onEmail: (e) => this.setState({ email: e.target.value, emailError: "" }),
       onNotes: (e) => this.setState({ notes: e.target.value }),
       notesCount: s.notes.length + " / 240",
       shoeError: s.shoeError,
@@ -1163,5 +1184,6 @@ class Component extends DCLogic {
   }
 }
 </script>
+<div id="bp-turnstile"></div>
 </body>
 </html>
