@@ -18,9 +18,9 @@ and not make it. That question is why this list is short.
 <p><em>Why print it:</em> a moulded insole is one stiffness everywhere. This one changes cell size and wall thickness between heel and forefoot, per customer, with no tooling cost — because there is no tool.</p>
 <ul class="spec">
 <li><b>Material</b> TPU 95A or PEBA</li>
-<li><b>Print</b> 5.2 h per pair</li>
+<li><b>Print</b> 11 h 19 m per insert</li>
 <li><b>Stack</b> Heel 12 mm · forefoot 6 mm</li>
-<li><b>Sizes</b> M 6–13 / W 7–14</li>
+<li><b>Sizes</b> US M13 first, more to follow</li>
 <li><b>Status</b> BEST IN BULL™ eligible</li>
 </ul>
 <p style="margin-top:22px"><a class="lozenge" href="../#order">BUILD YOURS</a></p>
@@ -28,14 +28,13 @@ and not make it. That question is why this list is short.
 <div>
 <p class="role">Item 02 · Drop 002 · In the lab</p>
 <h2>BULL<br>SLIDES</h2>
-<p><strong>$128</strong> · recover hard, move easy. Zoned lattice footbed, high heel walls, wide toe box. Supportive rather than plush — it holds the arch instead of letting it sink.</p>
-<p><em>Why print it:</em> recovery slides are foam bricks that flatten in a season. A printed lattice tunes give by zone, and when it does go off it is reprinted from the same file rather than replaced by a guess.</p>
+<p><strong>$128</strong> · recover hard, move easy. Zoned lattice footbed, high heel walls, wide toe box. Supportive rather than plush.</p>
+<p><em>Why print it:</em> a printed lattice lets us tune give by zone, and reprint from the same file rather than replace by a guess.</p>
 <ul class="spec">
-<li><b>Material</b> TPU 95A</li>
-<li><b>Print</b> 18–22 h per slide</li>
-<li><b>Stack</b> Heel 38 mm · forefoot 34 mm</li>
-<li><b>Sizes</b> M 6–13 / W 7–14</li>
-<li><b>Drawing</b> BPL-SL-013-B</li>
+<li><b>Material</b> TPU and PEBA, three-part build</li>
+<li><b>Print</b> In qualification</li>
+<li><b>Stack</b> ≈ 38 mm at the heel</li>
+<li><b>Sizes</b> US M13 first, more to follow</li>
 </ul>
 <p style="margin-top:22px"><a class="lozenge" href="mailto:bullish@bullprintlab.com?subject=Bull%20Slides%20—%20Drop%20002">TELL ME WHEN</a></p>
 </div>
@@ -51,7 +50,7 @@ and not make it. That question is why this list is short.
 <li><b>Material</b> TPU 95A</li>
 <li><b>Print</b> 7.1 h per pair</li>
 <li><b>Stack</b> Heel 8 mm · forefoot 6 mm</li>
-<li><b>Sizes</b> M 6–13 / W 7–14</li>
+<li><b>Sizes</b> US M13 first, more to follow</li>
 </ul>
 </div>
 <div>
