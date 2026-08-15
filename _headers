@@ -21,6 +21,15 @@
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
 
+/platform/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Unversioned filenames that change with the build, unlike the SRI-pinned
+# vendor bundles and the hashed fonts. They must revalidate or a visitor keeps
+# a boot script that no longer matches the page it boots.
+/bp-prerender.js
+  Cache-Control: public, max-age=0, must-revalidate
+
 /order/confirmed
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store

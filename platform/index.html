@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BullPrint Lab Platform — describe the part, get the geometry.</title>
+<meta name="description" content="The AI CAD workspace behind BullPrint Lab. Describe a part in plain language, read the BullSpec it derives, and generate real parametric geometry — on our own GPU, on our own floor.">
+<link rel="canonical" href="https://bullprintlab.com/platform/">
+<meta name="theme-color" content="#0B0B0D">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMEIwQjBEIi8+PHRleHQgeD0iMzIiIHk9IjQ1IiBmb250LWZhbWlseT0iQXJjaGl2byxIZWx2ZXRpY2EsQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0MiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI0U4QjIzQSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+4oK/PC90ZXh0Pjwvc3ZnPg==">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BullPrint Lab">
+<meta property="og:url" content="https://bullprintlab.com/platform/">
+<meta property="og:title" content="BullPrint Lab Platform — describe the part, get the geometry.">
+<meta property="og:description" content="The AI CAD workspace behind BullPrint Lab. Describe a part in plain language, read the BullSpec it derives, and generate real parametric geometry — on our own GPU, on our own floor.">
+<meta property="og:image" content="https://bullprintlab.com/assets/insert-spec-sheet.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BullPrint Lab Platform — describe the part, get the geometry.">
+<meta name="twitter:description" content="The AI CAD workspace behind BullPrint Lab. Describe a part in plain language, read the BullSpec it derives, and generate real parametric geometry — on our own GPU, on our own floor.">
+<link rel="alternate" type="text/plain" href="/llms.txt">
+<script src="/vendor/react.production.min.js"></script>
+<script src="/vendor/react-dom.production.min.js"></script>
+<script src="/bp-prerender.js" defer></script>
+<script src="/support.js"></script>
+</head>
+<body>
+<div id="bp-prerender"><section data-screen="landing"><div id="dc-root"><div class="sc-host" data-sc-name="_capture"><div data-dc-tpl="3" style="min-height: 100vh; display: flex; flex-direction: column;">
+  <svg data-dc-tpl="4" width="0" height="0" aria-hidden="true" style="position: absolute;"><defs data-dc-tpl="5">
+    <linearGradient data-dc-tpl="6" id="plGold" x1="0" y1="0" x2=".8" y2="1"><stop data-dc-tpl="7" offset="0" stop-color="#FBE9B0"></stop><stop data-dc-tpl="8" offset=".2" stop-color="#F5D07A"></stop><stop data-dc-tpl="9" offset=".45" stop-color="#E8B23A"></stop><stop data-dc-tpl="10" offset=".75" stop-color="#A87F24"></stop><stop data-dc-tpl="11" offset="1" stop-color="#7A5C18"></stop></linearGradient>
+  </defs></svg>
+
+  
+  <header data-dc-tpl="12" style="position: sticky; top: 0px; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 20px; background: rgba(11, 11, 13, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+    <div data-dc-tpl="13" style="display: flex; align-items: center; gap: 26px;">
+      <div data-dc-tpl="14" style="display: flex; align-items: center; gap: 10px;">
+        <svg data-dc-tpl="15" width="26" height="22" viewBox="0 0 120 100" aria-hidden="true">
+          <g data-dc-tpl="16" transform="translate(2.192,3.528) scale(0.1635)" style="transform-origin: 0px 0px;">
+            <path data-dc-tpl="17" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)" transform="scale(6.116)"></path>
+          </g>
+          <path data-dc-tpl="18" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="19" d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="20" d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#plGold)"></path>
+        </svg>
+        <span data-dc-tpl="21" style="font: 800 14px / 1 Archivo, sans-serif; letter-spacing: 0.01em; color: rgb(244, 242, 237);">BULLPRINT<span data-dc-tpl="22" style="color: rgb(232, 178, 58);">LAB</span></span>
+      </div>
+      <nav data-dc-tpl="23" aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2px;">
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">LANDING</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">DESIGN</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">PROJECTS</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">COMPUTE</span></button>
+        
+      </nav>
+    </div>
+    <div data-dc-tpl="26" style="display: flex; align-items: center; gap: 10px;">
+      <span data-dc-tpl="27" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">READY</span></span>
+      <span data-dc-tpl="28" style="width: 6px; height: 6px; border-radius: 50%; background: rgb(92, 89, 82); display: block;"></span>
+    </div>
+  </header>
+
+  
+  
+    <main data-dc-tpl="30" style="flex: 1 1 0%; display: flex; flex-direction: column;">
+      <section data-dc-tpl="31" style="position: relative; padding: clamp(56px, 9vw, 110px) 24px 70px; overflow: hidden;">
+        <div data-dc-tpl="32" style="position: absolute; inset: 0px; background: radial-gradient(58% 70% at 50% 0%, rgba(232, 178, 58, 0.1), transparent 68%);"></div>
+        <div data-dc-tpl="33" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.027) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.027) 1px, transparent 1px); background-size: 56px 56px;"></div>
+        <div data-dc-tpl="34" style="position: relative; max-width: 940px; margin: 0px auto;">
+          <div data-dc-tpl="35" style="display: flex; align-items: center; gap: 11px; margin-bottom: 24px;">
+            <span data-dc-tpl="36" style="width: 5px; height: 5px; background: rgb(232, 178, 58); display: block;"></span>
+            <span data-dc-tpl="37" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.24em; color: rgb(232, 178, 58);">AI-NATIVE CAD · PROMPT TO PRINTABLE GEOMETRY</span>
+          </div>
+          <h1 data-dc-tpl="38" style="margin: 0px; font: 900 clamp(36px, 6.4vw, 68px) / 0.98 Archivo, sans-serif; letter-spacing: -0.035em; color: rgb(244, 242, 237); text-wrap: balance;">TURN AN IDEA INTO A PRINTABLE 3D DESIGN.</h1>
+          <p data-dc-tpl="39" style="margin: 20px 0px 0px; max-width: 620px; font: 400 16px / 1.75 Archivo, sans-serif; color: rgb(165, 161, 154); text-wrap: pretty;">Describe the part. BullPrintLab infers the dimensions, clearances and manufacturing assumptions, builds real parametric geometry, and lets you change any of it by typing. Every design is a spec, not a picture.</p>
+
+          <div data-dc-tpl="40" style="margin-top: 34px; border: 1px solid rgba(232, 178, 58, 0.32); background: rgba(16, 16, 19, 0.72); backdrop-filter: blur(18px);">
+            <textarea data-dc-tpl="41" placeholder="Make an insert for a 120 × 80 × 25 mm electronics board." aria-label="Describe the part you want" style="width: 100%; box-sizing: border-box; height: 108px; resize: none; padding: 20px; background: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; color: rgb(244, 242, 237); font: 400 16px / 1.6 Archivo, sans-serif; outline: none;"></textarea>
+            <div data-dc-tpl="42" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+              <div data-dc-tpl="43" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                
+                  <span data-dc-tpl="45" style="padding: 8px 11px; border: 1px solid rgba(255, 255, 255, 0.14); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">DIMENSIONS</span> <span data-dc-tpl="46" style="color: rgb(244, 242, 237);"><span class="sc-interp">AUTO</span></span></span>
+                
+                  <span data-dc-tpl="45" style="padding: 8px 11px; border: 1px solid rgba(255, 255, 255, 0.14); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">MATERIAL</span> <span data-dc-tpl="46" style="color: rgb(244, 242, 237);"><span class="sc-interp">PETG</span></span></span>
+                
+                  <span data-dc-tpl="45" style="padding: 8px 11px; border: 1px solid rgba(255, 255, 255, 0.14); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">METHOD</span> <span data-dc-tpl="46" style="color: rgb(244, 242, 237);"><span class="sc-interp">FDM</span></span></span>
+                
+                  <span data-dc-tpl="45" style="padding: 8px 11px; border: 1px solid rgba(255, 255, 255, 0.14); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">TOLERANCE</span> <span data-dc-tpl="46" style="color: rgb(244, 242, 237);"><span class="sc-interp">0.4 MM</span></span></span>
+                
+              </div>
+              <button data-dc-tpl="47" type="button" style="padding: 14px 24px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.16em; cursor: pointer;">GENERATE A PART →</button>
+            </div>
+          </div>
+          <p data-dc-tpl="48" style="margin: 12px 0px 0px; font: 500 10px / 1.7 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);">ADVANCED FIELDS ARE OPTIONAL — EVERY ASSUMPTION IS SHOWN AND EDITABLE AFTER GENERATION</p>
+
+          <div data-dc-tpl="49" style="margin-top: 34px;">
+            <div data-dc-tpl="50" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(139, 135, 128); margin-bottom: 14px;">TRY ONE</div>
+            <div data-dc-tpl="51" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px;">
+              
+                <button data-dc-tpl="53" type="button" class="scp0" style="text-align: left; padding: 16px 18px; background: rgb(14, 14, 17); border: 1px solid rgba(255, 255, 255, 0.09); color: rgb(165, 161, 154); font: 400 13.5px / 1.6 Archivo, sans-serif; cursor: pointer; transition: border-color 180ms, color 180ms;"><span class="sc-interp">Create a rectangular wall bracket 100 mm wide, 50 mm tall, 4 mm thick, with four 5 mm mounting holes.</span></button>
+              
+                <button data-dc-tpl="53" type="button" class="scp0" style="text-align: left; padding: 16px 18px; background: rgb(14, 14, 17); border: 1px solid rgba(255, 255, 255, 0.09); color: rgb(165, 161, 154); font: 400 13.5px / 1.6 Archivo, sans-serif; cursor: pointer; transition: border-color 180ms, color 180ms;"><span class="sc-interp">Design a wall-mounted slide-in holder for an iPad Mini with two countersunk screw holes and 2 mm clearance.</span></button>
+              
+                <button data-dc-tpl="53" type="button" class="scp0" style="text-align: left; padding: 16px 18px; background: rgb(14, 14, 17); border: 1px solid rgba(255, 255, 255, 0.09); color: rgb(165, 161, 154); font: 400 13.5px / 1.6 Archivo, sans-serif; cursor: pointer; transition: border-color 180ms, color 180ms;"><span class="sc-interp">Make an insert for a 120 × 80 × 25 mm electronics board.</span></button>
+              
+                <button data-dc-tpl="53" type="button" class="scp0" style="text-align: left; padding: 16px 18px; background: rgb(14, 14, 17); border: 1px solid rgba(255, 255, 255, 0.09); color: rgb(165, 161, 154); font: 400 13.5px / 1.6 Archivo, sans-serif; cursor: pointer; transition: border-color 180ms, color 180ms;"><span class="sc-interp">Build a spacer with a 10 mm centre hole and 25 mm outer diameter.</span></button>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-dc-tpl="54" style="border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13);">
+        <div data-dc-tpl="55" style="max-width: 1240px; margin: 0px auto; padding: 64px 24px;">
+          <div data-dc-tpl="56" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.08);">
+            
+              <div data-dc-tpl="58" style="background: rgb(11, 11, 13); padding: 24px 22px;">
+                <div data-dc-tpl="59" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);"><span class="sc-interp">01</span></div>
+                <div data-dc-tpl="60" style="margin-top: 13px; font: 800 16px / 1.1 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">INTERPRET</span></div>
+                <p data-dc-tpl="61" style="margin: 10px 0px 0px; font: 400 13px / 1.65 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">The prompt becomes typed intent — dimensions, constraints, fasteners, tolerances.</span></p>
+              </div>
+            
+              <div data-dc-tpl="58" style="background: rgb(11, 11, 13); padding: 24px 22px;">
+                <div data-dc-tpl="59" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);"><span class="sc-interp">02</span></div>
+                <div data-dc-tpl="60" style="margin-top: 13px; font: 800 16px / 1.1 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">BULLSPEC</span></div>
+                <p data-dc-tpl="61" style="margin: 10px 0px 0px; font: 400 13px / 1.65 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">A validated JSON spec. The editable source of truth for the part.</span></p>
+              </div>
+            
+              <div data-dc-tpl="58" style="background: rgb(11, 11, 13); padding: 24px 22px;">
+                <div data-dc-tpl="59" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);"><span class="sc-interp">03</span></div>
+                <div data-dc-tpl="60" style="margin-top: 13px; font: 800 16px / 1.1 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">GENERATE</span></div>
+                <p data-dc-tpl="61" style="margin: 10px 0px 0px; font: 400 13px / 1.65 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">A deterministic CAD engine emits OpenSCAD, then solid geometry.</span></p>
+              </div>
+            
+              <div data-dc-tpl="58" style="background: rgb(11, 11, 13); padding: 24px 22px;">
+                <div data-dc-tpl="59" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);"><span class="sc-interp">04</span></div>
+                <div data-dc-tpl="60" style="margin-top: 13px; font: 800 16px / 1.1 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">VALIDATE</span></div>
+                <p data-dc-tpl="61" style="margin: 10px 0px 0px; font: 400 13px / 1.65 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">Wall thickness, overhang, manifold, bed fit — checked before export.</span></p>
+              </div>
+            
+              <div data-dc-tpl="58" style="background: rgb(11, 11, 13); padding: 24px 22px;">
+                <div data-dc-tpl="59" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);"><span class="sc-interp">05</span></div>
+                <div data-dc-tpl="60" style="margin-top: 13px; font: 800 16px / 1.1 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">EXPORT</span></div>
+                <p data-dc-tpl="61" style="margin: 10px 0px 0px; font: 400 13px / 1.65 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">STL now, STEP and 3MF next. Parameters travel with the file.</span></p>
+              </div>
+            
+          </div>
+          <p data-dc-tpl="62" style="margin: 22px 0px 0px; max-width: 820px; font: 400 13px / 1.7 Archivo, sans-serif; color: rgb(139, 135, 128); text-wrap: pretty;">The model never emits triangles directly. It emits <span data-dc-tpl="63" style="color: rgb(244, 242, 237);">BullSpec</span> — a typed JSON description of parameters and features — and a deterministic CAD engine turns that into geometry. That is why "make it 20 mm wider" changes one number instead of producing an unrelated part.</p>
+        </div>
+      </section>
+    </main>
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  <footer data-dc-tpl="242" style="border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13); padding: 22px 24px; display: flex; flex-wrap: wrap; gap: 12px 26px; justify-content: space-between; font: 500 10px / 1.6 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(92, 89, 82);">
+    <span data-dc-tpl="243">BULLPRINTLAB.COM · AI-NATIVE CAD</span>
+    <span data-dc-tpl="244">PHASE 1 INTERFACE · GEOMETRY IS MOCKED, PIPELINE IS SPECIFIED</span>
+    <span data-dc-tpl="245">© 2026 BULLPRINT LAB</span>
+  </footer></div></div></div></section>
+<section data-screen="design"><div id="dc-root"><div class="sc-host" data-sc-name="_capture"><div data-dc-tpl="3" style="min-height: 100vh; display: flex; flex-direction: column;">
+  <svg data-dc-tpl="4" width="0" height="0" aria-hidden="true" style="position: absolute;"><defs data-dc-tpl="5">
+    <linearGradient data-dc-tpl="6" id="plGold" x1="0" y1="0" x2=".8" y2="1"><stop data-dc-tpl="7" offset="0" stop-color="#FBE9B0"></stop><stop data-dc-tpl="8" offset=".2" stop-color="#F5D07A"></stop><stop data-dc-tpl="9" offset=".45" stop-color="#E8B23A"></stop><stop data-dc-tpl="10" offset=".75" stop-color="#A87F24"></stop><stop data-dc-tpl="11" offset="1" stop-color="#7A5C18"></stop></linearGradient>
+  </defs></svg>
+
+  
+  <header data-dc-tpl="12" style="position: sticky; top: 0px; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 20px; background: rgba(11, 11, 13, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+    <div data-dc-tpl="13" style="display: flex; align-items: center; gap: 26px;">
+      <div data-dc-tpl="14" style="display: flex; align-items: center; gap: 10px;">
+        <svg data-dc-tpl="15" width="26" height="22" viewBox="0 0 120 100" aria-hidden="true">
+          <g data-dc-tpl="16" transform="translate(2.192,3.528) scale(0.1635)" style="transform-origin: 0px 0px;">
+            <path data-dc-tpl="17" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)" transform="scale(6.116)"></path>
+          </g>
+          <path data-dc-tpl="18" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="19" d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="20" d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#plGold)"></path>
+        </svg>
+        <span data-dc-tpl="21" style="font: 800 14px / 1 Archivo, sans-serif; letter-spacing: 0.01em; color: rgb(244, 242, 237);">BULLPRINT<span data-dc-tpl="22" style="color: rgb(232, 178, 58);">LAB</span></span>
+      </div>
+      <nav data-dc-tpl="23" aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2px;">
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">LANDING</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">DESIGN</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">PROJECTS</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">COMPUTE</span></button>
+        
+      </nav>
+    </div>
+    <div data-dc-tpl="26" style="display: flex; align-items: center; gap: 10px;">
+      <span data-dc-tpl="27" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">READY</span></span>
+      <span data-dc-tpl="28" style="width: 6px; height: 6px; border-radius: 50%; background: rgb(92, 89, 82); display: block;"></span>
+    </div>
+  </header>
+
+  
+  
+
+  
+  
+    <main data-dc-tpl="65" style="flex: 1 1 0%; display: grid; grid-template-columns: 340px minmax(0px, 1fr) 320px; min-height: 0px;">
+
+      
+      <section data-dc-tpl="66" aria-label="Design conversation" style="display: flex; flex-direction: column; min-height: 0px; border-right: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13);">
+        <div data-dc-tpl="67" style="padding: 16px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+          <span data-dc-tpl="68" style="font: 700 10.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);">DESIGN CONVERSATION</span>
+          <span data-dc-tpl="69" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">0 TURNS</span></span>
+        </div>
+        <div data-dc-tpl="70" style="flex: 1 1 0%; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 16px; min-height: 0px;">
+          
+        </div>
+        <form data-dc-tpl="83" style="padding: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; flex-direction: column; gap: 10px;">
+          <textarea data-dc-tpl="84" placeholder="Make the base 5 mm thicker…" aria-label="Change the design" class="scp1" style="width: 100%; box-sizing: border-box; height: 64px; resize: none; padding: 12px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.14); color: rgb(244, 242, 237); font: 400 13.5px / 1.5 Archivo, sans-serif; outline: none; transition: border-color 180ms;"></textarea>
+          <div data-dc-tpl="85" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            
+              <button data-dc-tpl="87" type="button" class="scp2" style="padding: 7px 10px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.14); color: rgb(139, 135, 128); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; cursor: pointer; transition: 160ms;"><span class="sc-interp">MAKE IT 120 MM WIDE</span></button>
+            
+              <button data-dc-tpl="87" type="button" class="scp2" style="padding: 7px 10px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.14); color: rgb(139, 135, 128); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; cursor: pointer; transition: 160ms;"><span class="sc-interp">5 MM THICKER</span></button>
+            
+              <button data-dc-tpl="87" type="button" class="scp2" style="padding: 7px 10px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.14); color: rgb(139, 135, 128); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; cursor: pointer; transition: 160ms;"><span class="sc-interp">TWO M4 HOLES 80 MM APART</span></button>
+            
+          </div>
+          <button data-dc-tpl="88" type="submit" style="padding: 13px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); font: 700 11.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.16em; cursor: pointer;">APPLY CHANGE →</button>
+        </form>
+      </section>
+
+      
+      <section data-dc-tpl="89" aria-label="3D viewport" style="display: flex; flex-direction: column; min-height: 0px; min-width: 0px; background: rgb(0, 0, 0);">
+        <div data-dc-tpl="90" style="display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding: 11px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13);">
+          <div data-dc-tpl="91" style="display: flex; gap: 2px; padding: 3px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.08);">
+            
+              <button data-dc-tpl="93" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">ISO</span></button>
+            
+              <button data-dc-tpl="93" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">FRONT</span></button>
+            
+              <button data-dc-tpl="93" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">SIDE</span></button>
+            
+              <button data-dc-tpl="93" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">TOP</span></button>
+            
+          </div>
+          <div data-dc-tpl="94" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            
+              <button data-dc-tpl="96" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">WIREFRAME</span></button>
+            
+              <button data-dc-tpl="96" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">GRID</span></button>
+            
+              <button data-dc-tpl="96" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">DIMENSIONS</span></button>
+            
+              <button data-dc-tpl="96" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">RESET</span></button>
+            
+          </div>
+        </div>
+
+        <div data-dc-tpl="97" style="flex: 1 1 0%; position: relative; min-height: 420px; overflow: hidden;">
+          <div data-dc-tpl="98" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 32px 32px; opacity: 1;"></div>
+          <div data-dc-tpl="99" style="position: absolute; inset: 0px; background: radial-gradient(62% 62% at 50% 46%, rgba(232, 178, 58, 0.07), transparent 70%);"></div>
+          <svg data-dc-tpl="100" viewBox="-260 -200 520 400" preserveAspectRatio="xMidYMid meet" style="position: absolute; inset: 0px; width: 100%; height: 100%; cursor: grab;">
+            
+              <polygon data-dc-tpl="102" points="121.0,-36.3 121.0,102.8 127.7,99.1 127.7,-40.0" fill="rgb(96,79,36)" stroke="rgba(255,255,255,.34)" stroke-width="1.1" stroke-linejoin="round"></polygon>
+            
+              <polygon data-dc-tpl="102" points="-127.7,-99.1 121.0,-36.3 127.7,-40.0 -121.0,-102.8" fill="rgb(76,62,29)" stroke="rgba(255,255,255,.34)" stroke-width="1.1" stroke-linejoin="round"></polygon>
+            
+              <polygon data-dc-tpl="102" points="-127.7,-99.1 121.0,-36.3 121.0,102.8 -127.7,40.0" fill="rgb(65,53,25)" stroke="rgba(255,255,255,.34)" stroke-width="1.1" stroke-linejoin="round"></polygon>
+            
+              <polygon data-dc-tpl="102" points="-121.0,-102.8 127.7,-40.0 127.7,99.1 -121.0,36.3" fill="rgb(120,98,46)" stroke="rgba(255,255,255,.34)" stroke-width="1.1" stroke-linejoin="round"></polygon>
+            
+              <polygon data-dc-tpl="102" points="-127.7,40.0 121.0,102.8 127.7,99.1 -121.0,36.3" fill="rgb(107,88,41)" stroke="rgba(255,255,255,.34)" stroke-width="1.1" stroke-linejoin="round"></polygon>
+            
+              <polygon data-dc-tpl="102" points="-127.7,-99.1 -127.7,40.0 -121.0,36.3 -121.0,-102.8" fill="rgb(85,70,32)" stroke="rgba(255,255,255,.34)" stroke-width="1.1" stroke-linejoin="round"></polygon>
+            
+            
+              <polygon data-dc-tpl="104" points="-77.3,-58.6 -77.5,-56.7 -78.2,-55.1 -79.4,-53.9 -80.9,-53.2 -82.6,-53.0 -84.4,-53.5 -86.1,-54.5 -87.5,-55.9 -88.7,-57.7 -89.4,-59.7 -89.7,-61.7 -89.4,-63.6 -88.7,-65.2 -87.5,-66.4 -86.1,-67.1 -84.4,-67.2 -82.6,-66.8 -80.9,-65.8 -79.4,-64.4 -78.2,-62.6 -77.5,-60.6" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.1"></polygon>
+            
+              <polygon data-dc-tpl="104" points="96.8,-14.6 96.6,-12.7 95.9,-11.1 94.7,-9.9 93.2,-9.2 91.5,-9.0 89.7,-9.5 88.0,-10.5 86.6,-11.9 85.4,-13.7 84.7,-15.7 84.4,-17.7 84.7,-19.6 85.4,-21.2 86.6,-22.4 88.0,-23.1 89.7,-23.3 91.5,-22.8 93.2,-21.8 94.7,-20.4 95.9,-18.6 96.6,-16.6" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.1"></polygon>
+            
+              <polygon data-dc-tpl="104" points="-77.3,13.7 -77.5,15.6 -78.2,17.3 -79.4,18.5 -80.9,19.2 -82.6,19.3 -84.4,18.8 -86.1,17.9 -87.5,16.4 -88.7,14.6 -89.4,12.6 -89.7,10.6 -89.4,8.7 -88.7,7.1 -87.5,5.9 -86.1,5.2 -84.4,5.1 -82.6,5.5 -80.9,6.5 -79.4,8.0 -78.2,9.7 -77.5,11.7" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.1"></polygon>
+            
+              <polygon data-dc-tpl="104" points="96.8,57.7 96.6,59.6 95.9,61.2 94.7,62.5 93.2,63.1 91.5,63.3 89.7,62.8 88.0,61.8 86.6,60.4 85.4,58.6 84.7,56.6 84.4,54.6 84.7,52.7 85.4,51.1 86.6,49.9 88.0,49.2 89.7,49.1 91.5,49.5 93.2,50.5 94.7,51.9 95.9,53.7 96.6,55.7" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.1"></polygon>
+            
+            
+              <g data-dc-tpl="106">
+                <path data-dc-tpl="107" d="M-121.0 58.3L127.7 121.1" fill="none" stroke="#E8B23A" stroke-width=".9" opacity=".85"></path>
+                <text data-dc-tpl="108" x="3.4" y="135.1" text-anchor="middle" fill="#E8B23A" style="font: 500 9px &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;"><span class="sc-interp">100.0 MM</span></text>
+              </g>
+            
+              <g data-dc-tpl="106">
+                <path data-dc-tpl="107" d="M151.7 -40.0L151.7 99.1" fill="none" stroke="#E8B23A" stroke-width=".9" opacity=".85"></path>
+                <text data-dc-tpl="108" x="173.7" y="29.6" text-anchor="middle" fill="#E8B23A" style="font: 500 9px &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;"><span class="sc-interp">50.0 MM</span></text>
+              </g>
+            
+          </svg>
+          <div data-dc-tpl="109" style="position: absolute; left: 16px; bottom: 14px; font: 500 9.5px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">CAM 34° / 22° · ISO</span><br data-dc-tpl="110"><span data-dc-tpl="111" style="color: rgb(92, 89, 82);">DRAG TO ORBIT · MOCKED GEOMETRY, PHASE 1</span></div>
+          <div data-dc-tpl="112" style="position: absolute; right: 16px; bottom: 14px; text-align: right; font: 500 9.5px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">BBOX 100 × 50 × 4 MM</span><br data-dc-tpl="113"><span data-dc-tpl="114" style="color: rgb(92, 89, 82);"><span class="sc-interp">VOL ≈ 20 CM³</span></span></div>
+        </div>
+
+        <div data-dc-tpl="115" style="border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13);">
+          <div data-dc-tpl="116" style="display: flex; gap: 2px; padding: 8px 10px 0px;">
+            
+              <button data-dc-tpl="118" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">BULLSPEC</span></button>
+            
+              <button data-dc-tpl="118" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">OPENSCAD</span></button>
+            
+              <button data-dc-tpl="118" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">VERSIONS</span></button>
+            
+          </div>
+          <div data-dc-tpl="119" style="max-height: 190px; overflow: auto; padding: 14px 16px 18px;">
+            
+              <pre data-dc-tpl="121" style="margin: 0px; font: 500 11.5px / 1.7 &quot;JetBrains Mono&quot;, monospace; color: rgb(165, 161, 154); white-space: pre;"><span class="sc-interp">{
+  "name": "Wall Bracket",
+  "units": "mm",
+  "manufacturing_method": "FDM",
+  "material": "PETG",
+  "parameters": {
+    "width": 100,
+    "height": 50,
+    "thickness": 4,
+    "wall_thickness": 3,
+    "clearance": 0.4
+  },
+  "features": [
+    {
+      "type": "base_plate",
+      "width": 100,
+      "height": 50,
+      "thickness": 4
+    },
+    {
+      "type": "hole_pattern",
+      "hole_type": "through",
+      "diameter": 5,
+      "count": 4,
+      "spacing": 70
+    }
+  ]
+}</span></pre>
+            
+            
+            
+          </div>
+        </div>
+      </section>
+
+      
+      <aside data-dc-tpl="131" aria-label="Parameters and manufacturing" style="display: flex; flex-direction: column; min-height: 0px; border-left: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13); overflow-y: auto;">
+        <div data-dc-tpl="132" style="padding: 16px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+          <div data-dc-tpl="133" style="font: 700 10.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);"><span class="sc-interp">WALL BRACKET</span></div>
+          <div data-dc-tpl="134" style="margin-top: 8px; font: 500 9.5px / 1.7 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">BPL-0041</span> · <span class="sc-interp">v1</span></div>
+        </div>
+
+        <div data-dc-tpl="135" style="padding: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+          <div data-dc-tpl="136" style="font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(139, 135, 128); margin-bottom: 14px;">PARAMETERS · MM</div>
+          <div data-dc-tpl="137" style="display: flex; flex-direction: column; gap: 12px;">
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-w" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">WIDTH</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">100 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-w" type="range" min="20" max="300" step="1" value="100" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-h" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">HEIGHT</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">50 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-h" type="range" min="20" max="300" step="1" value="50" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-t" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">PLATE THICKNESS</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">4 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-t" type="range" min="1" max="20" step="0.5" value="4" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-wall" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">WALL THICKNESS</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">3 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-wall" type="range" min="0.8" max="8" step="0.2" value="3" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-hd" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">HOLE DIAMETER</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">5 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-hd" type="range" min="2" max="12" step="0.5" value="5" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-hn" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">HOLE COUNT</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">4 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-hn" type="range" min="1" max="8" step="1" value="4" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-sp" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">HOLE SPACING</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">70 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-sp" type="range" min="10" max="260" step="1" value="70" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+              <div data-dc-tpl="139" style="display: flex; flex-direction: column; gap: 7px;">
+                <label data-dc-tpl="140" for="bp-cl" style="display: flex; justify-content: space-between; gap: 10px; font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">FIT CLEARANCE</span><span data-dc-tpl="141" style="color: rgb(232, 178, 58);"><span class="sc-interp">0.4 MM</span></span></label>
+                <input data-dc-tpl="142" id="bp-cl" type="range" min="0" max="1.2" step="0.1" value="0.4" style="width: 100%; accent-color: rgb(232, 178, 58); cursor: pointer;">
+              </div>
+            
+          </div>
+        </div>
+
+        <div data-dc-tpl="143" style="padding: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+          <div data-dc-tpl="144" style="font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(139, 135, 128); margin-bottom: 14px;">MANUFACTURING</div>
+          <div data-dc-tpl="145" style="display: flex; flex-direction: column; gap: 14px;">
+            <div data-dc-tpl="146">
+              <div data-dc-tpl="147" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128); margin-bottom: 9px;">METHOD</div>
+              <div data-dc-tpl="148" role="radiogroup" aria-label="Manufacturing method" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                
+                  <div data-dc-tpl="150" role="radio" tabindex="0" aria-checked="true" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">FDM</span></div>
+                
+                  <div data-dc-tpl="150" role="radio" tabindex="0" aria-checked="false" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">RESIN</span></div>
+                
+                  <div data-dc-tpl="150" role="radio" tabindex="0" aria-checked="false" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">CNC</span></div>
+                
+              </div>
+            </div>
+            <div data-dc-tpl="151">
+              <div data-dc-tpl="152" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128); margin-bottom: 9px;">MATERIAL</div>
+              <div data-dc-tpl="153" role="radiogroup" aria-label="Material" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                
+                  <div data-dc-tpl="155" role="radio" tabindex="0" aria-checked="true" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">PETG</span></div>
+                
+                  <div data-dc-tpl="155" role="radio" tabindex="0" aria-checked="false" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">TPU 95A</span></div>
+                
+                  <div data-dc-tpl="155" role="radio" tabindex="0" aria-checked="false" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">ASA</span></div>
+                
+              </div>
+            </div>
+            <div data-dc-tpl="156" style="display: flex; flex-direction: column; gap: 1px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.08);">
+              
+                <div data-dc-tpl="158" style="background: rgb(14, 14, 17); padding: 10px 12px; display: flex; justify-content: space-between; gap: 12px; font: 500 10.5px / 1.4 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.04em;">
+                  <span data-dc-tpl="159" style="color: rgb(139, 135, 128);"><span class="sc-interp">NOZZLE</span></span><span data-dc-tpl="160" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">0.4 mm</span></span>
+                </div>
+              
+                <div data-dc-tpl="158" style="background: rgb(14, 14, 17); padding: 10px 12px; display: flex; justify-content: space-between; gap: 12px; font: 500 10.5px / 1.4 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.04em;">
+                  <span data-dc-tpl="159" style="color: rgb(139, 135, 128);"><span class="sc-interp">LAYER</span></span><span data-dc-tpl="160" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">0.20 mm</span></span>
+                </div>
+              
+                <div data-dc-tpl="158" style="background: rgb(14, 14, 17); padding: 10px 12px; display: flex; justify-content: space-between; gap: 12px; font: 500 10.5px / 1.4 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.04em;">
+                  <span data-dc-tpl="159" style="color: rgb(139, 135, 128);"><span class="sc-interp">MIN WALL</span></span><span data-dc-tpl="160" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">1.2 mm</span></span>
+                </div>
+              
+                <div data-dc-tpl="158" style="background: rgb(14, 14, 17); padding: 10px 12px; display: flex; justify-content: space-between; gap: 12px; font: 500 10.5px / 1.4 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.04em;">
+                  <span data-dc-tpl="159" style="color: rgb(139, 135, 128);"><span class="sc-interp">BED</span></span><span data-dc-tpl="160" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">256 × 256 mm</span></span>
+                </div>
+              
+                <div data-dc-tpl="158" style="background: rgb(14, 14, 17); padding: 10px 12px; display: flex; justify-content: space-between; gap: 12px; font: 500 10.5px / 1.4 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.04em;">
+                  <span data-dc-tpl="159" style="color: rgb(139, 135, 128);"><span class="sc-interp">EST. PRINT</span></span><span data-dc-tpl="160" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">1 H</span></span>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+
+        <div data-dc-tpl="161" style="padding: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+          <div data-dc-tpl="162" style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 14px;">
+            <span data-dc-tpl="163" style="font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(139, 135, 128);">DESIGN HEALTH</span>
+            <span data-dc-tpl="164" style="font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(95, 211, 138);"><span class="sc-interp">ALL CHECKS PASS</span></span>
+          </div>
+          <div data-dc-tpl="165" style="display: flex; flex-direction: column; gap: 10px;">
+            
+              <div data-dc-tpl="167" style="display: flex; gap: 10px; align-items: flex-start;">
+                <span data-dc-tpl="168" style="flex: 0 0 auto; width: 13px; font: 700 11px / 1.35 &quot;JetBrains Mono&quot;, monospace; color: rgb(95, 211, 138);"><span class="sc-interp">✓</span></span>
+                <span data-dc-tpl="169" style="font: 400 12.5px / 1.5 Archivo, sans-serif; color: rgb(95, 211, 138);"><span class="sc-interp">Fits 256 × 256 mm print bed</span></span>
+              </div>
+            
+              <div data-dc-tpl="167" style="display: flex; gap: 10px; align-items: flex-start;">
+                <span data-dc-tpl="168" style="flex: 0 0 auto; width: 13px; font: 700 11px / 1.35 &quot;JetBrains Mono&quot;, monospace; color: rgb(95, 211, 138);"><span class="sc-interp">✓</span></span>
+                <span data-dc-tpl="169" style="font: 400 12.5px / 1.5 Archivo, sans-serif; color: rgb(95, 211, 138);"><span class="sc-interp">Manifold geometry, single connected solid</span></span>
+              </div>
+            
+              <div data-dc-tpl="167" style="display: flex; gap: 10px; align-items: flex-start;">
+                <span data-dc-tpl="168" style="flex: 0 0 auto; width: 13px; font: 700 11px / 1.35 &quot;JetBrains Mono&quot;, monospace; color: rgb(95, 211, 138);"><span class="sc-interp">✓</span></span>
+                <span data-dc-tpl="169" style="font: 400 12.5px / 1.5 Archivo, sans-serif; color: rgb(95, 211, 138);"><span class="sc-interp">Wall thickness above the 1.2 mm minimum</span></span>
+              </div>
+            
+              <div data-dc-tpl="167" style="display: flex; gap: 10px; align-items: flex-start;">
+                <span data-dc-tpl="168" style="flex: 0 0 auto; width: 13px; font: 700 11px / 1.35 &quot;JetBrains Mono&quot;, monospace; color: rgb(95, 211, 138);"><span class="sc-interp">✓</span></span>
+                <span data-dc-tpl="169" style="font: 400 12.5px / 1.5 Archivo, sans-serif; color: rgb(95, 211, 138);"><span class="sc-interp">Hole-to-edge distance clears one diameter</span></span>
+              </div>
+            
+              <div data-dc-tpl="167" style="display: flex; gap: 10px; align-items: flex-start;">
+                <span data-dc-tpl="168" style="flex: 0 0 auto; width: 13px; font: 700 11px / 1.35 &quot;JetBrains Mono&quot;, monospace; color: rgb(95, 211, 138);"><span class="sc-interp">✓</span></span>
+                <span data-dc-tpl="169" style="font: 400 12.5px / 1.5 Archivo, sans-serif; color: rgb(95, 211, 138);"><span class="sc-interp">No unsupported overhang beyond 45°</span></span>
+              </div>
+            
+          </div>
+        </div>
+
+        <div data-dc-tpl="170" style="padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+          <div data-dc-tpl="171" style="font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(139, 135, 128);">EXPORT</div>
+          <div data-dc-tpl="172" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            
+              <button data-dc-tpl="174" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">STL</span></button>
+            
+              <button data-dc-tpl="174" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">OPENSCAD</span></button>
+            
+              <button data-dc-tpl="174" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">BULLSPEC</span></button>
+            
+              <button data-dc-tpl="174" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">STEP · SOON</span></button>
+            
+          </div>
+          <p data-dc-tpl="175" style="margin: 6px 0px 0px; font: 400 12px / 1.6 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">STL, OpenSCAD source and BullSpec JSON are written on export. Parameters travel with the file, so the part stays editable.</span></p>
+        </div>
+      </aside>
+    </main>
+  
+
+  
+  
+
+  
+  
+
+  <footer data-dc-tpl="242" style="border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13); padding: 22px 24px; display: flex; flex-wrap: wrap; gap: 12px 26px; justify-content: space-between; font: 500 10px / 1.6 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(92, 89, 82);">
+    <span data-dc-tpl="243">BULLPRINTLAB.COM · AI-NATIVE CAD</span>
+    <span data-dc-tpl="244">PHASE 1 INTERFACE · GEOMETRY IS MOCKED, PIPELINE IS SPECIFIED</span>
+    <span data-dc-tpl="245">© 2026 BULLPRINT LAB</span>
+  </footer></div></div></div></section>
+<section data-screen="projects"><div id="dc-root"><div class="sc-host" data-sc-name="_capture"><div data-dc-tpl="3" style="min-height: 100vh; display: flex; flex-direction: column;">
+  <svg data-dc-tpl="4" width="0" height="0" aria-hidden="true" style="position: absolute;"><defs data-dc-tpl="5">
+    <linearGradient data-dc-tpl="6" id="plGold" x1="0" y1="0" x2=".8" y2="1"><stop data-dc-tpl="7" offset="0" stop-color="#FBE9B0"></stop><stop data-dc-tpl="8" offset=".2" stop-color="#F5D07A"></stop><stop data-dc-tpl="9" offset=".45" stop-color="#E8B23A"></stop><stop data-dc-tpl="10" offset=".75" stop-color="#A87F24"></stop><stop data-dc-tpl="11" offset="1" stop-color="#7A5C18"></stop></linearGradient>
+  </defs></svg>
+
+  
+  <header data-dc-tpl="12" style="position: sticky; top: 0px; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 20px; background: rgba(11, 11, 13, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+    <div data-dc-tpl="13" style="display: flex; align-items: center; gap: 26px;">
+      <div data-dc-tpl="14" style="display: flex; align-items: center; gap: 10px;">
+        <svg data-dc-tpl="15" width="26" height="22" viewBox="0 0 120 100" aria-hidden="true">
+          <g data-dc-tpl="16" transform="translate(2.192,3.528) scale(0.1635)" style="transform-origin: 0px 0px;">
+            <path data-dc-tpl="17" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)" transform="scale(6.116)"></path>
+          </g>
+          <path data-dc-tpl="18" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="19" d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="20" d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#plGold)"></path>
+        </svg>
+        <span data-dc-tpl="21" style="font: 800 14px / 1 Archivo, sans-serif; letter-spacing: 0.01em; color: rgb(244, 242, 237);">BULLPRINT<span data-dc-tpl="22" style="color: rgb(232, 178, 58);">LAB</span></span>
+      </div>
+      <nav data-dc-tpl="23" aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2px;">
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">LANDING</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">DESIGN</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">PROJECTS</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">COMPUTE</span></button>
+        
+      </nav>
+    </div>
+    <div data-dc-tpl="26" style="display: flex; align-items: center; gap: 10px;">
+      <span data-dc-tpl="27" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">READY</span></span>
+      <span data-dc-tpl="28" style="width: 6px; height: 6px; border-radius: 50%; background: rgb(92, 89, 82); display: block;"></span>
+    </div>
+  </header>
+
+  
+  
+
+  
+  
+
+  
+  
+    <main data-dc-tpl="177" style="flex: 1 1 0%; max-width: 1240px; width: 100%; margin: 0px auto; padding: 44px 24px 80px; box-sizing: border-box;">
+      <div data-dc-tpl="178" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+        <div data-dc-tpl="179">
+          <h1 data-dc-tpl="180" style="margin: 0px; font: 900 clamp(26px, 3.6vw, 40px) / 1 Archivo, sans-serif; letter-spacing: -0.03em; color: rgb(244, 242, 237);">PROJECTS</h1>
+          <p data-dc-tpl="181" style="margin: 12px 0px 0px; font: 400 14px / 1.7 Archivo, sans-serif; color: rgb(139, 135, 128);">Every part is reproducible from its BullSpec. Open one to keep editing where you left off.</p>
+        </div>
+        <button data-dc-tpl="182" type="button" class="scp3" style="padding: 13px 20px; border: 1px solid rgb(232, 178, 58); background: none; color: rgb(232, 178, 58); font: 700 11.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; cursor: pointer;">NEW PART →</button>
+      </div>
+      <div data-dc-tpl="183" style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px;">
+        
+          <button data-dc-tpl="185" type="button" class="scp4" style="text-align: left; padding: 0px; background: rgb(11, 11, 13); border: 1px solid rgba(255, 255, 255, 0.09); cursor: pointer; display: flex; flex-direction: column; transition: border-color 200ms;">
+            <div data-dc-tpl="186" style="height: 150px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; background: rgb(8, 8, 10);">
+              <div data-dc-tpl="187" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+              <svg data-dc-tpl="188" viewBox="-70 -52 140 104" style="position: absolute; inset: 0px; width: 100%; height: 100%;">
+                
+                  <polygon data-dc-tpl="190" points="-20.0,-15.1 19.0,-5.2 20.0,-5.9 -19.0,-15.8" fill="rgb(58,48,22)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="19.0,-5.2 19.0,15.8 20.0,15.1 20.0,-5.9" fill="rgb(96,78,32)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="-19.0,-15.8 20.0,-5.9 20.0,15.1 -19.0,5.2" fill="rgb(150,120,48)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+              </svg>
+              <span data-dc-tpl="191" style="position: absolute; right: 10px; top: 10px; padding: 5px 8px; font: 700 9px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(11, 11, 13); background: rgb(232, 178, 58); border: 1px solid rgb(232, 178, 58);"><span class="sc-interp">COMPLETE</span></span>
+            </div>
+            <div data-dc-tpl="192" style="padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 9px; flex: 1 1 0%;">
+              <div data-dc-tpl="193" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">BPL-0041</span></div>
+              <div data-dc-tpl="194" style="font: 800 16px / 1.2 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">Wall Bracket</span></div>
+              <div data-dc-tpl="195" style="font: 500 10px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">FDM</span> · <span class="sc-interp">PETG</span><br data-dc-tpl="196"><span class="sc-interp">v4</span> · <span class="sc-interp">08.15.26</span></div>
+            </div>
+          </button>
+        
+          <button data-dc-tpl="185" type="button" class="scp4" style="text-align: left; padding: 0px; background: rgb(11, 11, 13); border: 1px solid rgba(255, 255, 255, 0.09); cursor: pointer; display: flex; flex-direction: column; transition: border-color 200ms;">
+            <div data-dc-tpl="186" style="height: 150px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; background: rgb(8, 8, 10);">
+              <div data-dc-tpl="187" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+              <svg data-dc-tpl="188" viewBox="-70 -52 140 104" style="position: absolute; inset: 0px; width: 100%; height: 100%;">
+                
+                  <polygon data-dc-tpl="190" points="-14.3,-23.9 12.7,-17.1 14.3,-18.1 -12.7,-25.0" fill="rgb(58,48,22)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="12.7,-17.1 12.7,25.0 14.3,23.9 14.3,-18.1" fill="rgb(96,78,32)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="-12.7,-25.0 14.3,-18.1 14.3,23.9 -12.7,17.1" fill="rgb(150,120,48)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+              </svg>
+              <span data-dc-tpl="191" style="position: absolute; right: 10px; top: 10px; padding: 5px 8px; font: 700 9px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(11, 11, 13); background: rgb(232, 178, 58); border: 1px solid rgb(232, 178, 58);"><span class="sc-interp">COMPLETE</span></span>
+            </div>
+            <div data-dc-tpl="192" style="padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 9px; flex: 1 1 0%;">
+              <div data-dc-tpl="193" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">BPL-0040</span></div>
+              <div data-dc-tpl="194" style="font: 800 16px / 1.2 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">Slide-In Holder</span></div>
+              <div data-dc-tpl="195" style="font: 500 10px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">FDM</span> · <span class="sc-interp">PETG</span><br data-dc-tpl="196"><span class="sc-interp">v2</span> · <span class="sc-interp">08.14.26</span></div>
+            </div>
+          </button>
+        
+          <button data-dc-tpl="185" type="button" class="scp4" style="text-align: left; padding: 0px; background: rgb(11, 11, 13); border: 1px solid rgba(255, 255, 255, 0.09); cursor: pointer; display: flex; flex-direction: column; transition: border-color 200ms;">
+            <div data-dc-tpl="186" style="height: 150px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; background: rgb(8, 8, 10);">
+              <div data-dc-tpl="187" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+              <svg data-dc-tpl="188" viewBox="-70 -52 140 104" style="position: absolute; inset: 0px; width: 100%; height: 100%;">
+                
+                  <polygon data-dc-tpl="190" points="-22.0,-17.6 17.0,-7.7 22.0,-10.9 -17.0,-20.8" fill="rgb(58,48,22)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="17.0,-7.7 17.0,20.8 22.0,17.6 22.0,-10.9" fill="rgb(96,78,32)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="-17.0,-20.8 22.0,-10.9 22.0,17.6 -17.0,7.7" fill="rgb(150,120,48)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+              </svg>
+              <span data-dc-tpl="191" style="position: absolute; right: 10px; top: 10px; padding: 5px 8px; font: 700 9px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(232, 178, 58); background: rgba(232, 178, 58, 0.12); border: 1px solid rgba(232, 178, 58, 0.4);"><span class="sc-interp">VALIDATING</span></span>
+            </div>
+            <div data-dc-tpl="192" style="padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 9px; flex: 1 1 0%;">
+              <div data-dc-tpl="193" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">BPL-0038</span></div>
+              <div data-dc-tpl="194" style="font: 800 16px / 1.2 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">Board Insert</span></div>
+              <div data-dc-tpl="195" style="font: 500 10px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">FDM</span> · <span class="sc-interp">TPU 95A</span><br data-dc-tpl="196"><span class="sc-interp">v6</span> · <span class="sc-interp">08.13.26</span></div>
+            </div>
+          </button>
+        
+          <button data-dc-tpl="185" type="button" class="scp4" style="text-align: left; padding: 0px; background: rgb(11, 11, 13); border: 1px solid rgba(255, 255, 255, 0.09); cursor: pointer; display: flex; flex-direction: column; transition: border-color 200ms;">
+            <div data-dc-tpl="186" style="height: 150px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; background: rgb(8, 8, 10);">
+              <div data-dc-tpl="187" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+              <svg data-dc-tpl="188" viewBox="-70 -52 140 104" style="position: absolute; inset: 0px; width: 100%; height: 100%;">
+                
+                  <polygon data-dc-tpl="190" points="-24.4,-22.8 14.6,-12.9 24.4,-19.2 -14.6,-29.1" fill="rgb(58,48,22)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="14.6,-12.9 14.6,29.1 24.4,22.8 24.4,-19.2" fill="rgb(96,78,32)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="-14.6,-29.1 24.4,-19.2 24.4,22.8 -14.6,12.9" fill="rgb(150,120,48)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+              </svg>
+              <span data-dc-tpl="191" style="position: absolute; right: 10px; top: 10px; padding: 5px 8px; font: 700 9px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(11, 11, 13); background: rgb(232, 178, 58); border: 1px solid rgb(232, 178, 58);"><span class="sc-interp">COMPLETE</span></span>
+            </div>
+            <div data-dc-tpl="192" style="padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 9px; flex: 1 1 0%;">
+              <div data-dc-tpl="193" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">BPL-0037</span></div>
+              <div data-dc-tpl="194" style="font: 800 16px / 1.2 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">Hex Spacer</span></div>
+              <div data-dc-tpl="195" style="font: 500 10px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">FDM</span> · <span class="sc-interp">PETG</span><br data-dc-tpl="196"><span class="sc-interp">v1</span> · <span class="sc-interp">08.12.26</span></div>
+            </div>
+          </button>
+        
+          <button data-dc-tpl="185" type="button" class="scp4" style="text-align: left; padding: 0px; background: rgb(11, 11, 13); border: 1px solid rgba(255, 255, 255, 0.09); cursor: pointer; display: flex; flex-direction: column; transition: border-color 200ms;">
+            <div data-dc-tpl="186" style="height: 150px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; background: rgb(8, 8, 10);">
+              <div data-dc-tpl="187" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+              <svg data-dc-tpl="188" viewBox="-70 -52 140 104" style="position: absolute; inset: 0px; width: 100%; height: 100%;">
+                
+                  <polygon data-dc-tpl="190" points="-21.3,-14.3 17.7,-4.4 21.3,-6.7 -17.7,-16.7" fill="rgb(58,48,22)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="17.7,-4.4 17.7,16.7 21.3,14.3 21.3,-6.7" fill="rgb(96,78,32)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="-17.7,-16.7 21.3,-6.7 21.3,14.3 -17.7,4.4" fill="rgb(150,120,48)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+              </svg>
+              <span data-dc-tpl="191" style="position: absolute; right: 10px; top: 10px; padding: 5px 8px; font: 700 9px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(165, 161, 154); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.16);"><span class="sc-interp">QUEUED</span></span>
+            </div>
+            <div data-dc-tpl="192" style="padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 9px; flex: 1 1 0%;">
+              <div data-dc-tpl="193" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">BPL-0035</span></div>
+              <div data-dc-tpl="194" style="font: 800 16px / 1.2 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">Rail Adapter</span></div>
+              <div data-dc-tpl="195" style="font: 500 10px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">CNC</span> · <span class="sc-interp">ALU 6061</span><br data-dc-tpl="196"><span class="sc-interp">v3</span> · <span class="sc-interp">08.11.26</span></div>
+            </div>
+          </button>
+        
+          <button data-dc-tpl="185" type="button" class="scp4" style="text-align: left; padding: 0px; background: rgb(11, 11, 13); border: 1px solid rgba(255, 255, 255, 0.09); cursor: pointer; display: flex; flex-direction: column; transition: border-color 200ms;">
+            <div data-dc-tpl="186" style="height: 150px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden; background: rgb(8, 8, 10);">
+              <div data-dc-tpl="187" style="position: absolute; inset: 0px; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 22px 22px;"></div>
+              <svg data-dc-tpl="188" viewBox="-70 -52 140 104" style="position: absolute; inset: 0px; width: 100%; height: 100%;">
+                
+                  <polygon data-dc-tpl="190" points="-23.3,-16.0 15.7,-6.1 23.3,-11.1 -15.7,-21.0" fill="rgb(58,48,22)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="15.7,-6.1 15.7,21.0 23.3,16.0 23.3,-11.1" fill="rgb(96,78,32)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+                  <polygon data-dc-tpl="190" points="-15.7,-21.0 23.3,-11.1 23.3,16.0 -15.7,6.1" fill="rgb(150,120,48)" stroke="rgba(255,255,255,.28)" stroke-width=".8"></polygon>
+                
+              </svg>
+              <span data-dc-tpl="191" style="position: absolute; right: 10px; top: 10px; padding: 5px 8px; font: 700 9px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(11, 11, 13); background: rgb(232, 178, 58); border: 1px solid rgb(232, 178, 58);"><span class="sc-interp">COMPLETE</span></span>
+            </div>
+            <div data-dc-tpl="192" style="padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 9px; flex: 1 1 0%;">
+              <div data-dc-tpl="193" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">BPL-0031</span></div>
+              <div data-dc-tpl="194" style="font: 800 16px / 1.2 Archivo, sans-serif; letter-spacing: -0.01em; color: rgb(244, 242, 237);"><span class="sc-interp">Sensor Enclosure</span></div>
+              <div data-dc-tpl="195" style="font: 500 10px / 1.8 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);"><span class="sc-interp">FDM</span> · <span class="sc-interp">ASA</span><br data-dc-tpl="196"><span class="sc-interp">v9</span> · <span class="sc-interp">08.09.26</span></div>
+            </div>
+          </button>
+        
+      </div>
+    </main>
+  
+
+  
+  
+
+  <footer data-dc-tpl="242" style="border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13); padding: 22px 24px; display: flex; flex-wrap: wrap; gap: 12px 26px; justify-content: space-between; font: 500 10px / 1.6 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(92, 89, 82);">
+    <span data-dc-tpl="243">BULLPRINTLAB.COM · AI-NATIVE CAD</span>
+    <span data-dc-tpl="244">PHASE 1 INTERFACE · GEOMETRY IS MOCKED, PIPELINE IS SPECIFIED</span>
+    <span data-dc-tpl="245">© 2026 BULLPRINT LAB</span>
+  </footer></div></div></div></section>
+<section data-screen="compute"><div id="dc-root"><div class="sc-host" data-sc-name="_capture"><div data-dc-tpl="3" style="min-height: 100vh; display: flex; flex-direction: column;">
+  <svg data-dc-tpl="4" width="0" height="0" aria-hidden="true" style="position: absolute;"><defs data-dc-tpl="5">
+    <linearGradient data-dc-tpl="6" id="plGold" x1="0" y1="0" x2=".8" y2="1"><stop data-dc-tpl="7" offset="0" stop-color="#FBE9B0"></stop><stop data-dc-tpl="8" offset=".2" stop-color="#F5D07A"></stop><stop data-dc-tpl="9" offset=".45" stop-color="#E8B23A"></stop><stop data-dc-tpl="10" offset=".75" stop-color="#A87F24"></stop><stop data-dc-tpl="11" offset="1" stop-color="#7A5C18"></stop></linearGradient>
+  </defs></svg>
+
+  
+  <header data-dc-tpl="12" style="position: sticky; top: 0px; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 20px; background: rgba(11, 11, 13, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+    <div data-dc-tpl="13" style="display: flex; align-items: center; gap: 26px;">
+      <div data-dc-tpl="14" style="display: flex; align-items: center; gap: 10px;">
+        <svg data-dc-tpl="15" width="26" height="22" viewBox="0 0 120 100" aria-hidden="true">
+          <g data-dc-tpl="16" transform="translate(2.192,3.528) scale(0.1635)" style="transform-origin: 0px 0px;">
+            <path data-dc-tpl="17" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)" transform="scale(6.116)"></path>
+          </g>
+          <path data-dc-tpl="18" d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="19" d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#plGold)"></path>
+          <path data-dc-tpl="20" d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#plGold)"></path>
+        </svg>
+        <span data-dc-tpl="21" style="font: 800 14px / 1 Archivo, sans-serif; letter-spacing: 0.01em; color: rgb(244, 242, 237);">BULLPRINT<span data-dc-tpl="22" style="color: rgb(232, 178, 58);">LAB</span></span>
+      </div>
+      <nav data-dc-tpl="23" aria-label="Screens" style="display: flex; gap: 2px; padding: 3px; background: rgb(16, 16, 19); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2px;">
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">LANDING</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">DESIGN</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgba(255, 255, 255, 0.14); background: rgb(16, 16, 19); color: rgb(139, 135, 128); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">PROJECTS</span></button>
+        
+          <button data-dc-tpl="25" type="button" style="padding: 8px 11px; cursor: pointer; user-select: none; font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; text-align: center; border: 1px solid rgb(232, 178, 58); background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 45%, rgb(168, 127, 36)); color: rgb(11, 11, 13); transition: 160ms cubic-bezier(0.2, 0.8, 0.2, 1);"><span class="sc-interp">COMPUTE</span></button>
+        
+      </nav>
+    </div>
+    <div data-dc-tpl="26" style="display: flex; align-items: center; gap: 10px;">
+      <span data-dc-tpl="27" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(139, 135, 128);"><span class="sc-interp">READY</span></span>
+      <span data-dc-tpl="28" style="width: 6px; height: 6px; border-radius: 50%; background: rgb(92, 89, 82); display: block;"></span>
+    </div>
+  </header>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <main data-dc-tpl="198" style="flex: 1 1 0%; max-width: 1240px; width: 100%; margin: 0px auto; padding: 44px 24px 80px; box-sizing: border-box;">
+      <div data-dc-tpl="199" style="display: flex; align-items: center; gap: 11px; margin-bottom: 18px;">
+        <span data-dc-tpl="200" style="width: 5px; height: 5px; background: rgb(232, 178, 58); display: block;"></span>
+        <span data-dc-tpl="201" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.24em; color: rgb(232, 178, 58);">SOVEREIGN COMPUTE · GPU-01 + GPU-02 · ON OUR FLOOR</span>
+      </div>
+      <h1 data-dc-tpl="202" style="margin: 0px; font: 900 clamp(28px, 4.4vw, 46px) / 1 Archivo, sans-serif; letter-spacing: -0.03em; color: rgb(244, 242, 237);">EVERY CARD EARNS ITS JOB.</h1>
+      <p data-dc-tpl="203" style="margin: 16px 0px 0px; max-width: 720px; font: 400 14.5px / 1.75 Archivo, sans-serif; color: rgb(165, 161, 154); text-wrap: pretty;">Two cards serve the public queue and the scheduler routes by capability — gpu-01 holds the interpreter, gpu-02 takes overflow. The 96 GB workstation card is deliberately not on this path; it is reserved for in-house design, where the work is ours and the latency is nobody else's problem. Geometry itself never touches the GPU: OpenSCAD and CadQuery run deterministic on the CPU, so a render burst can't block a part from generating.</p>
+
+      <div data-dc-tpl="204" style="margin-top: 34px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; align-items: start;">
+        <div data-dc-tpl="205" style="display: flex; flex-direction: column; gap: 20px;">
+          <div data-dc-tpl="206" style="border: 1px solid rgba(232, 178, 58, 0.32); background: rgba(16, 16, 19, 0.72); backdrop-filter: blur(18px);">
+            <div data-dc-tpl="207" style="padding: 16px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font: 700 10.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);">THE RACK</div>
+            <div data-dc-tpl="208" style="display: flex; flex-direction: column; gap: 1px; background: rgba(255, 255, 255, 0.08);">
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">GPU-01</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RTX 5090 · 32 GB · INTERPRETER</span></span>
+                </div>
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">GPU-02</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RTX 3090 · 24 GB · OVERFLOW</span></span>
+                </div>
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">CPU</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RYZEN 9 9950X3D 16C/32T · 5900X 12C/24T</span></span>
+                </div>
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">RAM</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">60 GB + 62 GB DDR5</span></span>
+                </div>
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">STORAGE</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">1.8 TB + 915 GB NVME · MODELS + ASSETS</span></span>
+                </div>
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">RESERVED</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RTX PRO 6000 96 GB · IN-HOUSE DESIGN ONLY</span></span>
+                </div>
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">QUEUE</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">REDIS · CELERY · CAPABILITY-ROUTED</span></span>
+                </div>
+              
+                <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">ISOLATION</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">CAD RUNS IN A NO-NETWORK CONTAINER</span></span>
+                </div>
+              
+            </div>
+          </div>
+          <div data-dc-tpl="213" style="border: 1px solid rgba(255, 255, 255, 0.09); background: rgb(11, 11, 13);">
+            <div data-dc-tpl="214" style="padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(139, 135, 128);">WORKER REGISTRATION — SCHEDULER ROUTES BY CAPABILITY</div>
+            <pre data-dc-tpl="215" style="margin: 0px; padding: 16px; font: 500 11.5px / 1.7 &quot;JetBrains Mono&quot;, monospace; color: rgb(165, 161, 154); white-space: pre; overflow-x: auto;"><span class="sc-interp">{
+  "worker": "gpu-01",
+  "gpu": "RTX 5090",
+  "vram": 32,
+  "cpu": "Ryzen 9 9950X3D",
+  "ram_gb": 60,
+  "capabilities": [
+    "text",
+    "vision",
+    "structured-output"
+  ]
+}</span></pre>
+          </div>
+          <p data-dc-tpl="216" style="margin: 0px; font: 400 12.5px / 1.7 Archivo, sans-serif; color: rgb(139, 135, 128); text-wrap: pretty;">Adding gpu-02 is a registration, not a rewrite — the app never couples to one card. Generated code executes in a container with no network, hard time and memory limits, and file-size caps.</p>
+        </div>
+
+        <div data-dc-tpl="217" style="border: 1px solid rgba(255, 255, 255, 0.09); background: rgb(11, 11, 13);">
+          <div data-dc-tpl="218" style="padding: 16px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+            <span data-dc-tpl="219" style="font: 700 10.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);">VRAM BUDGET — GPU-01 · 32 GB</span>
+            <span data-dc-tpl="220" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);">Q6_K · llama.cpp</span>
+          </div>
+          <div data-dc-tpl="221" style="padding: 18px; display: flex; flex-direction: column; gap: 16px;">
+            <div data-dc-tpl="222" style="display: flex; height: 14px; border: 1px solid rgba(255, 255, 255, 0.14);">
+              
+                <div data-dc-tpl="224" title="Qwen3.8-27B · Q6_K" style="width: 81%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 1;"></div>
+              
+                <div data-dc-tpl="224" title="KV CACHE · 64K CTX" style="width: 12.5%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 0.84;"></div>
+              
+                <div data-dc-tpl="224" title="HEADROOM" style="width: 6.5%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 0.68;"></div>
+              
+            </div>
+            <div data-dc-tpl="225" style="display: flex; flex-direction: column; gap: 1px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.08);">
+              
+                <div data-dc-tpl="227" style="background: rgb(14, 14, 17); padding: 13px 15px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline;">
+                  <div data-dc-tpl="228">
+                    <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(244, 242, 237);"><span class="sc-interp">Qwen3.8-27B · Q6_K</span></div>
+                    <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">INTERPRETER — prompt → BullSpec → OpenSCAD, structured output</span></div>
+                  </div>
+                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">26</span> GB</span>
+                </div>
+              
+                <div data-dc-tpl="227" style="background: rgb(14, 14, 17); padding: 13px 15px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline;">
+                  <div data-dc-tpl="228">
+                    <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(244, 242, 237);"><span class="sc-interp">KV CACHE · 64K CTX</span></div>
+                    <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">Long design conversations without re-reading the spec each turn</span></div>
+                  </div>
+                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">4</span> GB</span>
+                </div>
+              
+                <div data-dc-tpl="227" style="background: rgb(14, 14, 17); padding: 13px 15px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline;">
+                  <div data-dc-tpl="228">
+                    <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(139, 135, 128);"><span class="sc-interp">HEADROOM</span></div>
+                    <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">Context growth and model swaps</span></div>
+                  </div>
+                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">2</span> GB</span>
+                </div>
+              
+            </div>
+            <div data-dc-tpl="232" style="padding: 14px 16px; border: 1px solid rgba(232, 178, 58, 0.28); background: rgb(14, 14, 17);">
+              <div data-dc-tpl="233" style="font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(232, 178, 58);">THE MODEL CALL</div>
+              <p data-dc-tpl="234" style="margin: 10px 0px 0px; font: 400 12.5px / 1.65 Archivo, sans-serif; color: rgb(165, 161, 154); text-wrap: pretty;">Qwen3.8-27B over anything bigger: BullSpec generation is a structured-output problem, not a scale problem, and a 27B that fits one card with room for context beats a 70B that pages. It runs at Q6_K on gpu-01 and Q4_K_M on gpu-02, so overflow degrades quantisation rather than dropping the job. Concept render and image-to-3D are specified but not deployed — no card in the fleet holds them today. No open model emits trustworthy triangles — the models write specs, the CAD engine writes geometry. That split is the product.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-dc-tpl="235" style="margin-top: 20px; border: 1px solid rgba(255, 255, 255, 0.09); background: rgb(11, 11, 13); padding: 16px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <span data-dc-tpl="236" style="font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(139, 135, 128);">JOB PIPELINE</span>
+        
+          <span data-dc-tpl="238" style="display: flex; align-items: center; gap: 10px;">
+            <span data-dc-tpl="239" style="padding: 7px 10px; border: 1px solid rgba(255, 255, 255, 0.14); font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);"><span class="sc-interp">QUEUED</span></span>
+            <span data-dc-tpl="240" style="color: rgb(92, 89, 82); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace;">→</span>
+          </span>
+        
+          <span data-dc-tpl="238" style="display: flex; align-items: center; gap: 10px;">
+            <span data-dc-tpl="239" style="padding: 7px 10px; border: 1px solid rgba(255, 255, 255, 0.14); font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(232, 178, 58);"><span class="sc-interp">INTERPRETING</span></span>
+            <span data-dc-tpl="240" style="color: rgb(92, 89, 82); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace;">→</span>
+          </span>
+        
+          <span data-dc-tpl="238" style="display: flex; align-items: center; gap: 10px;">
+            <span data-dc-tpl="239" style="padding: 7px 10px; border: 1px solid rgba(255, 255, 255, 0.14); font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(232, 178, 58);"><span class="sc-interp">GENERATING_GEOMETRY</span></span>
+            <span data-dc-tpl="240" style="color: rgb(92, 89, 82); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace;">→</span>
+          </span>
+        
+          <span data-dc-tpl="238" style="display: flex; align-items: center; gap: 10px;">
+            <span data-dc-tpl="239" style="padding: 7px 10px; border: 1px solid rgba(255, 255, 255, 0.14); font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(232, 178, 58);"><span class="sc-interp">RENDERING</span></span>
+            <span data-dc-tpl="240" style="color: rgb(92, 89, 82); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace;">→</span>
+          </span>
+        
+          <span data-dc-tpl="238" style="display: flex; align-items: center; gap: 10px;">
+            <span data-dc-tpl="239" style="padding: 7px 10px; border: 1px solid rgba(255, 255, 255, 0.14); font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(232, 178, 58);"><span class="sc-interp">VALIDATING</span></span>
+            <span data-dc-tpl="240" style="color: rgb(92, 89, 82); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace;">→</span>
+          </span>
+        
+          <span data-dc-tpl="238" style="display: flex; align-items: center; gap: 10px;">
+            <span data-dc-tpl="239" style="padding: 7px 10px; border: 1px solid rgba(255, 255, 255, 0.14); font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(95, 211, 138);"><span class="sc-interp">COMPLETE</span></span>
+            <span data-dc-tpl="240" style="color: rgb(92, 89, 82); font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace;">→</span>
+          </span>
+        
+        <span data-dc-tpl="241" style="font: 500 10px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.1em; color: rgb(139, 135, 128);">STREAMED TO THE UI OVER SSE</span>
+      </div>
+    </main>
+  
+
+  <footer data-dc-tpl="242" style="border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgb(11, 11, 13); padding: 22px 24px; display: flex; flex-wrap: wrap; gap: 12px 26px; justify-content: space-between; font: 500 10px / 1.6 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.14em; color: rgb(92, 89, 82);">
+    <span data-dc-tpl="243">BULLPRINTLAB.COM · AI-NATIVE CAD</span>
+    <span data-dc-tpl="244">PHASE 1 INTERFACE · GEOMETRY IS MOCKED, PIPELINE IS SPECIFIED</span>
+    <span data-dc-tpl="245">© 2026 BULLPRINT LAB</span>
+  </footer></div></div></div></section></div>
+<template id="bp-tpl"><x-dc>
+<helmet data-dc-atomics>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+  body{margin:0;background:#08080A;color:#F4F2ED;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+  :focus-visible{outline:2px solid #E8B23A;outline-offset:2px}
+  input::placeholder,textarea::placeholder{color:#5C5952}
+  input,textarea,button{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="plGold" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".2" stop-color="#F5D07A"></stop><stop offset=".45" stop-color="#E8B23A"></stop><stop offset=".75" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop></linearGradient>
+  </defs></svg>
+
+  <!-- ===== APP BAR ===== -->
+  <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 20px;background:rgba(11,11,13,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="display:flex;align-items:center;gap:26px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg width="26" height="22" viewBox="0 0 120 100" aria-hidden="true">
+          <g transform="translate(2.192,3.528) scale(0.1635)" style="transform-origin:0 0">
+            <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)" transform="scale(6.116)"></path>
+          </g>
+          <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)"></path>
+          <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#plGold)"></path>
+          <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#plGold)"></path>
+        </svg>
+        <span style="font:800 14px/1 Archivo,sans-serif;letter-spacing:.01em;color:#F4F2ED">BULLPRINT<span style="color:#E8B23A">LAB</span></span>
+      </div>
+      <nav aria-label="Screens" style="display:flex;gap:2px;padding:3px;background:#101013;border:1px solid rgba(255,255,255,.08);border-radius:2px">
+        <sc-for list="{{ screens }}" as="s" hint-placeholder-count="3">
+          <button type="button" onClick="{{ s.go }}" style="{{ s.style }}">{{ s.label }}</button>
+        </sc-for>
+      </nav>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">{{ jobLabel }}</span>
+      <span style="width:6px;height:6px;border-radius:50%;background:{{ jobDot }};display:block"></span>
+    </div>
+  </header>
+
+  <!-- ===== LANDING ===== -->
+  <sc-if value="{{ onLanding }}" hint-placeholder-val="{{ true }}">
+    <main style="flex:1;display:flex;flex-direction:column">
+      <section style="position:relative;padding:clamp(56px,9vw,110px) 24px 70px;overflow:hidden">
+        <div style="position:absolute;inset:0;background:radial-gradient(58% 70% at 50% 0%,rgba(232,178,58,.10),transparent 68%)"></div>
+        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:56px 56px"></div>
+        <div style="position:relative;max-width:940px;margin:0 auto">
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:24px">
+            <span style="width:5px;height:5px;background:#E8B23A;display:block"></span>
+            <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">AI-NATIVE CAD · PROMPT TO PRINTABLE GEOMETRY</span>
+          </div>
+          <h1 style="margin:0;font:900 clamp(36px,6.4vw,68px)/0.98 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED;text-wrap:balance">TURN AN IDEA INTO A PRINTABLE 3D DESIGN.</h1>
+          <p style="margin:20px 0 0;max-width:620px;font:400 16px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Describe the part. BullPrintLab infers the dimensions, clearances and manufacturing assumptions, builds real parametric geometry, and lets you change any of it by typing. Every design is a spec, not a picture.</p>
+
+          <div style="margin-top:34px;border:1px solid rgba(232,178,58,.32);background:rgba(16,16,19,.72);backdrop-filter:blur(18px)">
+            <textarea value="{{ draft }}" onChange="{{ onDraft }}" placeholder="{{ rotating }}" aria-label="Describe the part you want" style="width:100%;box-sizing:border-box;height:108px;resize:none;padding:20px;background:transparent;border:none;color:#F4F2ED;font:400 16px/1.6 Archivo,sans-serif;outline:none"></textarea>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 16px;border-top:1px solid rgba(255,255,255,.08)">
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ advanced }}" as="a" hint-placeholder-count="4">
+                  <span style="padding:8px 11px;border:1px solid rgba(255,255,255,.14);font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ a.k }} <span style="color:#F4F2ED">{{ a.v }}</span></span>
+                </sc-for>
+              </div>
+              <button type="button" onClick="{{ generate }}" style="padding:14px 24px;border:none;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;cursor:pointer">GENERATE A PART →</button>
+            </div>
+          </div>
+          <p style="margin:12px 0 0;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">ADVANCED FIELDS ARE OPTIONAL — EVERY ASSUMPTION IS SHOWN AND EDITABLE AFTER GENERATION</p>
+
+          <div style="margin-top:34px">
+            <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8B8780;margin-bottom:14px">TRY ONE</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px">
+              <sc-for list="{{ examples }}" as="ex" hint-placeholder-count="4">
+                <button type="button" onClick="{{ ex.use }}" style="text-align:left;padding:16px 18px;background:#0E0E11;border:1px solid rgba(255,255,255,.09);color:#A5A19A;font:400 13.5px/1.6 Archivo,sans-serif;cursor:pointer;transition:border-color 180ms,color 180ms" style-hover="border-color:rgba(232,178,58,.4);color:#F4F2ED">{{ ex.text }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="border-top:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+        <div style="max-width:1240px;margin:0 auto;padding:64px 24px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+            <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="5">
+              <div style="background:#0B0B0D;padding:24px 22px">
+                <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">{{ p.n }}</div>
+                <div style="margin-top:13px;font:800 16px/1.1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ p.t }}</div>
+                <p style="margin:10px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">{{ p.c }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin:22px 0 0;max-width:820px;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">The model never emits triangles directly. It emits <span style="color:#F4F2ED">BullSpec</span> — a typed JSON description of parameters and features — and a deterministic CAD engine turns that into geometry. That is why "make it 20 mm wider" changes one number instead of producing an unrelated part.</p>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <!-- ===== WORKSPACE ===== -->
+  <sc-if value="{{ onDesign }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;display:grid;grid-template-columns:340px minmax(0,1fr) 320px;min-height:0">
+
+      <!-- CHAT -->
+      <section aria-label="Design conversation" style="display:flex;flex-direction:column;min-height:0;border-right:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+        <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+          <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">DESIGN CONVERSATION</span>
+          <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ turnCount }}</span>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:16px;min-height:0">
+          <sc-for list="{{ messages }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:{{ m.tagColor }}">{{ m.tag }}</span>
+              <p style="margin:0;font:400 13.5px/1.65 Archivo,sans-serif;color:{{ m.fg }};text-wrap:pretty">{{ m.text }}</p>
+              <sc-if value="{{ m.hasRows }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+                  <sc-for list="{{ m.rows }}" as="r" hint-placeholder-count="4">
+                    <div style="background:#0E0E11;padding:9px 12px;display:flex;justify-content:space-between;gap:12px;font:500 10.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em">
+                      <span style="color:#8B8780">{{ r.k }}</span><span style="color:#F4F2ED;text-align:right">{{ r.v }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ m.hasDelta }}" hint-placeholder-val="{{ false }}">
+                <span style="align-self:flex-start;padding:6px 9px;border:1px solid rgba(95,211,138,.4);font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#5FD38A">{{ m.delta }}</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <form onSubmit="{{ onSend }}" style="padding:14px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:10px">
+          <textarea value="{{ chatDraft }}" onChange="{{ onChatDraft }}" placeholder="Make the base 5 mm thicker…" aria-label="Change the design" style="width:100%;box-sizing:border-box;height:64px;resize:none;padding:12px;background:#101013;border:1px solid rgba(255,255,255,.14);color:#F4F2ED;font:400 13.5px/1.5 Archivo,sans-serif;outline:none;transition:border-color 180ms" style-focus="border-color:#E8B23A"></textarea>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ quickEdits }}" as="q" hint-placeholder-count="3">
+              <button type="button" onClick="{{ q.run }}" style="padding:7px 10px;background:#101013;border:1px solid rgba(255,255,255,.14);color:#8B8780;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;cursor:pointer;transition:all 160ms" style-hover="border-color:#E8B23A;color:#E8B23A">{{ q.label }}</button>
+            </sc-for>
+          </div>
+          <button type="submit" style="padding:13px;border:none;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;cursor:pointer">APPLY CHANGE →</button>
+        </form>
+      </section>
+
+      <!-- VIEWPORT -->
+      <section aria-label="3D viewport" style="display:flex;flex-direction:column;min-height:0;min-width:0;background:#000">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+          <div style="display:flex;gap:2px;padding:3px;background:#101013;border:1px solid rgba(255,255,255,.08)">
+            <sc-for list="{{ views }}" as="v" hint-placeholder-count="4">
+              <button type="button" onClick="{{ v.go }}" style="{{ v.style }}">{{ v.label }}</button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ toggles }}" as="t" hint-placeholder-count="3">
+              <button type="button" onClick="{{ t.go }}" style="{{ t.style }}">{{ t.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="flex:1;position:relative;min-height:420px;overflow:hidden">
+          <div style="position:absolute;inset:0;background-image:{{ gridImage }};background-size:32px 32px;opacity:{{ gridOpacity }}"></div>
+          <div style="position:absolute;inset:0;background:radial-gradient(62% 62% at 50% 46%,rgba(232,178,58,.07),transparent 70%)"></div>
+          <svg viewBox="-260 -200 520 400" preserveAspectRatio="xMidYMid meet" style="position:absolute;inset:0;width:100%;height:100%;cursor:grab" onPointerDown="{{ onOrbitStart }}" onPointerMove="{{ onOrbitMove }}" onPointerUp="{{ onOrbitEnd }}" onPointerLeave="{{ onOrbitEnd }}">
+            <sc-for list="{{ faces }}" as="fc" hint-placeholder-count="6">
+              <polygon points="{{ fc.pts }}" fill="{{ fc.fill }}" stroke="{{ fc.stroke }}" stroke-width="{{ fc.sw }}" stroke-linejoin="round"></polygon>
+            </sc-for>
+            <sc-for list="{{ holePaths }}" as="h" hint-placeholder-count="4">
+              <polygon points="{{ h.pts }}" fill="{{ h.fill }}" stroke="#E8B23A" stroke-width="1.1"></polygon>
+            </sc-for>
+            <sc-for list="{{ dimLines }}" as="d" hint-placeholder-count="3">
+              <g>
+                <path d="{{ d.path }}" fill="none" stroke="#E8B23A" stroke-width=".9" opacity=".85"></path>
+                <text x="{{ d.tx }}" y="{{ d.ty }}" text-anchor="middle" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.06em">{{ d.label }}</text>
+              </g>
+            </sc-for>
+          </svg>
+          <div style="position:absolute;left:16px;bottom:14px;font:500 9.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ camLabel }}<br><span style="color:#5C5952">DRAG TO ORBIT · MOCKED GEOMETRY, PHASE 1</span></div>
+          <div style="position:absolute;right:16px;bottom:14px;text-align:right;font:500 9.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ bboxLabel }}<br><span style="color:#5C5952">{{ volLabel }}</span></div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+          <div style="display:flex;gap:2px;padding:8px 10px 0">
+            <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="3">
+              <button type="button" onClick="{{ tb.go }}" style="{{ tb.style }}">{{ tb.label }}</button>
+            </sc-for>
+          </div>
+          <div style="max-height:190px;overflow:auto;padding:14px 16px 18px">
+            <sc-if value="{{ tabIsSpec }}" hint-placeholder-val="{{ true }}">
+              <pre style="margin:0;font:500 11.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A;white-space:pre">{{ specJson }}</pre>
+            </sc-if>
+            <sc-if value="{{ tabIsScad }}" hint-placeholder-val="{{ false }}">
+              <pre style="margin:0;font:500 11.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A;white-space:pre">{{ scadSource }}</pre>
+            </sc-if>
+            <sc-if value="{{ tabIsVersions }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+                <sc-for list="{{ versions }}" as="ver" hint-placeholder-count="3">
+                  <div style="background:#0E0E11;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px">
+                    <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:{{ ver.fg }}">{{ ver.tag }}</span>
+                    <span style="flex:1;font:400 12.5px/1.4 Archivo,sans-serif;color:#8B8780">{{ ver.note }}</span>
+                    <button type="button" onClick="{{ ver.restore }}" style="padding:6px 10px;background:none;border:1px solid rgba(255,255,255,.16);color:#A5A19A;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;cursor:pointer" style-hover="border-color:#E8B23A;color:#E8B23A">{{ ver.action }}</button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARAMETERS -->
+      <aside aria-label="Parameters and manufacturing" style="display:flex;flex-direction:column;min-height:0;border-left:1px solid rgba(255,255,255,.08);background:#0B0B0D;overflow-y:auto">
+        <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">{{ partName }}</div>
+          <div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ partId }} · {{ versionLabel }}</div>
+        </div>
+
+        <div style="padding:18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780;margin-bottom:14px">PARAMETERS · MM</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ paramRows }}" as="p" hint-placeholder-count="6">
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label for="{{ p.id }}" style="display:flex;justify-content:space-between;gap:10px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">{{ p.label }}<span style="color:#E8B23A">{{ p.display }}</span></label>
+                <input id="{{ p.id }}" type="range" min="{{ p.min }}" max="{{ p.max }}" step="{{ p.step }}" value="{{ p.value }}" onChange="{{ p.onInput }}" style="width:100%;accent-color:#E8B23A;cursor:pointer">
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding:18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780;margin-bottom:14px">MANUFACTURING</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780;margin-bottom:9px">METHOD</div>
+              <div role="radiogroup" aria-label="Manufacturing method" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                <sc-for list="{{ methodOpts }}" as="o" hint-placeholder-count="3">
+                  <div role="radio" tabindex="0" aria-checked="{{ o.checked }}" onClick="{{ o.pick }}" onKeyDown="{{ o.key }}" style="{{ o.style }}">{{ o.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780;margin-bottom:9px">MATERIAL</div>
+              <div role="radiogroup" aria-label="Material" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                <sc-for list="{{ materialOpts }}" as="o" hint-placeholder-count="3">
+                  <div role="radio" tabindex="0" aria-checked="{{ o.checked }}" onClick="{{ o.pick }}" onKeyDown="{{ o.key }}" style="{{ o.style }}">{{ o.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+              <sc-for list="{{ mfgRows }}" as="r" hint-placeholder-count="4">
+                <div style="background:#0E0E11;padding:10px 12px;display:flex;justify-content:space-between;gap:12px;font:500 10.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em">
+                  <span style="color:#8B8780">{{ r.k }}</span><span style="color:#F4F2ED;text-align:right">{{ r.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">DESIGN HEALTH</span>
+            <span style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:{{ healthFg }}">{{ healthLabel }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ health }}" as="h" hint-placeholder-count="5">
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span style="flex:none;width:13px;font:700 11px/1.35 'JetBrains Mono',monospace;color:{{ h.fg }}">{{ h.mark }}</span>
+                <span style="font:400 12.5px/1.5 Archivo,sans-serif;color:{{ h.fg }}">{{ h.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding:18px;display:flex;flex-direction:column;gap:10px">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">EXPORT</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ exports }}" as="e" hint-placeholder-count="4">
+              <button type="button" onClick="{{ e.go }}" style="{{ e.style }}">{{ e.label }}</button>
+            </sc-for>
+          </div>
+          <p style="margin:6px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:#8B8780">{{ exportNote }}</p>
+        </div>
+      </aside>
+    </main>
+  </sc-if>
+
+  <!-- ===== PROJECTS ===== -->
+  <sc-if value="{{ onProjects }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;max-width:1240px;width:100%;margin:0 auto;padding:44px 24px 80px;box-sizing:border-box">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+        <div>
+          <h1 style="margin:0;font:900 clamp(26px,3.6vw,40px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">PROJECTS</h1>
+          <p style="margin:12px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#8B8780">Every part is reproducible from its BullSpec. Open one to keep editing where you left off.</p>
+        </div>
+        <button type="button" onClick="{{ goLanding }}" style="padding:13px 20px;border:1px solid #E8B23A;background:none;color:#E8B23A;font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;cursor:pointer" style-hover="background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D">NEW PART →</button>
+      </div>
+      <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px">
+        <sc-for list="{{ projects }}" as="pr" hint-placeholder-count="6">
+          <button type="button" onClick="{{ pr.open }}" style="text-align:left;padding:0;background:#0B0B0D;border:1px solid rgba(255,255,255,.09);cursor:pointer;display:flex;flex-direction:column;transition:border-color 200ms" style-hover="border-color:rgba(232,178,58,.4)">
+            <div style="height:150px;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;background:#08080A">
+              <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:22px 22px"></div>
+              <svg viewBox="-70 -52 140 104" style="position:absolute;inset:0;width:100%;height:100%">
+                <sc-for list="{{ pr.faces }}" as="f2" hint-placeholder-count="3">
+                  <polygon points="{{ f2.pts }}" fill="{{ f2.fill }}" stroke="{{ f2.stroke }}" stroke-width=".8"></polygon>
+                </sc-for>
+              </svg>
+              <span style="position:absolute;right:10px;top:10px;padding:5px 8px;font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:{{ pr.statusFg }};background:{{ pr.statusBg }};border:1px solid {{ pr.statusLine }}">{{ pr.status }}</span>
+            </div>
+            <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">{{ pr.id }}</div>
+              <div style="font:800 16px/1.2 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ pr.name }}</div>
+              <div style="font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">{{ pr.method }} · {{ pr.material }}<br>{{ pr.version }} · {{ pr.date }}</div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ===== COMPUTE ===== -->
+  <sc-if value="{{ onCompute }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;max-width:1240px;width:100%;margin:0 auto;padding:44px 24px 80px;box-sizing:border-box">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px">
+        <span style="width:5px;height:5px;background:#E8B23A;display:block"></span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">SOVEREIGN COMPUTE · GPU-01 + GPU-02 · ON OUR FLOOR</span>
+      </div>
+      <h1 style="margin:0;font:900 clamp(28px,4.4vw,46px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">EVERY CARD EARNS ITS JOB.</h1>
+      <p style="margin:16px 0 0;max-width:720px;font:400 14.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Two cards serve the public queue and the scheduler routes by capability — gpu-01 holds the interpreter, gpu-02 takes overflow. The 96 GB workstation card is deliberately not on this path; it is reserved for in-house design, where the work is ours and the latency is nobody else's problem. Geometry itself never touches the GPU: OpenSCAD and CadQuery run deterministic on the CPU, so a render burst can't block a part from generating.</p>
+
+      <div style="margin-top:34px;display:grid;grid-template-columns:1fr 1.2fr;gap:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="border:1px solid rgba(232,178,58,.32);background:rgba(16,16,19,.72);backdrop-filter:blur(18px)">
+            <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">THE RACK</div>
+            <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08)">
+              <sc-for list="{{ rackRows }}" as="r" hint-placeholder-count="6">
+                <div style="background:#0B0B0D;padding:12px 16px;display:flex;justify-content:space-between;gap:14px;font:500 10.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.06em">
+                  <span style="color:#8B8780">{{ r.k }}</span><span style="color:#F4F2ED;text-align:right">{{ r.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
+            <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">WORKER REGISTRATION — SCHEDULER ROUTES BY CAPABILITY</div>
+            <pre style="margin:0;padding:16px;font:500 11.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A;white-space:pre;overflow-x:auto">{{ workerJson }}</pre>
+          </div>
+          <p style="margin:0;font:400 12.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Adding gpu-02 is a registration, not a rewrite — the app never couples to one card. Generated code executes in a container with no network, hard time and memory limits, and file-size caps.</p>
+        </div>
+
+        <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
+          <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">VRAM BUDGET — GPU-01 · 32 GB</span>
+            <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">Q6_K · llama.cpp</span>
+          </div>
+          <div style="padding:18px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;height:14px;border:1px solid rgba(255,255,255,.14)">
+              <sc-for list="{{ modelStack }}" as="m" hint-placeholder-count="5">
+                <div style="width:{{ m.pct }};background:linear-gradient(120deg,#F5D07A,#E8B23A 55%,#A87F24);border-right:1px solid #0B0B0D;opacity:{{ m.barOp }}" title="{{ m.name }}"></div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+              <sc-for list="{{ modelStack }}" as="m" hint-placeholder-count="5">
+                <div style="background:#0E0E11;padding:13px 15px;display:flex;justify-content:space-between;gap:14px;align-items:baseline">
+                  <div>
+                    <div style="font:700 12px/1.3 'JetBrains Mono',monospace;letter-spacing:.06em;color:{{ m.fg }}">{{ m.name }}</div>
+                    <div style="margin-top:5px;font:400 12px/1.5 Archivo,sans-serif;color:#8B8780">{{ m.role }}</div>
+                  </div>
+                  <span style="flex:none;font:700 12px/1 'JetBrains Mono',monospace;color:#E8B23A">{{ m.gb }} GB</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="padding:14px 16px;border:1px solid rgba(232,178,58,.28);background:#0E0E11">
+              <div style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">THE MODEL CALL</div>
+              <p style="margin:10px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Qwen3.8-27B over anything bigger: BullSpec generation is a structured-output problem, not a scale problem, and a 27B that fits one card with room for context beats a 70B that pages. It runs at Q6_K on gpu-01 and Q4_K_M on gpu-02, so overflow degrades quantisation rather than dropping the job. Concept render and image-to-3D are specified but not deployed — no card in the fleet holds them today. No open model emits trustworthy triangles — the models write specs, the CAD engine writes geometry. That split is the product.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;border:1px solid rgba(255,255,255,.09);background:#0B0B0D;padding:16px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">JOB PIPELINE</span>
+        <sc-for list="{{ jobStates }}" as="j" hint-placeholder-count="6">
+          <span style="display:flex;align-items:center;gap:10px">
+            <span style="padding:7px 10px;border:1px solid rgba(255,255,255,.14);font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:{{ j.fg }}">{{ j.label }}</span>
+            <span style="color:#5C5952;font:500 10px/1 'JetBrains Mono',monospace">→</span>
+          </span>
+        </sc-for>
+        <span style="font:500 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">STREAMED TO THE UI OVER SSE</span>
+      </div>
+    </main>
+  </sc-if>
+
+  <footer style="border-top:1px solid rgba(255,255,255,.08);background:#0B0B0D;padding:22px 24px;display:flex;flex-wrap:wrap;gap:12px 26px;justify-content:space-between;font:500 10px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5C5952">
+    <span>BULLPRINTLAB.COM · AI-NATIVE CAD</span>
+    <span>PHASE 1 INTERFACE · GEOMETRY IS MOCKED, PIPELINE IS SPECIFIED</span>
+    <span>© 2026 BULLPRINT LAB</span>
+  </footer>
+</div>
+</x-dc></template>
+<script src="/bp-boot.js"></script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    screen: "landing", draft: "", rotIdx: 0,
+    chatDraft: "", view: "ISO", wire: false, grid: true, dims: true,
+    tab: "SPEC", yaw: 34, pitch: 22, drag: null,
+    job: "idle", exportNote: "STL, OpenSCAD source and BullSpec JSON are written on export. Parameters travel with the file, so the part stays editable.",
+    name: "Wall Bracket", method: "FDM", material: "PETG",
+    p: { width: 100, height: 50, thickness: 4, wall: 3, holeDia: 5, holeCount: 4, spacing: 70, clearance: 0.4 },
+    messages: [], versions: []
+  };
+
+  componentDidMount() {
+    this.rot = setInterval(() => this.setState(s => ({ rotIdx: (s.rotIdx + 1) % 4 })), 3600);
+  }
+  componentWillUnmount() { clearInterval(this.rot); }
+
+  // ---------- prompt parsing ----------
+  parse(text) {
+    const t = text.toLowerCase();
+    const d = {};
+    const grab = (re) => { const m = t.match(re); return m ? parseFloat(m[1]) : null; };
+    const w = grab(/(\d+(?:\.\d+)?)\s*mm\s*(?:wide|width)/) ?? grab(/width\D{0,8}(\d+(?:\.\d+)?)/);
+    const h = grab(/(\d+(?:\.\d+)?)\s*mm\s*(?:tall|high|height)/) ?? grab(/height\D{0,8}(\d+(?:\.\d+)?)/);
+    const th = grab(/(\d+(?:\.\d+)?)\s*mm\s*thick/) ?? grab(/thick\w*\D{0,8}(\d+(?:\.\d+)?)/);
+    const cl = grab(/(\d+(?:\.\d+)?)\s*mm\s*clearance/);
+    const sp = grab(/(\d+(?:\.\d+)?)\s*mm\s*apart/) ?? grab(/spacing\D{0,8}(\d+(?:\.\d+)?)/);
+    const metric = t.match(/m(\d)\b/);
+    const holeD = grab(/(\d+(?:\.\d+)?)\s*mm\s*(?:mounting\s*)?holes?/) ?? (metric ? parseFloat(metric[1]) : null);
+    const words = { one: 1, two: 2, three: 3, four: 4, six: 6, eight: 8 };
+    let cnt = null;
+    const cm = t.match(/\b(\d|one|two|three|four|six|eight)\b(?=[^.]*hole)/);
+    if (cm) cnt = words[cm[1]] ?? parseFloat(cm[1]);
+    if (w) d.width = w; if (h) d.height = h; if (th) d.thickness = th;
+    if (cl) d.clearance = cl; if (sp) d.spacing = sp;
+    if (holeD) d.holeDia = holeD; if (cnt) d.holeCount = cnt;
+    let name = "Custom Part";
+    const kinds = [["bracket", "Wall Bracket"], ["holder", "Slide-In Holder"], ["insert", "Insert"], ["spacer", "Spacer"], ["plate", "Mounting Plate"], ["tray", "Tray"], ["enclosure", "Enclosure"], ["clip", "Clip"], ["adapter", "Adapter"], ["mount", "Wall Mount"]];
+    kinds.forEach(([k, n]) => { if (t.includes(k)) name = n; });
+    return { d, name };
+  }
+
+  applyDelta(text, isFirst) {
+    const { d, name } = this.parse(text);
+    const rel = text.toLowerCase().match(/(\d+(?:\.\d+)?)\s*mm\s*(thicker|thinner|taller|shorter|wider|narrower)/);
+    const next = Object.assign({}, this.state.p);
+    const changed = [];
+    if (rel) {
+      const v = parseFloat(rel[1]), k = rel[2];
+      const map = { thicker: ["thickness", 1], thinner: ["thickness", -1], taller: ["height", 1], shorter: ["height", -1], wider: ["width", 1], narrower: ["width", -1] };
+      const [key, sign] = map[k];
+      next[key] = Math.max(1, next[key] + sign * v);
+      changed.push(key.toUpperCase() + " → " + next[key] + " MM");
+    }
+    Object.keys(d).forEach(k => {
+      if (next[k] !== d[k]) { changed.push(k.toUpperCase() + " → " + d[k] + (k === "holeCount" ? "" : " MM")); next[k] = d[k]; }
+    });
+    const rows = isFirst ? [
+      { k: "OVERALL", v: next.width + " × " + next.height + " × " + next.thickness },
+      { k: "WALL THICKNESS", v: next.wall + " mm" },
+      { k: "MOUNTING", v: next.holeCount + " × ⌀" + next.holeDia + " @ " + next.spacing + " mm" },
+      { k: "MATERIAL", v: this.state.material + " · assumed" },
+      { k: "FIT TOLERANCE", v: next.clearance + " mm · assumed" },
+      { k: "LOAD CASE", v: "Medium-duty wall mounting · assumed" }
+    ] : null;
+    const msgs = this.state.messages.concat([
+      { who: "user", text: text },
+      {
+        who: "ai",
+        text: isFirst
+          ? "Parsed the request into BullSpec and generated parametric geometry. Assumptions are shown below and every one of them is editable."
+          : (changed.length ? "Updated BullSpec and regenerated only the affected geometry. Everything else is unchanged." : "I could not find a dimension to change in that. Try naming a parameter and a value — for example, make the base 6 mm thick."),
+        rows: rows, delta: changed.join(" · ")
+      }
+    ]);
+    const vers = changed.length
+      ? this.state.versions.concat([{ n: this.state.versions.length + 1, note: changed.join(" · ") }])
+      : this.state.versions;
+    this.setState({
+      p: next, messages: msgs, versions: vers, chatDraft: "",
+      name: isFirst ? name : this.state.name, job: "complete"
+    });
+  }
+
+  // ---------- projection ----------
+  project(pt) {
+    const ry = this.state.yaw * Math.PI / 180, rx = this.state.pitch * Math.PI / 180;
+    let x = pt[0], y = pt[1], z = pt[2];
+    let x1 = x * Math.cos(ry) + z * Math.sin(ry);
+    let z1 = -x * Math.sin(ry) + z * Math.cos(ry);
+    let y1 = y * Math.cos(rx) - z1 * Math.sin(rx);
+    let z2 = y * Math.sin(rx) + z1 * Math.cos(rx);
+    return [x1, y1, z2];
+  }
+
+  chip(on, label) {
+    return {
+      label: label,
+      style: "padding:8px 11px;cursor:pointer;user-select:none;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-align:center;"
+        + "border:1px solid " + (on ? "#E8B23A" : "rgba(255,255,255,.14)") + ";"
+        + "background:" + (on ? "linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24)" : "#101013") + ";"
+        + "color:" + (on ? "#0B0B0D" : "#8B8780") + ";transition:all 160ms cubic-bezier(.2,.8,.2,1)"
+    };
+  }
+
+  renderVals() {
+    const s = this.state, p = s.p;
+    const scale = Math.min(3.0, 300 / Math.max(p.width, p.height + 40));
+    const W = p.width * scale / 2, H = p.height * scale / 2, T = p.thickness * scale / 2;
+
+    // box corners
+    const C = [[-W, -H, -T], [W, -H, -T], [W, H, -T], [-W, H, -T], [-W, -H, T], [W, -H, T], [W, H, T], [-W, H, T]];
+    const P = C.map(c => this.project(c));
+    const faceDef = [
+      { idx: [4, 5, 6, 7], tone: 1.00 }, { idx: [1, 2, 6, 5], tone: 0.74 },
+      { idx: [0, 3, 7, 4], tone: 0.62 }, { idx: [3, 2, 6, 7], tone: 0.86 },
+      { idx: [0, 1, 5, 4], tone: 0.52 }, { idx: [0, 1, 2, 3], tone: 0.40 }
+    ];
+    const faces = faceDef.map(f => {
+      const z = f.idx.reduce((a, i) => a + P[i][2], 0) / 4;
+      const pts = f.idx.map(i => P[i][0].toFixed(1) + "," + P[i][1].toFixed(1)).join(" ");
+      const lum = Math.round(28 + 92 * f.tone);
+      return {
+        z: z, pts: pts,
+        fill: s.wire ? "none" : "rgb(" + Math.round(lum * 1.0) + "," + Math.round(lum * .82) + "," + Math.round(lum * .38) + ")",
+        stroke: s.wire ? "#E8B23A" : "rgba(255,255,255,.34)",
+        sw: s.wire ? "1" : "1.1"
+      };
+    }).sort((a, b) => a.z - b.z);
+
+    // holes on the top face, along X
+    const holes = [];
+    const n = Math.max(1, Math.round(p.holeCount));
+    const pitch = n > 1 ? p.spacing * scale / (n > 2 ? 1 : 1) : 0;
+    const rows = n > 2 ? 2 : 1, perRow = Math.ceil(n / rows);
+    for (let r = 0; r < rows; r++) {
+      for (let i = 0; i < perRow; i++) {
+        if (r * perRow + i >= n) break;
+        const cx = perRow > 1 ? -pitch / 2 + (pitch / (perRow - 1)) * i : 0;
+        const cy = rows > 1 ? (r === 0 ? -H * 0.52 : H * 0.52) : 0;
+        const rad = p.holeDia * scale / 2;
+        const pts = [];
+        for (let a = 0; a < 22; a++) {
+          const ang = a / 22 * Math.PI * 2;
+          const q = this.project([cx + Math.cos(ang) * rad, cy + Math.sin(ang) * rad, T + 0.4]);
+          pts.push(q[0].toFixed(1) + "," + q[1].toFixed(1));
+        }
+        holes.push({ pts: pts.join(" "), fill: s.wire ? "none" : "#0B0B0D" });
+      }
+    }
+
+    // dimension lines
+    const dl = [];
+    if (s.dims) {
+      const a = this.project([-W, H, T]), b = this.project([W, H, T]);
+      dl.push({ path: "M" + a[0].toFixed(1) + " " + (a[1] + 22).toFixed(1) + "L" + b[0].toFixed(1) + " " + (b[1] + 22).toFixed(1), tx: ((a[0] + b[0]) / 2).toFixed(1), ty: (Math.max(a[1], b[1]) + 36).toFixed(1), label: p.width.toFixed(1) + " MM" });
+      const c2 = this.project([W, -H, T]), d2 = this.project([W, H, T]);
+      dl.push({ path: "M" + (c2[0] + 24).toFixed(1) + " " + c2[1].toFixed(1) + "L" + (d2[0] + 24).toFixed(1) + " " + d2[1].toFixed(1), tx: (Math.max(c2[0], d2[0]) + 46).toFixed(1), ty: ((c2[1] + d2[1]) / 2).toFixed(1), label: p.height.toFixed(1) + " MM" });
+    }
+
+    const bedFits = p.width <= 256 && p.height <= 256;
+    const minWall = p.wall >= 1.2, holeEdge = (p.height / 2 - p.holeDia) > p.holeDia;
+    const overhang = p.thickness >= 3;
+    const warns = [!bedFits, !minWall, !holeEdge, !overhang].filter(Boolean).length;
+
+    const setP = (k) => (e) => {
+      const v = parseFloat(e.target.value);
+      this.setState(st => ({ p: Object.assign({}, st.p, { [k]: v }) }));
+    };
+    const pr = (id, label, k, min, max, step, unit) => ({
+      id: id, label: label, value: p[k], min: min, max: max, step: step,
+      display: p[k] + (unit || " MM"), onInput: setP(k)
+    });
+
+    const radio = (val, cur, label, key) => {
+      const pick = () => this.setState({ [key]: val });
+      const c = this.chip(cur === val, label);
+      return { label: label, checked: cur === val, pick: pick, key: (e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); pick(); } }, style: c.style };
+    };
+
+    const seedIf = (txt) => () => {
+      if (!s.messages.length) { this.setState({ screen: "design", job: "complete" }); this.applyDelta(txt, true); }
+      else this.setState({ screen: "design" });
+    };
+
+    const examples = [
+      "Create a rectangular wall bracket 100 mm wide, 50 mm tall, 4 mm thick, with four 5 mm mounting holes.",
+      "Design a wall-mounted slide-in holder for an iPad Mini with two countersunk screw holes and 2 mm clearance.",
+      "Make an insert for a 120 × 80 × 25 mm electronics board.",
+      "Build a spacer with a 10 mm centre hole and 25 mm outer diameter."
+    ];
+
+    const specJson = JSON.stringify({
+      name: s.name, units: "mm", manufacturing_method: s.method, material: s.material,
+      parameters: { width: p.width, height: p.height, thickness: p.thickness, wall_thickness: p.wall, clearance: p.clearance },
+      features: [
+        { type: "base_plate", width: p.width, height: p.height, thickness: p.thickness },
+        { type: "hole_pattern", hole_type: "through", diameter: p.holeDia, count: Math.round(p.holeCount), spacing: p.spacing }
+      ]
+    }, null, 2);
+
+    const scad = [
+      "// " + s.name + " — generated from BullSpec",
+      "$fn = 64;",
+      "width = " + p.width + "; height = " + p.height + "; thickness = " + p.thickness + ";",
+      "hole_d = " + p.holeDia + "; hole_n = " + Math.round(p.holeCount) + "; spacing = " + p.spacing + ";",
+      "clearance = " + p.clearance + ";",
+      "",
+      "module base_plate() {",
+      "  cube([width, height, thickness], center = true);",
+      "}",
+      "",
+      "module hole_pattern() {",
+      "  rows = hole_n > 2 ? 2 : 1;",
+      "  per = ceil(hole_n / rows);",
+      "  for (r = [0 : rows - 1], i = [0 : per - 1])",
+      "    translate([-spacing/2 + spacing/max(per-1,1) * i,",
+      "               rows > 1 ? (r == 0 ? -height*0.26 : height*0.26) : 0, 0])",
+      "      cylinder(h = thickness * 2, d = hole_d + clearance, center = true);",
+      "}",
+      "",
+      "difference() { base_plate(); hole_pattern(); }"
+    ].join("\n");
+
+    const thumb = (w, h, t) => {
+      const sc = 46 / Math.max(w, h);
+      const c = [[-w * sc / 2, -h * sc / 2, -t * sc / 2], [w * sc / 2, -h * sc / 2, -t * sc / 2], [w * sc / 2, h * sc / 2, -t * sc / 2], [-w * sc / 2, h * sc / 2, -t * sc / 2], [-w * sc / 2, -h * sc / 2, t * sc / 2], [w * sc / 2, -h * sc / 2, t * sc / 2], [w * sc / 2, h * sc / 2, t * sc / 2], [-w * sc / 2, h * sc / 2, t * sc / 2]];
+      const pr2 = c.map(q => {
+        const ry = 32 * Math.PI / 180, rx = 24 * Math.PI / 180;
+        const x1 = q[0] * Math.cos(ry) + q[2] * Math.sin(ry), z1 = -q[0] * Math.sin(ry) + q[2] * Math.cos(ry);
+        return [x1, q[1] * Math.cos(rx) - z1 * Math.sin(rx)];
+      });
+      return [
+        { idx: [0, 1, 5, 4], tone: "rgb(58,48,22)" }, { idx: [1, 2, 6, 5], tone: "rgb(96,78,32)" }, { idx: [4, 5, 6, 7], tone: "rgb(150,120,48)" }
+      ].map(f => ({ pts: f.idx.map(i => pr2[i][0].toFixed(1) + "," + pr2[i][1].toFixed(1)).join(" "), fill: f.tone, stroke: "rgba(255,255,255,.28)" }));
+    };
+
+    const statusOf = (st) => st === "COMPLETE"
+      ? { statusFg: "#0B0B0D", statusBg: "#E8B23A", statusLine: "#E8B23A" }
+      : st === "VALIDATING"
+        ? { statusFg: "#E8B23A", statusBg: "rgba(232,178,58,.12)", statusLine: "rgba(232,178,58,.4)" }
+        : { statusFg: "#A5A19A", statusBg: "rgba(255,255,255,.06)", statusLine: "rgba(255,255,255,.16)" };
+
+    const projects = [
+      { id: "BPL-0041", name: "Wall Bracket", method: "FDM", material: "PETG", version: "v4", date: "08.15.26", status: "COMPLETE", dims: [100, 50, 4] },
+      { id: "BPL-0040", name: "Slide-In Holder", method: "FDM", material: "PETG", version: "v2", date: "08.14.26", status: "COMPLETE", dims: [145, 210, 14] },
+      { id: "BPL-0038", name: "Board Insert", method: "FDM", material: "TPU 95A", version: "v6", date: "08.13.26", status: "VALIDATING", dims: [124, 84, 25] },
+      { id: "BPL-0037", name: "Hex Spacer", method: "FDM", material: "PETG", version: "v1", date: "08.12.26", status: "COMPLETE", dims: [25, 25, 10] },
+      { id: "BPL-0035", name: "Rail Adapter", method: "CNC", material: "ALU 6061", version: "v3", date: "08.11.26", status: "QUEUED", dims: [80, 40, 12] },
+      { id: "BPL-0031", name: "Sensor Enclosure", method: "FDM", material: "ASA", version: "v9", date: "08.09.26", status: "COMPLETE", dims: [96, 62, 30] }
+    ].map(pj => Object.assign({}, pj, statusOf(pj.status), {
+      faces: thumb(pj.dims[0], pj.dims[1], pj.dims[2]),
+      open: () => this.setState({ screen: "design" })
+    }));
+
+    const msgs = s.messages.map(m => ({
+      tag: m.who === "user" ? "YOU" : "BULLPRINTLAB",
+      tagColor: m.who === "user" ? "#8B8780" : "#E8B23A",
+      fg: m.who === "user" ? "#F4F2ED" : "#A5A19A",
+      text: m.text, rows: m.rows || [], hasRows: !!(m.rows && m.rows.length),
+      hasDelta: !!(m.delta && m.delta.length), delta: m.delta
+    }));
+
+    const jobMap = { idle: ["READY", "#5C5952"], complete: ["COMPLETE", "#5FD38A"] };
+    const jm = jobMap[s.job] || jobMap.idle;
+
+    return {
+      screens: [
+        Object.assign({ go: () => this.setState({ screen: "landing" }) }, this.chip(s.screen === "landing", "LANDING")),
+        Object.assign({ go: () => this.setState({ screen: "design" }) }, this.chip(s.screen === "design", "DESIGN")),
+        Object.assign({ go: () => this.setState({ screen: "projects" }) }, this.chip(s.screen === "projects", "PROJECTS")),
+        Object.assign({ go: () => this.setState({ screen: "compute" }) }, this.chip(s.screen === "compute", "COMPUTE"))
+      ],
+      onLanding: s.screen === "landing", onDesign: s.screen === "design", onProjects: s.screen === "projects",
+      onCompute: s.screen === "compute",
+
+      rackRows: [
+        { k: "GPU-01", v: "RTX 5090 · 32 GB · INTERPRETER" },
+        { k: "GPU-02", v: "RTX 3090 · 24 GB · OVERFLOW" },
+        { k: "CPU", v: "RYZEN 9 9950X3D 16C/32T · 5900X 12C/24T" },
+        { k: "RAM", v: "60 GB + 62 GB DDR5" },
+        { k: "STORAGE", v: "1.8 TB + 915 GB NVME · MODELS + ASSETS" },
+        { k: "RESERVED", v: "RTX PRO 6000 96 GB · IN-HOUSE DESIGN ONLY" },
+        { k: "QUEUE", v: "REDIS · CELERY · CAPABILITY-ROUTED" },
+        { k: "ISOLATION", v: "CAD RUNS IN A NO-NETWORK CONTAINER" }
+      ],
+      workerJson: JSON.stringify({
+        worker: "gpu-01",
+        gpu: "RTX 5090",
+        vram: 32,
+        cpu: "Ryzen 9 9950X3D",
+        ram_gb: 60,
+        capabilities: ["text", "vision", "structured-output"]
+      }, null, 2),
+      modelStack: [
+        { name: "Qwen3.8-27B · Q6_K", role: "INTERPRETER — prompt → BullSpec → OpenSCAD, structured output", gb: 26, pct: "81.0%", fg: "#F4F2ED" },
+        { name: "KV CACHE · 64K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 4, pct: "12.5%", fg: "#F4F2ED" },
+        { name: "HEADROOM", role: "Context growth and model swaps", gb: 2, pct: "6.5%", fg: "#8B8780" }
+      ].map(function (m, i) { m.barOp = i === 4 ? ".25" : String(1 - i * 0.16); return m; }),
+      jobStates: ["QUEUED", "INTERPRETING", "GENERATING_GEOMETRY", "RENDERING", "VALIDATING", "COMPLETE"].map((j, i) => ({
+        label: j, fg: i === 5 ? "#5FD38A" : i > 0 && i < 5 ? "#E8B23A" : "#8B8780"
+      })),
+      goLanding: () => this.setState({ screen: "landing" }),
+      jobLabel: jm[0], jobDot: jm[1],
+
+      draft: s.draft,
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      rotating: examples[s.rotIdx],
+      generate: () => { const t = s.draft.trim() || examples[s.rotIdx]; this.setState({ screen: "design", messages: [], versions: [{ n: 1, note: "Initial generation" }], job: "complete" }); this.applyDelta(t, true); },
+      examples: examples.map(t => ({ text: t, use: seedIf(t) })),
+      advanced: [{ k: "DIMENSIONS", v: "AUTO" }, { k: "MATERIAL", v: s.material }, { k: "METHOD", v: s.method }, { k: "TOLERANCE", v: p.clearance + " MM" }],
+      pipeline: [
+        { n: "01", t: "INTERPRET", c: "The prompt becomes typed intent — dimensions, constraints, fasteners, tolerances." },
+        { n: "02", t: "BULLSPEC", c: "A validated JSON spec. The editable source of truth for the part." },
+        { n: "03", t: "GENERATE", c: "A deterministic CAD engine emits OpenSCAD, then solid geometry." },
+        { n: "04", t: "VALIDATE", c: "Wall thickness, overhang, manifold, bed fit — checked before export." },
+        { n: "05", t: "EXPORT", c: "STL now, STEP and 3MF next. Parameters travel with the file." }
+      ],
+
+      messages: msgs, turnCount: s.messages.length + " TURNS",
+      chatDraft: s.chatDraft,
+      onChatDraft: (e) => this.setState({ chatDraft: e.target.value }),
+      onSend: (e) => { if (e && e.preventDefault) e.preventDefault(); const t = s.chatDraft.trim(); if (t) this.applyDelta(t, false); },
+      quickEdits: [
+        { label: "MAKE IT 120 MM WIDE", run: () => this.applyDelta("Make it 120 mm wide.", false) },
+        { label: "5 MM THICKER", run: () => this.applyDelta("Make the base 5 mm thicker.", false) },
+        { label: "TWO M4 HOLES 80 MM APART", run: () => this.applyDelta("Add two M4 mounting holes 80 mm apart.", false) }
+      ],
+
+      views: ["ISO", "FRONT", "SIDE", "TOP"].map(v => Object.assign({
+        go: () => {
+          const map = { ISO: [34, 22], FRONT: [0, 0], SIDE: [90, 0], TOP: [0, 89] };
+          this.setState({ view: v, yaw: map[v][0], pitch: map[v][1] });
+        }
+      }, this.chip(s.view === v, v))),
+      toggles: [
+        Object.assign({ go: () => this.setState({ wire: !s.wire }) }, this.chip(s.wire, "WIREFRAME")),
+        Object.assign({ go: () => this.setState({ grid: !s.grid }) }, this.chip(s.grid, "GRID")),
+        Object.assign({ go: () => this.setState({ dims: !s.dims }) }, this.chip(s.dims, "DIMENSIONS")),
+        Object.assign({ go: () => this.setState({ view: "ISO", yaw: 34, pitch: 22 }) }, this.chip(false, "RESET"))
+      ],
+      gridImage: "linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)",
+      gridOpacity: s.grid ? "1" : "0",
+      faces: faces, holePaths: holes, dimLines: dl,
+      onOrbitStart: (e) => { this.setState({ drag: { x: e.clientX, y: e.clientY, yaw: s.yaw, pitch: s.pitch } }); },
+      onOrbitMove: (e) => {
+        if (!s.drag) return;
+        this.setState({
+          view: "FREE",
+          yaw: s.drag.yaw + (e.clientX - s.drag.x) * 0.5,
+          pitch: Math.max(-89, Math.min(89, s.drag.pitch + (e.clientY - s.drag.y) * 0.4))
+        });
+      },
+      onOrbitEnd: () => { if (s.drag) this.setState({ drag: null }); },
+      camLabel: "CAM " + Math.round(s.yaw) + "° / " + Math.round(s.pitch) + "° · " + (s.view === "FREE" ? "FREE ORBIT" : s.view),
+      bboxLabel: "BBOX " + p.width + " × " + p.height + " × " + p.thickness + " MM",
+      volLabel: "VOL ≈ " + Math.round(p.width * p.height * p.thickness / 1000) + " CM³",
+
+      tabs: ["SPEC", "OPENSCAD", "VERSIONS"].map(t => Object.assign({
+        go: () => this.setState({ tab: t })
+      }, this.chip(s.tab === t, t === "SPEC" ? "BULLSPEC" : t))),
+      tabIsSpec: s.tab === "SPEC", tabIsScad: s.tab === "OPENSCAD", tabIsVersions: s.tab === "VERSIONS",
+      specJson: specJson, scadSource: scad,
+      versions: s.versions.map((v, i, arr) => ({
+        tag: "v" + v.n, note: v.note,
+        fg: i === arr.length - 1 ? "#E8B23A" : "#8B8780",
+        action: i === arr.length - 1 ? "CURRENT" : "RESTORE",
+        restore: () => this.setState({ versions: arr.slice(0, i + 1) })
+      })),
+
+      partName: s.name.toUpperCase(), partId: "BPL-0041",
+      versionLabel: "v" + Math.max(1, s.versions.length),
+      paramRows: [
+        pr("bp-w", "WIDTH", "width", 20, 300, 1),
+        pr("bp-h", "HEIGHT", "height", 20, 300, 1),
+        pr("bp-t", "PLATE THICKNESS", "thickness", 1, 20, 0.5),
+        pr("bp-wall", "WALL THICKNESS", "wall", 0.8, 8, 0.2),
+        pr("bp-hd", "HOLE DIAMETER", "holeDia", 2, 12, 0.5),
+        pr("bp-hn", "HOLE COUNT", "holeCount", 1, 8, 1, ""),
+        pr("bp-sp", "HOLE SPACING", "spacing", 10, 260, 1),
+        pr("bp-cl", "FIT CLEARANCE", "clearance", 0, 1.2, 0.1)
+      ],
+      methodOpts: ["FDM", "RESIN", "CNC"].map(v => radio(v, s.method, v, "method")),
+      materialOpts: ["PETG", "TPU 95A", "ASA"].map(v => radio(v, s.material, v, "material")),
+      mfgRows: [
+        { k: "NOZZLE", v: "0.4 mm" },
+        { k: "LAYER", v: s.method === "FDM" ? "0.20 mm" : "0.05 mm" },
+        { k: "MIN WALL", v: "1.2 mm" },
+        { k: "BED", v: "256 × 256 mm" },
+        { k: "EST. PRINT", v: Math.max(1, Math.round(p.width * p.height * p.thickness / 26000)) + " H" }
+      ],
+      health: [
+        { mark: bedFits ? "✓" : "⚠", fg: bedFits ? "#5FD38A" : "#F7931A", text: bedFits ? "Fits 256 × 256 mm print bed" : "Exceeds the 256 mm bed — split the part or scale it down" },
+        { mark: "✓", fg: "#5FD38A", text: "Manifold geometry, single connected solid" },
+        { mark: minWall ? "✓" : "⚠", fg: minWall ? "#5FD38A" : "#F7931A", text: minWall ? "Wall thickness above the 1.2 mm minimum" : "Wall below 1.2 mm — thin for a 0.4 mm nozzle" },
+        { mark: holeEdge ? "✓" : "⚠", fg: holeEdge ? "#5FD38A" : "#F7931A", text: holeEdge ? "Hole-to-edge distance clears one diameter" : "Holes sit closer than one diameter to the edge" },
+        { mark: overhang ? "✓" : "⚠", fg: overhang ? "#5FD38A" : "#F7931A", text: overhang ? "No unsupported overhang beyond 45°" : "Thin plate may need a brim to stay flat" }
+      ],
+      healthLabel: warns ? warns + " WARNING" + (warns > 1 ? "S" : "") : "ALL CHECKS PASS",
+      healthFg: warns ? "#F7931A" : "#5FD38A",
+      exports: ["STL", "OPENSCAD", "BULLSPEC", "STEP · SOON"].map((l, i) => Object.assign({
+        go: () => this.setState({ exportNote: i === 3 ? "STEP and 3MF land in the next milestone — the CAD abstraction already routes to CadQuery for solid export." : l + " written from the current BullSpec. Reopening the project restores every parameter shown here." })
+      }, this.chip(false, l))),
+      exportNote: s.exportNote,
+      projects: projects
+    };
+  }
+}
+</script>
+</body>
+</html>

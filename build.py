@@ -127,7 +127,305 @@ HEAD = f"""<title>{TITLE}</title>
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<script src="./bp-forms.js" defer></script>"""
+<script src="./bp-forms.js" defer></script>
+<script src="./bp-prerender.js" defer></script>"""
+
+# ---- the platform app -----------------------------------------------------
+#
+# `design/BullPrintLab Platform.dc.html` is the AI-CAD application: landing,
+# workspace, projects and compute. A second design export, built by the same
+# rules as the site — vendored React, self-hosted fonts, no third-party
+# request — but it needs none of the site's wiring: no image uploads, no store
+# links, no BTC ticker, no Turnstile forms.
+#
+# It ships at /platform/, so subresources are referenced root-absolute:
+# `./support.js` would resolve to /platform/support.js and 404.
+PLATFORM_SRC = ROOT / "design" / "BullPrintLab Platform.dc.html"
+PLATFORM_OUT = ROOT / "platform" / "index.html"
+
+PLATFORM_TITLE = "BullPrint Lab Platform — describe the part, get the geometry."
+PLATFORM_DESC = ("The AI CAD workspace behind BullPrint Lab. Describe a part in "
+                 "plain language, read the BullSpec it derives, and generate real "
+                 "parametric geometry — on our own GPU, on our own floor.")
+
+PLATFORM_HEAD = f"""<title>{PLATFORM_TITLE}</title>
+<meta name="description" content="{PLATFORM_DESC}">
+<link rel="canonical" href="{SITE}/platform/">
+<meta name="theme-color" content="#0B0B0D">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml;base64,{{favicon}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BullPrint Lab">
+<meta property="og:url" content="{SITE}/platform/">
+<meta property="og:title" content="{PLATFORM_TITLE}">
+<meta property="og:description" content="{PLATFORM_DESC}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{PLATFORM_TITLE}">
+<meta name="twitter:description" content="{PLATFORM_DESC}">
+<link rel="alternate" type="text/plain" href="/llms.txt">
+<script src="/vendor/react.production.min.js"></script>
+<script src="/vendor/react-dom.production.min.js"></script>
+<script src="/bp-prerender.js" defer></script>"""
+
+
+PLATFORM_PRERENDER = ROOT / "platform-prerender.html"
+PLATFORM_SCREENS = ("landing", "design", "projects", "compute")
+
+# /platform/ is one level down, so the parked template's boot script — like
+# every other subresource on that page — is referenced root-absolute.
+PLATFORM_TEMPLATE_PARK = (
+    '<template id="bp-tpl">{tpl}</template>\n'
+    '<script src="/bp-boot.js"></script>'
+)
+
+
+def capture_platform_prerender() -> None:
+    """Render every screen of the platform app and keep the markup.
+
+    The site is one long document, so capturing it once captures all of it.
+    The platform is a four-screen app where exactly one screen is in the DOM
+    at a time — capturing it naively would ship a quarter of the page and hide
+    COMPUTE, which is the most citable content on it, from every crawler that
+    does not execute JavaScript.
+
+    So each screen is rendered from a temporary copy with its initial state
+    pinned, and the four are concatenated. That is the correct degradation
+    rather than cloaking: a visitor without JavaScript cannot work the tabs
+    either, so the static fallback has to carry all four. Same content, just
+    unpaginated.
+    """
+    import http.server
+    import socketserver
+    import threading
+
+    if not PLATFORM_OUT.exists():
+        sys.exit("build once before capturing the platform prerender")
+
+    anchor = 'state = {\n    screen: "landing"'
+    built = PLATFORM_OUT.read_text()
+    if built.count(anchor) != 1:
+        sys.exit(f"platform prerender: initial-state anchor is not unique "
+                 f"({built.count(anchor)} matches) — export format changed?")
+
+    port = 8798
+    os.chdir(ROOT)
+    httpd = socketserver.TCPServer(
+        ("127.0.0.1", port), http.server.SimpleHTTPRequestHandler)
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    time.sleep(1)
+
+    tmp = PLATFORM_OUT.parent / "_capture.html"
+    parts = []
+    try:
+        for screen in PLATFORM_SCREENS:
+            tmp.write_text(built.replace(
+                anchor, anchor.replace('"landing"', f'"{screen}"'), 1))
+            for exe in ("brave-browser", "google-chrome", "chromium"):
+                try:
+                    dom = subprocess.run(
+                        [exe, "--headless", "--disable-gpu", "--no-sandbox",
+                         "--virtual-time-budget=10000", "--dump-dom",
+                         f"http://127.0.0.1:{port}/platform/_capture.html"],
+                        capture_output=True, text=True, timeout=120).stdout
+                    break
+                except FileNotFoundError:
+                    continue
+            else:
+                sys.exit("no headless browser found (brave-browser / chrome / chromium)")
+
+            m = re.search(r"<body[^>]*>(.*)</body>", dom, re.S)
+            if not m:
+                sys.exit(f"platform prerender: no <body> in the {screen} render")
+            body = re.sub(r"<script.*?</script>", "", m.group(1), flags=re.S)
+            body = re.sub(r"<template.*?</template>", "", body, flags=re.S)
+            if "{{" in body:
+                sys.exit(f"platform prerender: {screen} still has template "
+                         "expressions — it did not render")
+            # same guard as the site: never capture the previous static copy
+            if 'id="bp-prerender"' in body:
+                sys.exit(f"platform prerender: {screen} still contains the "
+                         "previous static copy — bp-prerender.js did not run. "
+                         "Rebuild first, then capture.")
+            parts.append(f'<section data-screen="{screen}">{body.strip()}</section>')
+            print(f"  platform   captured {screen}  ({len(body) / 1024:.0f} KB)")
+    finally:
+        httpd.shutdown()
+        tmp.unlink(missing_ok=True)
+
+    out = "\n".join(parts)
+    PLATFORM_PRERENDER.write_text(out)
+    print(f"  platform   prerender {len(out) / 1024:.0f} KB "
+          f"across {len(parts)} screens")
+
+
+def platform_compute(html: str) -> str:
+    """Correct the COMPUTE page to the fleet that actually serves it.
+
+    The export describes a single 96 GB RTX PRO 6000 holding the whole stack
+    resident. That is not the deployment: the 96 GB card is reserved for
+    in-house design and is deliberately not on the public path. Public
+    inference runs on two consumer cards, routed by capability — which is what
+    the page's own scheduler section already claims, so this makes the claim
+    true rather than replacing it.
+
+    Every number below is measured off the machines, not estimated:
+      gpu-01  smash       RTX 5090 32,607 MiB · Ryzen 9 9950X3D 16C/32T · 60 GB
+      gpu-02  defendable  RTX 3090 24,576 MiB · Ryzen 9 5900X  12C/24T · 62 GB
+      in-house rails      RTX PRO 6000 Blackwell 96 GB · Xeon w9-3475X · 251 GB
+
+    Fix this at source in the design when convenient and this step becomes a
+    no-op — the asserts below will say so loudly if the export changes first.
+    """
+    subs = [
+        # -- eyebrow + headline: the argument is the fleet, not one card
+        ("SOVEREIGN COMPUTE · GPU-01 · ON OUR FLOOR",
+         "SOVEREIGN COMPUTE · GPU-01 + GPU-02 · ON OUR FLOOR"),
+        ("ONE CARD RUNS THE WHOLE STACK.",
+         "EVERY CARD EARNS ITS JOB."),
+
+        # -- the 96 GB "everything resident" claim does not survive 32 GB
+        ("96 GB is enough to keep the interpreter, the concept model and "
+         "image-to-3D resident at once — no eviction, no cold loads between "
+         "jobs. Geometry itself never touches the GPU: OpenSCAD and CadQuery "
+         "run deterministic on the Xeon, so a render burst can't block a part "
+         "from generating.",
+         "Two cards serve the public queue and the scheduler routes by "
+         "capability — gpu-01 holds the interpreter, gpu-02 takes overflow. "
+         "The 96 GB workstation card is deliberately not on this path; it is "
+         "reserved for in-house design, where the work is ours and the latency "
+         "is nobody else's problem. Geometry itself never touches the GPU: "
+         "OpenSCAD and CadQuery run deterministic on the CPU, so a render "
+         "burst can't block a part from generating."),
+
+        # -- the rack is now two machines
+        ('{ k: "GPU", v: "RTX 6000 BLACKWELL · 96 GB" },\n'
+         '        { k: "CPU", v: "XEON W9-3475X · SAPPHIRE RAPIDS · 36C/72T" },\n'
+         '        { k: "RAM", v: "256 GB KINGSTON FURY DDR5" },\n'
+         '        { k: "STORAGE", v: "4 TB NVME · MODELS + GENERATED ASSETS" },',
+         '{ k: "GPU-01", v: "RTX 5090 · 32 GB · INTERPRETER" },\n'
+         '        { k: "GPU-02", v: "RTX 3090 · 24 GB · OVERFLOW" },\n'
+         '        { k: "CPU", v: "RYZEN 9 9950X3D 16C/32T · 5900X 12C/24T" },\n'
+         '        { k: "RAM", v: "60 GB + 62 GB DDR5" },\n'
+         '        { k: "STORAGE", v: "1.8 TB + 915 GB NVME · MODELS + ASSETS" },\n'
+         '        { k: "RESERVED", v: "RTX PRO 6000 96 GB · IN-HOUSE DESIGN ONLY" },'),
+
+        # -- worker registration reflects the card that answers
+        ('worker: "gpu-01",\n'
+         '        gpu: "RTX 6000 Blackwell",\n'
+         '        vram: 96,\n'
+         '        cpu: "Xeon w9-3475X",\n'
+         '        ram_gb: 256,\n'
+         '        capabilities: ["text", "image", "vision", "3d", "render"]',
+         'worker: "gpu-01",\n'
+         '        gpu: "RTX 5090",\n'
+         '        vram: 32,\n'
+         '        cpu: "Ryzen 9 9950X3D",\n'
+         '        ram_gb: 60,\n'
+         '        capabilities: ["text", "vision", "structured-output"]'),
+
+        # -- budget header: 32 GB, and it is a GGUF runtime, not FP8 vLLM
+        ("VRAM BUDGET — 96 GB, FULLY RESIDENT", "VRAM BUDGET — GPU-01 · 32 GB"),
+        ("FP8 · vLLM", "Q6_K · llama.cpp"),
+
+        # -- the stack that is actually resident. FLUX and Hunyuan3D are not
+        #    deployed on any card in the fleet; listing them as resident on a
+        #    32 GB budget would be the exact overselling the brand forbids.
+        ('{ name: "Qwen3-32B · FP8", role: "INTERPRETER — prompt → BullSpec → OpenSCAD, structured output via vLLM", gb: 34, pct: "35.4%", fg: "#F4F2ED" },\n'
+         '        { name: "KV CACHE · 128K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 24, pct: "25.0%", fg: "#F4F2ED" },\n'
+         '        { name: "FLUX.1-dev · FP8", role: "CONCEPT — visual direction render, never the artifact", gb: 17, pct: "17.7%", fg: "#F4F2ED" },\n'
+         '        { name: "Hunyuan3D-2", role: "IMAGE → 3D — photo or sketch to rough mesh, then re-specced as BullSpec", gb: 12, pct: "12.5%", fg: "#F4F2ED" },\n'
+         '        { name: "HEADROOM", role: "Burst renders and model swaps without eviction", gb: 9, pct: "9.4%", fg: "#8B8780" }',
+         '{ name: "Qwen3.8-27B · Q6_K", role: "INTERPRETER — prompt → BullSpec → OpenSCAD, structured output", gb: 26, pct: "81.0%", fg: "#F4F2ED" },\n'
+         '        { name: "KV CACHE · 64K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 4, pct: "12.5%", fg: "#F4F2ED" },\n'
+         '        { name: "HEADROOM", role: "Context growth and model swaps", gb: 2, pct: "6.5%", fg: "#8B8780" }'),
+
+        # -- and the model call names the model that answers
+        ("Qwen3-32B over anything bigger: at FP8 it leaves room for the entire "
+         "visual stack plus a 128K context, and BullSpec generation is a "
+         "structured-output problem, not a scale problem. Qwen2.5-Coder-32B is "
+         "the drop-in fallback if pure OpenSCAD emission benchmarks better.",
+         "Qwen3.8-27B over anything bigger: BullSpec generation is a "
+         "structured-output problem, not a scale problem, and a 27B that fits "
+         "one card with room for context beats a 70B that pages. It runs at "
+         "Q6_K on gpu-01 and Q4_K_M on gpu-02, so overflow degrades quantisation "
+         "rather than dropping the job. Concept render and image-to-3D are "
+         "specified but not deployed — no card in the fleet holds them today.")
+    ]
+
+    for old, new in subs:
+        if old not in html:
+            sys.exit(f"platform compute: source text not found, export changed?\n  {old[:90]}…")
+        html = html.replace(old, new, 1)
+
+    # the retired claims must be gone, not merely edited around
+    for gone in ("ONE CARD RUNS THE WHOLE STACK", "96 GB, FULLY RESIDENT",
+                 "Qwen3-32B", "FLUX.1-dev", "Hunyuan3D-2", "no eviction"):
+        assert gone not in html, f"platform compute: stale claim survived: {gone}"
+    print("  platform   COMPUTE repointed at the real fleet (gpu-01 5090 / gpu-02 3090)")
+    return html
+
+
+def build_platform() -> None:
+    """Build /platform/index.html from its design export.
+
+    Deliberately not folded into main()'s pipeline: the site's transforms
+    (asset repoint, form wiring, store links, ticker routing) are all
+    site-specific, and running them against an export that has none of those
+    hooks would fail the guards for the wrong reason.
+    """
+    if not PLATFORM_SRC.exists():
+        print(f"  platform   SKIP — no {PLATFORM_SRC.name}")
+        return
+
+    html = PLATFORM_SRC.read_text()
+    html = platform_compute(html)
+
+    # Same font treatment as the site: no third-party request, so the CSP can
+    # keep forbidding external hosts outright.
+    before = html
+    html = re.sub(r'<link rel="preconnect" href="https://fonts\.gstatic\.com"[^>]*>\s*', "", html)
+    html = re.sub(r'<link href="https://fonts\.googleapis\.com/[^"]*" rel="stylesheet">',
+                  '<link rel="stylesheet" href="/fonts/fonts.css">', html)
+    if html == before:
+        sys.exit("platform: font links not found — did the export format change?")
+
+    # /platform/ is one level down; the export's relative runtime ref would 404.
+    marker = '<script src="./support.js"></script>'
+    if marker not in html:
+        sys.exit("platform: support.js script tag not found — export format changed?")
+    head = PLATFORM_HEAD.replace(
+        "{favicon}", base64.b64encode(FAVICON.encode()).decode())
+    html = html.replace(marker, head + '\n<script src="/support.js"></script>', 1)
+
+    if PLATFORM_PRERENDER.exists():
+        static = PLATFORM_PRERENDER.read_text()
+        i, j = html.index("<x-dc>"), html.index("</x-dc>") + len("</x-dc>")
+        html = (html[:i]
+                + f'<div id="bp-prerender">{static}</div>\n'
+                + PLATFORM_TEMPLATE_PARK.replace("{tpl}", html[i:j])
+                + html[j:])
+        print(f"  platform   prerender inlined {len(static) / 1024:.0f} KB, "
+              "template parked inert")
+    else:
+        print("  platform   prerender NONE — run `python3 build.py --prerender`; "
+              "non-JS crawlers will see template source")
+
+    PLATFORM_OUT.parent.mkdir(exist_ok=True)
+    PLATFORM_OUT.write_text(html)
+    print(f"  platform   wrote {PLATFORM_OUT.relative_to(ROOT)}  ({len(html) / 1024:.0f} KB)")
+
+    for must in ("<x-dc>", "</x-dc>", '"/support.js"', "/vendor/react.production.min.js",
+                 "/fonts/fonts.css"):
+        assert must in html, f"platform: missing {must}"
+    assert "./support.js" not in html, "platform: a relative support.js ref survived"
+    assert "fonts.googleapis.com" not in html and "fonts.gstatic.com" not in html, \
+        "platform: a Google Fonts reference survived"
+    sub = re.findall(r'<(?:script|img)\b[^>]*\bsrc="([^"]+)"', html)
+    sub += re.findall(r'<link\b[^>]*\bhref="([^"]+)"', html)
+    external = [u for u in sub if u.startswith(("http://", "https://"))
+                and not u.startswith(SITE)]
+    assert not external, f"platform: external subresource(s) survived: {external}"
 
 
 def check_vendor() -> None:
@@ -334,9 +632,19 @@ def capture_prerender() -> None:
     body = m.group(1)
     # drop what only makes sense live: the runtime's own nodes and our scripts
     body = re.sub(r"<script.*?</script>", "", body, flags=re.S)
+    body = re.sub(r"<template.*?</template>", "", body, flags=re.S)
     body = re.sub(r'<div id="bp-turnstile".*?</div>', "", body, flags=re.S)
     if "{{" in body:
         sys.exit("the captured DOM still has template expressions — it did not render")
+    # A capture runs against the previously built page, which already carries
+    # an inlined static copy. That copy is normally removed by bp-prerender.js
+    # before the capture reads the DOM — but if it is not (a slow render, or a
+    # boot script that failed to load) the capture silently doubles in size and
+    # every visitor gets the page twice. Refuse rather than ship that.
+    if 'id="bp-prerender"' in body:
+        sys.exit("the captured DOM still contains the previous static copy — "
+                 "bp-prerender.js did not run. Rebuild first (`python3 build.py`) "
+                 "so the page loads it, then capture.")
     PRERENDER.write_text(body.strip())
     print(f"  prerender  captured {len(body) / 1024:.0f} KB from a real browser")
 
@@ -595,6 +903,7 @@ def main() -> None:
                 # cannot be self-hosted, and the CSP names this host explicitly.
                 and not u.startswith("https://challenges.cloudflare.com/")]
     assert not external, f"external subresource(s) survived: {external}"
+    build_platform()
     blog.build_order_confirmed(ROOT)
     posts = blog.build(ROOT)
     pages = blog.build_pages(ROOT)
@@ -608,6 +917,7 @@ def main() -> None:
 if __name__ == "__main__":
     if "--prerender" in sys.argv:
         capture_prerender()
+        capture_platform_prerender()
         main()
     else:
         main()

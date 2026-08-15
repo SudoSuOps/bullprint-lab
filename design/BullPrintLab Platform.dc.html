@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#08080A;color:#F4F2ED;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+  :focus-visible{outline:2px solid #E8B23A;outline-offset:2px}
+  input::placeholder,textarea::placeholder{color:#5C5952}
+  input,textarea,button{font-family:inherit}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="plGold" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".2" stop-color="#F5D07A"></stop><stop offset=".45" stop-color="#E8B23A"></stop><stop offset=".75" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop></linearGradient>
+  </defs></svg>
+
+  <!-- ===== APP BAR ===== -->
+  <header style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 20px;background:rgba(11,11,13,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="display:flex;align-items:center;gap:26px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg width="26" height="22" viewBox="0 0 120 100" aria-hidden="true">
+          <g transform="translate(2.192,3.528) scale(0.1635)" style="transform-origin:0 0">
+            <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)" transform="scale(6.116)"></path>
+          </g>
+          <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#plGold)"></path>
+          <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#plGold)"></path>
+          <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#plGold)"></path>
+        </svg>
+        <span style="font:800 14px/1 Archivo,sans-serif;letter-spacing:.01em;color:#F4F2ED">BULLPRINT<span style="color:#E8B23A">LAB</span></span>
+      </div>
+      <nav aria-label="Screens" style="display:flex;gap:2px;padding:3px;background:#101013;border:1px solid rgba(255,255,255,.08);border-radius:2px">
+        <sc-for list="{{ screens }}" as="s" hint-placeholder-count="3">
+          <button type="button" onClick="{{ s.go }}" style="{{ s.style }}">{{ s.label }}</button>
+        </sc-for>
+      </nav>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">{{ jobLabel }}</span>
+      <span style="width:6px;height:6px;border-radius:50%;background:{{ jobDot }};display:block"></span>
+    </div>
+  </header>
+
+  <!-- ===== LANDING ===== -->
+  <sc-if value="{{ onLanding }}" hint-placeholder-val="{{ true }}">
+    <main style="flex:1;display:flex;flex-direction:column">
+      <section style="position:relative;padding:clamp(56px,9vw,110px) 24px 70px;overflow:hidden">
+        <div style="position:absolute;inset:0;background:radial-gradient(58% 70% at 50% 0%,rgba(232,178,58,.10),transparent 68%)"></div>
+        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:56px 56px"></div>
+        <div style="position:relative;max-width:940px;margin:0 auto">
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:24px">
+            <span style="width:5px;height:5px;background:#E8B23A;display:block"></span>
+            <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">AI-NATIVE CAD · PROMPT TO PRINTABLE GEOMETRY</span>
+          </div>
+          <h1 style="margin:0;font:900 clamp(36px,6.4vw,68px)/0.98 Archivo,sans-serif;letter-spacing:-.035em;color:#F4F2ED;text-wrap:balance">TURN AN IDEA INTO A PRINTABLE 3D DESIGN.</h1>
+          <p style="margin:20px 0 0;max-width:620px;font:400 16px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Describe the part. BullPrintLab infers the dimensions, clearances and manufacturing assumptions, builds real parametric geometry, and lets you change any of it by typing. Every design is a spec, not a picture.</p>
+
+          <div style="margin-top:34px;border:1px solid rgba(232,178,58,.32);background:rgba(16,16,19,.72);backdrop-filter:blur(18px)">
+            <textarea value="{{ draft }}" onChange="{{ onDraft }}" placeholder="{{ rotating }}" aria-label="Describe the part you want" style="width:100%;box-sizing:border-box;height:108px;resize:none;padding:20px;background:transparent;border:none;color:#F4F2ED;font:400 16px/1.6 Archivo,sans-serif;outline:none"></textarea>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 16px;border-top:1px solid rgba(255,255,255,.08)">
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ advanced }}" as="a" hint-placeholder-count="4">
+                  <span style="padding:8px 11px;border:1px solid rgba(255,255,255,.14);font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ a.k }} <span style="color:#F4F2ED">{{ a.v }}</span></span>
+                </sc-for>
+              </div>
+              <button type="button" onClick="{{ generate }}" style="padding:14px 24px;border:none;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;cursor:pointer">GENERATE A PART →</button>
+            </div>
+          </div>
+          <p style="margin:12px 0 0;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">ADVANCED FIELDS ARE OPTIONAL — EVERY ASSUMPTION IS SHOWN AND EDITABLE AFTER GENERATION</p>
+
+          <div style="margin-top:34px">
+            <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8B8780;margin-bottom:14px">TRY ONE</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px">
+              <sc-for list="{{ examples }}" as="ex" hint-placeholder-count="4">
+                <button type="button" onClick="{{ ex.use }}" style="text-align:left;padding:16px 18px;background:#0E0E11;border:1px solid rgba(255,255,255,.09);color:#A5A19A;font:400 13.5px/1.6 Archivo,sans-serif;cursor:pointer;transition:border-color 180ms,color 180ms" style-hover="border-color:rgba(232,178,58,.4);color:#F4F2ED">{{ ex.text }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="border-top:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+        <div style="max-width:1240px;margin:0 auto;padding:64px 24px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+            <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="5">
+              <div style="background:#0B0B0D;padding:24px 22px">
+                <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">{{ p.n }}</div>
+                <div style="margin-top:13px;font:800 16px/1.1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ p.t }}</div>
+                <p style="margin:10px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">{{ p.c }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin:22px 0 0;max-width:820px;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">The model never emits triangles directly. It emits <span style="color:#F4F2ED">BullSpec</span> — a typed JSON description of parameters and features — and a deterministic CAD engine turns that into geometry. That is why "make it 20 mm wider" changes one number instead of producing an unrelated part.</p>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <!-- ===== WORKSPACE ===== -->
+  <sc-if value="{{ onDesign }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;display:grid;grid-template-columns:340px minmax(0,1fr) 320px;min-height:0">
+
+      <!-- CHAT -->
+      <section aria-label="Design conversation" style="display:flex;flex-direction:column;min-height:0;border-right:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+        <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+          <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">DESIGN CONVERSATION</span>
+          <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ turnCount }}</span>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:16px;min-height:0">
+          <sc-for list="{{ messages }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:{{ m.tagColor }}">{{ m.tag }}</span>
+              <p style="margin:0;font:400 13.5px/1.65 Archivo,sans-serif;color:{{ m.fg }};text-wrap:pretty">{{ m.text }}</p>
+              <sc-if value="{{ m.hasRows }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+                  <sc-for list="{{ m.rows }}" as="r" hint-placeholder-count="4">
+                    <div style="background:#0E0E11;padding:9px 12px;display:flex;justify-content:space-between;gap:12px;font:500 10.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em">
+                      <span style="color:#8B8780">{{ r.k }}</span><span style="color:#F4F2ED;text-align:right">{{ r.v }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ m.hasDelta }}" hint-placeholder-val="{{ false }}">
+                <span style="align-self:flex-start;padding:6px 9px;border:1px solid rgba(95,211,138,.4);font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#5FD38A">{{ m.delta }}</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <form onSubmit="{{ onSend }}" style="padding:14px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:10px">
+          <textarea value="{{ chatDraft }}" onChange="{{ onChatDraft }}" placeholder="Make the base 5 mm thicker…" aria-label="Change the design" style="width:100%;box-sizing:border-box;height:64px;resize:none;padding:12px;background:#101013;border:1px solid rgba(255,255,255,.14);color:#F4F2ED;font:400 13.5px/1.5 Archivo,sans-serif;outline:none;transition:border-color 180ms" style-focus="border-color:#E8B23A"></textarea>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ quickEdits }}" as="q" hint-placeholder-count="3">
+              <button type="button" onClick="{{ q.run }}" style="padding:7px 10px;background:#101013;border:1px solid rgba(255,255,255,.14);color:#8B8780;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;cursor:pointer;transition:all 160ms" style-hover="border-color:#E8B23A;color:#E8B23A">{{ q.label }}</button>
+            </sc-for>
+          </div>
+          <button type="submit" style="padding:13px;border:none;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;cursor:pointer">APPLY CHANGE →</button>
+        </form>
+      </section>
+
+      <!-- VIEWPORT -->
+      <section aria-label="3D viewport" style="display:flex;flex-direction:column;min-height:0;min-width:0;background:#000">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+          <div style="display:flex;gap:2px;padding:3px;background:#101013;border:1px solid rgba(255,255,255,.08)">
+            <sc-for list="{{ views }}" as="v" hint-placeholder-count="4">
+              <button type="button" onClick="{{ v.go }}" style="{{ v.style }}">{{ v.label }}</button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ toggles }}" as="t" hint-placeholder-count="3">
+              <button type="button" onClick="{{ t.go }}" style="{{ t.style }}">{{ t.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="flex:1;position:relative;min-height:420px;overflow:hidden">
+          <div style="position:absolute;inset:0;background-image:{{ gridImage }};background-size:32px 32px;opacity:{{ gridOpacity }}"></div>
+          <div style="position:absolute;inset:0;background:radial-gradient(62% 62% at 50% 46%,rgba(232,178,58,.07),transparent 70%)"></div>
+          <svg viewBox="-260 -200 520 400" preserveAspectRatio="xMidYMid meet" style="position:absolute;inset:0;width:100%;height:100%;cursor:grab" onPointerDown="{{ onOrbitStart }}" onPointerMove="{{ onOrbitMove }}" onPointerUp="{{ onOrbitEnd }}" onPointerLeave="{{ onOrbitEnd }}">
+            <sc-for list="{{ faces }}" as="fc" hint-placeholder-count="6">
+              <polygon points="{{ fc.pts }}" fill="{{ fc.fill }}" stroke="{{ fc.stroke }}" stroke-width="{{ fc.sw }}" stroke-linejoin="round"></polygon>
+            </sc-for>
+            <sc-for list="{{ holePaths }}" as="h" hint-placeholder-count="4">
+              <polygon points="{{ h.pts }}" fill="{{ h.fill }}" stroke="#E8B23A" stroke-width="1.1"></polygon>
+            </sc-for>
+            <sc-for list="{{ dimLines }}" as="d" hint-placeholder-count="3">
+              <g>
+                <path d="{{ d.path }}" fill="none" stroke="#E8B23A" stroke-width=".9" opacity=".85"></path>
+                <text x="{{ d.tx }}" y="{{ d.ty }}" text-anchor="middle" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.06em">{{ d.label }}</text>
+              </g>
+            </sc-for>
+          </svg>
+          <div style="position:absolute;left:16px;bottom:14px;font:500 9.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ camLabel }}<br><span style="color:#5C5952">DRAG TO ORBIT · MOCKED GEOMETRY, PHASE 1</span></div>
+          <div style="position:absolute;right:16px;bottom:14px;text-align:right;font:500 9.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ bboxLabel }}<br><span style="color:#5C5952">{{ volLabel }}</span></div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,.08);background:#0B0B0D">
+          <div style="display:flex;gap:2px;padding:8px 10px 0">
+            <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="3">
+              <button type="button" onClick="{{ tb.go }}" style="{{ tb.style }}">{{ tb.label }}</button>
+            </sc-for>
+          </div>
+          <div style="max-height:190px;overflow:auto;padding:14px 16px 18px">
+            <sc-if value="{{ tabIsSpec }}" hint-placeholder-val="{{ true }}">
+              <pre style="margin:0;font:500 11.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A;white-space:pre">{{ specJson }}</pre>
+            </sc-if>
+            <sc-if value="{{ tabIsScad }}" hint-placeholder-val="{{ false }}">
+              <pre style="margin:0;font:500 11.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A;white-space:pre">{{ scadSource }}</pre>
+            </sc-if>
+            <sc-if value="{{ tabIsVersions }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+                <sc-for list="{{ versions }}" as="ver" hint-placeholder-count="3">
+                  <div style="background:#0E0E11;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px">
+                    <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:{{ ver.fg }}">{{ ver.tag }}</span>
+                    <span style="flex:1;font:400 12.5px/1.4 Archivo,sans-serif;color:#8B8780">{{ ver.note }}</span>
+                    <button type="button" onClick="{{ ver.restore }}" style="padding:6px 10px;background:none;border:1px solid rgba(255,255,255,.16);color:#A5A19A;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;cursor:pointer" style-hover="border-color:#E8B23A;color:#E8B23A">{{ ver.action }}</button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARAMETERS -->
+      <aside aria-label="Parameters and manufacturing" style="display:flex;flex-direction:column;min-height:0;border-left:1px solid rgba(255,255,255,.08);background:#0B0B0D;overflow-y:auto">
+        <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">{{ partName }}</div>
+          <div style="margin-top:8px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ partId }} · {{ versionLabel }}</div>
+        </div>
+
+        <div style="padding:18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780;margin-bottom:14px">PARAMETERS · MM</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ paramRows }}" as="p" hint-placeholder-count="6">
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <label for="{{ p.id }}" style="display:flex;justify-content:space-between;gap:10px;font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">{{ p.label }}<span style="color:#E8B23A">{{ p.display }}</span></label>
+                <input id="{{ p.id }}" type="range" min="{{ p.min }}" max="{{ p.max }}" step="{{ p.step }}" value="{{ p.value }}" onChange="{{ p.onInput }}" style="width:100%;accent-color:#E8B23A;cursor:pointer">
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding:18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780;margin-bottom:14px">MANUFACTURING</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780;margin-bottom:9px">METHOD</div>
+              <div role="radiogroup" aria-label="Manufacturing method" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                <sc-for list="{{ methodOpts }}" as="o" hint-placeholder-count="3">
+                  <div role="radio" tabindex="0" aria-checked="{{ o.checked }}" onClick="{{ o.pick }}" onKeyDown="{{ o.key }}" style="{{ o.style }}">{{ o.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780;margin-bottom:9px">MATERIAL</div>
+              <div role="radiogroup" aria-label="Material" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+                <sc-for list="{{ materialOpts }}" as="o" hint-placeholder-count="3">
+                  <div role="radio" tabindex="0" aria-checked="{{ o.checked }}" onClick="{{ o.pick }}" onKeyDown="{{ o.key }}" style="{{ o.style }}">{{ o.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+              <sc-for list="{{ mfgRows }}" as="r" hint-placeholder-count="4">
+                <div style="background:#0E0E11;padding:10px 12px;display:flex;justify-content:space-between;gap:12px;font:500 10.5px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em">
+                  <span style="color:#8B8780">{{ r.k }}</span><span style="color:#F4F2ED;text-align:right">{{ r.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:18px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">DESIGN HEALTH</span>
+            <span style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:{{ healthFg }}">{{ healthLabel }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ health }}" as="h" hint-placeholder-count="5">
+              <div style="display:flex;gap:10px;align-items:flex-start">
+                <span style="flex:none;width:13px;font:700 11px/1.35 'JetBrains Mono',monospace;color:{{ h.fg }}">{{ h.mark }}</span>
+                <span style="font:400 12.5px/1.5 Archivo,sans-serif;color:{{ h.fg }}">{{ h.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding:18px;display:flex;flex-direction:column;gap:10px">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">EXPORT</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ exports }}" as="e" hint-placeholder-count="4">
+              <button type="button" onClick="{{ e.go }}" style="{{ e.style }}">{{ e.label }}</button>
+            </sc-for>
+          </div>
+          <p style="margin:6px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:#8B8780">{{ exportNote }}</p>
+        </div>
+      </aside>
+    </main>
+  </sc-if>
+
+  <!-- ===== PROJECTS ===== -->
+  <sc-if value="{{ onProjects }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;max-width:1240px;width:100%;margin:0 auto;padding:44px 24px 80px;box-sizing:border-box">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+        <div>
+          <h1 style="margin:0;font:900 clamp(26px,3.6vw,40px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">PROJECTS</h1>
+          <p style="margin:12px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#8B8780">Every part is reproducible from its BullSpec. Open one to keep editing where you left off.</p>
+        </div>
+        <button type="button" onClick="{{ goLanding }}" style="padding:13px 20px;border:1px solid #E8B23A;background:none;color:#E8B23A;font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;cursor:pointer" style-hover="background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D">NEW PART →</button>
+      </div>
+      <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px">
+        <sc-for list="{{ projects }}" as="pr" hint-placeholder-count="6">
+          <button type="button" onClick="{{ pr.open }}" style="text-align:left;padding:0;background:#0B0B0D;border:1px solid rgba(255,255,255,.09);cursor:pointer;display:flex;flex-direction:column;transition:border-color 200ms" style-hover="border-color:rgba(232,178,58,.4)">
+            <div style="height:150px;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;background:#08080A">
+              <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:22px 22px"></div>
+              <svg viewBox="-70 -52 140 104" style="position:absolute;inset:0;width:100%;height:100%">
+                <sc-for list="{{ pr.faces }}" as="f2" hint-placeholder-count="3">
+                  <polygon points="{{ f2.pts }}" fill="{{ f2.fill }}" stroke="{{ f2.stroke }}" stroke-width=".8"></polygon>
+                </sc-for>
+              </svg>
+              <span style="position:absolute;right:10px;top:10px;padding:5px 8px;font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:{{ pr.statusFg }};background:{{ pr.statusBg }};border:1px solid {{ pr.statusLine }}">{{ pr.status }}</span>
+            </div>
+            <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">{{ pr.id }}</div>
+              <div style="font:800 16px/1.2 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ pr.name }}</div>
+              <div style="font:500 10px/1.8 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">{{ pr.method }} · {{ pr.material }}<br>{{ pr.version }} · {{ pr.date }}</div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ===== COMPUTE ===== -->
+  <sc-if value="{{ onCompute }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;max-width:1240px;width:100%;margin:0 auto;padding:44px 24px 80px;box-sizing:border-box">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px">
+        <span style="width:5px;height:5px;background:#E8B23A;display:block"></span>
+        <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">SOVEREIGN COMPUTE · GPU-01 · ON OUR FLOOR</span>
+      </div>
+      <h1 style="margin:0;font:900 clamp(28px,4.4vw,46px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">ONE CARD RUNS THE WHOLE STACK.</h1>
+      <p style="margin:16px 0 0;max-width:720px;font:400 14.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">96 GB is enough to keep the interpreter, the concept model and image-to-3D resident at once — no eviction, no cold loads between jobs. Geometry itself never touches the GPU: OpenSCAD and CadQuery run deterministic on the Xeon, so a render burst can't block a part from generating.</p>
+
+      <div style="margin-top:34px;display:grid;grid-template-columns:1fr 1.2fr;gap:20px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="border:1px solid rgba(232,178,58,.32);background:rgba(16,16,19,.72);backdrop-filter:blur(18px)">
+            <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">THE RACK</div>
+            <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08)">
+              <sc-for list="{{ rackRows }}" as="r" hint-placeholder-count="6">
+                <div style="background:#0B0B0D;padding:12px 16px;display:flex;justify-content:space-between;gap:14px;font:500 10.5px/1.5 'JetBrains Mono',monospace;letter-spacing:.06em">
+                  <span style="color:#8B8780">{{ r.k }}</span><span style="color:#F4F2ED;text-align:right">{{ r.v }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
+            <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">WORKER REGISTRATION — SCHEDULER ROUTES BY CAPABILITY</div>
+            <pre style="margin:0;padding:16px;font:500 11.5px/1.7 'JetBrains Mono',monospace;color:#A5A19A;white-space:pre;overflow-x:auto">{{ workerJson }}</pre>
+          </div>
+          <p style="margin:0;font:400 12.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Adding gpu-02 is a registration, not a rewrite — the app never couples to one card. Generated code executes in a container with no network, hard time and memory limits, and file-size caps.</p>
+        </div>
+
+        <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
+          <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">VRAM BUDGET — 96 GB, FULLY RESIDENT</span>
+            <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">FP8 · vLLM</span>
+          </div>
+          <div style="padding:18px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;height:14px;border:1px solid rgba(255,255,255,.14)">
+              <sc-for list="{{ modelStack }}" as="m" hint-placeholder-count="5">
+                <div style="width:{{ m.pct }};background:linear-gradient(120deg,#F5D07A,#E8B23A 55%,#A87F24);border-right:1px solid #0B0B0D;opacity:{{ m.barOp }}" title="{{ m.name }}"></div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+              <sc-for list="{{ modelStack }}" as="m" hint-placeholder-count="5">
+                <div style="background:#0E0E11;padding:13px 15px;display:flex;justify-content:space-between;gap:14px;align-items:baseline">
+                  <div>
+                    <div style="font:700 12px/1.3 'JetBrains Mono',monospace;letter-spacing:.06em;color:{{ m.fg }}">{{ m.name }}</div>
+                    <div style="margin-top:5px;font:400 12px/1.5 Archivo,sans-serif;color:#8B8780">{{ m.role }}</div>
+                  </div>
+                  <span style="flex:none;font:700 12px/1 'JetBrains Mono',monospace;color:#E8B23A">{{ m.gb }} GB</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="padding:14px 16px;border:1px solid rgba(232,178,58,.28);background:#0E0E11">
+              <div style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">THE MODEL CALL</div>
+              <p style="margin:10px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Qwen3-32B over anything bigger: at FP8 it leaves room for the entire visual stack plus a 128K context, and BullSpec generation is a structured-output problem, not a scale problem. Qwen2.5-Coder-32B is the drop-in fallback if pure OpenSCAD emission benchmarks better. No open model emits trustworthy triangles — the models write specs, the CAD engine writes geometry. That split is the product.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;border:1px solid rgba(255,255,255,.09);background:#0B0B0D;padding:16px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">JOB PIPELINE</span>
+        <sc-for list="{{ jobStates }}" as="j" hint-placeholder-count="6">
+          <span style="display:flex;align-items:center;gap:10px">
+            <span style="padding:7px 10px;border:1px solid rgba(255,255,255,.14);font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:{{ j.fg }}">{{ j.label }}</span>
+            <span style="color:#5C5952;font:500 10px/1 'JetBrains Mono',monospace">→</span>
+          </span>
+        </sc-for>
+        <span style="font:500 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">STREAMED TO THE UI OVER SSE</span>
+      </div>
+    </main>
+  </sc-if>
+
+  <footer style="border-top:1px solid rgba(255,255,255,.08);background:#0B0B0D;padding:22px 24px;display:flex;flex-wrap:wrap;gap:12px 26px;justify-content:space-between;font:500 10px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5C5952">
+    <span>BULLPRINTLAB.COM · AI-NATIVE CAD</span>
+    <span>PHASE 1 INTERFACE · GEOMETRY IS MOCKED, PIPELINE IS SPECIFIED</span>
+    <span>© 2026 BULLPRINT LAB</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    screen: "landing", draft: "", rotIdx: 0,
+    chatDraft: "", view: "ISO", wire: false, grid: true, dims: true,
+    tab: "SPEC", yaw: 34, pitch: 22, drag: null,
+    job: "idle", exportNote: "STL, OpenSCAD source and BullSpec JSON are written on export. Parameters travel with the file, so the part stays editable.",
+    name: "Wall Bracket", method: "FDM", material: "PETG",
+    p: { width: 100, height: 50, thickness: 4, wall: 3, holeDia: 5, holeCount: 4, spacing: 70, clearance: 0.4 },
+    messages: [], versions: []
+  };
+
+  componentDidMount() {
+    this.rot = setInterval(() => this.setState(s => ({ rotIdx: (s.rotIdx + 1) % 4 })), 3600);
+  }
+  componentWillUnmount() { clearInterval(this.rot); }
+
+  // ---------- prompt parsing ----------
+  parse(text) {
+    const t = text.toLowerCase();
+    const d = {};
+    const grab = (re) => { const m = t.match(re); return m ? parseFloat(m[1]) : null; };
+    const w = grab(/(\d+(?:\.\d+)?)\s*mm\s*(?:wide|width)/) ?? grab(/width\D{0,8}(\d+(?:\.\d+)?)/);
+    const h = grab(/(\d+(?:\.\d+)?)\s*mm\s*(?:tall|high|height)/) ?? grab(/height\D{0,8}(\d+(?:\.\d+)?)/);
+    const th = grab(/(\d+(?:\.\d+)?)\s*mm\s*thick/) ?? grab(/thick\w*\D{0,8}(\d+(?:\.\d+)?)/);
+    const cl = grab(/(\d+(?:\.\d+)?)\s*mm\s*clearance/);
+    const sp = grab(/(\d+(?:\.\d+)?)\s*mm\s*apart/) ?? grab(/spacing\D{0,8}(\d+(?:\.\d+)?)/);
+    const metric = t.match(/m(\d)\b/);
+    const holeD = grab(/(\d+(?:\.\d+)?)\s*mm\s*(?:mounting\s*)?holes?/) ?? (metric ? parseFloat(metric[1]) : null);
+    const words = { one: 1, two: 2, three: 3, four: 4, six: 6, eight: 8 };
+    let cnt = null;
+    const cm = t.match(/\b(\d|one|two|three|four|six|eight)\b(?=[^.]*hole)/);
+    if (cm) cnt = words[cm[1]] ?? parseFloat(cm[1]);
+    if (w) d.width = w; if (h) d.height = h; if (th) d.thickness = th;
+    if (cl) d.clearance = cl; if (sp) d.spacing = sp;
+    if (holeD) d.holeDia = holeD; if (cnt) d.holeCount = cnt;
+    let name = "Custom Part";
+    const kinds = [["bracket", "Wall Bracket"], ["holder", "Slide-In Holder"], ["insert", "Insert"], ["spacer", "Spacer"], ["plate", "Mounting Plate"], ["tray", "Tray"], ["enclosure", "Enclosure"], ["clip", "Clip"], ["adapter", "Adapter"], ["mount", "Wall Mount"]];
+    kinds.forEach(([k, n]) => { if (t.includes(k)) name = n; });
+    return { d, name };
+  }
+
+  applyDelta(text, isFirst) {
+    const { d, name } = this.parse(text);
+    const rel = text.toLowerCase().match(/(\d+(?:\.\d+)?)\s*mm\s*(thicker|thinner|taller|shorter|wider|narrower)/);
+    const next = Object.assign({}, this.state.p);
+    const changed = [];
+    if (rel) {
+      const v = parseFloat(rel[1]), k = rel[2];
+      const map = { thicker: ["thickness", 1], thinner: ["thickness", -1], taller: ["height", 1], shorter: ["height", -1], wider: ["width", 1], narrower: ["width", -1] };
+      const [key, sign] = map[k];
+      next[key] = Math.max(1, next[key] + sign * v);
+      changed.push(key.toUpperCase() + " → " + next[key] + " MM");
+    }
+    Object.keys(d).forEach(k => {
+      if (next[k] !== d[k]) { changed.push(k.toUpperCase() + " → " + d[k] + (k === "holeCount" ? "" : " MM")); next[k] = d[k]; }
+    });
+    const rows = isFirst ? [
+      { k: "OVERALL", v: next.width + " × " + next.height + " × " + next.thickness },
+      { k: "WALL THICKNESS", v: next.wall + " mm" },
+      { k: "MOUNTING", v: next.holeCount + " × ⌀" + next.holeDia + " @ " + next.spacing + " mm" },
+      { k: "MATERIAL", v: this.state.material + " · assumed" },
+      { k: "FIT TOLERANCE", v: next.clearance + " mm · assumed" },
+      { k: "LOAD CASE", v: "Medium-duty wall mounting · assumed" }
+    ] : null;
+    const msgs = this.state.messages.concat([
+      { who: "user", text: text },
+      {
+        who: "ai",
+        text: isFirst
+          ? "Parsed the request into BullSpec and generated parametric geometry. Assumptions are shown below and every one of them is editable."
+          : (changed.length ? "Updated BullSpec and regenerated only the affected geometry. Everything else is unchanged." : "I could not find a dimension to change in that. Try naming a parameter and a value — for example, make the base 6 mm thick."),
+        rows: rows, delta: changed.join(" · ")
+      }
+    ]);
+    const vers = changed.length
+      ? this.state.versions.concat([{ n: this.state.versions.length + 1, note: changed.join(" · ") }])
+      : this.state.versions;
+    this.setState({
+      p: next, messages: msgs, versions: vers, chatDraft: "",
+      name: isFirst ? name : this.state.name, job: "complete"
+    });
+  }
+
+  // ---------- projection ----------
+  project(pt) {
+    const ry = this.state.yaw * Math.PI / 180, rx = this.state.pitch * Math.PI / 180;
+    let x = pt[0], y = pt[1], z = pt[2];
+    let x1 = x * Math.cos(ry) + z * Math.sin(ry);
+    let z1 = -x * Math.sin(ry) + z * Math.cos(ry);
+    let y1 = y * Math.cos(rx) - z1 * Math.sin(rx);
+    let z2 = y * Math.sin(rx) + z1 * Math.cos(rx);
+    return [x1, y1, z2];
+  }
+
+  chip(on, label) {
+    return {
+      label: label,
+      style: "padding:8px 11px;cursor:pointer;user-select:none;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.12em;text-align:center;"
+        + "border:1px solid " + (on ? "#E8B23A" : "rgba(255,255,255,.14)") + ";"
+        + "background:" + (on ? "linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24)" : "#101013") + ";"
+        + "color:" + (on ? "#0B0B0D" : "#8B8780") + ";transition:all 160ms cubic-bezier(.2,.8,.2,1)"
+    };
+  }
+
+  renderVals() {
+    const s = this.state, p = s.p;
+    const scale = Math.min(3.0, 300 / Math.max(p.width, p.height + 40));
+    const W = p.width * scale / 2, H = p.height * scale / 2, T = p.thickness * scale / 2;
+
+    // box corners
+    const C = [[-W, -H, -T], [W, -H, -T], [W, H, -T], [-W, H, -T], [-W, -H, T], [W, -H, T], [W, H, T], [-W, H, T]];
+    const P = C.map(c => this.project(c));
+    const faceDef = [
+      { idx: [4, 5, 6, 7], tone: 1.00 }, { idx: [1, 2, 6, 5], tone: 0.74 },
+      { idx: [0, 3, 7, 4], tone: 0.62 }, { idx: [3, 2, 6, 7], tone: 0.86 },
+      { idx: [0, 1, 5, 4], tone: 0.52 }, { idx: [0, 1, 2, 3], tone: 0.40 }
+    ];
+    const faces = faceDef.map(f => {
+      const z = f.idx.reduce((a, i) => a + P[i][2], 0) / 4;
+      const pts = f.idx.map(i => P[i][0].toFixed(1) + "," + P[i][1].toFixed(1)).join(" ");
+      const lum = Math.round(28 + 92 * f.tone);
+      return {
+        z: z, pts: pts,
+        fill: s.wire ? "none" : "rgb(" + Math.round(lum * 1.0) + "," + Math.round(lum * .82) + "," + Math.round(lum * .38) + ")",
+        stroke: s.wire ? "#E8B23A" : "rgba(255,255,255,.34)",
+        sw: s.wire ? "1" : "1.1"
+      };
+    }).sort((a, b) => a.z - b.z);
+
+    // holes on the top face, along X
+    const holes = [];
+    const n = Math.max(1, Math.round(p.holeCount));
+    const pitch = n > 1 ? p.spacing * scale / (n > 2 ? 1 : 1) : 0;
+    const rows = n > 2 ? 2 : 1, perRow = Math.ceil(n / rows);
+    for (let r = 0; r < rows; r++) {
+      for (let i = 0; i < perRow; i++) {
+        if (r * perRow + i >= n) break;
+        const cx = perRow > 1 ? -pitch / 2 + (pitch / (perRow - 1)) * i : 0;
+        const cy = rows > 1 ? (r === 0 ? -H * 0.52 : H * 0.52) : 0;
+        const rad = p.holeDia * scale / 2;
+        const pts = [];
+        for (let a = 0; a < 22; a++) {
+          const ang = a / 22 * Math.PI * 2;
+          const q = this.project([cx + Math.cos(ang) * rad, cy + Math.sin(ang) * rad, T + 0.4]);
+          pts.push(q[0].toFixed(1) + "," + q[1].toFixed(1));
+        }
+        holes.push({ pts: pts.join(" "), fill: s.wire ? "none" : "#0B0B0D" });
+      }
+    }
+
+    // dimension lines
+    const dl = [];
+    if (s.dims) {
+      const a = this.project([-W, H, T]), b = this.project([W, H, T]);
+      dl.push({ path: "M" + a[0].toFixed(1) + " " + (a[1] + 22).toFixed(1) + "L" + b[0].toFixed(1) + " " + (b[1] + 22).toFixed(1), tx: ((a[0] + b[0]) / 2).toFixed(1), ty: (Math.max(a[1], b[1]) + 36).toFixed(1), label: p.width.toFixed(1) + " MM" });
+      const c2 = this.project([W, -H, T]), d2 = this.project([W, H, T]);
+      dl.push({ path: "M" + (c2[0] + 24).toFixed(1) + " " + c2[1].toFixed(1) + "L" + (d2[0] + 24).toFixed(1) + " " + d2[1].toFixed(1), tx: (Math.max(c2[0], d2[0]) + 46).toFixed(1), ty: ((c2[1] + d2[1]) / 2).toFixed(1), label: p.height.toFixed(1) + " MM" });
+    }
+
+    const bedFits = p.width <= 256 && p.height <= 256;
+    const minWall = p.wall >= 1.2, holeEdge = (p.height / 2 - p.holeDia) > p.holeDia;
+    const overhang = p.thickness >= 3;
+    const warns = [!bedFits, !minWall, !holeEdge, !overhang].filter(Boolean).length;
+
+    const setP = (k) => (e) => {
+      const v = parseFloat(e.target.value);
+      this.setState(st => ({ p: Object.assign({}, st.p, { [k]: v }) }));
+    };
+    const pr = (id, label, k, min, max, step, unit) => ({
+      id: id, label: label, value: p[k], min: min, max: max, step: step,
+      display: p[k] + (unit || " MM"), onInput: setP(k)
+    });
+
+    const radio = (val, cur, label, key) => {
+      const pick = () => this.setState({ [key]: val });
+      const c = this.chip(cur === val, label);
+      return { label: label, checked: cur === val, pick: pick, key: (e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); pick(); } }, style: c.style };
+    };
+
+    const seedIf = (txt) => () => {
+      if (!s.messages.length) { this.setState({ screen: "design", job: "complete" }); this.applyDelta(txt, true); }
+      else this.setState({ screen: "design" });
+    };
+
+    const examples = [
+      "Create a rectangular wall bracket 100 mm wide, 50 mm tall, 4 mm thick, with four 5 mm mounting holes.",
+      "Design a wall-mounted slide-in holder for an iPad Mini with two countersunk screw holes and 2 mm clearance.",
+      "Make an insert for a 120 × 80 × 25 mm electronics board.",
+      "Build a spacer with a 10 mm centre hole and 25 mm outer diameter."
+    ];
+
+    const specJson = JSON.stringify({
+      name: s.name, units: "mm", manufacturing_method: s.method, material: s.material,
+      parameters: { width: p.width, height: p.height, thickness: p.thickness, wall_thickness: p.wall, clearance: p.clearance },
+      features: [
+        { type: "base_plate", width: p.width, height: p.height, thickness: p.thickness },
+        { type: "hole_pattern", hole_type: "through", diameter: p.holeDia, count: Math.round(p.holeCount), spacing: p.spacing }
+      ]
+    }, null, 2);
+
+    const scad = [
+      "// " + s.name + " — generated from BullSpec",
+      "$fn = 64;",
+      "width = " + p.width + "; height = " + p.height + "; thickness = " + p.thickness + ";",
+      "hole_d = " + p.holeDia + "; hole_n = " + Math.round(p.holeCount) + "; spacing = " + p.spacing + ";",
+      "clearance = " + p.clearance + ";",
+      "",
+      "module base_plate() {",
+      "  cube([width, height, thickness], center = true);",
+      "}",
+      "",
+      "module hole_pattern() {",
+      "  rows = hole_n > 2 ? 2 : 1;",
+      "  per = ceil(hole_n / rows);",
+      "  for (r = [0 : rows - 1], i = [0 : per - 1])",
+      "    translate([-spacing/2 + spacing/max(per-1,1) * i,",
+      "               rows > 1 ? (r == 0 ? -height*0.26 : height*0.26) : 0, 0])",
+      "      cylinder(h = thickness * 2, d = hole_d + clearance, center = true);",
+      "}",
+      "",
+      "difference() { base_plate(); hole_pattern(); }"
+    ].join("\n");
+
+    const thumb = (w, h, t) => {
+      const sc = 46 / Math.max(w, h);
+      const c = [[-w * sc / 2, -h * sc / 2, -t * sc / 2], [w * sc / 2, -h * sc / 2, -t * sc / 2], [w * sc / 2, h * sc / 2, -t * sc / 2], [-w * sc / 2, h * sc / 2, -t * sc / 2], [-w * sc / 2, -h * sc / 2, t * sc / 2], [w * sc / 2, -h * sc / 2, t * sc / 2], [w * sc / 2, h * sc / 2, t * sc / 2], [-w * sc / 2, h * sc / 2, t * sc / 2]];
+      const pr2 = c.map(q => {
+        const ry = 32 * Math.PI / 180, rx = 24 * Math.PI / 180;
+        const x1 = q[0] * Math.cos(ry) + q[2] * Math.sin(ry), z1 = -q[0] * Math.sin(ry) + q[2] * Math.cos(ry);
+        return [x1, q[1] * Math.cos(rx) - z1 * Math.sin(rx)];
+      });
+      return [
+        { idx: [0, 1, 5, 4], tone: "rgb(58,48,22)" }, { idx: [1, 2, 6, 5], tone: "rgb(96,78,32)" }, { idx: [4, 5, 6, 7], tone: "rgb(150,120,48)" }
+      ].map(f => ({ pts: f.idx.map(i => pr2[i][0].toFixed(1) + "," + pr2[i][1].toFixed(1)).join(" "), fill: f.tone, stroke: "rgba(255,255,255,.28)" }));
+    };
+
+    const statusOf = (st) => st === "COMPLETE"
+      ? { statusFg: "#0B0B0D", statusBg: "#E8B23A", statusLine: "#E8B23A" }
+      : st === "VALIDATING"
+        ? { statusFg: "#E8B23A", statusBg: "rgba(232,178,58,.12)", statusLine: "rgba(232,178,58,.4)" }
+        : { statusFg: "#A5A19A", statusBg: "rgba(255,255,255,.06)", statusLine: "rgba(255,255,255,.16)" };
+
+    const projects = [
+      { id: "BPL-0041", name: "Wall Bracket", method: "FDM", material: "PETG", version: "v4", date: "08.15.26", status: "COMPLETE", dims: [100, 50, 4] },
+      { id: "BPL-0040", name: "Slide-In Holder", method: "FDM", material: "PETG", version: "v2", date: "08.14.26", status: "COMPLETE", dims: [145, 210, 14] },
+      { id: "BPL-0038", name: "Board Insert", method: "FDM", material: "TPU 95A", version: "v6", date: "08.13.26", status: "VALIDATING", dims: [124, 84, 25] },
+      { id: "BPL-0037", name: "Hex Spacer", method: "FDM", material: "PETG", version: "v1", date: "08.12.26", status: "COMPLETE", dims: [25, 25, 10] },
+      { id: "BPL-0035", name: "Rail Adapter", method: "CNC", material: "ALU 6061", version: "v3", date: "08.11.26", status: "QUEUED", dims: [80, 40, 12] },
+      { id: "BPL-0031", name: "Sensor Enclosure", method: "FDM", material: "ASA", version: "v9", date: "08.09.26", status: "COMPLETE", dims: [96, 62, 30] }
+    ].map(pj => Object.assign({}, pj, statusOf(pj.status), {
+      faces: thumb(pj.dims[0], pj.dims[1], pj.dims[2]),
+      open: () => this.setState({ screen: "design" })
+    }));
+
+    const msgs = s.messages.map(m => ({
+      tag: m.who === "user" ? "YOU" : "BULLPRINTLAB",
+      tagColor: m.who === "user" ? "#8B8780" : "#E8B23A",
+      fg: m.who === "user" ? "#F4F2ED" : "#A5A19A",
+      text: m.text, rows: m.rows || [], hasRows: !!(m.rows && m.rows.length),
+      hasDelta: !!(m.delta && m.delta.length), delta: m.delta
+    }));
+
+    const jobMap = { idle: ["READY", "#5C5952"], complete: ["COMPLETE", "#5FD38A"] };
+    const jm = jobMap[s.job] || jobMap.idle;
+
+    return {
+      screens: [
+        Object.assign({ go: () => this.setState({ screen: "landing" }) }, this.chip(s.screen === "landing", "LANDING")),
+        Object.assign({ go: () => this.setState({ screen: "design" }) }, this.chip(s.screen === "design", "DESIGN")),
+        Object.assign({ go: () => this.setState({ screen: "projects" }) }, this.chip(s.screen === "projects", "PROJECTS")),
+        Object.assign({ go: () => this.setState({ screen: "compute" }) }, this.chip(s.screen === "compute", "COMPUTE"))
+      ],
+      onLanding: s.screen === "landing", onDesign: s.screen === "design", onProjects: s.screen === "projects",
+      onCompute: s.screen === "compute",
+
+      rackRows: [
+        { k: "GPU", v: "RTX 6000 BLACKWELL · 96 GB" },
+        { k: "CPU", v: "XEON W9-3475X · SAPPHIRE RAPIDS · 36C/72T" },
+        { k: "RAM", v: "256 GB KINGSTON FURY DDR5" },
+        { k: "STORAGE", v: "4 TB NVME · MODELS + GENERATED ASSETS" },
+        { k: "QUEUE", v: "REDIS · CELERY · CAPABILITY-ROUTED" },
+        { k: "ISOLATION", v: "CAD RUNS IN A NO-NETWORK CONTAINER" }
+      ],
+      workerJson: JSON.stringify({
+        worker: "gpu-01",
+        gpu: "RTX 6000 Blackwell",
+        vram: 96,
+        cpu: "Xeon w9-3475X",
+        ram_gb: 256,
+        capabilities: ["text", "image", "vision", "3d", "render"]
+      }, null, 2),
+      modelStack: [
+        { name: "Qwen3-32B · FP8", role: "INTERPRETER — prompt → BullSpec → OpenSCAD, structured output via vLLM", gb: 34, pct: "35.4%", fg: "#F4F2ED" },
+        { name: "KV CACHE · 128K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 24, pct: "25.0%", fg: "#F4F2ED" },
+        { name: "FLUX.1-dev · FP8", role: "CONCEPT — visual direction render, never the artifact", gb: 17, pct: "17.7%", fg: "#F4F2ED" },
+        { name: "Hunyuan3D-2", role: "IMAGE → 3D — photo or sketch to rough mesh, then re-specced as BullSpec", gb: 12, pct: "12.5%", fg: "#F4F2ED" },
+        { name: "HEADROOM", role: "Burst renders and model swaps without eviction", gb: 9, pct: "9.4%", fg: "#8B8780" }
+      ].map(function (m, i) { m.barOp = i === 4 ? ".25" : String(1 - i * 0.16); return m; }),
+      jobStates: ["QUEUED", "INTERPRETING", "GENERATING_GEOMETRY", "RENDERING", "VALIDATING", "COMPLETE"].map((j, i) => ({
+        label: j, fg: i === 5 ? "#5FD38A" : i > 0 && i < 5 ? "#E8B23A" : "#8B8780"
+      })),
+      goLanding: () => this.setState({ screen: "landing" }),
+      jobLabel: jm[0], jobDot: jm[1],
+
+      draft: s.draft,
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      rotating: examples[s.rotIdx],
+      generate: () => { const t = s.draft.trim() || examples[s.rotIdx]; this.setState({ screen: "design", messages: [], versions: [{ n: 1, note: "Initial generation" }], job: "complete" }); this.applyDelta(t, true); },
+      examples: examples.map(t => ({ text: t, use: seedIf(t) })),
+      advanced: [{ k: "DIMENSIONS", v: "AUTO" }, { k: "MATERIAL", v: s.material }, { k: "METHOD", v: s.method }, { k: "TOLERANCE", v: p.clearance + " MM" }],
+      pipeline: [
+        { n: "01", t: "INTERPRET", c: "The prompt becomes typed intent — dimensions, constraints, fasteners, tolerances." },
+        { n: "02", t: "BULLSPEC", c: "A validated JSON spec. The editable source of truth for the part." },
+        { n: "03", t: "GENERATE", c: "A deterministic CAD engine emits OpenSCAD, then solid geometry." },
+        { n: "04", t: "VALIDATE", c: "Wall thickness, overhang, manifold, bed fit — checked before export." },
+        { n: "05", t: "EXPORT", c: "STL now, STEP and 3MF next. Parameters travel with the file." }
+      ],
+
+      messages: msgs, turnCount: s.messages.length + " TURNS",
+      chatDraft: s.chatDraft,
+      onChatDraft: (e) => this.setState({ chatDraft: e.target.value }),
+      onSend: (e) => { if (e && e.preventDefault) e.preventDefault(); const t = s.chatDraft.trim(); if (t) this.applyDelta(t, false); },
+      quickEdits: [
+        { label: "MAKE IT 120 MM WIDE", run: () => this.applyDelta("Make it 120 mm wide.", false) },
+        { label: "5 MM THICKER", run: () => this.applyDelta("Make the base 5 mm thicker.", false) },
+        { label: "TWO M4 HOLES 80 MM APART", run: () => this.applyDelta("Add two M4 mounting holes 80 mm apart.", false) }
+      ],
+
+      views: ["ISO", "FRONT", "SIDE", "TOP"].map(v => Object.assign({
+        go: () => {
+          const map = { ISO: [34, 22], FRONT: [0, 0], SIDE: [90, 0], TOP: [0, 89] };
+          this.setState({ view: v, yaw: map[v][0], pitch: map[v][1] });
+        }
+      }, this.chip(s.view === v, v))),
+      toggles: [
+        Object.assign({ go: () => this.setState({ wire: !s.wire }) }, this.chip(s.wire, "WIREFRAME")),
+        Object.assign({ go: () => this.setState({ grid: !s.grid }) }, this.chip(s.grid, "GRID")),
+        Object.assign({ go: () => this.setState({ dims: !s.dims }) }, this.chip(s.dims, "DIMENSIONS")),
+        Object.assign({ go: () => this.setState({ view: "ISO", yaw: 34, pitch: 22 }) }, this.chip(false, "RESET"))
+      ],
+      gridImage: "linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)",
+      gridOpacity: s.grid ? "1" : "0",
+      faces: faces, holePaths: holes, dimLines: dl,
+      onOrbitStart: (e) => { this.setState({ drag: { x: e.clientX, y: e.clientY, yaw: s.yaw, pitch: s.pitch } }); },
+      onOrbitMove: (e) => {
+        if (!s.drag) return;
+        this.setState({
+          view: "FREE",
+          yaw: s.drag.yaw + (e.clientX - s.drag.x) * 0.5,
+          pitch: Math.max(-89, Math.min(89, s.drag.pitch + (e.clientY - s.drag.y) * 0.4))
+        });
+      },
+      onOrbitEnd: () => { if (s.drag) this.setState({ drag: null }); },
+      camLabel: "CAM " + Math.round(s.yaw) + "° / " + Math.round(s.pitch) + "° · " + (s.view === "FREE" ? "FREE ORBIT" : s.view),
+      bboxLabel: "BBOX " + p.width + " × " + p.height + " × " + p.thickness + " MM",
+      volLabel: "VOL ≈ " + Math.round(p.width * p.height * p.thickness / 1000) + " CM³",
+
+      tabs: ["SPEC", "OPENSCAD", "VERSIONS"].map(t => Object.assign({
+        go: () => this.setState({ tab: t })
+      }, this.chip(s.tab === t, t === "SPEC" ? "BULLSPEC" : t))),
+      tabIsSpec: s.tab === "SPEC", tabIsScad: s.tab === "OPENSCAD", tabIsVersions: s.tab === "VERSIONS",
+      specJson: specJson, scadSource: scad,
+      versions: s.versions.map((v, i, arr) => ({
+        tag: "v" + v.n, note: v.note,
+        fg: i === arr.length - 1 ? "#E8B23A" : "#8B8780",
+        action: i === arr.length - 1 ? "CURRENT" : "RESTORE",
+        restore: () => this.setState({ versions: arr.slice(0, i + 1) })
+      })),
+
+      partName: s.name.toUpperCase(), partId: "BPL-0041",
+      versionLabel: "v" + Math.max(1, s.versions.length),
+      paramRows: [
+        pr("bp-w", "WIDTH", "width", 20, 300, 1),
+        pr("bp-h", "HEIGHT", "height", 20, 300, 1),
+        pr("bp-t", "PLATE THICKNESS", "thickness", 1, 20, 0.5),
+        pr("bp-wall", "WALL THICKNESS", "wall", 0.8, 8, 0.2),
+        pr("bp-hd", "HOLE DIAMETER", "holeDia", 2, 12, 0.5),
+        pr("bp-hn", "HOLE COUNT", "holeCount", 1, 8, 1, ""),
+        pr("bp-sp", "HOLE SPACING", "spacing", 10, 260, 1),
+        pr("bp-cl", "FIT CLEARANCE", "clearance", 0, 1.2, 0.1)
+      ],
+      methodOpts: ["FDM", "RESIN", "CNC"].map(v => radio(v, s.method, v, "method")),
+      materialOpts: ["PETG", "TPU 95A", "ASA"].map(v => radio(v, s.material, v, "material")),
+      mfgRows: [
+        { k: "NOZZLE", v: "0.4 mm" },
+        { k: "LAYER", v: s.method === "FDM" ? "0.20 mm" : "0.05 mm" },
+        { k: "MIN WALL", v: "1.2 mm" },
+        { k: "BED", v: "256 × 256 mm" },
+        { k: "EST. PRINT", v: Math.max(1, Math.round(p.width * p.height * p.thickness / 26000)) + " H" }
+      ],
+      health: [
+        { mark: bedFits ? "✓" : "⚠", fg: bedFits ? "#5FD38A" : "#F7931A", text: bedFits ? "Fits 256 × 256 mm print bed" : "Exceeds the 256 mm bed — split the part or scale it down" },
+        { mark: "✓", fg: "#5FD38A", text: "Manifold geometry, single connected solid" },
+        { mark: minWall ? "✓" : "⚠", fg: minWall ? "#5FD38A" : "#F7931A", text: minWall ? "Wall thickness above the 1.2 mm minimum" : "Wall below 1.2 mm — thin for a 0.4 mm nozzle" },
+        { mark: holeEdge ? "✓" : "⚠", fg: holeEdge ? "#5FD38A" : "#F7931A", text: holeEdge ? "Hole-to-edge distance clears one diameter" : "Holes sit closer than one diameter to the edge" },
+        { mark: overhang ? "✓" : "⚠", fg: overhang ? "#5FD38A" : "#F7931A", text: overhang ? "No unsupported overhang beyond 45°" : "Thin plate may need a brim to stay flat" }
+      ],
+      healthLabel: warns ? warns + " WARNING" + (warns > 1 ? "S" : "") : "ALL CHECKS PASS",
+      healthFg: warns ? "#F7931A" : "#5FD38A",
+      exports: ["STL", "OPENSCAD", "BULLSPEC", "STEP · SOON"].map((l, i) => Object.assign({
+        go: () => this.setState({ exportNote: i === 3 ? "STEP and 3MF land in the next milestone — the CAD abstraction already routes to CadQuery for solid export." : l + " written from the current BullSpec. Reopening the project restores every parameter shown here." })
+      }, this.chip(false, l))),
+      exportNote: s.exportNote,
+      projects: projects
+    };
+  }
+}
+</script>
+</body>
+</html>
