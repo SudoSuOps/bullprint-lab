@@ -247,6 +247,66 @@ def cap_front(fg: str) -> str:
 
 # Every piece in all three colourways — the store needs a variant per blank, and
 # a gold picked for black cotton is not the gold you want on bone. Kit sizes.
+
+# ── embroidery ──────────────────────────────────────────────────────────────
+#
+# Embroidery is not printing. Three things change:
+#   1. The windows are WIDE AND SHORT — 5.9 x 2.0 in on a trucker front, where
+#      the bull's own 1.2:1 does not fill the space. A horizontal lockup does.
+#   2. A stitch has a minimum gauge. Anything under about 1.5 mm comes back as
+#      lint, which is why the seal's 7px ring text and the genesis hash never
+#      go on a hat. The bull at stroke 8 lands 2-4 mm at these sizes; checked
+#      below rather than assumed.
+#   3. The file should match Printful's printfile pixel size for the placement,
+#      so nothing is scaled twice.
+#
+# Placement windows, read off the API for the blanks actually chosen:
+#   trucker 6606   embroidery_front_large 1770x600@300 · addon 675x675@300
+#   richardson 258 embroidery_front 600x300@300 · embroidery_left 1770x600@300
+#   UA dad hat     embroidery_front_large 1650x600@300 · back 600x300@300
+#   SOCCO SC200    embroidery_outside_* 177x294@150   <- portrait, and 150 DPI
+
+def emb_wide(fg: str) -> str:
+    """Bull left, wordmark right — fills a 5.9 x 2.0 in window."""
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 354 120">
+<g transform="translate(6,10) scale(1.0)">{bull(fg, 8)}</g>
+<text x="140" y="58" fill="{fg}" font-family="Archivo, sans-serif" font-weight="900" font-size="40" letter-spacing="-1">BULLPRINT</text>
+<text x="140" y="96" fill="{fg}" font-family="JetBrains Mono, monospace" font-weight="700" font-size="26" letter-spacing="10">LAB</text>
+</svg>'''
+
+
+def emb_square(fg: str) -> str:
+    """Bull alone, centred — the 2.2 in addon panel."""
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<g transform="translate(0,10)">{bull(fg, 8)}</g>
+</svg>'''
+
+
+def emb_small(fg: str) -> str:
+    """Bull alone for a 2 x 1 in window — cap front, dad-hat back."""
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120">
+<g transform="translate(60,10)">{bull(fg, 8)}</g>
+</svg>'''
+
+
+def emb_sock(fg: str) -> str:
+    """SOCCO is PORTRAIT — 1.2 x 2.0 in — and the only 150 DPI file here.
+    Bull up top, BPL beneath, both inside a tall narrow band."""
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 200">
+<g transform="translate(0,14)">{bull(fg, 8)}</g>
+<text x="60" y="150" text-anchor="middle" fill="{fg}" font-family="Archivo, sans-serif" font-weight="900" font-size="30" letter-spacing="-1">BPL</text>
+<text x="60" y="182" text-anchor="middle" fill="{fg}" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" letter-spacing="2">BULL</text>
+</svg>'''
+
+
+# name, builder, printfile width px, printfile DPI
+EMB = [
+    ("emb-wide-1770",  emb_wide,   1770, 300),   # trucker front · cap left · UA front
+    ("emb-square-675", emb_square,  675, 300),   # trucker addon
+    ("emb-small-600",  emb_small,   600, 300),   # richardson front · UA back
+    ("emb-sock-177",   emb_sock,    177, 150),   # SOCCO outside left/right
+]
+
 PIECES = [
     ("t01-seal",        seal,           9.0),
     ("t02-bullish",     bullish,       10.5),
@@ -263,6 +323,8 @@ WAYS = (("gold", GOLD), ("bone", BONE), ("ink", INK))
 
 JOBS = [(f"{n}-{w}", fn, inch, c) for n, fn, inch in PIECES for w, c in WAYS]
 # The kit masters carry their own colour and are used as authored.
+JOBS += [(f"{n}-{w}", fn, px / dpi, c)
+         for n, fn, px, dpi in EMB for w, c in WAYS]
 JOBS += [
     ("t06-bull-mascot",        lambda _c: kit("bull-modelled"),       8.0, GOLD),
     ("t03b-bull-modelled",     lambda _c: kit("bull-modelled"),      11.0, GOLD),
@@ -270,7 +332,10 @@ JOBS += [
 ]
 
 def render(name: str, svg: str, inches: float) -> pathlib.Path:
-    px = round(inches * DPI)
+    # SOCCO's printfile is 150 DPI; matching Printful's own size avoids a
+    # second resample on their side.
+    dpi = 150 if name.startswith("emb-sock") else DPI
+    px = round(inches * dpi)
     src = SVG / f"_{name}.svg"
     src.write_text(svg)
     out = PRINT / f"{name}.png"
@@ -292,13 +357,21 @@ def main() -> None:
         out = render(name, fn(colour), inches)
         im = Image.open(out)
         dpi = im.size[0] / inches
-        flag = "" if dpi >= DPI - 1 else f"  <-- {dpi:.0f} DPI"
+        want = 150 if name.startswith("emb-sock") else DPI
+        flag = "" if dpi >= want - 1 else f"  <-- {dpi:.0f} DPI"
         print(f"  {name:<26} {inches:>5.1f} in   {im.size[0]:>5}x{im.size[1]:<5} "
               f"{im.mode}  {out.stat().st_size / 1024:>5.0f} KB{flag}")
         if im.mode != "RGBA":
             sys.exit(f"{name}: not RGBA — a print file needs a transparent ground")
         if dpi < 150:
             sys.exit(f"{name}: {dpi:.0f} DPI is under Printful's floor")
+        if name.startswith("emb-"):
+            # stroke 8 in a 120-unit viewBox, measured on the delivered inches
+            mm = (8.0 / 120.0) * inches * 25.4
+            if mm < 1.5:
+                sys.exit(f"{name}: stitch gauge {mm:.2f} mm is under 1.5 mm — "
+                         "it comes back as lint")
+            print(f"  {'':<26} stitch gauge {mm:.1f} mm")
         # A dropped <textPath> renders a clean, plausible, WRONG file. The seal
         # without its rings still looks like a seal, which is how it nearly
         # shipped. Ink coverage is the cheapest way to notice.
