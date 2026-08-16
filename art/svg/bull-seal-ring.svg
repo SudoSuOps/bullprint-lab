@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <path id="hashRing" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/>
+    <path id="nameRing" d="M100,100 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"/>
+    <linearGradient id="sealGold" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#8A6A1E"/><stop offset=".4" stop-color="#E8B23A"/>
+      <stop offset=".7" stop-color="#FBE9B0"/><stop offset="1" stop-color="#C39A2C"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".5"/>
+  <text fill="#8A6A1E" style="font:500 7.2px 'JetBrains Mono',monospace;letter-spacing:.62em">
+    <textPath href="#hashRing" startOffset="0.4%">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</textPath>
+  </text>
+  <circle cx="100" cy="100" r="81" fill="none" stroke="url(#sealGold)" stroke-width="3"/>
+  <circle cx="100" cy="100" r="52" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"/>
+  <text fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.5em">
+    <textPath href="#nameRing" startOffset="1.5%">BEST IN BULL™ · BULLPRINT LAB · </textPath>
+  </text>
+  <!-- modelled bull, scaled 0.78, centred at (100,94) -->
+  <text x="100" y="134" text-anchor="middle" fill="#8A6A1E" style="font:500 7.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED</text>
+</svg>
