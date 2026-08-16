@@ -490,6 +490,37 @@ def check_vendor() -> None:
         print(f"  vendor ok  {rel}")
 
 
+def link_openfootlab(html: str) -> str:
+    """Point at-risk feet at the clinical lab, in the footer, beside the non-claim.
+
+    BullPrint's first non-negotiable is no medical or therapeutic claims,
+    anywhere, by anyone. A sister link to a foot-at-risk platform is the one
+    place that rule could quietly break: put it next to the product and it
+    reads as "these inserts help at-risk feet", which is a medical claim by
+    association and is false.
+
+    So it goes in the footer's legal bar, welded to the existing
+    "NO MEDICAL CLAIMS" line, and it sends those people AWAY rather than
+    inviting them in. Framed that way the link strengthens the position
+    instead of eroding it — it is the disclaimer with somewhere to go.
+
+    openfootlab.com is canonical; footlabos.com 301s to it, so linking the
+    alias would spend a redirect and split the signal for nothing.
+
+    Belongs in the design export, like the contact address before it. Until it
+    is there, this transform carries it and fails loudly if the anchor moves.
+    """
+    anchor = "<span>NO MEDICAL CLAIMS · EXPERIMENTAL PRODUCTS</span>"
+    if anchor not in html:
+        sys.exit("footer legal bar not found — did the export change?")
+    html = html.replace(anchor, anchor + (
+        '\n        <span>FEET AT RISK? THAT IS A DIFFERENT LAB · '
+        '<a href="https://openfootlab.com" target="_blank" rel="noopener"'
+        ' style="color:#E8B23A">OPENFOOTLAB.COM</a></span>'), 1)
+    print("  openfootlab at-risk handoff added to the footer legal bar")
+    return html
+
+
 def link_store(html: str) -> str:
     """Put STORE in the header nav.
 
@@ -901,6 +932,7 @@ def main() -> None:
 
     html = wire_forms(html)
     html = link_store(html)
+    html = link_openfootlab(html)
     html = route_ticker(html)
 
     # self-hosted fonts: drop the Google links, add the local stylesheet
@@ -952,7 +984,8 @@ def main() -> None:
 
     # cheap guards against shipping something obviously broken
     for must in ("<x-dc>", "</x-dc>", "bp-prerender", "support.js", "react.production.min.js",
-                 "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email", '"/store/"'):
+                 "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email", '"/store/"',
+                 "openfootlab.com", "NO MEDICAL CLAIMS"):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
     # The design started carrying its own <title> and description; if build.py
