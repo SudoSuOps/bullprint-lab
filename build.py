@@ -120,23 +120,25 @@ FAVICON = (
     '</g></svg>'
 )
 
-HEAD = f"""<title>{TITLE}</title>
-<meta name="description" content="{DESC}">
-<link rel="canonical" href="{SITE}/">
+# NOTE: no <title> and no description here — the design carries both now, and
+# emitting ours as well shipped duplicates. og:/twitter: below reuse whatever
+# the design declared, via {title} / {desc}, so the card can never drift from
+# the page.
+HEAD = f"""<link rel="canonical" href="{SITE}/">
 <meta name="theme-color" content="#0B0B0D">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="data:image/svg+xml;base64,{{favicon}}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BullPrint Lab">
 <meta property="og:url" content="{SITE}/">
-<meta property="og:title" content="{TITLE}">
-<meta property="og:description" content="{DESC}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{desc}}">
 <meta property="og:image" content="{OG_IMAGE}">
 <meta property="og:image:width" content="1402">
 <meta property="og:image:height" content="1122">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{TITLE}">
-<meta name="twitter:description" content="{DESC}">
+<meta name="twitter:title" content="{{title}}">
+<meta name="twitter:description" content="{{desc}}">
 <meta name="twitter:image" content="{OG_IMAGE}">
 <script type="application/ld+json">{{jsonld}}</script>
 <link rel="alternate" type="text/plain" href="/llms.txt">
@@ -880,9 +882,22 @@ def main() -> None:
         sys.exit("font links not found — did the export format change?")
     print("  fonts      google links -> ./fonts/fonts.css")
 
+    # The design is the source of truth for the title and description. Read
+    # them back out of it rather than declaring a second, competing pair.
+    m = re.search(r"<title>(.*?)</title>", html, re.S)
+    page_title = m.group(1).strip() if m else TITLE
+    m = re.search(r'<meta name="description" content="(.*?)"', html, re.S)
+    page_desc = m.group(1).strip() if m else DESC
+    print(f"  head       title from {'design' if page_title != TITLE else 'build.py fallback'}: "
+          f"{page_title[:52]}")
+
     head = HEAD.replace(
         "{favicon}", base64.b64encode(FAVICON.encode()).decode())
-    head = head.replace("{jsonld}", json.dumps(ORG_LD, separators=(",", ":")))
+    head = head.replace("{jsonld}", json.dumps(
+        {**ORG_LD, "@graph": [
+            {**n, "description": page_desc} if n.get("@type") == "Organization" else n
+            for n in ORG_LD["@graph"]]}, separators=(",", ":")))
+    head = head.replace("{title}", page_title).replace("{desc}", page_desc)
 
     # React must be defined before support.js runs, so go in ahead of it.
     marker = '<script src="./support.js"></script>'
@@ -910,6 +925,12 @@ def main() -> None:
                  "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email", '"/store/"'):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
+    # The design started carrying its own <title> and description; if build.py
+    # ever emits a second pair again the page ships duplicates and browsers
+    # silently pick the first.
+    for tag, want in (("<title>", 1), ('name="description"', 1)):
+        n = html.count(tag)
+        assert n == want, f"{tag} appears {n}x in index.html, want {want}"
     assert "fonts.googleapis.com" not in html and "fonts.gstatic.com" not in html, \
         "a Google Fonts reference survived the rewrite"
     # Only SUBRESOURCES must be same-origin. Outbound links in the footer
