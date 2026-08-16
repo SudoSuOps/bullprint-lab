@@ -165,14 +165,19 @@ def seal(fg: str) -> str:
 
 
 def bullish(fg: str) -> str:
-    """T-02 — the BULLISH lockup, bar pairs through the B, off the slide."""
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 66">
+    """T-02 — the BULLISH lockup, bar pairs through the B, off the slide.
+
+    viewBox widened from 260 to 300 and the strapline recentred. At 260 the
+    strapline was centred on x=86 and ran off the LEFT edge; the edge guard
+    caught it at 0px margin after the same bug shipped a cap reading BULLPRIN.
+    """
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 74">
 <g fill="{fg}">
-  <rect x="8.8" y="3.3" width="2.5" height="12"/><rect x="14.7" y="3.3" width="2.5" height="12"/>
-  <rect x="8.8" y="20.6" width="2.5" height="17.6"/><rect x="14.7" y="20.6" width="2.5" height="17.6"/>
-  <text x="2" y="32" style="font:400 32px 'Saira Stencil One',sans-serif">B</text>
-  <text x="25.9" y="32" style="font:400 32px 'Saira Stencil One',sans-serif;letter-spacing:.05em">ULLISH</text>
-  <text x="86" y="58" text-anchor="middle" opacity=".55" style="font:500 7.5px 'JetBrains Mono',monospace;letter-spacing:.3em">BULLPRINT LAB · JUPITER FL</text>
+  <rect x="16.8" y="5.3" width="2.5" height="12"/><rect x="22.7" y="5.3" width="2.5" height="12"/>
+  <rect x="16.8" y="22.6" width="2.5" height="17.6"/><rect x="22.7" y="22.6" width="2.5" height="17.6"/>
+  <text x="10" y="34" style="font:400 32px 'Saira Stencil One',sans-serif">B</text>
+  <text x="33.9" y="34" style="font:400 32px 'Saira Stencil One',sans-serif;letter-spacing:.05em">ULLISH</text>
+  <text x="150" y="62" text-anchor="middle" opacity=".55" style="font:500 7.5px 'JetBrains Mono',monospace;letter-spacing:.3em">BULLPRINT LAB · JUPITER FL</text>
 </g>
 </svg>'''
 
@@ -267,11 +272,17 @@ def cap_front(fg: str) -> str:
 #   SOCCO SC200    embroidery_outside_* 177x294@150   <- portrait, and 150 DPI
 
 def emb_wide(fg: str) -> str:
-    """Bull left, wordmark right — fills a 5.9 x 2.0 in window."""
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 354 120">
-<g transform="translate(6,10) scale(1.0)">{bull(fg, 8)}</g>
-<text x="140" y="58" fill="{fg}" font-family="Archivo, sans-serif" font-weight="900" font-size="40" letter-spacing="-1">BULLPRINT</text>
-<text x="140" y="96" fill="{fg}" font-family="JetBrains Mono, monospace" font-weight="700" font-size="26" letter-spacing="10">LAB</text>
+    """Bull left, wordmark right — fills a 5.9 x 2.0 in window.
+
+    The viewBox is 420 wide, not 354. At 354 the wordmark ran off the right
+    edge and the file shipped reading BULLPRIN — the T was clipped in the SVG
+    itself, not by Printful, and it took a cap mockup to see it. edge_guard()
+    below now refuses any file whose ink touches its own boundary.
+    """
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 142">
+<g transform="translate(10,20)">{bull(fg, 8)}</g>
+<text x="150" y="72" fill="{fg}" font-family="Archivo, sans-serif" font-weight="900" font-size="42" letter-spacing="-1">BULLPRINT</text>
+<text x="152" y="112" fill="{fg}" font-family="JetBrains Mono, monospace" font-weight="700" font-size="26" letter-spacing="14">LAB</text>
 </svg>'''
 
 
@@ -365,6 +376,20 @@ def main() -> None:
             sys.exit(f"{name}: not RGBA — a print file needs a transparent ground")
         if dpi < 150:
             sys.exit(f"{name}: {dpi:.0f} DPI is under Printful's floor")
+        # A print file whose ink runs to its own boundary has been cropped by
+        # its viewBox. It looks fine at thumbnail size and ships a truncated
+        # wordmark. This is how BULLPRIN happened.
+        import numpy as np
+        al = np.array(im)[:, :, 3] > 8
+        if al.any():
+            cols, rows = al.any(axis=0), al.any(axis=1)
+            x0, x1 = cols.argmax(), len(cols) - cols[::-1].argmax() - 1
+            y0, y1 = rows.argmax(), len(rows) - rows[::-1].argmax() - 1
+            mx = min(x0, im.size[0] - 1 - x1)
+            my = min(y0, im.size[1] - 1 - y1)
+            if mx < 2 or my < 2:
+                sys.exit(f"{name}: ink touches the edge (margins {mx}px x, "
+                         f"{my}px y) — the viewBox is cropping the artwork")
         if name.startswith("emb-"):
             # stroke 8 in a 120-unit viewBox, measured on the delivered inches
             mm = (8.0 / 120.0) * inches * 25.4
