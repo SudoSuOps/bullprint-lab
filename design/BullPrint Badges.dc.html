@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Anton&family=Bebas+Neue&family=Black+Ops+One&family=Rubik+Mono+One&family=Bungee&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#08080A;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+</style>
+</helmet>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="bgGold" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".2" stop-color="#F5D07A"></stop><stop offset=".45" stop-color="#E8B23A"></stop><stop offset=".75" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop></linearGradient>
+  <path id="bgRing" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path>
+  <g id="bgBullFill">
+    <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#bgGold)"></path>
+    <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#bgGold)"></path>
+    <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#bgGold)"></path>
+  </g>
+  <g id="bgBullDark">
+    <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#0B0B0D"></path>
+    <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#0B0B0D"></path>
+    <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#0B0B0D"></path>
+  </g>
+  <g id="bgBullLine">
+    <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="none" stroke="#E8B23A" stroke-width="3" stroke-linejoin="round"></path>
+    <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="none" stroke="#E8B23A" stroke-width="3" stroke-linejoin="round"></path>
+    <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="3" stroke-linejoin="round"></path>
+  </g>
+  <pattern id="bgLat" width="11" height="19" patternUnits="userSpaceOnUse">
+    <g fill="none" stroke="#8A6A1E" stroke-width=".9">
+      <path d="M5.5,3.2 L11,6.3 L11,12.7 L5.5,15.8 L0,12.7 L0,6.3 Z"></path>
+      <path d="M0,-6.3 L5.5,-3.2 L5.5,3.2 L0,6.3 L-5.5,3.2 L-5.5,-3.2 Z"></path>
+      <path d="M0,12.7 L5.5,15.8 L5.5,22.2 L0,25.3 L-5.5,22.2 L-5.5,15.8 Z"></path>
+      <path d="M11,-6.3 L16.5,-3.2 L16.5,3.2 L11,6.3 L5.5,3.2 L5.5,-3.2 Z"></path>
+      <path d="M11,12.7 L16.5,15.8 L16.5,22.2 L11,25.3 L5.5,22.2 L5.5,15.8 Z"></path>
+    </g>
+  </pattern>
+</defs></svg>
+
+<section style="padding:52px 56px 70px;border-bottom:1px solid rgba(255,255,255,.08)">
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t3" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">3</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">"BULLISH" — engraving type for BASE-1</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#8B8780">sidewall deboss 0.8 · SAIRA SET AT 19 MM CAPS · stroke ≥1.2</span>
+  </div>
+  <p style="max-width:920px;margin:0 0 28px;font:400 13.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Seven cuts of the same word, shown at sidewall scale on the midsole rail. The filter is printability, not taste: at 14 mm cap height every stroke has to stay above 1.2 mm (three nozzle widths) after the 0.8 deboss, counters can't close up, and nothing can rely on hairline contrast — TPU at 0.20 layers erases it. Stencil cuts can go clean through the rail and drain.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:18px">
+    <sc-for list="{{ fonts }}" as="ft" hint-placeholder-count="7">
+      <div id="{{ ft.id }}" style="flex:none;width:588px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.08)">
+          <span style="display:flex;align-items:center;gap:9px"><a href="{{ ft.href }}" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">{{ ft.id }}</a><span style="font:800 14px/1 Archivo,sans-serif;color:#F4F2ED">{{ ft.name }}</span></span>
+          <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:{{ ft.tagFg }}">{{ ft.tag }}</span>
+        </div>
+        <div style="position:relative;background:#000;padding:26px 24px 30px;overflow:hidden">
+          <div style="position:absolute;left:0;right:0;top:10px;height:3px;background:linear-gradient(90deg,#8A6A1E,#E8B23A 50%,#8A6A1E)"></div>
+          <div style="position:absolute;left:0;right:0;bottom:10px;height:3px;background:linear-gradient(90deg,#8A6A1E,#E8B23A 50%,#8A6A1E)"></div>
+          <div style="text-align:center;color:#E8B23A;text-shadow:0 1.5px 0 rgba(0,0,0,.9),0 -1px 0 rgba(251,233,176,.28);font:{{ ft.css }};letter-spacing:{{ ft.track }}">BULLISH</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:14px;padding:12px 16px 15px">
+          <p style="margin:0;font:400 12px/1.6 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">{{ ft.note }}</p>
+          <span style="flex:none;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780;text-align:right">MIN STROKE<br><span style="color:{{ ft.strokeFg }}">{{ ft.stroke }}</span></span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div id="3h" style="margin-top:26px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(232,178,58,.32)">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <span style="display:flex;align-items:center;gap:9px"><a href="#3h" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">3h</a><span style="font:800 14px/1 Archivo,sans-serif;color:#F4F2ED">THE RAIL LOCKUP — ₿ULLISH + STAMP</span></span>
+      <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">SAIRA 19 MM CAPS · ONE DEBOSS PASS</span>
+    </div>
+    <svg viewBox="0 0 1200 190" style="width:100%;display:block;background:#000">
+      <rect x="0" y="12" width="1200" height="5" fill="url(#bgGold)"></rect>
+      <rect x="0" y="173" width="1200" height="5" fill="url(#bgGold)"></rect>
+      <rect x="0" y="17" width="1200" height="156" fill="#101013"></rect>
+      <rect x="305" y="37" width="9" height="23" fill="#E8B23A"></rect>
+      <rect x="327" y="37" width="9" height="23" fill="#E8B23A"></rect>
+      <rect x="305" y="141" width="9" height="23" fill="#E8B23A"></rect>
+      <rect x="327" y="141" width="9" height="23" fill="#E8B23A"></rect>
+      <text id="lkB" x="280" y="142" fill="#E8B23A" style="font:400 118px/1 'Saira Stencil One',sans-serif">B</text><text id="lkRest" x="368" y="142" fill="#E8B23A" style="font:400 118px/1 'Saira Stencil One',sans-serif;letter-spacing:.05em">ULLISH</text>
+      <rect x="878" y="53" width="84" height="84" rx="12" fill="none" stroke="#E8B23A" stroke-width="2.4"></rect>
+      <g transform="translate(920,101) scale(1.12) translate(-60,-48)"><use href="#bgBullLine"></use></g>
+      <text x="1010" y="80" fill="#8B8780" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em">STAMP = CAP HEIGHT</text>
+      <text x="1010" y="98" fill="#8B8780" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em">HORNS OVERHANG ±3.5</text>
+      <text x="1010" y="116" fill="#8B8780" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em">GAP 6.0 · SAME 0.8 DEBOSS</text>
+      <text x="60" y="80" fill="#8B8780" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em">₿ BARS 2.0 × 5.0</text>
+      <text x="60" y="98" fill="#8B8780" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em">THROUGH THE BOWLS</text>
+      <text x="60" y="116" fill="#8B8780" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em">CLEAR OF COUNTERS</text>
+    </svg>
+    <p style="margin:0;padding:13px 16px 16px;font:400 12.5px/1.65 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">The B becomes ₿ with two bar pairs set through the bowls — aligned to the glyph's own verticals, protruding 5.0 mm above cap and below baseline at 2.0 mm wide, comfortably over the stroke floor. Same face, no second font. The horned stamp closes the word: the frame sits at cap height and the longhorn sweep breaks out of it, overhanging ±3.5 mm each side — the horns are the one element allowed to leave the box. Line-cut in the same 0.8 deboss, so the whole lockup engraves in one pass. Reads: Bitcoin in the first letter, BEST IN BULL in the last mark.</p>
+  </div>
+
+  <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="background:#0B0B0D;border:1px solid rgba(255,255,255,.1);padding:20px 24px">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">ENGRAVING RULES</div>
+      <p style="margin:11px 0 0;font:400 12.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Deboss 0.8 = four layers, deep enough to shadow, shallow enough to flex. Set the word on the lateral rail only — the medial side stays clean per the two-layer drawing. Uppercase always; tracking opens +4% at this depth. Saira's stencil gaps are the joint minimum: 19 mm caps or larger, never smaller.</p>
+    </div>
+    <div style="background:#0B0B0D;border:1px solid rgba(255,255,255,.1);padding:20px 24px">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">MY CALL</div>
+      <p style="margin:11px 0 0;font:400 12.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Client call: <a href="#3g">3g</a> SAIRA STENCIL — and it works, on one condition already applied: the word sets at 19 mm caps, where the joints measure 1.23 mm and clear the 1.2 floor. On the 26 mm heel rail that leaves 3.5 mm of margin top and bottom. <a href="#3a">3a</a> stays the fallback if the fore-rail taper ever forces the caps back down, and the through-cut variant on the swims uses the same face.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding:52px 56px 70px;border-bottom:1px solid rgba(255,255,255,.08)">
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t2" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">2</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">THE BAND — sculpted profiles, not a flat strap</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#8B8780">62 mm wide · 6.0 base · elevation is the design</span>
+  </div>
+  <p style="max-width:920px;margin:0 0 28px;font:400 13.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Four cross-sections. The face detail is real geometry — rails, steps and channels that print as elevation, catch light along their edges, and give the badge somewhere to sit rather than floating on a slab. All four share the 62 × 6.0 base, the same tab geometry into the sandwich, and the same badge slot, so the profile is a colourway-level choice: any band, any badge, any base.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:20px">
+
+    <div id="2a" style="flex:none;width:588px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span style="display:flex;align-items:center;gap:9px"><a href="#2a" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">2a</a><span style="font:800 14px/1 Archivo,sans-serif;color:#F4F2ED">TWIN RAIL</span></span>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">PEAK 8.4 · THE DROP BAND</span>
+      </div>
+      <svg viewBox="0 0 620 132" style="width:100%;display:block;background:#000">
+        <path d="M70 106H550V88C550 82 546 78 540 78H508C502 78 498 74 498 68V62C498 56 502 52 508 52H540C546 52 550 56 550 62" fill="none" stroke="#0B0B0D" stroke-width="0"></path>
+        <path d="M70 106V70C70 62 76 56 84 56H116C124 56 130 62 130 70V78C130 84 134 88 140 88H480C486 88 490 84 490 78V70C490 62 496 56 504 56H536C544 56 550 62 550 70V106Z" fill="rgba(232,178,58,.09)" stroke="#E8B23A" stroke-width="2" stroke-linejoin="round"></path>
+        <path d="M84 56H116M504 56H536" stroke="#F5D07A" stroke-width="3"></path>
+        <path d="M40 56V106M34 56H46M34 106H46" stroke="#E8B23A" stroke-width="1"></path>
+        <text x="24" y="86" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace" transform="rotate(-90 24 86)">8.4</text>
+        <text x="310" y="80" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">FIELD 6.0 · MONOGRAM DEBOSS 0.6</text>
+        <text x="100" y="46" text-anchor="middle" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace">RAIL +2.4 · R1.2 CROWN</text>
+        <text x="310" y="122" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">SECTION · NTS · GOLD EDGE CATCHES THE LIGHT ALONG BOTH RAILS</text>
+      </svg>
+      <svg viewBox="0 0 620 96" style="width:100%;display:block;border-top:1px solid rgba(255,255,255,.08);background:#000">
+        <rect x="24" y="14" width="572" height="68" rx="12" fill="#101013" stroke="rgba(232,178,58,.4)" stroke-width="1.4"></rect>
+        <rect x="24" y="14" width="572" height="11" rx="5" fill="url(#bgGold)"></rect>
+        <rect x="24" y="71" width="572" height="11" rx="5" fill="url(#bgGold)"></rect>
+        <circle cx="310" cy="48" r="19" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.6"></circle>
+        <g transform="translate(310,50) scale(0.28) translate(-60,-48)"><use href="#bgBullFill"></use></g>
+        <text x="160" y="52" text-anchor="middle" fill="#8A6A1E" style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.3em">BULLPRINT</text>
+        <text x="470" y="52" text-anchor="middle" fill="#8A6A1E" style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.3em">BEST IN BULL</text>
+      </svg>
+      <p style="margin:0;padding:13px 16px 16px;font:400 12px/1.65 Archivo,sans-serif;color:#8B8780">Two crowned rails frame a recessed field — the look the renders already carry, made structural. Rails take the scuffs so the monogram never does.</p>
+    </div>
+
+    <div id="2b" style="flex:none;width:588px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span style="display:flex;align-items:center;gap:9px"><a href="#2b" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">2b</a><span style="font:800 14px/1 Archivo,sans-serif;color:#F4F2ED">PODIUM STEP</span></span>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">PEAK 9.6 · THE COLLECTOR</span>
+      </div>
+      <svg viewBox="0 0 620 132" style="width:100%;display:block;background:#000">
+        <path d="M70 106V82C70 78 73 75 77 75H160C164 75 167 72 167 68V62C167 58 170 55 174 55H240C244 55 247 52 247 48V42C247 38 250 35 254 35H366C370 35 373 38 373 42V48C373 52 376 55 380 55H446C450 55 453 58 453 62V68C453 72 456 75 460 75H543C547 75 550 78 550 82V106Z" fill="rgba(232,178,58,.09)" stroke="#E8B23A" stroke-width="2" stroke-linejoin="round"></path>
+        <path d="M254 35H366" stroke="#F5D07A" stroke-width="3"></path>
+        <path d="M40 35V106M34 35H46M34 106H46" stroke="#E8B23A" stroke-width="1"></path>
+        <text x="24" y="78" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace" transform="rotate(-90 24 78)">9.6</text>
+        <text x="310" y="28" text-anchor="middle" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace">PLATEAU CARRIES THE BADGE · +3.6</text>
+        <text x="310" y="122" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">THREE TIERS · 45° CHAMFERED STEPS · EACH EDGE IS A HIGHLIGHT LINE</text>
+      </svg>
+      <svg viewBox="0 0 620 96" style="width:100%;display:block;border-top:1px solid rgba(255,255,255,.08);background:#000">
+        <rect x="24" y="14" width="572" height="68" rx="12" fill="#101013" stroke="rgba(232,178,58,.4)" stroke-width="1.4"></rect>
+        <rect x="96" y="22" width="428" height="52" rx="9" fill="#16130A" stroke="#8A6A1E" stroke-width="1"></rect>
+        <rect x="196" y="30" width="228" height="36" rx="7" fill="#1D180C" stroke="#E8B23A" stroke-width="1.3"></rect>
+        <circle cx="310" cy="48" r="16" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.6"></circle>
+        <text x="310" y="54" text-anchor="middle" fill="url(#bgGold)" style="font:900 20px Archivo,sans-serif">₿</text>
+        <text x="60" y="52" text-anchor="middle" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.2em">SZ 13</text>
+        <text x="560" y="52" text-anchor="middle" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.2em">001</text>
+      </svg>
+      <p style="margin:0;padding:13px 16px 16px;font:400 12px/1.65 Archivo,sans-serif;color:#8B8780">A stepped podium rising to the badge — the mark literally sits on a pedestal. Every chamfer prints clean at 45° and reads as a machined part.</p>
+    </div>
+
+    <div id="2c" style="flex:none;width:588px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span style="display:flex;align-items:center;gap:9px"><a href="#2c" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">2c</a><span style="font:800 14px/1 Archivo,sans-serif;color:#F4F2ED">CHANNEL CUT</span></span>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">PEAK 8.4 · THE SWIMS BAND</span>
+      </div>
+      <svg viewBox="0 0 620 132" style="width:100%;display:block;background:#000">
+        <path d="M70 106V62C70 56 74 52 80 52H240C246 52 250 56 250 62V76C250 82 254 86 260 86H360C366 86 370 82 370 76V62C370 56 374 52 380 52H540C546 52 550 56 550 62V106Z" fill="rgba(232,178,58,.09)" stroke="#E8B23A" stroke-width="2" stroke-linejoin="round"></path>
+        <path d="M282 86V80M310 86V78M338 86V80" stroke="#E8B23A" stroke-width="1.4"></path>
+        <text x="310" y="72" text-anchor="middle" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace">CHANNEL 14 W × 3.4 D</text>
+        <path d="M40 52V106M34 52H46M34 106H46" stroke="#E8B23A" stroke-width="1"></path>
+        <text x="24" y="86" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace" transform="rotate(-90 24 86)">8.4</text>
+        <text x="310" y="122" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">BADGES SIT IN THE CHANNEL · DRAIN SLOTS EVERY 24 MM THROUGH THE FLOOR</text>
+      </svg>
+      <svg viewBox="0 0 620 96" style="width:100%;display:block;border-top:1px solid rgba(255,255,255,.08);background:#000">
+        <rect x="24" y="14" width="572" height="68" rx="12" fill="#101013" stroke="rgba(232,178,58,.4)" stroke-width="1.4"></rect>
+        <rect x="24" y="34" width="572" height="28" fill="#060607" stroke="#8A6A1E" stroke-width="1"></rect>
+        <circle cx="240" cy="48" r="15" fill="url(#bgGold)"></circle>
+        <g transform="translate(240,50) scale(0.24) translate(-60,-48)"><use href="#bgBullDark"></use></g>
+        <circle cx="380" cy="48" r="15" fill="url(#bgGold)"></circle>
+        <text x="380" y="54" text-anchor="middle" fill="#000" style="font:900 19px Archivo,sans-serif">₿</text>
+        <path d="M60 34V62M100 34V62M140 34V62M480 34V62M520 34V62M560 34V62" stroke="#1D180C" stroke-width="4"></path>
+        <text x="310" y="30" text-anchor="middle" fill="#8A6A1E" style="font:700 8.5px 'JetBrains Mono',monospace;letter-spacing:.26em">GRIP, DRAIN, PROTECT</text>
+      </svg>
+      <p style="margin:0;padding:13px 16px 16px;font:400 12px/1.65 Archivo,sans-serif;color:#8B8780">A recessed channel runs the band with badges seated inside it, below scuff height. The channel floor is slotted — water leaves, which makes it the swims band by construction.</p>
+    </div>
+
+    <div id="2d" style="flex:none;width:588px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span style="display:flex;align-items:center;gap:9px"><a href="#2d" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">2d</a><span style="font:800 14px/1 Archivo,sans-serif;color:#F4F2ED">OPEN LATTICE CREST</span></span>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">PEAK 10.0 · THE LOUD ONE</span>
+      </div>
+      <svg viewBox="0 0 620 132" style="width:100%;display:block;background:#000">
+        <path d="M70 106V74C110 52 170 40 310 40C450 40 510 52 550 74V106Z" fill="rgba(232,178,58,.09)" stroke="#E8B23A" stroke-width="2" stroke-linejoin="round"></path>
+        <path d="M130 92C150 76 200 62 310 62C420 62 470 76 490 92" fill="none" stroke="#8A6A1E" stroke-width="1.2" stroke-dasharray="5 4"></path>
+        <text x="310" y="56" text-anchor="middle" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace">CREST 10.0 AT CENTRE · FLANKS OPEN CELL</text>
+        <path d="M40 40V106M34 40H46M34 106H46" stroke="#E8B23A" stroke-width="1"></path>
+        <text x="24" y="80" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace" transform="rotate(-90 24 80)">10.0</text>
+        <text x="310" y="122" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">THE INSOLE LATTICE SURFACES ON THE BAND — VENTED, LIGHTEST OF THE FOUR</text>
+      </svg>
+      <svg viewBox="0 0 620 96" style="width:100%;display:block;border-top:1px solid rgba(255,255,255,.08);background:#000">
+        <rect x="24" y="14" width="572" height="68" rx="12" fill="#101013" stroke="rgba(232,178,58,.4)" stroke-width="1.4"></rect>
+        <clipPath id="bgClip2d"><rect x="26" y="16" width="568" height="64" rx="11"></rect></clipPath>
+        <g clip-path="url(#bgClip2d)"><rect x="24" y="6" width="572" height="90" fill="url(#bgLat)"></rect></g>
+        <rect x="216" y="24" width="188" height="48" rx="9" fill="#101013" stroke="#E8B23A" stroke-width="1.4"></rect>
+        <circle cx="310" cy="48" r="17" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.6"></circle>
+        <g transform="translate(310,50) scale(0.26) translate(-60,-48)"><use href="#bgBullFill"></use></g>
+        <text x="258" y="53" text-anchor="middle" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.16em">BULL</text>
+        <text x="364" y="53" text-anchor="middle" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.16em">ON</text>
+      </svg>
+      <p style="margin:0;padding:13px 16px 16px;font:400 12px/1.65 Archivo,sans-serif;color:#8B8780">The lattice breaks the surface — open cells across the flanks, a solid crest island carrying the badge. Vented, lightest, and unmistakably printed. Needs a bridging test before it's promised.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="background:#0B0B0D;border:1px solid rgba(255,255,255,.1);padding:20px 24px">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">SHARED RULES</div>
+      <p style="margin:11px 0 0;font:400 12.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">62 × 6.0 base and identical sandwich tabs on all four, so the profile never touches the two-layer drawing. Badge slot is the same keyed mount from row 1. Bands print face-up — every elevation is a top surface, no supports on the show face.</p>
+    </div>
+    <div style="background:#0B0B0D;border:1px solid rgba(255,255,255,.1);padding:20px 24px">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">MY CALL</div>
+      <p style="margin:11px 0 0;font:400 12.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty"><a href="#2a">2a</a> ships the drop — it's the render made real. <a href="#2c">2c</a> is the swims band by construction. <a href="#2b">2b</a> for the numbered collector run, and <a href="#2d">2d</a> only after the bridging test passes — promise it second, print it first.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding:52px 56px 80px">
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t1" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">1</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">BULL BADGES — drop-in marks for the slide band</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#8B8780">⌀28 mm face · one keyed slot · five looks per mark</span>
+  </div>
+  <p style="max-width:900px;margin:0 0 30px;font:400 13.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Badges print separately in TPU 95A and press into a keyed slot on the 90A band — the firmer part snaps into the softer one and the undercut does the retention, no adhesive. Same footprint on all ten, so any badge fits any band and the badge pack becomes its own product. Faces are drawn at final geometry; every relief figure is printable at 0.20 mm layers.</p>
+
+  <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:16px">ROW 1 — THE BULL HEAD</div>
+  <div style="display:flex;flex-wrap:wrap;gap:18px;margin-bottom:38px">
+
+    <div id="1a" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1a" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1a</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">RAISED 1.2</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <circle cx="60" cy="60" r="50" fill="#101013" stroke="url(#bgGold)" stroke-width="2.5"></circle>
+        <circle cx="60" cy="60" r="43" fill="none" stroke="#8A6A1E" stroke-width=".8" opacity=".6"></circle>
+        <g transform="translate(60,62) scale(0.72) translate(-60,-48)"><use href="#bgBullFill"></use></g>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">GOLDEN BULL</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Modelled bull raised off a black puck. The hero look — ships on the drop.</p>
+      </div>
+    </div>
+
+    <div id="1b" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1b" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1b</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">DEBOSS 0.6</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <rect x="14" y="14" width="92" height="92" rx="14" fill="#101013" stroke="rgba(232,178,58,.5)" stroke-width="1.6"></rect>
+        <g transform="translate(60,62) scale(0.72) translate(-60,-48)"><use href="#bgBullLine"></use></g>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">LINE CUT</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Engraved outline on a rounded square. Quietest of the five — the daily wearer.</p>
+      </div>
+    </div>
+
+    <div id="1c" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1c" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1c</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">THROUGH-CUT</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <circle cx="60" cy="60" r="50" fill="url(#bgGold)"></circle>
+        <g transform="translate(60,62) scale(0.72) translate(-60,-48)"><use href="#bgBullDark"></use></g>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">KNOCKOUT</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Solid gold puck, bull cut clean through. Drains water — right badge for the swims.</p>
+      </div>
+    </div>
+
+    <div id="1d" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1d" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1d</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">RAISED 0.8</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <path d="M60 8L104 33V87L60 112L16 87V33Z" fill="#101013" stroke="url(#bgGold)" stroke-width="2.5" stroke-linejoin="round"></path>
+        <path d="M60 20L94 39.5V80.5L60 100L26 80.5V39.5Z" fill="none" stroke="#8A6A1E" stroke-width=".8" opacity=".7"></path>
+        <g transform="translate(60,62) scale(0.6) translate(-60,-48)"><use href="#bgBullLine"></use></g>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">HEX SEAL</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Bull in the hex containment field — the lattice cell as a frame. Reads as hardware.</p>
+      </div>
+    </div>
+
+    <div id="1e" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1e" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1e</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">CELLS CLOSE</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <circle cx="60" cy="60" r="50" fill="#101013" stroke="rgba(232,178,58,.5)" stroke-width="1.6"></circle>
+        <clipPath id="bgClip1e"><circle cx="60" cy="60" r="47"></circle></clipPath>
+        <g clip-path="url(#bgClip1e)"><rect x="10" y="10" width="100" height="100" fill="url(#bgLat)"></rect></g>
+        <g transform="translate(60,62) scale(0.72) translate(-60,-48)"><use href="#bgBullFill"></use></g>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">LATTICE BULL</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Open cells close up to form the bull — the insole argument at badge scale. The collector.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:16px">ROW 2 — THE ₿</div>
+  <div style="display:flex;flex-wrap:wrap;gap:18px">
+
+    <div id="1f" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1f" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1f</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">RAISED 1.2</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <circle cx="60" cy="60" r="50" fill="#101013" stroke="url(#bgGold)" stroke-width="2.5"></circle>
+        <circle cx="60" cy="60" r="43" fill="none" stroke="#8A6A1E" stroke-width=".8" opacity=".6"></circle>
+        <text x="60" y="86" text-anchor="middle" fill="url(#bgGold)" style="font:900 74px Archivo,sans-serif">₿</text>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">GOLD ₿</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">The symbol raised full-height. Pairs with 1a as the drop set.</p>
+      </div>
+    </div>
+
+    <div id="1g" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1g" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1g</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">DEBOSS 0.6</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <rect x="14" y="14" width="92" height="92" rx="14" fill="#101013" stroke="rgba(232,178,58,.5)" stroke-width="1.6"></rect>
+        <text x="60" y="86" text-anchor="middle" fill="none" stroke="#E8B23A" stroke-width="1.8" style="font:900 74px Archivo,sans-serif">₿</text>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">₿ LINE</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Engraved outline. Subtle enough for shoes that leave the house every day.</p>
+      </div>
+    </div>
+
+    <div id="1h" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1h" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1h</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">THROUGH-CUT</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <circle cx="60" cy="60" r="50" fill="url(#bgGold)"></circle>
+        <text x="60" y="86" text-anchor="middle" fill="#000" style="font:900 74px Archivo,sans-serif">₿</text>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">₿ STENCIL</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Cut clean through the gold. The loudest read at distance — and it drains.</p>
+      </div>
+    </div>
+
+    <div id="1i" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1i" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1i</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">RAISED 0.8</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <circle cx="60" cy="60" r="50" fill="#101013" stroke="url(#bgGold)" stroke-width="2"></circle>
+        <text fill="#8A6A1E" style="font:500 6.4px 'JetBrains Mono',monospace;letter-spacing:.42em"><textPath href="#bgRing" startOffset="0.5%">000000000019d6689c085ae165831e934ff763ae4</textPath></text>
+        <text x="60" y="80" text-anchor="middle" fill="url(#bgGold)" style="font:900 52px Archivo,sans-serif">₿</text>
+        <text x="60" y="99" text-anchor="middle" fill="#8A6A1E" style="font:500 6px 'JetBrains Mono',monospace;letter-spacing:.24em">GENESIS</text>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">GENESIS ₿</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">The block-0 hash ringing the symbol — the seal language at 28 mm. Miner's badge.</p>
+      </div>
+    </div>
+
+    <div id="1j" style="flex:none;width:216px;scroll-margin-top:16px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)">
+        <a href="#1j" style="font:700 10px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:4px">1j</a>
+        <span style="font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">CELLS CLOSE</span>
+      </div>
+      <svg viewBox="0 0 120 120" style="width:100%;display:block;background:#000">
+        <path d="M60 8L104 33V87L60 112L16 87V33Z" fill="#101013" stroke="rgba(232,178,58,.5)" stroke-width="1.6" stroke-linejoin="round"></path>
+        <clipPath id="bgClip1j"><path d="M60 10L102 34V86L60 110L18 86V34Z"></path></clipPath>
+        <g clip-path="url(#bgClip1j)"><rect x="10" y="4" width="100" height="112" fill="url(#bgLat)"></rect></g>
+        <text x="60" y="84" text-anchor="middle" fill="url(#bgGold)" style="font:900 64px Archivo,sans-serif">₿</text>
+      </svg>
+      <div style="padding:12px 14px 15px">
+        <div style="font:800 13.5px/1 Archivo,sans-serif;color:#F4F2ED">LATTICE ₿</div>
+        <p style="margin:8px 0 0;font:400 11.5px/1.6 Archivo,sans-serif;color:#8B8780">Cells close to form the ₿ inside a hex puck. Pairs with 1e as the collector set.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOUNTING SPEC -->
+  <div style="margin-top:40px;display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:stretch">
+    <div style="background:#000;border:1px solid rgba(255,255,255,.1);padding:24px 28px">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">DROP-IN MOUNT — SECTION THROUGH THE BAND · MM · NTS</div>
+      <svg viewBox="0 0 640 210" style="width:100%;display:block">
+        <rect x="60" y="118" width="520" height="52" rx="10" fill="rgba(232,178,58,.07)" stroke="#E8B23A" stroke-width="2"></rect>
+        <path d="M250 118V142C250 150 258 156 268 156H372C382 156 390 150 390 142V118" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.8"></path>
+        <path d="M250 130H236M390 130H404" stroke="#E8B23A" stroke-width="1.8"></path>
+        <rect x="236" y="118" width="14" height="12" fill="rgba(232,178,58,.25)" stroke="#E8B23A" stroke-width="1.4"></rect>
+        <rect x="390" y="118" width="14" height="12" fill="rgba(232,178,58,.25)" stroke="#E8B23A" stroke-width="1.4"></rect>
+        <rect x="256" y="64" width="128" height="26" rx="6" fill="url(#bgGold)"></rect>
+        <path d="M282 90V104C282 112 290 118 300 118H340C350 118 358 112 358 104V90" fill="none" stroke="#E8B23A" stroke-width="1.8"></path>
+        <path d="M282 96H272M358 96H368" stroke="#E8B23A" stroke-width="1.6"></path>
+        <text x="320" y="52" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">BADGE FACE ⌀28.0 · 3.2 PROUD</text>
+        <text x="446" y="98" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">STEM 20.0 × 6.0 · 2.6 DEEP</text>
+        <text x="446" y="116" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">UNDERCUT 0.6 EACH SIDE</text>
+        <text x="446" y="134" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">SLOT +0.15 CLEARANCE</text>
+        <text x="66" y="112" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">BAND · TPU 90A · 8.0</text>
+        <text x="66" y="188" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">BADGE · TPU 95A — FIRMER SNAPS INTO SOFTER, RETENTION IS THE UNDERCUT, NO ADHESIVE</text>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="flex:1;background:#0B0B0D;border:1px solid rgba(255,255,255,.1);padding:22px 24px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">ONE SLOT, TEN FACES</div>
+        <p style="margin:12px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Every badge shares the same stem, so the band never cares which face is in it. Badges nest ~60 per plate at 18 minutes each — the pack is the cheapest SKU on the floor and the first thing a BullTaker buys twice.</p>
+      </div>
+      <div style="flex:1;background:#0B0B0D;border:1px solid rgba(255,255,255,.1);padding:22px 24px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">MY CALL</div>
+        <p style="margin:12px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Ship the drop with <a href="#1a">1a</a> + <a href="#1f">1f</a> installed. Sell <a href="#1c">1c</a> + <a href="#1h">1h</a> as the swims pair — the through-cuts drain. Hold <a href="#1e">1e</a> + <a href="#1j">1j</a> as the numbered collector pack, and <a href="#1i">1i</a> for the miners. Price the pack after the first nest plate prints.</p>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin:26px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:rgba(255,255,255,.45)">Try next: "draw the badge stem as a CAD plate" · "put <a href="#1a">1a</a>/<a href="#1f">1f</a> on the two-layer band drawing" · "badge pack card for the store"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1300}}">class Component extends DCLogic {
+  renderVals() {
+    return {
+      fonts: [
+        { id: "3a", name: "ARCHIVO BLACK", tag: "HOUSE · THE SAFE PRINT", css: "900 62px/1 Archivo,sans-serif", track: ".045em", stroke: "1.9 MM", note: "The brand display face at engraving weight. Zero new vocabulary, prints without a single adjustment." },
+        { id: "3b", name: "BEBAS NEUE", tag: "TALL CONDENSED", css: "400 78px/0.95 'Bebas Neue',sans-serif", track: ".07em", stroke: "1.4 MM", note: "Athletic and vertical — fills the rail height without growing the footprint. Counters stay open but strokes run closest to minimum of the clean prints." },
+        { id: "3c", name: "ANTON", tag: "HEAVY CONDENSED", css: "400 66px/1 Anton,sans-serif", track: ".05em", stroke: "1.8 MM", note: "Denser than Bebas with meat on every stroke. The sportswear read — this is what sideline equipment type looks like." },
+        { id: "3d", name: "RUBIK MONO ONE", tag: "THE HARDWARE", css: "400 44px/1 'Rubik Mono One',monospace", track: ".02em", stroke: "2.2 MM", note: "Widest counters and fattest strokes on the sheet. Reads as cast-in machine lettering, and it squares with the mono spec language everywhere else." },
+        { id: "3e", name: "BUNGEE", tag: "DISPLAY ROUND", css: "400 56px/1 Bungee,sans-serif", track: ".03em", stroke: "1.8 MM", note: "Rounded, signage-flavoured, friendliest of the seven. Right if the slide should smile; wrong if it should read as equipment." },
+        { id: "3f", name: "BLACK OPS ONE", tag: "STENCIL · CAN CUT THROUGH", css: "400 60px/1 'Black Ops One',sans-serif", track: ".04em", stroke: "1.6 MM", note: "Military-crate stencil. The bridges mean it can be cut clean through the rail instead of debossed — the word becomes drainage." },
+        { id: "3g", name: "SAIRA STENCIL", tag: "★ SELECTED · SET AT 19 MM CAPS", css: "400 60px/1 'Saira Stencil One',sans-serif", track: ".05em", stroke: "1.23 MM AT 19 CAPS", note: "The pick. Under the floor at 14 mm caps, so the word scales to 19 mm — joints land at 1.23 mm and clear the minimum with the deboss intact. The stencil gaps read as machined, and it can still cut through for the swims." }
+      ].map(function (f) {
+        f.href = "#" + f.id;
+        f.tagFg = f.tagWarn ? "#F7931A" : "#8B8780";
+        f.strokeFg = f.strokeWarn ? "#F7931A" : "#E8B23A";
+        return f;
+      })
+    };
+  }
+}</script>
+</body>
+</html>

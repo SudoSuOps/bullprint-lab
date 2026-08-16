@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#08080A;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+</style>
+</helmet>
+
+<div style="padding:56px 60px 90px;display:flex;flex-direction:column;gap:30px">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="tlBull" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".18" stop-color="#F5D07A"></stop><stop offset=".44" stop-color="#E8B23A"></stop><stop offset=".72" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop></linearGradient>
+    <linearGradient id="tlHorn" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop><stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop></linearGradient>
+    <g id="tlBullFill">
+      <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#tlHorn)"></path>
+      <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#tlHorn)"></path>
+      <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#tlBull)"></path>
+      <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="#8A6A1E" opacity=".55"></path>
+      <ellipse cx="55" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse><ellipse cx="65" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse>
+    </g>
+    <pattern id="tlMono" width="44" height="44" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#E8B23A" stroke-width="1.5" opacity=".5">
+        <circle cx="11" cy="11" r="7"></circle><circle cx="33" cy="33" r="7"></circle>
+        <path d="M11 18v8M33 26v-8"></path>
+      </g>
+    </pattern>
+    <pattern id="tlLat" width="19.8" height="34.3" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#E8B23A" stroke-width="1.1" opacity=".8">
+        <path d="M9.9,5.7 L19.8,11.4 L19.8,22.9 L9.9,28.6 L0,22.9 L0,11.4 Z"></path>
+        <path d="M0,-11.4 L9.9,-5.7 L9.9,5.7 L0,11.4 L-9.9,5.7 L-9.9,-5.7 Z"></path>
+        <path d="M0,22.9 L9.9,28.6 L9.9,40 L0,45.7 L-9.9,40 L-9.9,28.6 Z"></path>
+        <path d="M19.8,-11.4 L29.7,-5.7 L29.7,5.7 L19.8,11.4 L9.9,5.7 L9.9,-5.7 Z"></path>
+        <path d="M19.8,22.9 L29.7,28.6 L29.7,40 L19.8,45.7 L9.9,40 L9.9,28.6 Z"></path>
+      </g>
+    </pattern>
+    <pattern id="tlWeave" width="10" height="10" patternUnits="userSpaceOnUse">
+      <g stroke="#C9A64E" stroke-width="1" opacity=".6" fill="none"><circle cx="5" cy="5" r="3.1"></circle><path d="M5 0v1.9M5 8.1V10M0 5h1.9M8.1 5H10"></path></g>
+    </pattern>
+  </defs></svg>
+
+  <!-- ===== TITLE ===== -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:30px 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;align-items:center;gap:16px">
+        <svg width="54" height="45" viewBox="0 0 120 100"><use href="#tlBullFill"></use></svg>
+        <div>
+          <div style="font:800 22px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">BULLPRINT LAB</div>
+          <div style="margin-top:8px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#A5A19A">CAPTURED-BAND CONSTRUCTION · CONTROLLED DOCUMENT</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font:900 30px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">BULL SLIDES — 3 PART</div>
+        <div style="margin-top:9px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">DWG BPL-SL-2L-013-A · SIZE US M13</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(255,255,255,.1)">
+      <sc-for list="{{ titleBlock }}" as="t" hint-placeholder-count="6">
+        <div style="background:#0B0B0D;padding:18px 20px">
+          <div style="font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">{{ t.k }}</div>
+          <div style="margin-top:9px;font:700 13px/1.35 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">{{ t.v }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== SHEET 1 — THE SANDWICH ===== -->
+  <div style="width:1240px;background:#000;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 1 OF 3 — THE SANDWICH</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">NOT TO SCALE — DIMENSIONS GOVERN · MM</span>
+    </div>
+
+    <div style="padding:24px 40px;border-bottom:1px solid rgba(255,255,255,.1)">
+      <p style="margin:0;max-width:960px;font:400 14.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Three printed parts, and no adhesive carries load. The band's tabs lie flat on <strong style="color:#F4F2ED;font-weight:700">BASE-1</strong>, then <strong style="color:#F4F2ED;font-weight:700">BASE-2</strong> closes over them — the strap is trapped between two lattice layers across its full tab area. Pull-out force becomes compression and shear through the sandwich rather than tension in a glue line or a post. A 3 mm spacer-mesh sheet then sits over BASE-1 and BASE-2 is wrapped in the same mesh, so every surface around the foot is knit rather than TPU. The mesh is comfort, never structure.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:1px;background:rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:30px 34px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:20px">EXPLODED — ASSEMBLY ORDER 1 → 2 → 3</div>
+        <svg viewBox="0 0 660 560" style="width:100%;display:block">
+          <text x="20" y="26" fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.14em">3 · BASE-2 — FOOTBED CAP · 90A (MESH WRAPPED)</text>
+          <path d="M96 58H556C576 58 588 70 588 88V106C588 124 570 136 550 136H102C82 136 64 124 64 106V88C64 70 76 58 96 58Z" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2.4"></path>
+          <path d="M96 58H556C576 58 588 70 588 76H64C64 70 76 58 96 58Z" fill="url(#tlWeave)" stroke="#C9A64E" stroke-width="1.2"></path>
+          <rect x="182" y="120" width="72" height="16" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.6" stroke-dasharray="4 3"></rect>
+          <rect x="402" y="120" width="72" height="16" fill="#0B0B0D" stroke="#E8B23A" stroke-width="1.6" stroke-dasharray="4 3"></rect>
+          <text x="604" y="84" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">12.0</text>
+          <text x="604" y="102" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">TPU 90A</text>
+          <text x="182" y="156" fill="#A5A19A" style="font:500 9px 'JetBrains Mono',monospace">RECESSES 72.4 × 34.4 × 3.6 — RECEIVE THE TABS</text>
+
+          <text x="20" y="212" fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.14em">2 · BAND — MONOGRAM STRAP · 90A (BARE TPU)</text>
+          <path d="M176 262C176 240 194 226 220 226H436C462 226 480 240 480 262V278C480 296 462 308 436 308H220C194 308 176 296 176 278Z" fill="url(#tlMono)" stroke="#E8B23A" stroke-width="2.4"></path>
+          
+          <rect x="182" y="252" width="72" height="34" fill="rgba(232,178,58,.16)" stroke="#E8B23A" stroke-width="1.8"></rect>
+          <rect x="402" y="252" width="72" height="34" fill="rgba(232,178,58,.16)" stroke="#E8B23A" stroke-width="1.8"></rect>
+          <g transform="translate(300,268) scale(0.4) translate(-60,-50)"><use href="#tlBullFill"></use></g>
+          <text x="352" y="278" fill="#E8B23A" style="font:800 20px Archivo,sans-serif;letter-spacing:.06em">PRINT</text>
+          <text x="496" y="252" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">BAND 8.0 · TAB 3.4</text>
+          <text x="496" y="270" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">TPU 90A</text>
+          <text x="182" y="330" fill="#A5A19A" style="font:500 9px 'JetBrains Mono',monospace">TABS 72 × 34 × 3.4 — CAPTURED, NOT GLUED</text>
+
+          <text x="20" y="386" fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.14em">1 · BASE-1 — MIDSOLE · 95A (MESH SHEET ON TOP)</text>
+          <path d="M78 424H562C584 424 598 438 598 458V486C598 512 580 526 554 526H90C64 526 46 512 46 486V458C46 438 58 424 78 424Z" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2.4"></path>
+          <path d="M78 424H562C584 424 598 438 598 446H46C46 438 58 424 78 424Z" fill="url(#tlWeave)" stroke="#C9A64E" stroke-width="1.2"></path>
+          <path d="M46 496H598" stroke="#E8B23A" stroke-width="1.4" opacity=".7"></path>
+          <rect x="182" y="424" width="72" height="14" fill="rgba(232,178,58,.28)" stroke="#E8B23A" stroke-width="1.6"></rect>
+          <rect x="402" y="424" width="72" height="14" fill="rgba(232,178,58,.28)" stroke="#E8B23A" stroke-width="1.6"></rect>
+          <text x="64" y="516" fill="#E8B23A" style="font:400 16px 'Saira Stencil One',sans-serif;letter-spacing:.12em">₿ULLISH</text><text x="164" y="516" fill="#8B8780" style="font:500 8.5px 'JetBrains Mono',monospace;letter-spacing:.12em">SAIRA 19 MM CAPS · ₿ BARS ON THE B · HORNED STAMP AFTER H · DEBOSS 0.8</text>
+          <text x="614" y="452" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace" transform="rotate(90 614 452)">26.0</text>
+          <text x="182" y="548" fill="#A5A19A" style="font:500 9px 'JetBrains Mono',monospace">TAB LANDINGS — BARE TPU, MESH CUT CLEAR</text>
+        </svg>
+      </div>
+
+      <div style="background:#0B0B0D;padding:30px 34px;display:flex;flex-direction:column;gap:22px">
+        <div>
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">SECTION A–A — THROUGH A TAB</div>
+          <svg viewBox="0 0 510 340" style="width:100%;display:block">
+            
+            <rect x="66" y="43" width="300" height="30" fill="url(#tlMono)" stroke="#E8B23A" stroke-width="2"></rect>
+            <text x="378" y="62" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">8.0 BAND · 90A</text>
+            <path d="M108 73V96M324 73V96" stroke="#E8B23A" stroke-width="1.4" stroke-dasharray="3 3"></path>
+
+            <rect x="66" y="88" width="300" height="17" fill="url(#tlWeave)" stroke="#C9A64E" stroke-width="1.2"></rect>
+            <text x="378" y="102" fill="#C9A64E" style="font:500 9.5px 'JetBrains Mono',monospace">3.0 MESH — WRAPS BASE-2</text>
+            <rect x="66" y="105" width="300" height="34" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2"></rect>
+            <text x="378" y="126" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">12.0 BASE-2 · 90A</text>
+            <rect x="100" y="129" width="52" height="10" fill="rgba(232,178,58,.3)" stroke="#E8B23A" stroke-width="1.4"></rect>
+            <rect x="280" y="129" width="52" height="10" fill="rgba(232,178,58,.3)" stroke="#E8B23A" stroke-width="1.4"></rect>
+
+            <rect x="100" y="139" width="52" height="10" fill="rgba(232,178,58,.5)" stroke="#E8B23A" stroke-width="1.6"></rect>
+            <rect x="280" y="139" width="52" height="10" fill="rgba(232,178,58,.5)" stroke="#E8B23A" stroke-width="1.6"></rect>
+            <text x="160" y="147" fill="#F4F2ED" style="font:700 9px 'JetBrains Mono',monospace">TAB 3.4 IN 3.6 POCKET</text>
+
+            <rect x="66" y="149" width="300" height="88" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2"></rect>
+            <rect x="66" y="152" width="300" height="14" fill="url(#tlWeave)" stroke="#C9A64E" stroke-width="1.2"></rect>
+            <text x="378" y="162" fill="#C9A64E" style="font:500 9.5px 'JetBrains Mono',monospace">3.0 MESH SHEET</text>
+            <text x="378" y="196" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">26.0 BASE-1 · 95A</text>
+            <text x="78" y="170" fill="#A5A19A" style="font:500 9px 'JetBrains Mono',monospace">ZONED LATTICE CORE</text>
+            <rect x="66" y="237" width="300" height="14" fill="rgba(232,178,58,.14)" stroke="#E8B23A" stroke-width="2"></rect>
+            <text x="78" y="248" fill="#A5A19A" style="font:500 9px 'JetBrains Mono',monospace">TREAD SKIN 4.0</text>
+
+            <path d="M40 96V251M34 96H46M34 251H46" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="22" y="196" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 22 196)">38.0 STACK</text>
+            <text x="66" y="278" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">BASE-1 26.0 + BASE-2 12.0 = 38.0 HEEL</text>
+            <text x="66" y="296" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">FOREFOOT 34.0 — BASE-1 TAPERS, BASE-2 CONSTANT</text>
+            <text x="66" y="314" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">SPACER MESH EXCLUDED FROM STACK TOLERANCE</text>
+            <text x="66" y="332" fill="#C9A64E" style="font:500 9px 'JetBrains Mono',monospace">TAB 3.4 IN A 3.6 POCKET · 0.2 CLEARANCE TOTAL</text>
+          </svg>
+        </div>
+        <div style="margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)">
+          <sc-for list="{{ stack }}" as="k" hint-placeholder-count="6">
+            <div style="background:#0B0B0D;padding:14px 16px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">{{ k.k }}<br><span style="color:#F4F2ED">{{ k.v }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SHEET 1B — ORTHOGRAPHIC ===== -->
+  <div style="width:1240px;background:#000;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 1B — ORTHOGRAPHIC VIEWS</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">TOP · LATERAL · MEDIAL · FRONT · REAR · NTS · MM</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">TOP — ASSEMBLED</div>
+        <svg viewBox="0 -24 340 584" style="width:100%;max-width:300px;display:block">
+          <path d="M170 30C214 30 244 54 246 96C248 138 240 190 236 240C232 292 234 344 238 396C242 442 218 476 170 476C122 476 98 442 102 396C106 344 108 292 104 240C100 190 92 138 94 96C96 54 126 30 170 30Z" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2.4"></path>
+          <path d="M170 46C208 46 234 68 236 102C238 140 230 190 226 240C222 292 224 342 228 392C231 430 208 462 170 462C132 462 109 430 112 392C116 342 118 292 114 240C110 190 102 140 104 102C106 68 132 46 170 46Z" fill="none" stroke="#8A6A1E" stroke-width="1" stroke-dasharray="5 5"></path>
+          <path d="M96 150H244C250 150 254 156 254 164V216C254 226 248 232 240 232H100C92 232 86 226 86 216V164C86 156 90 150 96 150Z" fill="url(#tlMono)" stroke="#E8B23A" stroke-width="2.2"></path>
+          
+          <rect x="98" y="168" width="26" height="46" fill="none" stroke="#E8B23A" stroke-width="1.2" stroke-dasharray="4 3"></rect>
+          <rect x="216" y="168" width="26" height="46" fill="none" stroke="#E8B23A" stroke-width="1.2" stroke-dasharray="4 3"></rect>
+          <g transform="translate(170,192) scale(0.36) translate(-60,-50)"><use href="#tlBullFill"></use></g>
+          <g transform="translate(170,404) scale(0.3) translate(-60,-50)"><use href="#tlBullFill"></use></g>
+          <path d="M62 30V476M56 30H68M56 476H68" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="44" y="258" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 44 258)">317.0</text>
+          <path d="M94 16H246M94 10V22M246 10V22" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="170" y="6" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">112.0</text>
+          <path d="M86 254H254M86 248V260M254 248V260" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="170" y="274" text-anchor="middle" fill="#E8B23A" style="font:500 9.5px 'JetBrains Mono',monospace">BAND 116.0 OVERHANGS 2.0 / SIDE</text>
+          <text x="262" y="196" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">TAB ZONES</text>
+          <text x="170" y="524" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">SECTION A–A AT 20.8 FROM HEEL END</text>
+          <path d="M78 440H262" stroke="#E8B23A" stroke-width="1.4" stroke-dasharray="12 4 3 4"></path>
+          <text x="82" y="432" fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace">A</text>
+          <text x="252" y="432" fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace">A</text>
+        </svg>
+      </div>
+
+      <div style="background:#0B0B0D;padding:28px 32px;display:flex;flex-direction:column;gap:26px">
+        <div>
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:16px">LATERAL — OUTSIDE FACE</div>
+          <svg viewBox="0 0 620 200" style="width:100%;display:block">
+            <path d="M64 108C64 82 78 62 112 56C154 48 214 54 300 66C392 79 470 86 556 84C580 83 594 92 594 106V132C594 148 582 158 564 158H92C74 158 64 148 64 132Z" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2.2"></path>
+            <path d="M64 120H594" stroke="#8A6A1E" stroke-width="1.2" stroke-dasharray="6 4"></path>
+            <path d="M64 132H594" stroke="#E8B23A" stroke-width="1.2" opacity=".7"></path>
+            <path d="M150 56C150 44 160 36 176 36H420C438 36 448 46 448 58V66C448 74 440 80 430 80H168C158 80 150 74 150 66Z" fill="url(#tlMono)" stroke="#E8B23A" stroke-width="2"></path>
+            
+            <text x="112" y="150" fill="#E8B23A" style="font:400 15px 'Saira Stencil One',sans-serif;letter-spacing:.12em">₿ULLISH</text><text x="204" y="150" fill="#8B8780" style="font:500 8.5px 'JetBrains Mono',monospace;letter-spacing:.1em">+ STAMP · JOINTS 1.23 ≥ 1.2 FLOOR</text>
+            <path d="M42 84V158M36 84H48M36 158H48" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="26" y="130" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 26 130)">34.0</text>
+            <path d="M612 56V158M606 56H618M606 158H618" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="600" y="122" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 600 122)">38.0</text>
+            <text x="470" y="52" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">BAND 8.0 BARE</text>
+            <text x="200" y="114" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">SPLIT LINE — 90A OVER 95A</text>
+            <text x="64" y="184" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">TOE SPRING 12.0 · HEEL AT RIGHT</text>
+          </svg>
+        </div>
+        <div>
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:16px">MEDIAL — INSIDE FACE</div>
+          <svg viewBox="0 0 620 180" style="width:100%;display:block">
+            <path d="M26 100C26 86 40 76 64 76C150 78 228 71 320 58C406 46 466 40 508 48C542 54 556 74 556 100V126C556 142 546 152 528 152H56C38 152 26 142 26 126Z" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2.2"></path>
+            <path d="M26 112H556" stroke="#8A6A1E" stroke-width="1.2" stroke-dasharray="6 4"></path>
+            <path d="M26 126H556" stroke="#E8B23A" stroke-width="1.2" opacity=".7"></path>
+            <path d="M172 50C172 38 182 30 198 30H442C460 30 470 40 470 52V60C470 68 462 74 452 74H190C180 74 172 68 172 60Z" fill="url(#tlMono)" stroke="#E8B23A" stroke-width="2"></path>
+            
+            <g transform="translate(300,52) scale(0.24) translate(-60,-50)"><use href="#tlBullFill"></use></g>
+            <text x="26" y="170" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">ARCH SIDE — RAIL TEXT OMITTED, HEEL AT LEFT</text>
+            <text x="486" y="46" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">MIRROR OF LATERAL</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:16px">FRONT — TOE END</div>
+        <svg viewBox="0 0 560 280" style="width:100%;display:block">
+          <path d="M126 168C126 150 140 138 162 138H398C420 138 434 150 434 168V190C434 208 420 220 398 220H162C140 220 126 208 126 190Z" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2.2"></path>
+          <path d="M126 190H434" stroke="#E8B23A" stroke-width="1.2" opacity=".7"></path>
+          <path d="M126 168H434" stroke="#8A6A1E" stroke-width="1.2" stroke-dasharray="6 4"></path>
+          <path d="M112 96C112 78 126 66 148 66H412C434 66 448 78 448 96V116C448 130 436 138 420 138H140C124 138 112 130 112 116Z" fill="url(#tlMono)" stroke="#E8B23A" stroke-width="2.2"></path>
+          
+          <g transform="translate(280,104) scale(0.34) translate(-60,-50)"><use href="#tlBullFill"></use></g>
+          <path d="M126 240H434M126 234V246M434 234V246" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="280" y="258" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">112.0 BASE</text>
+          <path d="M112 42H448M112 36V48M448 36V48" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="280" y="30" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">116.0 BAND</text>
+          <path d="M92 138V220M86 138H98M86 220H98" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="76" y="188" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 76 188)">34.0</text>
+          <text x="466" y="112" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">INSTEP</text>
+          <text x="466" y="130" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">OPENING</text>
+          <text x="466" y="148" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">44.0 RISE</text>
+          <text x="126" y="120" fill="#C9A64E" style="font:500 9px 'JetBrains Mono',monospace">MESH WRAPS UNDER</text>
+        </svg>
+      </div>
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:16px">REAR — HEEL END</div>
+        <svg viewBox="0 0 640 280" style="width:100%;display:block">
+          <path d="M148 132C148 112 164 98 188 98H372C396 98 412 112 412 132V186C412 206 396 220 372 220H188C164 220 148 206 148 186Z" fill="url(#tlLat)" stroke="#E8B23A" stroke-width="2.4"></path>
+          <path d="M148 148H412" stroke="#8A6A1E" stroke-width="1.2" stroke-dasharray="6 4"></path>
+          <path d="M148 190H412" stroke="#E8B23A" stroke-width="1.2" opacity=".7"></path>
+          <path d="M148 132H412" fill="none" stroke="#C9A64E" stroke-width="1.2"></path>
+          <path d="M148 132C148 112 164 98 188 98H372C396 98 412 112 412 132Z" fill="url(#tlWeave)" stroke="#C9A64E" stroke-width="1.1"></path>
+          <g transform="translate(280,168) scale(0.3) translate(-60,-50)"><use href="#tlBullFill"></use></g>
+          <path d="M148 240H412M148 234V246M412 234V246" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="280" y="258" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">75.9 HEEL</text>
+          <path d="M128 98V220M122 98H134M122 220H134" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="112" y="164" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 112 164)">38.0</text>
+          <text x="430" y="118" fill="#C9A64E" style="font:500 9px 'JetBrains Mono',monospace">BASE-2 + MESH · 90A</text>
+          <text x="430" y="170" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">BASE-1 BARE 26.0 · 95A</text>
+          <text x="430" y="200" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">TREAD SKIN 4.0</text>
+          <text x="148" y="82" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">NO BAND AT HEEL — OPEN BACK</text>
+          <text x="148" y="64" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">HEEL DEBOSS: BULLPRINT LAB / SZ 13</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SHEET 2 — PARTS + MESH ===== -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 2 OF 3 — PARTS LIST &amp; SPACER MESH</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">3 PRINTED PARTS · 2 SHORES · 3MM SPACER MESH</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)">
+      <sc-for list="{{ parts }}" as="p" hint-placeholder-count="3">
+        <div style="background:#0B0B0D;padding:26px 28px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8A6A1E">{{ p.no }}</span>
+            <span style="padding:5px 9px;font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:{{ p.tagFg }};border:1px solid {{ p.tagLine }}">{{ p.tag }}</span>
+          </div>
+          <div style="font:800 19px/1.1 Archivo,sans-serif;letter-spacing:-.015em;color:#F4F2ED">{{ p.name }}</div>
+          <p style="margin:0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">{{ p.copy }}</p>
+          <div style="margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:8px;font:500 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.08em">
+            <sc-for list="{{ p.rows }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:#8B8780">{{ r.k }}</span><span style="color:#F4F2ED;text-align:right">{{ r.v }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#C9A64E;margin-bottom:18px">3D SPACER MESH — 3 MM COMFORT LAYER</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)">
+          <sc-for list="{{ mesh }}" as="fr" hint-placeholder-count="8">
+            <div style="background:#0B0B0D;padding:11px 14px;display:flex;justify-content:space-between;gap:16px;font:500 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em">
+              <span style="color:#8B8780">{{ fr.k }}</span><span style="color:#F4F2ED;text-align:right">{{ fr.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin:16px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">The mesh adds 3.0 mm per faced surface and is excluded from the stack tolerance — the printed parts must hit their dimensions bare, before any mesh goes on. It is an open-cell knit, so it breathes and drains rather than holding water, and it compresses to roughly 1.8 mm under load. At 3 mm it is doing real comfort work, but it is still not structure: if the mesh is carrying load, the geometry is wrong.</p>
+      </div>
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">DUAL SHORE — FIRM CARRIES, SOFT CONTACTS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);margin-bottom:22px">
+          <div style="background:#0B0B0D;padding:16px 18px">
+            <div style="font:800 17px/1 Archivo,sans-serif;color:#E8B23A">95A</div>
+            <div style="margin-top:9px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">BASE-1 ONLY<br><span style="color:#A5A19A">STRUCTURE · TREAD · TAB SEAT</span></div>
+          </div>
+          <div style="background:#0B0B0D;padding:16px 18px">
+            <div style="font:800 17px/1 Archivo,sans-serif;color:#E8B23A">90A</div>
+            <div style="margin-top:9px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">BASE-2 + BAND<br><span style="color:#A5A19A">EVERY SURFACE THE FOOT TOUCHES</span></div>
+          </div>
+        </div>
+        <p style="margin:0 0 22px;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Every part the foot touches is the softer shore; the part that carries load and hits the ground is the firmer one. The 5-point gap is small enough that both print on the same profile — but it needs a purge between spools, and the tab seat must stay 95A or the softer band will creep under clamp load.</p>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">WHY CAPTURED BEATS BONDED</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ why }}" as="w" hint-placeholder-count="4">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="margin-top:5px;width:5px;height:5px;background:#E8B23A;display:block;flex:none"></span>
+              <div>
+                <div style="font:700 12px/1.3 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">{{ w.t }}</div>
+                <div style="margin-top:5px;font:400 13px/1.6 Archivo,sans-serif;color:#8B8780">{{ w.c }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SHEET 3 — ASSEMBLY + MODEL ===== -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 3 OF 3 — ASSEMBLY &amp; PARAMETRIC MODEL</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">FOR CLAUDE CODE · SIZE 13 INSTANCE</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="6">
+        <div style="background:#0B0B0D;padding:24px 26px;display:flex;flex-direction:column;gap:11px">
+          <div style="display:flex;align-items:center;gap:11px">
+            <span style="flex:none;width:23px;height:23px;border:1px solid #E8B23A;border-radius:50%;display:grid;place-items:center;font:700 10px/1 'JetBrains Mono',monospace;color:#E8B23A">{{ st.n }}</span>
+            <span style="font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#F4F2ED">{{ st.t }}</span>
+          </div>
+          <p style="margin:0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">{{ st.c }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:28px 40px;display:grid;grid-template-columns:1fr 1fr;gap:28px">
+      <div style="min-width:0">
+        <p style="margin:0 0 16px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Three solids from one chain. The tab pocket is the only mating feature, so it is defined once and consumed by both bases — that is what keeps the sandwich closing.</p>
+        <pre style="margin:0;padding:22px;background:#000;border:1px solid rgba(232,178,58,.28);overflow-x:auto;font:500 12px/1.75 'JetBrains Mono',monospace;color:#F4F2ED">{{ paramCode }}</pre>
+      </div>
+      <div style="min-width:0">
+        <p style="margin:0 0 16px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Build and export order. Every assert here is a failure we would otherwise only find after a 20-hour print.</p>
+        <pre style="margin:0;padding:22px;background:#000;border:1px solid rgba(255,255,255,.14);overflow-x:auto;font:500 12px/1.75 'JetBrains Mono',monospace;color:#A5A19A">{{ buildCode }}</pre>
+      </div>
+    </div>
+    <div style="padding:0 40px 30px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div style="padding:22px 26px;border:1px solid rgba(247,147,26,.3);background:#0B0B0D">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">THE RISK ON THIS CONSTRUCTION</div>
+        <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Three parts means three chances for tolerance to stack. If BASE-2 prints 0.3 proud and the tab pocket prints 0.3 tight, the band binds and the assembly stops closing flat. Print one full set and measure the pocket before committing a batch — that gate is step 5.</p>
+      </div>
+      <div style="padding:22px 26px;border:1px solid rgba(247,147,26,.3);background:#0B0B0D">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">DISCLAIMER — PRINT ON EVERY BOX</div>
+        <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">For recovery and casual use only. Not a medical device. Not intended to diagnose, treat, cure or prevent any disease. This wording is not optional and does not get shortened for layout.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      titleBlock: [
+        { k: "DRAWING", v: "BPL-SL-2L-013-A" },
+        { k: "PART", v: "BULL SLIDES · 3 PART" },
+        { k: "MATERIAL", v: "TPU 95A / 90A + MESH" },
+        { k: "SIZE", v: "US M13 · EU 47" },
+        { k: "REVISION", v: "A · 2026.08.14" },
+        { k: "STATUS", v: "FOR SAMPLE" }
+      ],
+
+      stack: [
+        { k: "BASE-1 · 95A", v: "26.0 MM" },
+        { k: "BASE-2 · 90A", v: "12.0 MM" },
+        { k: "TOTAL HEEL", v: "38.0 MM" },
+        { k: "TOTAL FOREFOOT", v: "34.0 MM" },
+        { k: "TAB 3.4 / POCKET", v: "3.6 MM" },
+        { k: "SPACER MESH", v: "3.0 MM / FACE" }
+      ],
+
+      parts: [
+        {
+          no: "PART 1", name: "BASE-1 MIDSOLE", tag: "MESH SHEET", tagFg: "#C9A64E", tagLine: "rgba(201,166,78,.45)",
+          copy: "Zoned lattice, tread skin, embossed rail text. Firmest shore — carries the load and takes the ground.",
+          rows: [
+            { k: "THICKNESS", v: "26.0 MM" },
+            { k: "MATERIAL", v: "TPU 95A · BG-01" },
+            { k: "TOP FACE", v: "3MM MESH SHEET" },
+            { k: "PRINT", v: "13–15 H" }
+          ]
+        },
+        {
+          no: "PART 2", name: "BAND", tag: "BARE TPU", tagFg: "#A5A19A", tagLine: "rgba(255,255,255,.2)",
+          copy: "Monogram strap with two flat tabs, softer shore so it gives across the instep. Debossed, no mesh.",
+          rows: [
+            { k: "BAND", v: "8.0 MM" },
+            { k: "TAB", v: "72 × 34 × 3.4" },
+            { k: "MATERIAL", v: "TPU 95A / 90A + MESH" },
+            { k: "PRINT", v: "2.4 H" }
+          ]
+        },
+        {
+          no: "PART 3", name: "BASE-2 FOOTBED CAP", tag: "3MM MESH", tagFg: "#C9A64E", tagLine: "rgba(201,166,78,.45)",
+          copy: "Closes over the tabs and becomes the contact surface. Softer shore is what the foot actually feels.",
+          rows: [
+            { k: "THICKNESS", v: "12.0 MM" },
+            { k: "RECESS", v: "72.4 × 34.4 × 3.6 · BARE" },
+            { k: "MATERIAL", v: "TPU 95A / 90A + MESH" },
+            { k: "PRINT", v: "5–6 H" }
+          ]
+        }
+      ],
+
+      mesh: [
+        { k: "APPLIED TO", v: "BASE-1 TOP (SHEET) + BASE-2 (WRAP)" },
+        { k: "MATERIAL", v: "3D SPACER MESH · KNIT" },
+        { k: "THICKNESS", v: "3.0 MM ± 0.3 UNLOADED" },
+        { k: "BOND", v: "CONTACT CEMENT · COMFORT LAYER" },
+        { k: "BASE-1", v: "FLAT SHEET, NO RETURN" },
+        { k: "BASE-2", v: "FULL WRAP · TOP + SIDES + UNDER" },
+        { k: "TERMINATION", v: "UNDER-EDGE, HIDDEN AT SPLIT LINE" },
+        { k: "COMPRESSED", v: "≈1.8 MM UNDER 70 KG" },
+        { k: "EXCLUDED FROM", v: "STACK TOLERANCE" }
+      ],
+
+      why: [
+        { t: "NO GLUE IN THE LOAD PATH", c: "The tab is trapped between two lattice layers. Adhesive fails in tension; this joint never sees tension." },
+        { t: "FULL-AREA CLAMP", c: "72 × 34 mm of contact each side, not a 12 mm post. Pull-out spreads across the whole tab instead of concentrating at a root." },
+        { t: "SERVICEABLE", c: "A worn band is a 2.4-hour reprint. Open the sandwich, swap the part, close it — the expensive base survives." },
+        { t: "MESH STAYS OUT OF THE JOINT", c: "Mesh is cut clear of both tab landings and both recesses. The tab clamps TPU against TPU — a knit in the load path would creep and the band would loosen." }
+      ],
+
+      steps: [
+        { n: "1", t: "PRINT ALL THREE", c: "BASE-1 in 95A, band and BASE-2 in 90A. Measure every part bare, before any mesh or assembly." },
+        { n: "2", t: "SHEET BASE-1", c: "Lay 3 mm spacer mesh flat over the BASE-1 top face. Cut clear of both tab landings — no mesh under a tab." },
+        { n: "3", t: "WRAP BASE-2", c: "Wrap BASE-2 fully — top, sides, under-edge. Recesses stay bare so the tab seats on printed TPU." },
+        { n: "4", t: "SEAT THE TABS", c: "Lay the band tabs flat on the BASE-1 landings. No adhesive on the load faces." },
+        { n: "5", t: "CLOSE AND GATE", c: "BASE-2 down over the tabs. Check it sits flat with no rock — this is the tolerance gate." },
+        { n: "6", t: "PULL TEST", c: "One per batch: 250 N on the band for 60 seconds. Any tab movement is an automatic bull off." }
+      ],
+
+      paramCode: [
+        "# bull_slides_2l.py — three solids, one chain",
+        "",
+        "foot_length = 300.0",
+        "clearance   =   5.0",
+        "rim         =   6.0",
+        "fit_gap     =   2.0",
+        "heel_gap    =   1.0",
+        "sidewall    =   2.0",
+        "",
+        "footbed_len = foot_length + clearance      # 305.0",
+        "length      = footbed_len + 2 * rim        # 317.0",
+        "width_ball  = 112.0",
+        "",
+        "# --- the split -----------------------------",
+        "base1_thk   =  26.0    # midsole, bare, TPU 95A",
+        "base2_thk   =  12.0    # footbed cap, wrapped, TPU 90A",
+        "stack_heel  = base1_thk + base2_thk        # 38.0",
+        "stack_fore  =  34.0    # base1 tapers, base2 constant",
+        "",
+        "# --- the only mating feature ---------------",
+        "tab   = (72.0, 34.0, 3.4)   # w, d, t",
+        "clear_depth = 0.2          # total across the pocket depth",
+        "clear_plane = 0.2          # per side, in plane",
+        "pocket = (tab[0] + 2 * clear_plane,",
+        "          tab[1] + 2 * clear_plane,",
+        "          tab[2] + clear_depth)",
+        "tab_x = [0.34 * length, 0.62 * length]",
+        "",
+        "band_thk    =   8.0    # TPU 90A",
+        "mesh_thk    =   3.0    # 3D spacer knit, excluded from stack",
+        "mesh_comp   =   1.8    # compressed under 70 kg",
+        "mesh_return =   8.0    # wrap return depth"
+      ].join("\n"),
+
+      buildCode: [
+        "# build order — pocket defined once, consumed twice",
+        "",
+        "1. p = tab_pocket(pocket, at=tab_x)",
+        "",
+        "# PART 1",
+        "2. base1 = loft(outline, taper(base1_thk, stack_fore))",
+        "3. base1 = lattice_fill(base1, zones)",
+        "4. base1 = base1 - p.lower_half",
+        "5. base1 += rail_lockup(btc_B, 'ULLISH', bull_stamp,",
+        "                        font='Saira Stencil One', caps=19.0,",
+        "                        depth=0.8, side='lateral', gap=6.0)",
+        "   # btc_B = Saira B + bar pairs 2.0 × 5.0 through the bowls",
+        "   # bull_stamp = line-cut bull, square frame at cap height,",
+        "   #              horns overhang the frame ±3.5 mm",
+        "assert min_stroke(rail_text) >= 1.2   # 1.23 at 19 mm caps",
+        "",
+        "# PART 2",
+        "6. band = strap(width_ball, band_thk).tabs(tab, at=tab_x)",
+        "7. band += monogram(depth=0.6) + bull_badge(0.8)",
+        "",
+        "# PART 3",
+        "8. base2 = cap(outline, base2_thk).contour(footbed)",
+        "9. base2 = lattice_fill(base2, zones.top)",
+        "10. base2 = base2 - p.upper_half",
+        "",
+        "export('BullSlide_SZ13_BASE1.3mf')",
+        "export('BullSlide_SZ13_BAND.3mf')",
+        "export('BullSlide_SZ13_BASE2.3mf')",
+        "",
+        "# checks before export",
+        "assert pocket[0] >= tab[0] and pocket[1] >= tab[1]   # in-plane fit",
+        "assert pocket[2] - tab[2] == clear_depth             # depth clearance",
+        "assert base1_thk + base2_thk == stack_heel",
+        "assert min_wall(base2) >= 1.4",
+        "assert not mesh_thk in stack_tolerance",
+        "assert overhang_max(band) <= 45   # no supports",
+        "assert shore(base1) > shore(base2)   # firm carries, soft contacts"
+      ].join("\n")
+    };
+  }
+}
+</script>
+</body>
+</html>

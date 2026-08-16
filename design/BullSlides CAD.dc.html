@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#08080A;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+</style>
+</helmet>
+
+<div style="padding:56px 60px 90px;display:flex;flex-direction:column;gap:30px">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="cdBull" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".18" stop-color="#F5D07A"></stop><stop offset=".44" stop-color="#E8B23A"></stop><stop offset=".72" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop></linearGradient>
+    <linearGradient id="cdHorn" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop><stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop></linearGradient>
+    <g id="cdBullFill">
+      <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#cdHorn)"></path>
+      <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#cdHorn)"></path>
+      <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#cdBull)"></path>
+      <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="#8A6A1E" opacity=".55"></path>
+      <ellipse cx="55" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse><ellipse cx="65" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse>
+    </g>
+    <pattern id="cdHeel" width="15.6" height="27" patternUnits="userSpaceOnUse"><g fill="none" stroke="#E8B23A" stroke-width="1.35" opacity=".9"><path d="M7.8,4.5 L15.6,9 L15.6,18 L7.8,22.5 L0,18 L0,9 Z"></path><path d="M0,-9 L7.8,-4.5 L7.8,4.5 L0,9 L-7.8,4.5 L-7.8,-4.5 Z"></path><path d="M0,18 L7.8,22.5 L7.8,31.5 L0,36 L-7.8,31.5 L-7.8,22.5 Z"></path><path d="M15.6,-9 L23.4,-4.5 L23.4,4.5 L15.6,9 L7.8,4.5 L7.8,-4.5 Z"></path><path d="M15.6,18 L23.4,22.5 L23.4,31.5 L15.6,36 L7.8,31.5 L7.8,22.5 Z"></path></g></pattern>
+    <pattern id="cdMid" width="19.8" height="34.3" patternUnits="userSpaceOnUse"><g fill="none" stroke="#E8B23A" stroke-width="1.1" opacity=".8"><path d="M9.9,5.7 L19.8,11.4 L19.8,22.9 L9.9,28.6 L0,22.9 L0,11.4 Z"></path><path d="M0,-11.4 L9.9,-5.7 L9.9,5.7 L0,11.4 L-9.9,5.7 L-9.9,-5.7 Z"></path><path d="M0,22.9 L9.9,28.6 L9.9,40 L0,45.7 L-9.9,40 L-9.9,28.6 Z"></path><path d="M19.8,-11.4 L29.7,-5.7 L29.7,5.7 L19.8,11.4 L9.9,5.7 L9.9,-5.7 Z"></path><path d="M19.8,22.9 L29.7,28.6 L29.7,40 L19.8,45.7 L9.9,40 L9.9,28.6 Z"></path></g></pattern>
+    <pattern id="cdFore" width="22.6" height="39.2" patternUnits="userSpaceOnUse"><g fill="none" stroke="#E8B23A" stroke-width="0.95" opacity=".72"><path d="M11.3,6.5 L22.6,13.1 L22.6,26.1 L11.3,32.7 L0,26.1 L0,13.1 Z"></path><path d="M0,-13.1 L11.3,-6.5 L11.3,6.5 L0,13.1 L-11.3,6.5 L-11.3,-6.5 Z"></path><path d="M0,26.1 L11.3,32.7 L11.3,45.7 L0,52.3 L-11.3,45.7 L-11.3,32.7 Z"></path><path d="M22.6,-13.1 L33.9,-6.5 L33.9,6.5 L22.6,13.1 L11.3,6.5 L11.3,-6.5 Z"></path><path d="M22.6,26.1 L33.9,32.7 L33.9,45.7 L22.6,52.3 L11.3,45.7 L11.3,32.7 Z"></path></g></pattern>
+    <clipPath id="cdFoot"><path d="M140 42C182 42 206 66 208 108C210 150 202 200 198 250C194 300 196 350 200 392C204 434 182 468 140 468C98 468 76 434 80 392C84 350 86 300 82 250C78 200 70 150 72 108C74 66 98 42 140 42Z"></path></clipPath>
+    <clipPath id="cdZoneFore"><rect x="0" y="0" width="300" height="200"></rect></clipPath>
+    <clipPath id="cdZoneMid"><rect x="0" y="200" width="300" height="130"></rect></clipPath>
+    <clipPath id="cdZoneHeel"><rect x="0" y="330" width="300" height="160"></rect></clipPath>
+  </defs></svg>
+
+  <!-- ===== TITLE BLOCK ===== -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:30px 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.1)">
+      <div style="display:flex;align-items:center;gap:16px">
+        <svg width="54" height="45" viewBox="0 0 120 100"><use href="#cdBullFill"></use></svg>
+        <div>
+          <div style="font:800 22px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">BULLPRINT LAB</div>
+          <div style="margin-top:8px;font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#A5A19A">ENGINEERING DRAWING · CONTROLLED DOCUMENT</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font:900 30px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">BULL SLIDES</div>
+        <div style="margin-top:9px;font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">DWG BPL-SL-013-B · SIZE US M13 REGULAR</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(255,255,255,.1)">
+      <sc-for list="{{ titleBlock }}" as="t" hint-placeholder-count="6">
+        <div style="background:#0B0B0D;padding:18px 20px">
+          <div style="font:500 9px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">{{ t.k }}</div>
+          <div style="margin-top:9px;font:700 13px/1.35 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">{{ t.v }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ===== VIEWS ===== -->
+  <div style="width:1240px;background:#000;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 1 OF 5 — GEOMETRY</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">THIRD ANGLE PROJECTION · ALL DIMENSIONS MM · ONE-PIECE PART · NOT TO SCALE — DIMENSIONS GOVERN</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1.45fr;gap:1px;background:rgba(255,255,255,.1)">
+      <!-- PLAN -->
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">VIEW A — PLAN / FOOTBED · NTS</div>
+        <svg viewBox="0 0 300 560" style="width:100%;max-width:340px;display:block">
+          <g clip-path="url(#cdFoot)">
+            <g clip-path="url(#cdZoneFore)"><rect x="0" y="0" width="300" height="560" fill="url(#cdFore)"></rect></g>
+            <g clip-path="url(#cdZoneMid)"><rect x="0" y="0" width="300" height="560" fill="url(#cdMid)"></rect></g>
+            <g clip-path="url(#cdZoneHeel)"><rect x="0" y="0" width="300" height="560" fill="url(#cdHeel)"></rect></g>
+          </g>
+          <path d="M140 42C182 42 206 66 208 108C210 150 202 200 198 250C194 300 196 350 200 392C204 434 182 468 140 468C98 468 76 434 80 392C84 350 86 300 82 250C78 200 70 150 72 108C74 66 98 42 140 42Z" fill="none" stroke="#E8B23A" stroke-width="2.4"></path>
+          <path d="M140 56C176 56 196 76 198 110C200 150 192 200 188 250C184 300 186 350 190 390C193 424 174 454 140 454C106 454 87 424 90 390C94 350 96 300 92 250C88 200 80 150 82 110C84 76 104 56 140 56Z" fill="none" stroke="#8A6A1E" stroke-width="1" stroke-dasharray="5 5"></path>
+          <path d="M74 200H206M78 330H202" stroke="#8A6A1E" stroke-width="1" stroke-dasharray="4 6"></path>
+          <path d="M52 440H228" stroke="#E8B23A" stroke-width="1.6" stroke-dasharray="12 4 3 4"></path>
+          <path d="M56 440V452M50 446L56 456L62 446Z" fill="#E8B23A" stroke="#E8B23A" stroke-width="1.2" stroke-linejoin="round"></path>
+          <path d="M224 440V452M218 446L224 456L230 446Z" fill="#E8B23A" stroke="#E8B23A" stroke-width="1.2" stroke-linejoin="round"></path>
+          <text x="56" y="432" text-anchor="middle" fill="#E8B23A" style="font:700 12px 'JetBrains Mono',monospace">A</text>
+          <text x="224" y="432" text-anchor="middle" fill="#E8B23A" style="font:700 12px 'JetBrains Mono',monospace">A</text>
+          <g transform="translate(140,392) scale(0.34) translate(-60,-50)"><use href="#cdBullFill"></use></g>
+          <path d="M40 42V468M34 42H46M34 468H46" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="26" y="255" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 26 255)">317.0</text>
+          <path d="M72 26H208M72 20V32M208 20V32" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="140" y="16" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">112.0</text>
+          <path d="M96 490H184M96 484V496M184 484V496" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="140" y="508" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">75.9 HEEL</text>
+          <text x="216" y="130" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">ZONE C</text>
+          <text x="216" y="268" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">ZONE B</text>
+          <text x="216" y="400" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">ZONE A</text>
+          <text x="140" y="540" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">SECTION A–A · 20.8 MM FROM HEEL END</text>
+        </svg>
+      </div>
+
+      <!-- ELEVATION + SECTION -->
+      <div style="background:#0B0B0D;padding:28px 32px;display:flex;flex-direction:column;gap:26px">
+        <div>
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">VIEW B — SIDE ELEVATION (LATERAL) · NTS · STACK EXAGGERATED</div>
+          <svg viewBox="0 0 660 230" style="width:100%;display:block">
+            <path d="M60 150C60 120 74 96 108 88C150 78 214 84 300 96C392 109 470 116 560 114C588 113 600 122 600 136V150C600 160 592 166 578 166H82C68 166 60 160 60 150Z" fill="rgba(232,178,58,.08)" stroke="#E8B23A" stroke-width="2.2" stroke-linejoin="round"></path>
+            <path d="M64 150C64 122 78 100 110 93C152 83 214 89 300 101C392 114 470 121 560 119" fill="none" stroke="#8A6A1E" stroke-width="1" stroke-dasharray="5 5"></path>
+            <path d="M60 158H600" stroke="#8A6A1E" stroke-width="1" opacity=".6"></path>
+            <path d="M40 88V166M34 88H46M34 166H46" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="14" y="132" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 14 132)">38.0</text>
+            <path d="M620 114V166M614 114H626M614 166H626" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="646" y="146" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 646 146)">34.0</text>
+            <path d="M60 190H600M60 184V196M600 184V196" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="330" y="210" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">317.0 OVERALL</text>
+            <text x="470" y="80" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">TOE SPRING 12.0</text>
+            <text x="92" y="182" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">HEEL CUP DEPTH 6.0</text>
+            <text x="250" y="140" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">LATTICE CORE</text>
+            <text x="250" y="176" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">BASE SKIN 0.8</text>
+          </svg>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:24px">
+          <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">SECTION A–A — TRANSVERSE, THROUGH HEEL · NTS</div>
+          <svg viewBox="0 0 660 210" style="width:100%;display:block">
+            <path d="M120 60H540C556 60 566 72 566 90V130C566 148 554 160 536 160H124C106 160 94 148 94 130V90C94 72 104 60 120 60Z" fill="none" stroke="#E8B23A" stroke-width="2.2"></path>
+            <path d="M120 74H540C548 74 552 80 552 90V126C552 140 544 146 532 146H128C116 146 108 140 108 126V90C108 80 112 74 120 74Z" fill="url(#cdHeel)" stroke="#8A6A1E" stroke-width="1"></path>
+            <path d="M108 92C160 78 230 72 330 72C430 72 500 78 552 92" fill="none" stroke="#E8B23A" stroke-width="1.6"></path>
+            <path d="M94 178H566M94 172V184M566 172V184" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="330" y="198" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">75.9 HEEL WIDTH</text>
+            <path d="M74 60V160M68 60H80M68 160H80" stroke="#E8B23A" stroke-width="1"></path>
+            <text x="48" y="118" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 48 118)">38.0</text>
+            <text x="580" y="76" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">WALL 2.0</text>
+            <text x="580" y="132" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">CELL 12.0</text>
+            <text x="330" y="52" text-anchor="middle" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace">CONTOURED FOOTBED · SKIN 0.8 · BED 71.9 INTERNAL</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== TABLES ===== -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 2 OF 5 — BUILD SPECIFICATION</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">TPU 95A · QIDI MAX 4 · 0.4 MM NOZZLE</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">ZONED LATTICE</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)">
+          <sc-for list="{{ zoneHead }}" as="h" hint-placeholder-count="5">
+            <div style="background:#141418;padding:12px 10px;font:700 9px/1.3 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ h }}</div>
+          </sc-for>
+          <sc-for list="{{ zoneCells }}" as="c" hint-placeholder-count="20">
+            <div style="background:#0B0B0D;padding:13px 10px;font:500 11px/1.3 'JetBrains Mono',monospace;letter-spacing:.04em;color:{{ c.fg }}">{{ c.v }}</div>
+          </sc-for>
+        </div>
+        <p style="margin:18px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Zone transitions are blended over 14 mm, never stepped. A hard density change is where the part cracks first — that is the failure we already logged on PROTO 004.</p>
+      </div>
+
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">PRINT PARAMETERS</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)">
+          <sc-for list="{{ printParams }}" as="p" hint-placeholder-count="14">
+            <div style="background:#0B0B0D;padding:11px 14px;display:flex;justify-content:space-between;gap:16px;font:500 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em">
+              <span style="color:#8B8780">{{ p.k }}</span><span style="color:#F4F2ED;text-align:right">{{ p.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border-top:1px solid rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">TOLERANCES &amp; FIT</div>
+        <div style="display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)">
+          <sc-for list="{{ tolerances }}" as="t" hint-placeholder-count="6">
+            <div style="background:#0B0B0D;padding:11px 14px;display:flex;justify-content:space-between;gap:16px;font:500 11px/1.4 'JetBrains Mono',monospace;letter-spacing:.04em">
+              <span style="color:#8B8780">{{ t.k }}</span><span style="color:#F4F2ED;text-align:right">{{ t.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">INSPECTION GATES — BULL ON / BULL OFF</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ gates }}" as="g" hint-placeholder-count="6">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="margin-top:3px;flex:none;padding:4px 7px;font:700 8.5px/1 'JetBrains Mono',monospace;letter-spacing:.1em;color:#0B0B0D;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24)">{{ g.n }}</span>
+              <div>
+                <div style="font:700 12px/1.3 'JetBrains Mono',monospace;letter-spacing:.04em;color:#F4F2ED">{{ g.check }}</div>
+                <div style="margin-top:5px;font:400 12.5px/1.6 Archivo,sans-serif;color:#8B8780">{{ g.fail }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRINTABILITY + TOKEN ===== -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 3 OF 5 — PRINTABILITY &amp; ACCESSORY PART</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">FDM · TPU 95A · 0.4 MM NOZZLE</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <span style="width:22px;height:22px;border:1.5px solid #5FD38A;border-radius:50%;display:grid;place-items:center;font:700 11px/1 'JetBrains Mono',monospace;color:#5FD38A">✓</span>
+          <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#5FD38A">PRINT CONFIRMATION</span>
+        </div>
+        <div style="font:800 19px/1.35 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">Yes — this is a one-piece print.</div>
+        <p style="margin:12px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The entire slide is a single seamless part: footbed, lattice core, sidewalls, instep band and outsole print together in one job. No assembly, no bonding, no fasteners, no second component.</p>
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ printChecks }}" as="c" hint-placeholder-count="7">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="margin-top:2px;flex:none;font:700 11px/1.4 'JetBrains Mono',monospace;color:#5FD38A">✓</span>
+              <span style="font:400 13.5px/1.6 Archivo,sans-serif;color:#A5A19A">{{ c }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="background:#0B0B0D;padding:28px 32px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:20px">
+          <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">PART 2 — BULL TOKEN · NTS</span>
+          <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">DWG BPL-TK-001-A</span>
+        </div>
+        <svg viewBox="0 0 560 220" style="width:100%;display:block">
+          <g transform="translate(140,110) scale(1.5) translate(-60,-50)"><use href="#cdBullFill"></use></g>
+          <path d="M52 34H228M52 28V40M228 28V40" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="140" y="22" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">24.0</text>
+          <path d="M246 60V160M240 60H252M240 160H252" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="272" y="114" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace" transform="rotate(-90 272 114)">20.0</text>
+          <rect x="330" y="60" width="22" height="100" rx="9" fill="rgba(232,178,58,.12)" stroke="#E8B23A" stroke-width="1.8"></rect>
+          <path d="M330 178H352M330 172V184M352 172V184" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="341" y="198" text-anchor="middle" fill="#E8B23A" style="font:500 10px 'JetBrains Mono',monospace">3.2</text>
+          <text x="386" y="76" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">SIDE PROFILE</text>
+          <text x="386" y="98" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">WALL 1.2 · FILLET 0.6</text>
+          <text x="386" y="120" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">INFILL 100 % · 4/4 LAYERS</text>
+          <text x="386" y="142" fill="#8B8780" style="font:500 9.5px 'JetBrains Mono',monospace">18–28 MIN · ~6 G</text>
+        </svg>
+        <p style="margin:18px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Exact bull head from the slide badge, printed in the same TPU 95A on the same plate. Ships with every order, attached to the BullPrint coupon tag — the cheapest way to put the mark in someone's hand.</p>
+        <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em">
+          <span style="padding:8px 11px;border:1px solid rgba(232,178,58,.4);color:#E8B23A">BullPrint_Token_24.stl</span>
+          <span style="padding:8px 11px;border:1px solid rgba(255,255,255,.16);color:#8B8780">NESTS 40 PER PLATE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRINT INSTRUCTIONS ===== -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 4 OF 5 — PRINT INSTRUCTIONS, END TO END</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">ONE PART · ONE JOB · NO ASSEMBLY</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1)">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="9">
+        <div style="background:#0B0B0D;padding:26px 28px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="flex:none;width:24px;height:24px;border:1px solid #E8B23A;border-radius:50%;display:grid;place-items:center;font:700 10px/1 'JetBrains Mono',monospace;color:#E8B23A">{{ st.n }}</span>
+            <span style="font:700 11.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#F4F2ED">{{ st.title }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ st.points }}" as="pt" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px"><span style="margin-top:6px;width:4px;height:4px;background:#8A6A1E;display:block;flex:none"></span><span style="font:400 13px/1.6 Archivo,sans-serif;color:#A5A19A">{{ pt }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border-top:1px solid rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:26px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">VERY IMPORTANT — TPU MOVES</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">TPU is flexible. Expect roughly 1–2 % dimensional variation part to part. The slides are drawn to a true-to-size regular fit and will conform slightly after first wear — measure against the tolerance table, not against a caliper reading taken hot off the plate.</p>
+      </div>
+      <div style="background:#0B0B0D;padding:26px 32px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">DISCLAIMER — PRINT ON EVERY BOX</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">For recovery and casual use only. Not a medical device. Not intended to diagnose, treat, cure or prevent any disease. This wording is not optional and does not get shortened for layout.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PARAMETRIC MODEL ===== -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.12)">
+    <div style="padding:26px 40px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap">
+      <span style="font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.22em;color:#E8B23A">SHEET 5 OF 5 — PARAMETRIC MODEL FOR CLAUDE CODE</span>
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">CADQUERY / OPENSCAD · THIS SHEET IS SIZE 13 · OTHER SIZES REISSUE A DRAWING</span>
+    </div>
+    <div style="padding:28px 40px;display:grid;grid-template-columns:1fr 1fr;gap:28px">
+      <div style="min-width:0">
+        <p style="margin:0 0 18px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Every dimension on sheet 1 derives from <span style="color:#F4F2ED;font-weight:700">foot_length</span> — length, width and stack alike. This sheet is the size 13 instance; run the model with another foot length and release it under its own drawing number rather than editing this one. Size 13 is the drawn instance; the other sizes come from the same script with a different input, which is the whole reason the model is parametric rather than modelled by hand.</p>
+        <pre style="margin:0;padding:22px;background:#000;border:1px solid rgba(232,178,58,.28);overflow-x:auto;font:500 12px/1.75 'JetBrains Mono',monospace;letter-spacing:.02em;color:#F4F2ED">{{ paramCode }}</pre>
+      </div>
+      <div style="min-width:0">
+        <p style="margin:0 0 18px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Build order matters — the lattice is a boolean intersection with the solid body, not a surface pattern. Generate the body, generate the infinite lattice field, intersect, then subtract the ventilation. One part, no assembly.</p>
+        <pre style="margin:0;padding:22px;background:#000;border:1px solid rgba(255,255,255,.14);overflow-x:auto;font:500 12px/1.75 'JetBrains Mono',monospace;letter-spacing:.02em;color:#A5A19A">{{ buildCode }}</pre>
+      </div>
+    </div>
+    <div style="padding:0 40px 30px">
+      <div style="padding:22px 26px;border:1px solid rgba(247,147,26,.3);background:#0B0B0D">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">BEFORE ANY OF THIS SHIPS</div>
+        <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">These numbers are a starting geometry, not a validated design. The wall thickness, cell sizes and shore are our bench judgement for a size 13 — they need a printed sample, a wear test and an inspection pass before the file becomes a product. Print one, walk in it for a week, then argue with the drawing.<br><br><span style="color:#F4F2ED">REV B ADOPTS THE PROTO 009 GEOMETRY: 317 × 112, HEEL 38 / FOREFOOT 34, 12 MM TYPICAL CELL AT 1.6 MM WALL, 0.20 MM LAYER, 100 % LATTICE. THE 112 OUTER IS HELD BY REDUCING THE LATERAL SIDEWALL TO 2.0 MM — AT 4.0 MM THE FOOTBED LEFT NO CLEARANCE FOR A 104 MM BALL.</span> The slide was specified soft for recovery; 95A is the firmest qualified shore and will read as supportive rather than plush. If the sample walks too hard, the fix is shore before geometry — the lattice below is tuned for 95A and opening the cells is the second lever, not the first.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400}}">
+class Component extends DCLogic {
+  renderVals() {
+    // Fixed size-13 controlled drawing — the number BPL-SL-013 IS the size.
+    // Other sizes are issued by re-running the parametric model on sheet 5
+    // and releasing a new drawing number; they are never a toggle on this sheet.
+    const shore = "95A";
+    const size = 13;
+    const lastLength = 300;
+
+    return {
+      titleBlock: [
+        { k: "DRAWING", v: "BPL-SL-013-B" },
+        { k: "PART", v: "BULL SLIDES · PROTO 009" },
+        { k: "MATERIAL", v: "TPU " + shore + " (BG-01)" },
+        { k: "SIZE", v: "US M" + size + " · EU 47" },
+        { k: "REVISION", v: "B · 2026.08.14" },
+        { k: "STATUS", v: "BULL ON · PROTO 009" }
+      ],
+
+      zoneHead: ["ZONE", "REGION", "CELL", "WALL", "STACK"],
+      zoneCells: [
+        { v: "A", fg: "#E8B23A" }, { v: "HEEL", fg: "#F4F2ED" }, { v: "10.0 MM", fg: "#F4F2ED" }, { v: "1.8 MM", fg: "#F4F2ED" }, { v: "38.0 MM", fg: "#F4F2ED" },
+        { v: "B", fg: "#E8B23A" }, { v: "MIDFOOT", fg: "#F4F2ED" }, { v: "12.0 MM TYP", fg: "#F4F2ED" }, { v: "1.6 MM TYP", fg: "#F4F2ED" }, { v: "36.0 MM", fg: "#F4F2ED" },
+        { v: "C", fg: "#E8B23A" }, { v: "FOREFOOT", fg: "#F4F2ED" }, { v: "13.5 MM", fg: "#F4F2ED" }, { v: "1.4 MM", fg: "#F4F2ED" }, { v: "34.0 MM", fg: "#F4F2ED" },
+        { v: "—", fg: "#8B8780" }, { v: "EDGE FILLET", fg: "#8B8780" }, { v: "1.2 MM TYP", fg: "#8B8780" }, { v: "BLEND 14 MM", fg: "#8B8780" }, { v: "LINEAR", fg: "#8B8780" }
+      ],
+
+      printParams: [
+        { k: "MATERIAL", v: "TPU " + shore + " · DRY 6 H @ 55 °C" },
+        { k: "MACHINE", v: "QIDI MAX 4 · DIRECT DRIVE" },
+        { k: "NOZZLE", v: "0.4 MM HARDENED" },
+        { k: "LAYER HEIGHT", v: "0.20 MM" },
+        { k: "WALLS", v: "3" },
+        { k: "TOP / BOTTOM", v: "4 / 4 LAYERS (0.8 MM)" },
+        { k: "INFILL", v: "100 % LATTICE (HONEYCOMB)" },
+        { k: "EXTRUDER TEMP", v: "225–235 °C" },
+        { k: "BED TEMP", v: "50–60 °C · PEI TEXTURED" },
+        { k: "PRINT SPEED", v: "25–35 MM/S" },
+        { k: "RETRACTION", v: "1.0 MM · DIRECT DRIVE" },
+        { k: "COOLING", v: "100 %" },
+        { k: "ORIENTATION", v: "SOLE DOWN · FLAT · NO SUPPORTS" },
+        { k: "EST. TIME / WEIGHT", v: "18–22 H · ~340 G PER SLIDE" }
+      ],
+
+      tolerances: [
+        { k: "OVERALL LENGTH", v: "317.0 ± 1.5 MM" },
+        { k: "FOOTBED LENGTH", v: "305.0 INTERNAL · FITS 300 FOOT" },
+        { k: "FOOTBED WIDTH", v: "108.0 BALL / 71.9 HEEL · HEEL SNUG BY DESIGN" },
+        { k: "WIDTH AT BALL", v: "112.0 ± 1.0 MM" },
+        { k: "HEEL STACK", v: "38.0 ± 0.5 MM" },
+        { k: "FOREFOOT STACK", v: "34.0 ± 0.5 MM" },
+        { k: "SIDE VENT", v: "6.0 MM DIA · 18.0 GRID" },
+        { k: "DENSITY", v: "~1.20 G/CM³ · SHORE ± 3 A" }
+      ],
+
+      gates: [
+        { n: "G1", check: "DIMENSIONAL", fail: "Length or stack outside tolerance. Measure at heel centre and ball, not at the widest point." },
+        { n: "G2", check: "LATTICE INTEGRITY", fail: "Any collapsed, bridged or unfused cell in zone A. Hold it to a light — you can see through a good one." },
+        { n: "G3", check: "TRANSITION", fail: "A visible step where zones meet. Blended over 14 mm or it comes off the line." },
+        { n: "G4", check: "SLIP-ON FIT", fail: "Instep opening deforms permanently on entry, or the foot lifts out of the heel cup when walking." },
+        { n: "G5", check: "FLEX CYCLE", fail: "Sample from each batch: 12,000 cycles at 30°. Cracking at the arch is an automatic bull off." },
+        { n: "G6", check: "SURFACE", fail: "Stringing, blobs or a scarred first layer on the footbed. Cosmetic on the sole is acceptable, on the contact surface it is not." }
+      ],
+
+      steps: [
+        { n: "1", title: "PREPARE FILE", points: ["Use BullHeel_Slide_SZ13.stl as supplied.", "Open in the slicer and inspect.", "Confirm the model is manifold and error free before slicing."] },
+        { n: "2", title: "ORIENT MODEL", points: ["Sole down, flat on the plate.", "Best strength, best surface finish, least stringing.", "Do not tilt — a rotated part puts a seam on the footbed."] },
+        { n: "3", title: "SLICER SETTINGS", points: ["0.4 mm nozzle · 0.20 mm layer · 3 walls.", "4 top / 4 bottom · 100 % lattice infill.", "225–235 °C · bed 50–60 °C · 25–35 mm/s.", "Retract 1.0 mm direct drive · cooling 100 % · no supports.", "Adhesion: brim 5–8 mm."] },
+        { n: "4", title: "PRINT", points: ["Load dried TPU 95A.", "Watch the first 30 minutes — first layer decides the job.", "18–22 hours, ~340 g per slide."] },
+        { n: "5", title: "REMOVE & COOL", points: ["Let the part cool completely on the bed.", "TPU deforms if you pull it hot.", "Once cool, remove the brim."] },
+        { n: "6", title: "POST PROCESS", points: ["Trim strings with flush cutters.", "Inspect every lattice cell and wall.", "Flex the slide by hand to check even compliance."] },
+        { n: "7", title: "QUALITY CHECK", points: ["Verify 317 × 112 overall — reject outside ± 1.5 / ± 1.0.", "Heel 38 mm, forefoot 34 mm.", "No weak or bridged cells anywhere in the lattice."] },
+        { n: "8", title: "BULL TOKEN", points: ["Print the token with its own settings.", "Attach to the BullPrint coupon or drop it in the box."] },
+        { n: "9", title: "PACK & SHIP", points: ["Coupon, care card and token in every box.", "BEST IN BULL™ seal applied only after the checks pass.", "Ship with pride."] }
+      ],
+
+      printChecks: [
+        "All walls ≥ 1.2 mm — above the 0.4 mm nozzle minimum for TPU 95A.",
+        "Self-supporting geometry throughout, no overhang beyond 50°.",
+        "Lattice is continuous and manifold — one connected solid, no islands.",
+        "Sole-down orientation is optimal: contact surface on the plate, no seam on the footbed.",
+        "100 % lattice infill carries the structure; there is no sparse infill to collapse.",
+        "No supports required, so nothing to scar the underside.",
+        "Wall, rib and bridge thicknesses tested at print scale before release."
+      ],
+
+      paramCode: [
+        "# bull_slides.py — parametric, one derivation chain",
+        "",
+        "foot_length = " + lastLength.toFixed(1) + "    # mm, US M" + size + " FOOT (not shoe length)",
+        "clearance   =   5.0    # length, forefoot breathing room",
+        "fit_gap     =   2.0    # forefoot width, each side",
+        "heel_gap    =   1.0    # heel is deliberately snug, each side",
+        "rim         =   6.0    # toe and heel lip, each end",
+        "",
+        "footbed_len = foot_length + clearance          # 305.0 internal",
+        "length      = footbed_len + 2 * rim            # 317.0 outer",
+        "foot_ball   = foot_length * 0.3467          # 104.0 at size " + size,
+        "sidewall    =   2.0    # lateral wall each side, 5 × nozzle",
+        "",
+        "bed_ball    = foot_ball + 2 * fit_gap        # 108.0 internal",
+        "width_ball  = bed_ball + 2 * sidewall        # 112.0 outer, canonical",
+        "bed_heel    = foot_length * 0.2330 + 2 * heel_gap  #  71.9 internal",
+        "width_heel  = bed_heel + 2 * sidewall        #  75.9 outer",
+        "",
+        "stack_heel  = 38.0",
+        "stack_fore  = 34.0",
+        "toe_spring  = 12.0",
+        "heel_cup    =  6.0",
+        
+        "skin_top    =  0.8     # 4 layers @ 0.20",
+        "skin_base   =  0.8     # 4 layers @ 0.20",
+        "",
+        "zones = {                 # cell mm, wall mm, span % of length",
+        "  'A_heel':     (10.0, 1.8, (0.00, 0.28)),",
+        "  'B_midfoot':  (12.0, 1.6, (0.28, 0.60)),   # typ",
+        "  'C_forefoot': (13.5, 1.4, (0.60, 1.00)),",
+        "}",
+        "blend_run   = 14.0     # linear interpolation between zones",
+        "edge_fillet =  1.2     # every lattice edge",
+        "",
+        "vent_dia    =  6.0     # side ventilation and drainage",
+        "vent_grid   = 18.0"
+      ].join("\n"),
+
+      buildCode: [
+        "# one-piece slip-on — no strap, no assembly",
+        "",
+        "1. body   = loft(outline_spline, stack_profile)",
+        "2. body   = body.faces('>Z').contour(heel_cup, toe_spring)",
+        "",
+        "# inset is PER AXIS: thin lateral walls, deeper toe and heel lips",
+        "3. cavity = body.shell_inset(lateral=sidewall, ends=rim)",
+        "4. field  = honeycomb(cell=f(z_zone), wall=g(z_zone), axis=Z)",
+        "5. core   = field & cavity",
+        "6. slab   = (body - cavity) + core",
+        "",
+        "7. slab  -= side_vents(dia=vent_dia, grid=vent_grid)",
+        "8. slab   = slab.fillet(edge_fillet)",
+        "9. slab  += bull_badge(depth=0.8, at=instep_centre)",
+        "10. slab += heel_deboss('BULLPRINT LAB / PROTO 009 / SZ 13', 0.6)",
+        "",
+        "export('BullHeel_Slide_SZ13.step')   # parametric solid",
+        "export('BullHeel_Slide_SZ13.stl')    # watertight, print ready",
+        "export('BullHeel_Slide_SZ13.3mf')    # slicer ready",
+        "export('BullPrint_Token_24.stl')     # coupon token, ships with every order",
+        "",
+        "# checks before export",
+        "assert min_wall(slab) >= 1.4",
+        "# guards the formula above against a future edit, not the current value",
+        "assert bed_ball - foot_ball >= 2 * fit_gap        # forefoot fits",
+        "assert heel_gap < fit_gap                         # heel holds tighter, by intent",
+        "assert cavity.length == footbed_len               # 305.0, rim survived the inset",
+        "assert overhang_max(slab) <= 45   # no supports",
+        "assert is_watertight(slab)"
+      ].join("\n")
+    };
+  }
+}
+</script>
+</body>
+</html>

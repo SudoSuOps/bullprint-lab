@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#08080A;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="padding:56px 60px 90px;display:flex;flex-direction:column;gap:34px">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="stBull" x1="0" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".18" stop-color="#F5D07A"></stop><stop offset=".44" stop-color="#E8B23A"></stop><stop offset=".72" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop></linearGradient>
+    <linearGradient id="stHorn" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop><stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop></linearGradient>
+    <g id="stBullFill">
+      <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#stHorn)"></path>
+      <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#stHorn)"></path>
+      <path d="M74 34C82 36 86 42 84 47C79 45 75 41 73 38Z" fill="#A87F24"></path>
+      <path d="M46 34C38 36 34 42 36 47C41 45 45 41 47 38Z" fill="#A87F24"></path>
+      <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#stBull)"></path>
+      <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="#8A6A1E" opacity=".55"></path>
+      <ellipse cx="55" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse><ellipse cx="65" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse>
+      <path d="M66 44L75 42L73.5 49L66 47.6Z" fill="#3A2C0C"></path><path d="M54 44L45 42L46.5 49L54 47.6Z" fill="#3A2C0C"></path>
+      <path d="M53 31H67L64 37H56Z" fill="#FBE9B0" opacity=".28"></path>
+    </g>
+  </defs></svg>
+
+  <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+    <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;padding:6px 9px;background:#E8B23A;color:#0B0B0D">STORE PLAN v1</span>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">BULLPRINT STORE — footwear only, three drops</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#6E6B66">product line, materials standard, farm capacity and launch order</span>
+  </div>
+
+  <!-- ============ CAPACITY ============ -->
+  <div style="width:1240px;position:relative;background:#000;border:1px solid rgba(255,255,255,.1);overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(56% 70% at 76% 30%,rgba(232,178,58,.1),transparent 74%)"></div>
+    <div style="position:relative;padding:38px 48px 32px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 01 · THE FLOOR</div>
+      <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">{{ farmTotal }} PRINTERS. ONE STANDARD.</h2>
+      <p style="margin:16px 0 0;max-width:800px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The store is designed around the floor we actually have, not the one a catalogue would imply. The Qidi Max 4s run the line — every product below is allocated to them. The Bambus are held back for prototyping and short qualification runs, which is why the throughput figure counts Qidis only. Nothing enters the line unless it prints unattended overnight without a babysitter.</p>
+    </div>
+    <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:800 34px/1 Archivo,sans-serif;letter-spacing:-.02em;color:#E8B23A">{{ qidi }}</div><div style="margin-top:10px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">QIDI MAX 4<br>LARGE FORMAT · HIGH SPEED</div></div>
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:800 34px/1 Archivo,sans-serif;letter-spacing:-.02em;color:#E8B23A">{{ bambu }}</div><div style="margin-top:10px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">BAMBU P1S<br>PROTOTYPING · QUALIFICATION</div></div>
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:800 34px/1 Archivo,sans-serif;letter-spacing:-.02em;color:#F4F2ED">{{ hoursDay }}</div><div style="margin-top:10px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">QIDI HOURS / DAY<br>AT 80% UPTIME · LINE ONLY</div></div>
+      <div style="background:#0B0B0D;padding:26px 24px"><div style="font:800 34px/1 Archivo,sans-serif;letter-spacing:-.02em;color:#F4F2ED">{{ pairsWeek }}</div><div style="margin-top:10px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">INSOLE PAIRS / WEEK<br>IF THE QIDIS RAN ONLY INSOLES · SLIDES ≈ 1/8 THAT</div></div>
+    </div>
+    <div style="position:relative;padding:30px 48px;display:grid;grid-template-columns:1fr 1fr;gap:34px">
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">WHAT THE CAPACITY IS FOR</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Not volume. A floor this size means a hundred-unit drop clears in days instead of months, and a custom run doesn't block the shop. Editions stay small because we choose to, not because we can't print more — that distinction has to stay true or the scarcity becomes theatre.</p>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">THE CONSTRAINT NOBODY MENTIONS</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Printing is the cheap part. Inspection, finishing, serialising, packing and support scale with people, not printers. Every product below is scored on post-processing minutes, because that number — not print time — is what caps the store.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BULL-GRADE ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 02 · MATERIALS STANDARD</div>
+      <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">BULL-GRADE</h2>
+      <p style="margin:16px 0 0;max-width:820px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">A joke that turned into a spec. Bull-Grade is our qualified materials list, and it is short on purpose: TPU in two shores and PEBA. We print nothing else. If a product needs a material outside this list, it needs a qualification run before it can be sold — a bench decision, not a marketing one.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08)">
+      <sc-for list="{{ materials }}" as="m" hint-placeholder-count="3">
+        <div style="background:#0B0B0D;padding:28px 26px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+            <span style="font:800 19px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ m.name }}</span>
+            <span style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">{{ m.code }}</span>
+          </div>
+          <p style="margin:0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">{{ m.use }}</p>
+          <div style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);white-space:pre-line;font:500 9.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">{{ m.spec }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ THE LINE ============ -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 03 · THE LINE</div>
+        <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">FEET ONLY. THREE SHIP.</h2>
+        <p style="margin:14px 0 0;max-width:640px;font:400 14px/1.7 Archivo,sans-serif;color:#8B8780">Everything we make goes on a foot. The store opens with three — everything marked PIPELINE is designed, costed and parked until a drop earns it a week of its own.</p>
+      </div>
+      <p style="margin:0;max-width:400px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A">Every item passes the same test the insole did: would we use this ourselves, and does the print do something an injection-moulded version couldn't?</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="5">
+        <div style="background:#0B0B0D;padding:30px 32px;display:flex;flex-direction:column;gap:14px;grid-column:{{ p.span }}">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8A6A1E">{{ p.no }}</span>
+            <span style="padding:6px 10px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:{{ p.statusFg }};background:{{ p.statusBg }};border:1px solid {{ p.statusLine }}">{{ p.status }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+            <div style="font:900 26px/1.04 Archivo,sans-serif;letter-spacing:-.025em;color:#F4F2ED">{{ p.name }}</div>
+            <div style="text-align:right;flex:none">
+              <div style="font:800 22px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#E8B23A">{{ p.price }}</div>
+              <div style="margin-top:6px;font:500 9px/1.6 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ p.sats }}<br><span style="color:#A5A19A">{{ p.satsNote }}</span></div>
+            </div>
+          </div>
+          <p style="margin:0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">{{ p.copy }}</p>
+          <div style="margin-top:4px;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780;text-wrap:pretty"><span style="color:#E8B23A;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em">WHY PRINT IT · </span>{{ p.why }}</div>
+          <div style="margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">
+            <span>MATERIAL<br><span style="color:#A5A19A">{{ p.material }}</span></span>
+            <span>MACHINE<br><span style="color:#A5A19A">{{ p.machine }}</span></span>
+            <span>PRINT<br><span style="color:#A5A19A">{{ p.time }}</span></span>
+            <span>FINISHING<br><span style="color:#A5A19A">{{ p.finish }}</span></span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em">
+            <span style="color:{{ p.bibFg }}">{{ p.bib }}</span>
+            <span style="color:#8B8780">{{ p.edition }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ ACCESSORIES ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">BENCH OBJECTS · APPENDIX TO SHEET 03</div>
+        <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">NOT FOOTWEAR. STILL OURS.</h2>
+      </div>
+      <p style="margin:0;max-width:430px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Two small objects that come off the same plate as the footwear. They are accessories, not a second product line — and they are the only exception to the feet-only rule, because they ride along in boxes we are already shipping.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08)">
+      <sc-for list="{{ accessories }}" as="a" hint-placeholder-count="2">
+        <div style="background:#0B0B0D;padding:30px 32px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#8A6A1E">{{ a.no }}</span>
+            <span style="padding:6px 10px;font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A;background:rgba(232,178,58,.12);border:1px solid rgba(232,178,58,.4)">{{ a.status }}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+            <div style="font:900 26px/1.04 Archivo,sans-serif;letter-spacing:-.025em;color:#F4F2ED">{{ a.name }}</div>
+            <div style="text-align:right;flex:none">
+              <div style="font:800 22px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#E8B23A">{{ a.price }}</div>
+              <div style="margin-top:6px;font:500 9px/1.6 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ a.sats }}<br><span style="color:#A5A19A">{{ a.satsNote }}</span></div>
+            </div>
+          </div>
+          <p style="margin:0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">{{ a.copy }}</p>
+          <div style="margin-top:4px;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780;text-wrap:pretty"><span style="color:#E8B23A;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em">WHY PRINT IT · </span>{{ a.why }}</div>
+          <div style="margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);display:grid;grid-template-columns:repeat(4,1fr);gap:12px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">
+            <span>MATERIAL<br><span style="color:#A5A19A">{{ a.material }}</span></span>
+            <span>SIZE<br><span style="color:#A5A19A">{{ a.size }}</span></span>
+            <span>PRINT<br><span style="color:#A5A19A">{{ a.time }}</span></span>
+            <span>NESTS<br><span style="color:#A5A19A">{{ a.nests }}</span></span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ HEEL CUP CAD PLATE ============ -->
+  <div style="width:1240px;position:relative;background:#000;border:1px solid rgba(255,255,255,.1);overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(232,178,58,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(232,178,58,.06) 1px,transparent 1px);background-size:40px 40px"></div>
+    <div style="position:relative;padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 04 · PIPELINE · TECHNICAL PLATE</div>
+        <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">BULL HEEL CUP</h2>
+      </div>
+      <div style="text-align:right;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66">DRAWN, NOT RENDERED<br><span style="color:#8B8780">GEOMETRY IS AUTHORED · SCALE 1:2 · MM</span></div>
+    </div>
+
+    <div style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="background:rgba(11,11,13,.86);padding:30px 34px">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">PLAN — TOP VIEW</div>
+        <svg viewBox="0 0 360 300" style="width:100%;max-width:470px;display:block">
+          <defs>
+            <clipPath id="hcClip"><path d="M150 24C196 24 226 58 230 104C234 150 224 196 206 228C192 252 172 264 150 264C128 264 108 252 94 228C76 196 66 150 70 104C74 58 104 24 150 24Z"></path></clipPath>
+            <pattern id="hcCell" width="20.8" height="36" patternUnits="userSpaceOnUse">
+              <g fill="none" stroke="#E8B23A" stroke-width="1.1" opacity=".85">
+                <path d="M10.4,6 L20.8,12 L20.8,24 L10.4,30 L0,24 L0,12 Z"></path>
+                <path d="M0,-12 L10.4,-6 L10.4,6 L0,12 L-10.4,6 L-10.4,-6 Z"></path>
+                <path d="M0,24 L10.4,30 L10.4,42 L0,48 L-10.4,42 L-10.4,30 Z"></path>
+                <path d="M20.8,-12 L31.2,-6 L31.2,6 L20.8,12 L10.4,6 L10.4,-6 Z"></path>
+                <path d="M20.8,24 L31.2,30 L31.2,42 L20.8,48 L10.4,42 L10.4,30 Z"></path>
+              </g>
+            </pattern>
+            <pattern id="hcCellDense" width="13" height="22.5" patternUnits="userSpaceOnUse">
+              <g fill="none" stroke="#E8B23A" stroke-width="1.1" opacity=".95">
+                <path d="M6.5,3.75 L13,7.5 L13,15 L6.5,18.75 L0,15 L0,7.5 Z"></path>
+                <path d="M0,-7.5 L6.5,-3.75 L6.5,3.75 L0,7.5 L-6.5,3.75 L-6.5,-3.75 Z"></path>
+                <path d="M0,15 L6.5,18.75 L6.5,26.25 L0,30 L-6.5,26.25 L-6.5,18.75 Z"></path>
+                <path d="M13,-7.5 L19.5,-3.75 L19.5,3.75 L13,7.5 L6.5,3.75 L6.5,-3.75 Z"></path>
+                <path d="M13,15 L19.5,18.75 L19.5,26.25 L13,30 L6.5,26.25 L6.5,18.75 Z"></path>
+              </g>
+            </pattern>
+          </defs>
+          <g clip-path="url(#hcClip)">
+            <rect x="0" y="0" width="300" height="150" fill="url(#hcCell)"></rect>
+            <rect x="0" y="150" width="300" height="150" fill="url(#hcCellDense)"></rect>
+          </g>
+          <path d="M150 24C196 24 226 58 230 104C234 150 224 196 206 228C192 252 172 264 150 264C128 264 108 252 94 228C76 196 66 150 70 104C74 58 104 24 150 24Z" fill="none" stroke="#E8B23A" stroke-width="2.4"></path>
+          <path d="M150 40C188 40 214 70 217 108C220 148 211 190 196 218C184 240 168 250 150 250C132 250 116 240 104 218C89 190 80 148 83 108C86 70 112 40 150 40Z" fill="none" stroke="#8A6A1E" stroke-width="1" stroke-dasharray="5 5"></path>
+          <path d="M70 150H230" stroke="#8A6A1E" stroke-width="1" stroke-dasharray="4 6"></path>
+          <text x="238" y="120" fill="#6E6B66" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.1em">ARCH ZONE</text>
+          <text x="238" y="200" fill="#6E6B66" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.1em">HEEL PAD</text>
+          <text x="238" y="212" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.1em">5.5 MM CELL</text>
+          <text x="238" y="132" fill="#E8B23A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.1em">8.0 MM CELL</text>
+          <path d="M46 24V264M40 24H52M40 264H52" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="14" y="148" fill="#E8B23A" style="font:500 9.5px 'JetBrains Mono',monospace;letter-spacing:.08em" transform="rotate(-90 20 148)">128.0 MM</text>
+          <path d="M70 282H230M70 276V288M230 276V288" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="150" y="298" text-anchor="middle" fill="#E8B23A" style="font:500 9.5px 'JetBrains Mono',monospace;letter-spacing:.08em">88.0 MM</text>
+        </svg>
+      </div>
+
+      <div style="background:rgba(11,11,13,.86);padding:30px 34px;display:flex;flex-direction:column">
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A;margin-bottom:18px">SECTION A–A — SAGITTAL</div>
+        <svg viewBox="0 0 500 190" style="width:100%;display:block">
+          <path d="M20 130C20 90 34 52 74 40C110 29 150 34 190 48C260 73 330 92 400 96V126C330 124 258 108 188 84C150 71 116 66 88 74C62 82 48 104 46 130Z" fill="rgba(232,178,58,.09)" stroke="#E8B23A" stroke-width="2.2" stroke-linejoin="round"></path>
+          <path d="M46 130C48 104 62 82 88 74C116 66 150 71 188 84C258 108 330 124 400 126" fill="none" stroke="#8A6A1E" stroke-width="1" stroke-dasharray="5 5"></path>
+          <path d="M20 138H400M20 132V144M400 132V144" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="210" y="158" text-anchor="middle" fill="#E8B23A" style="font:500 9.5px 'JetBrains Mono',monospace;letter-spacing:.08em">128.0 MM — HEEL TO CUT LINE</text>
+          <path d="M8 40V130M2 40H14M2 130H14" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="30" y="30" fill="#E8B23A" style="font:500 9.5px 'JetBrains Mono',monospace;letter-spacing:.08em">WALL 22.0 MM</text>
+          <path d="M400 96V126" stroke="#E8B23A" stroke-width="1"></path>
+          <text x="330" y="172" fill="#6E6B66" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.1em">FEATHERED CUT · 1.8 MM</text>
+          <text x="60" y="118" fill="#6E6B66" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.1em">CUP FLOOR 4.2 MM</text>
+        </svg>
+        <div style="margin-top:auto;padding-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+          <div style="background:#0B0B0D;padding:14px 16px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">WALL HEIGHT<br><span style="color:#F4F2ED">22.0 MM</span></div>
+          <div style="background:#0B0B0D;padding:14px 16px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">CUT LINE<br><span style="color:#F4F2ED">128.0 MM</span></div>
+          <div style="background:#0B0B0D;padding:14px 16px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">HEEL CELL<br><span style="color:#F4F2ED">5.5 MM</span></div>
+          <div style="background:#0B0B0D;padding:14px 16px;font:500 10px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">ARCH CELL<br><span style="color:#F4F2ED">8.0 MM</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;padding:30px 48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:34px">
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">WHY A CUP AND NOT A SECOND INSOLE</div>
+        <p style="margin:14px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">It slides under a footbed the wearer already likes instead of replacing it, so it fits boots and dress shoes where a full-length insole crowds the toe box. Same profile data, half the print time.</p>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">WHAT CHANGES FROM THE INSOLE</div>
+        <p style="margin:14px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Wall goes up to 22 mm to actually hold the heel. Cells close to 5.5 mm under the pad where the load lands, open to 8.0 mm through the arch. The forefoot simply doesn't exist — the cut feathers to 1.8 mm so nothing catches underfoot.</p>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">STILL TO PROVE</div>
+        <p style="margin:14px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Whether the feathered cut survives repeated insertion into a tight shoe. That is the bull-off risk on this one, and it is why the cup sits in the pipeline rather than in a drop slot.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COLORWAYS ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 05 · COLOURWAYS</div>
+      <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">FOUR FINISHES. GOLD LEADS.</h2>
+      <p style="margin:16px 0 0;max-width:820px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Gold is the signature and stays the hero — insoles ship in it. Three supporting finishes let the slides and swims read as everyday footwear rather than trophies, and every one of them is a filament we already qualify.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ colorways }}" as="c" hint-placeholder-count="4">
+        <div style="background:#0B0B0D;display:flex;flex-direction:column">
+          <div style="height:150px;background-color:#0B0B0D;background-image:{{ c.under }};background-size:14px 14px;border-bottom:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden">
+            <div style="position:absolute;inset:0;background:{{ c.swatch }}"></div>
+            <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,{{ c.lines }} 0 1px,transparent 1px 5px)"></div>
+          </div>
+          <div style="padding:24px 24px 26px;display:flex;flex-direction:column;gap:11px;flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+              <span style="font:800 17px/1 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ c.name }}</span>
+              <span style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#E8B23A">{{ c.code }}</span>
+            </div>
+            <p style="margin:0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">{{ c.role }}</p>
+            <div style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);white-space:pre-line;font:500 9.5px/1.8 'JetBrains Mono',monospace;letter-spacing:.1em;color:#6E6B66">{{ c.on }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:30px 48px;display:grid;grid-template-columns:1fr 1fr;gap:34px">
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">THE RULE</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">One finish per object — no two-tone prints, no colour-change gimmicks. The bull mark is always gold or debossed, whatever the body colour, so the identity survives the palette. Bitcoin orange is a filament we do not stock: ₿ appears as geometry, never as a colour.</p>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">AVOID</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Rainbow, silk, glitter and colour-shift filaments. They print beautifully and they make the object look like a hobby print — which is the exact impression the whole brand is built to avoid.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RENDER PLATES ============ -->
+  <div style="width:1240px;background:#0E0E11;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 06 · RENDER PLATES</div>
+      <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">SHOT SPEC + DROP ZONE</h2>
+      <p style="margin:16px 0 0;max-width:820px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">I can't generate photography or renders — these are drop zones. Generate or shoot each one to the spec below and drag it onto the plate; it sticks and travels with the file. The spec matters more than the tool: six images shot to one lighting recipe look like a brand, six good images shot differently look like a marketplace.</p>
+    </div>
+    <div style="padding:34px 48px;border-bottom:1px solid rgba(255,255,255,.08);display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08)">
+      <div style="background:#0B0B0D;padding:24px"><div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">SET</div><p style="margin:12px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Pure black seamless, no floor line, no props. Object floats or sits on its own soft shadow.</p></div>
+      <div style="background:#0B0B0D;padding:24px"><div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">LIGHT</div><p style="margin:12px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">One large soft key from upper left, one hard warm rim from behind right to catch the gold. No fill — the shadow side stays black.</p></div>
+      <div style="background:#0B0B0D;padding:24px"><div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">LENS</div><p style="margin:12px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">85–105 mm equivalent, three-quarter view slightly above. Layer lines must be visible at 100% — that texture is the proof it was printed.</p></div>
+    </div>
+    <div style="padding:34px 48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));gap:20px">
+      <sc-for list="{{ plates }}" as="pl" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="height:180px;border:1px solid rgba(255,255,255,.1);background:#000;position:relative">
+            <image-slot id="{{ pl.slot }}" shape="rect" fit="cover" placeholder="{{ pl.hint }}"></image-slot>
+          </div>
+          <div style="font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#6E6B66">{{ pl.name }}<br><span style="color:#8B8780">{{ pl.shot }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:0 48px 34px">
+      <div style="padding:24px 26px;border:1px solid rgba(232,178,58,.28);background:#0B0B0D">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">PROMPT BASE — PASTE THIS, THEN ADD THE OBJECT LINE</div>
+        <p style="margin:14px 0 0;font:500 13px/1.8 'JetBrains Mono',monospace;letter-spacing:.02em;color:#F4F2ED;text-wrap:pretty">Product render on pure black background, single object, 3D printed in flexible {{ '{' }}material{{ '}' }}, visible fine layer lines, matte surface with soft specular highlights, large soft key light upper left, warm hard rim light back right, no fill light, deep shadows, 100 mm lens, three-quarter view slightly above, studio product photography, no text, no props, no floor line, photorealistic, high detail.</p>
+        <p style="margin:16px 0 0;font:400 13px/1.7 Archivo,sans-serif;color:#8B8780;text-wrap:pretty">Swap <span style="color:#A5A19A">{{ '{' }}material{{ '}' }}</span> for the colourway — "polished gold TPU", "matte graphite TPU", "bone white TPU", "titanium grey PEBA" — and append the object description. Keep every other word identical across the set so it matches.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LAUNCH ORDER ============ -->
+  <div style="width:1240px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+    <div style="padding:38px 48px 30px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">SHEET 07 · SEQUENCING</div>
+      <h2 style="margin:14px 0 0;font:900 44px/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THREE DROPS, NOT A CATALOGUE.</h2>
+      <p style="margin:16px 0 0;max-width:820px;font:400 15px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">A full-catalogue launch reads as a dropshipper. Three drops read as a lab with a point of view. Each one gets its own week, its own story and its own verdict — and the pipeline only opens when the three are shipping cleanly and inspection is keeping up.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ waves }}" as="w" hint-placeholder-count="3">
+        <div style="background:#0B0B0D;padding:30px 28px;display:flex;flex-direction:column;gap:13px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">{{ w.wave }}</span>
+            <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">{{ w.when }}</span>
+          </div>
+          <div style="font:800 19px/1.15 Archivo,sans-serif;letter-spacing:-.015em;color:#F4F2ED">{{ w.title }}</div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ w.items }}" as="i" hint-placeholder-count="3">
+              <div style="display:flex;gap:11px"><span style="margin-top:6px;width:4px;height:4px;background:#8A6A1E;display:block;flex:none"></span><span style="font:400 13px/1.6 Archivo,sans-serif;color:#A5A19A">{{ i }}</span></div>
+            </sc-for>
+          </div>
+          <p style="margin:8px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#8B8780">{{ w.why }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:30px 48px;display:grid;grid-template-columns:1fr 1fr;gap:34px">
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">PRICING LOGIC</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Price on finishing time and design value, never on filament weight. A $2 spool cost tells a customer nothing and prices the work at zero. Every item carries its USD price and a sats figure at spot — display only, unless we ship quoted BTC pricing with an expiry.</p>
+      </div>
+      <div>
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F7931A">WHAT WOULD BREAK THIS</div>
+        <p style="margin:14px 0 0;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Selling anything that carries a safety burden we can't back with testing — orthotic claims, protective footwear, climbing or safety toe. A footbed that fails is an uncomfortable afternoon. Keep the line there — nothing structural, nothing protective, nothing a person would trust with their safety.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400},&quot;qidiCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;min&quot;:1,&quot;max&quot;:60,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Farm&quot;},&quot;bambuCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:0,&quot;max&quot;:40,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Farm&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const qidi = this.props.qidiCount ?? 20;
+    const bambu = this.props.bambuCount ?? 5;
+    const uptime = 0.8;
+    const hoursDay = Math.round((qidi + bambu) * 24 * uptime);
+    // an insert pair ≈ 5.2 print-hours, and 4 pairs nest on a Max 4 bed
+    const qidiHoursDay = Math.round(qidi * 24 * uptime);
+    const pairsWeek = Math.round(qidiHoursDay * 7 / 5.2 * 0.85 / 10) * 10;
+    const btc = 63000;
+    const sats = (usd) => Math.round(usd / btc * 1e8).toLocaleString() + " SATS";
+
+    const P = (o) => Object.assign({
+      statusFg: "#E8B23A", statusBg: "rgba(232,178,58,.12)", statusLine: "rgba(232,178,58,.4)",
+      bibFg: "#E8B23A", span: "auto"
+    }, o);
+
+    return {
+      qidi: qidi, bambu: bambu, farmTotal: qidi + bambu,
+      hoursDay: qidiHoursDay.toLocaleString(), pairsWeek: "≈ " + pairsWeek.toLocaleString(),
+
+      accessories: [
+        {
+          no: "ACC 01", name: "BULL COASTER", price: "$18", sats: sats(18), satsNote: "AT $63K · ILLUSTRATIVE", status: "IN THE LAB",
+          copy: "Hex coaster with the bull debossed into the face and the lattice open underneath, so a wet glass drains through instead of sitting in a ring.",
+          why: "A moulded coaster is a solid disc that traps the water it is supposed to catch. Printing it means the drainage is the structure — the same argument as the insole, on a table.",
+          material: "TPU 95A · BG-01", size: "95 MM HEX · 8 MM", time: "1.6 H · 4 UP", nests: "12 PER PLATE"
+        },
+        {
+          no: "ACC 02", name: "BULL TOKEN", price: "FREE", sats: "SHIPS IN EVERY BOX", satsNote: "", status: "CONFIRMED",
+          copy: "The bull head from the slide badge, 24 × 20 × 3.2, attached to the BullPrint coupon in every box.",
+          why: "Six grams of the same material the product is made from, in the customer's hand before they have worn anything. It cannot fail an inspection and it costs nothing.",
+          material: "TPU 95A · BG-01", size: "24 × 20 × 3.2", time: "18–28 MIN", nests: "40 PER PLATE"
+        }
+      ],
+
+      colorways: [
+        { name: "GOLD", code: "CW-01", under: "none", swatch: "linear-gradient(150deg,#8A6A1E,#F5D07A 32%,#E8B23A 58%,#A87F24)", lines: "rgba(0,0,0,.16)", role: "The signature. Loud on purpose, and the finish every hero object ships in.", on: "INSOLES\nBG-01 / BG-03" },
+        { name: "GRAPHITE", code: "CW-02", under: "none", swatch: "linear-gradient(150deg,#26262B,#121216 62%,#0C0C0F)", lines: "rgba(255,255,255,.05)", role: "Equipment finish. Matte near-black — the default for slides and swims, where gold everywhere would be too much.", on: "SLIDES · SWIMS\nBG-01" },
+        { name: "BONE", code: "CW-03", under: "none", swatch: "linear-gradient(150deg,#F4F2ED,#DAD6CC 70%,#C4BFB2)", lines: "rgba(0,0,0,.07)", role: "The contrast run. One pale object in a black room reads as intentional, two reads as a different brand.", on: "LIMITED RUNS ONLY\nBG-01" },
+        { name: "TITANIUM", code: "CW-04", under: "none", swatch: "linear-gradient(150deg,#3A3A42,#2A2A31 60%,#1E1E24)", lines: "rgba(255,255,255,.06)", role: "Industrial grey for premium runs. Reads as equipment rather than accessory.", on: "PREMIUM RUNS\nBG-03 PEBA" }
+      ],
+
+      plates: [
+        { slot: "st-p01", name: "01 BULL INSOLES", shot: "PAIR · TOP + PROFILE · GOLD LATTICE", hint: "Insole render" },
+        { slot: "st-p02", name: "02 BULL SLIDES", shot: "3/4 · BLACK LATTICE · GOLD MARK", hint: "Slide render" },
+        { slot: "st-p03", name: "03 BULL SWIMS", shot: "3/4 + SOLE · WET · DRAINAGE VISIBLE", hint: "Water shoe render" },
+        { slot: "st-p04", name: "04 BULL HEEL CUP", shot: "3/4 · GOLD · WALL AND CUT LINE", hint: "Heel cup render" },
+        { slot: "st-p05", name: "05 CUSTOM BULL", shot: "MARK CLOSING INTO LATTICE · MACRO", hint: "Custom render" }
+      ],
+
+      materials: [
+        { name: "TPU 95A", code: "BG-01", use: "The firm one. Footbeds, insoles and anything that has to hold an arch under load.", spec: "INSOLES · HEEL CUPS · SWIMS\n0.12 MM LAYER" },
+        { name: "TPU 80A", code: "BG-02", use: "The soft one. Qualified and held for a plush variant — nothing in the current line ships in it.", spec: "NO CURRENT PRODUCT\nHELD FOR SOFT RUNS" },
+        { name: "PEBA", code: "BG-03", use: "The performance material. Lighter and springier than TPU, with better rebound over long wear.", spec: "PREMIUM INSOLES\n0.10 MM LAYER · DRY BEFORE USE" }
+      ],
+
+      products: [
+        P({
+          no: "ITEM 01", name: "BULL INSOLES", price: "$99", sats: sats(99), status: "DROP 001 · LIVE",
+          copy: "Lattice comfort, Bitcoin core. Variable-density footbed tuned by pressure map, with the ₿ working as a stiffness spine rather than a graphic.",
+          why: "A moulded insole is one stiffness everywhere. This one changes cell size and wall thickness between heel and forefoot, per customer, with no tooling cost.",
+          material: "BG-01 / BG-03", machine: "QIDI ×8", time: "5.2 H / PAIR", finish: "14 MIN",
+          bib: "BEST IN BULL ELIGIBLE", edition: "HEEL 12 MM · FOREFOOT 6 MM · M 6–13 / W 7–14"
+        }),
+        P({
+          no: "ITEM 02", name: "BULL SLIDES", price: "$128", sats: sats(128), status: "DROP 002 · IN THE LAB",
+          copy: "Recover hard, move easy. Zoned lattice footbed, high heel walls, wide toe box, easy slip-on. Supportive rather than plush — it holds the arch instead of letting it sink.",
+          why: "Recovery slides are foam bricks that flatten in a season. A printed lattice tunes give by zone and can be reprinted from the same file when it goes off. Drawing BPL-SL-013-B carries the full geometry.",
+          material: "BG-01 TPU 95A", machine: "QIDI ×6", time: "18–22 H / SLIDE", finish: "26 MIN",
+          bib: "BEST IN BULL ELIGIBLE", edition: "HEEL 38 MM · FOREFOOT 34 MM · M 6–13 / W 7–14"
+        }),
+        P({
+          no: "ITEM 03", name: "BULL SWIMS", price: "$92", sats: sats(92), status: "DROP 003 · COMING SOON",
+          copy: "Grip, drain, protect. Full-coverage water shoe with 360° drainage, flexible toe and side protection and a secure fit collar. Quick dry because there is nothing in it to stay wet.",
+          why: "Every part of a wet-environment shoe wants to be a hole, which is exactly what a lattice is. Nothing moulded drains like a printed one.",
+          material: "BG-01 TPU 95A", machine: "QIDI ×6", time: "7.1 H / PAIR", finish: "18 MIN",
+          bib: "BEST IN BULL ELIGIBLE", edition: "HEEL 8 MM · FOREFOOT 6 MM · M 6–13 / W 7–14"
+        }),
+        P({
+          no: "ITEM 04", name: "BULL HEEL CUP", price: "$62", sats: sats(62), status: "PIPELINE",
+          statusFg: "#A5A19A", statusBg: "rgba(255,255,255,.06)", statusLine: "rgba(255,255,255,.16)",
+          copy: "Half-length cup that takes the heel and arch and stops before the forefoot. Slides under a footbed the wearer already likes.",
+          why: "Fits boots and dress shoes where a full-length insole crowds the toe box. Same profile data, half the print time.",
+          material: "BG-01 TPU 95A", machine: "QIDI ×4", time: "2.6 H / PAIR", finish: "11 MIN",
+          bib: "BEST IN BULL ELIGIBLE", edition: "WALL 22 MM · CUT 128 MM"
+        }),
+        P({
+          no: "ITEM 05", name: "CUSTOM BULL", price: "FROM $240", sats: "QUOTED PER RUN", status: "BY REQUEST",
+          statusFg: "#A5A19A", statusBg: "rgba(255,255,255,.06)", statusLine: "rgba(255,255,255,.16)",
+          copy: "Your mark engineered into the lattice of any of the above — team, shop or brand. Sample first, run second.",
+          why: "It is the BullMaker entry point, and the clearest proof that a BullPrint is geometry rather than a print laid on top of a product.",
+          material: "BG-01 / BG-03", machine: "QIDI ×2", time: "+2 H / PAIR", finish: "+12 MIN",
+          bib: "STAMPED ON APPROVAL", edition: "COMMISSIONED"
+        })
+      ].map(function (p, i, all) {
+        // last card spans both columns whenever the count is odd — parity can never strand a cell
+        p.span = i === all.length - 1 && all.length % 2 ? "1 / -1" : "auto";
+        p.satsNote = /SATS/.test(p.sats) ? "AT $63K · ILLUSTRATIVE" : "";
+        return p;
+      }),
+
+      waves: [
+        {
+          wave: "WAVE 01", when: "LAUNCH", title: "THE THESIS",
+          items: ["Bull Insoles — the flagship", "Bull Slides — recovery, the second thing you own", "Bull Swims — the summer drop"],
+          why: "Three footwear products prove the lattice is a system rather than a one-off. Insole first because it is cheapest to trust, slides second because they are the easiest to love, swims third because they are seasonal."
+        },
+        {
+          wave: "WAVE 02", when: "+6 WEEKS", title: "THE FIT RANGE",
+          items: ["Bull Heel Cup", "Custom Bull runs", "Seasonal colourways"],
+          why: "Once the profile exists, everything else is a variation on it. These extend the same foot data into boots and commissioned runs without opening a new product category."
+        },
+        {
+          wave: "WAVE 03", when: "+3 MONTHS", title: "THE PROGRAMME",
+          items: ["Seasonal colourways", "Team and shop runs", "Reprint programme for worn pairs"],
+          why: "Reprints are the whole advantage of owning the file — a worn pair becomes a repeat order rather than a lost customer. Launch it once inspection is keeping pace at volume."
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

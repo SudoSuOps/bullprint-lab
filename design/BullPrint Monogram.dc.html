@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#08080A;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+  ::selection{background:#E8B23A;color:#0B0B0D}
+</style>
+</helmet>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="mgGold" x1="0" y1="0" x2=".7" y2="1">
+    <stop offset="0" stop-color="#C9A24A"></stop><stop offset=".3" stop-color="#A8811F"></stop>
+    <stop offset=".55" stop-color="#8A6A1E"></stop><stop offset=".8" stop-color="#B08C2A"></stop><stop offset="1" stop-color="#7A5C18"></stop>
+  </linearGradient>
+  <linearGradient id="mgTobacco" x1="0" y1="0" x2=".6" y2="1">
+    <stop offset="0" stop-color="#5E4714"></stop><stop offset=".5" stop-color="#3E2F0C"></stop><stop offset="1" stop-color="#241B06"></stop>
+  </linearGradient>
+  <linearGradient id="mgRail" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".35" stop-color="#E8B23A"></stop>
+    <stop offset=".7" stop-color="#A87F24"></stop><stop offset="1" stop-color="#F5D07A"></stop>
+  </linearGradient>
+  <linearGradient id="mgRaise" x1="0" y1="0" x2=".4" y2="1">
+    <stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".45" stop-color="#E8B23A"></stop><stop offset="1" stop-color="#A87F24"></stop>
+  </linearGradient>
+
+  <!-- ===== MONOGRAM PATTERNS — stroke on every path, never inherited ===== -->
+  <pattern id="mgPatA" width="48" height="48" patternUnits="userSpaceOnUse">
+    <g transform="translate(0,1.2)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="none" stroke="#4A3810" stroke-width="12.2" stroke-linejoin="round"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="none" stroke="#4A3810" stroke-width="12.2" stroke-linejoin="round"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#4A3810" stroke-width="12.2" stroke-linejoin="round"></path></g>
+      <path d="M33 29V43" fill="none" stroke="#4A3810" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M33 31H39C41.5 31 41.5 35.5 39 35.5H33" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+      <path d="M33 35.5H39.8C42.4 35.5 42.4 40.5 39.8 40.5H33" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+      <path d="M35.5 27.4V29M38.5 27.4V29M35.5 43V44.6M38.5 43V44.6" fill="none" stroke="#4A3810" stroke-width="2" stroke-linecap="round"></path>
+      <circle cx="36" cy="12" r="1.8" fill="#4A3810"></circle><circle cx="12" cy="36" r="1.8" fill="#4A3810"></circle>
+    </g>
+    <g>
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="none" stroke="#F7DFA4" stroke-width="10.4" stroke-linejoin="round"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="none" stroke="#F7DFA4" stroke-width="10.4" stroke-linejoin="round"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#F7DFA4" stroke-width="10.4" stroke-linejoin="round"></path></g>
+      <path d="M33 29V43" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linecap="round"></path>
+      <path d="M33 31H39C41.5 31 41.5 35.5 39 35.5H33" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+      <path d="M33 35.5H39.8C42.4 35.5 42.4 40.5 39.8 40.5H33" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+      <path d="M35.5 27.4V29M38.5 27.4V29M35.5 43V44.6M38.5 43V44.6" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linecap="round"></path>
+      <circle cx="36" cy="12" r="1.7" fill="#F7DFA4"></circle><circle cx="12" cy="36" r="1.7" fill="#F7DFA4"></circle>
+    </g>
+  </pattern>
+
+  <pattern id="mgPatB" width="40" height="40" patternUnits="userSpaceOnUse">
+    <g transform="translate(0,1.2)">
+      <path d="M14 23.1C5.6 17.5 2.8 9.1 5.6 4.2C9.8 7 12.6 11.2 14 15.4C15.4 11.2 18.2 7 22.4 4.2C25.2 9.1 22.4 17.5 14 23.1Z" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+      <path d="M34 43.1C25.6 37.5 22.8 29.1 25.6 24.2C29.8 27 32.6 31.2 34 35.4C35.4 31.2 38.2 27 42.4 24.2C45.2 29.1 42.4 37.5 34 43.1Z" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+      <path d="M-6 43.1C-14.4 37.5 -17.2 29.1 -14.4 24.2C-10.2 27 -7.4 31.2 -6 35.4C-4.6 31.2 -1.8 27 2.4 24.2C5.2 29.1 2.4 37.5 -6 43.1Z" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+    </g>
+    <g>
+      <path d="M14 23.1C5.6 17.5 2.8 9.1 5.6 4.2C9.8 7 12.6 11.2 14 15.4C15.4 11.2 18.2 7 22.4 4.2C25.2 9.1 22.4 17.5 14 23.1Z" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+      <path d="M34 43.1C25.6 37.5 22.8 29.1 25.6 24.2C29.8 27 32.6 31.2 34 35.4C35.4 31.2 38.2 27 42.4 24.2C45.2 29.1 42.4 37.5 34 43.1Z" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+      <path d="M-6 43.1C-14.4 37.5 -17.2 29.1 -14.4 24.2C-10.2 27 -7.4 31.2 -6 35.4C-4.6 31.2 -1.8 27 2.4 24.2C5.2 29.1 2.4 37.5 -6 43.1Z" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+    </g>
+  </pattern>
+
+  <pattern id="mgPatC" width="44" height="44" patternUnits="userSpaceOnUse">
+    <g transform="translate(0,1.2)">
+      <path d="M6 5V19M6 5H10.6C13.4 5 13.4 11 10.6 11H6M6 11H11.2C14.2 11 14.2 19 11.2 19H6" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+      <path d="M14 8.5V22M14 8.5H18.2C21 8.5 21 14.4 18.2 14.4H14" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+      <path d="M28 27V41M28 27H32.6C35.4 27 35.4 33 32.6 33H28M28 33H33.2C36.2 33 36.2 41 33.2 41H28" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+      <path d="M36 30.5V44M36 30.5H40.2C43 30.5 43 36.4 40.2 36.4H36" fill="none" stroke="#4A3810" stroke-width="2" stroke-linejoin="round"></path>
+    </g>
+    <g>
+      <path d="M6 5V19M6 5H10.6C13.4 5 13.4 11 10.6 11H6M6 11H11.2C14.2 11 14.2 19 11.2 19H6" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+      <path d="M14 8.5V22M14 8.5H18.2C21 8.5 21 14.4 18.2 14.4H14" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+      <path d="M28 27V41M28 27H32.6C35.4 27 35.4 33 32.6 33H28M28 33H33.2C36.2 33 36.2 41 33.2 41H28" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+      <path d="M36 30.5V44M36 30.5H40.2C43 30.5 43 36.4 40.2 36.4H36" fill="none" stroke="#F7DFA4" stroke-width="1.7" stroke-linejoin="round"></path>
+    </g>
+  </pattern>
+
+  <!-- ===== FABRIC PRINTS ===== -->
+  <pattern id="fbField" width="104" height="104" patternUnits="userSpaceOnUse">
+    <g transform="translate(6,8) scale(1.6)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <g transform="translate(62,50) scale(1.05)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <g transform="translate(28,70) scale(0.78)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#B08C2A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#B08C2A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#B08C2A"></path></g>
+    </g>
+    <g transform="translate(80,6) scale(0.6)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#8A6A1E"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#8A6A1E"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#8A6A1E"></path></g>
+    </g>
+    <text x="52" y="26" fill="#8A6A1E" style="font:700 8px 'JetBrains Mono',monospace;letter-spacing:.16em">BULLISH</text>
+    <text x="4" y="98" fill="#8A6A1E" style="font:700 8px 'JetBrains Mono',monospace;letter-spacing:.16em">BULL ON</text>
+  </pattern>
+
+  <pattern id="fbRailText" width="384" height="80" patternUnits="userSpaceOnUse">
+    <text x="0" y="17" fill="#E8B23A" style="font:700 12.5px 'JetBrains Mono',monospace;letter-spacing:.2em">BULLISH ON THE FAB · BEST IN BULL ·</text>
+    <path d="M0 28h384" fill="none" stroke="#8A6A1E" stroke-width="1.1"></path>
+    <g transform="translate(6,34) scale(0.82)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <text x="34" y="50" fill="#F7DFA4" style="font:900 15px Archivo,sans-serif;letter-spacing:.04em">BULL ON</text>
+    <g transform="translate(120,34) scale(0.82)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <text x="148" y="50" fill="#8A6A1E" style="font:700 12px 'JetBrains Mono',monospace;letter-spacing:.16em">SATOSHI BULL</text>
+    <path d="M0 62h384" fill="none" stroke="#8A6A1E" stroke-width="1.1"></path>
+    <text x="0" y="76" fill="#B08C2A" style="font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.26em">ENGINEERED FOR EVERY STEP ·</text>
+  </pattern>
+
+  <pattern id="fbHash" width="486" height="112" patternUnits="userSpaceOnUse">
+    <text x="0" y="16" fill="#8A6A1E" style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.05em">000000000019d6689c085ae165831e934ff763ae46a2a6c1</text>
+    <text x="0" y="37" fill="#F7DFA4" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.05em">72b3f1b60a8ce26f · BLOCK 0 · 03 JAN 2009 ·</text>
+    <text x="0" y="58" fill="#E8B23A" style="font:900 15px Archivo,sans-serif;letter-spacing:.06em">BLOCK FOUND BULL</text>
+    <g transform="translate(158,42) scale(0.8)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <text x="192" y="58" fill="#8A6A1E" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.18em">SATOSHI BULL · NONCE 2083236893</text>
+    <text x="0" y="79" fill="#8A6A1E" style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.05em">00000000000000000007878ec04bb2b2e12317804810f4c2</text>
+    <text x="0" y="100" fill="#B08C2A" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.2em">SHA-256 · WE MINE IT AND WE PRINT IT ·</text>
+  </pattern>
+
+  <!-- ===== BAND TILES — authored ≤56 units tall so one whole tile clears the seam allowance ===== -->
+  <pattern id="bdBtc" width="200" height="78" patternUnits="userSpaceOnUse" patternTransform="translate(0,26)">
+    <text x="4" y="46" fill="#E8B23A" style="font:900 46px Archivo,sans-serif;letter-spacing:-.02em">₿</text>
+    <g transform="translate(14,10) scale(1.15)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#FBE9B0"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#FBE9B0"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#FBE9B0"></path></g>
+    </g>
+    <text x="52" y="26" fill="#F7DFA4" style="font:900 15px Archivo,sans-serif;letter-spacing:.04em">₿ BULL</text>
+    <text x="52" y="44" fill="#B08C2A" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.14em">SATOSHI BULL</text>
+    <g transform="translate(152,14) scale(0.85)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#8A6A1E"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#8A6A1E"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#8A6A1E"></path></g>
+    </g>
+  </pattern>
+
+  <pattern id="bdHash" width="300" height="78" patternUnits="userSpaceOnUse" patternTransform="translate(0,26)">
+    <text x="0" y="17" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.04em">000000000019d6689c085ae165831e934ff7</text>
+    <text x="0" y="37" fill="#E8B23A" style="font:900 20px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#FBE9B0">A</tspan>h<tspan fill="#FBE9B0">M</tspan>a</text>
+    <rect x="96" y="21" width="74" height="20" fill="none" stroke="#E8B23A" stroke-width="1.3"></rect>
+    <text x="104" y="36" fill="#F7DFA4" style="font:900 13px Archivo,sans-serif;letter-spacing:.04em">BULL ON</text>
+    <text x="180" y="36" fill="#8A6A1E" style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.16em">BLOCK FOUND</text>
+    <text x="0" y="52" fill="#B08C2A" style="font:500 8px 'JetBrains Mono',monospace;letter-spacing:.14em">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</text>
+  </pattern>
+
+  <pattern id="bdLining" width="330" height="78" patternUnits="userSpaceOnUse" patternTransform="translate(0,26)">
+    <rect x="2" y="9" width="152" height="34" fill="none" stroke="#E8B23A" stroke-width="1.3"></rect>
+    <text x="8" y="27" fill="#E8B23A" style="font:900 17px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#FBE9B0">A</tspan>h<tspan fill="#FBE9B0">M</tspan>a</text>
+    <text x="84" y="26" fill="#F7DFA4" style="font:900 12px Archivo,sans-serif;letter-spacing:.04em">BULL ON</text>
+    <text x="8" y="39" fill="#B08C2A" style="font:500 8px 'JetBrains Mono',monospace;letter-spacing:.1em">PROTO 009 · INSPECTED</text>
+    <rect x="164" y="9" width="160" height="34" fill="none" stroke="#8A6A1E" stroke-width="1.3" stroke-dasharray="4 3"></rect>
+    <text x="170" y="27" fill="#8A6A1E" style="font:900 17px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#B08C2A">A</tspan>h<tspan fill="#B08C2A">M</tspan>a</text>
+    <text x="246" y="26" fill="#B08C2A" style="font:900 12px Archivo,sans-serif;letter-spacing:.04em">BULL OFF</text>
+    <text x="170" y="39" fill="#B08C2A" style="font:500 8px 'JetBrains Mono',monospace;letter-spacing:.1em">PROTO 004 · WALL 0.8 → 1.2</text>
+    <text x="2" y="59" fill="#B08C2A" style="font:500 8px 'JetBrains Mono',monospace;letter-spacing:.14em">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</text>
+  </pattern>
+
+  <pattern id="bdField" width="112" height="78" patternUnits="userSpaceOnUse" patternTransform="translate(0,26)">
+    <g transform="translate(4,4) scale(1.3)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <g transform="translate(52,20) scale(0.95)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#B08C2A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#B08C2A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#B08C2A"></path></g>
+    </g>
+    <g transform="translate(84,9) scale(0.7)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#8A6A1E"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#8A6A1E"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#8A6A1E"></path></g>
+    </g>
+    <text x="40" y="50" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.16em">BULL ON</text>
+  </pattern>
+
+  <pattern id="fbBtcBull" width="128" height="128" patternUnits="userSpaceOnUse">
+    <text x="6" y="78" fill="#E8B23A" style="font:900 74px Archivo,sans-serif;letter-spacing:-.02em">₿</text>
+    <g transform="translate(34,50) scale(1.55)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#FBE9B0"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#FBE9B0"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#FBE9B0"></path></g>
+    </g>
+    <g transform="translate(96,12) scale(0.62)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#8A6A1E"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#8A6A1E"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#8A6A1E"></path></g>
+    </g>
+    <text x="98" y="118" fill="#B08C2A" style="font:900 30px Archivo,sans-serif;letter-spacing:-.02em">₿</text>
+    <text x="6" y="100" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.16em">₿ BULL</text>
+    <text x="6" y="120" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.14em">SATOSHI BULL</text>
+  </pattern>
+
+  <pattern id="fbBrahmaLining" width="420" height="230" patternUnits="userSpaceOnUse">
+    <rect x="8" y="10" width="404" height="96" fill="none" stroke="#8A6A1E" stroke-width="1.2"></rect>
+    <text x="20" y="34" fill="#E8B23A" style="font:900 30px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#FBE9B0">A</tspan>h<tspan fill="#FBE9B0">M</tspan>a</text>
+    <text x="152" y="30" fill="#8A6A1E" style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.22em">THE AI ON THE BULL</text>
+    <text x="20" y="56" fill="#B08C2A" style="font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em">PROTO 009 / TPU95A / V8</text>
+    <rect x="286" y="42" width="118" height="26" fill="none" stroke="#E8B23A" stroke-width="1.4"></rect>
+    <g transform="translate(292,46) scale(0.72)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <text x="316" y="61" fill="#F7DFA4" style="font:900 15px Archivo,sans-serif;letter-spacing:.04em">BULL ON</text>
+    <text x="20" y="80" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.08em">GEOMETRY PASSED · PRINT PASSED · INSPECTION PASSED</text>
+    <text x="20" y="98" fill="#B08C2A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.18em">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</text>
+
+    <rect x="8" y="120" width="404" height="96" fill="none" stroke="#8A6A1E" stroke-width="1.2" stroke-dasharray="5 4"></rect>
+    <text x="20" y="144" fill="#8A6A1E" style="font:900 30px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#B08C2A">A</tspan>h<tspan fill="#B08C2A">M</tspan>a</text>
+    <text x="152" y="140" fill="#B08C2A" style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.22em">THE AI ON THE BULL</text>
+    <text x="20" y="166" fill="#B08C2A" style="font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.1em">PROTO 004 / TPU95A / V7</text>
+    <rect x="286" y="152" width="118" height="26" fill="none" stroke="#8A6A1E" stroke-width="1.4" stroke-dasharray="4 3"></rect>
+    <text x="304" y="171" fill="#B08C2A" style="font:900 15px Archivo,sans-serif;letter-spacing:.04em">BULL OFF</text>
+    <text x="20" y="190" fill="#B08C2A" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.08em">FOREFOOT TRANSITION FAILED · +12 MM · WALL 0.8 → 1.2</text>
+    <text x="20" y="208" fill="#B08C2A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.18em">RIDE AGAIN → GENERATE V9</text>
+  </pattern>
+
+  <pattern id="fbBrahmaHash" width="440" height="150" patternUnits="userSpaceOnUse">
+    <text x="0" y="14" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.04em">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b6</text>
+    <text x="0" y="30" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.04em">0a8ce26f00000000000000000007878ec04bb2b2e12317804810f4c2</text>
+    <text x="0" y="46" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.04em">6a5f6c9f9adcba0000000000000000000404cb000000001d00ffff01</text>
+    <g transform="translate(4,58) scale(0.85)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <text x="30" y="76" fill="#E8B23A" style="font:900 24px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#FBE9B0">A</tspan>h<tspan fill="#FBE9B0">M</tspan>a</text>
+    <text x="144" y="70" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.2em">CALLS IT</text>
+    <rect x="190" y="56" width="100" height="24" fill="none" stroke="#E8B23A" stroke-width="1.4"></rect>
+    <text x="204" y="73" fill="#F7DFA4" style="font:900 14px Archivo,sans-serif;letter-spacing:.04em">BULL ON</text>
+    <text x="300" y="73" fill="#8A6A1E" style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.16em">BLOCK FOUND</text>
+    <text x="0" y="96" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.04em">9adcba7878ec04bb2b2e12317804810f4c26a5f6c9f000000001d00ff</text>
+    <text x="0" y="112" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.04em">2083236893404cb000019d6689c085ae165831e934ff763ae46a2a6c1</text>
+    <text x="0" y="132" fill="#B08C2A" style="font:700 10px 'JetBrains Mono',monospace;letter-spacing:.2em">SATOSHI BULL · WE MINE IT AND WE PRINT IT ·</text>
+    <text x="0" y="146" fill="#B08C2A" style="font:500 8.5px 'JetBrains Mono',monospace;letter-spacing:.18em">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</text>
+  </pattern>
+
+  <pattern id="fbBrahma" width="324" height="132" patternUnits="userSpaceOnUse">
+    <text x="4" y="24" fill="#E8B23A" style="font:900 23px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#FBE9B0">A</tspan>h<tspan fill="#FBE9B0">M</tspan>a</text>
+    <text x="106" y="21" fill="#8A6A1E" style="font:700 8.5px 'JetBrains Mono',monospace;letter-spacing:.2em">THE AI ON THE BULL</text>
+    <rect x="4" y="36" width="96" height="24" fill="none" stroke="#E8B23A" stroke-width="1.3"></rect>
+    <g transform="translate(8,40) scale(0.68)">
+      <g transform="translate(2.192,3.528) scale(0.1635)"><path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#E8B23A"></path><path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#E8B23A"></path><path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#E8B23A"></path></g>
+    </g>
+    <text x="30" y="53" fill="#F7DFA4" style="font:900 13px Archivo,sans-serif;letter-spacing:.04em">BULL ON</text>
+    <rect x="110" y="36" width="104" height="24" fill="none" stroke="#8A6A1E" stroke-width="1.3" stroke-dasharray="4 3"></rect>
+    <text x="120" y="53" fill="#B08C2A" style="font:900 13px Archivo,sans-serif;letter-spacing:.04em">BULL OFF</text>
+    <text x="4" y="80" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em">PROTO 009 / V8 / INSPECTED</text>
+    <text x="4" y="100" fill="#B08C2A" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em">RIDE AGAIN → GENERATE V9</text>
+    <path d="M4 110h312" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".7"></path>
+    <text x="4" y="126" fill="#B08C2A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.22em">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</text>
+  </pattern>
+</defs></svg>
+
+<!-- ============ TURN 2 — FABRIC PRINTS ============ -->
+<section style="padding:52px 56px 70px;border-bottom:1px solid rgba(255,255,255,.08)">
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t2" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">2</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">BULL FABRIC — seven prints, plus Bull Bands</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#8B8780">printed on the 3 mm spacer knit, not debossed</span>
+  </div>
+  <p style="max-width:920px;margin:0 0 26px;font:400 13.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">These are for the fabric you're getting printed, so they work differently to the band monograms: no relief, no deboss, just gold on tobacco at real repeat scale. Text is legible here in a way it can't be at 0.6 mm in TPU — which is why the mining and BrAhMa directions live on fabric rather than on the band.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+    <sc-for list="{{ fabrics }}" as="f" hint-placeholder-count="7">
+      <div id="{{ f.id }}" style="flex:none;width:600px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+        <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+          <a href="{{ f.href }}" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">{{ f.id }}</a>{{ f.label }}
+        </div>
+        <div style="background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+          <div style="height:250px;overflow:hidden">
+            <svg width="100%" height="250" style="display:block">
+              <rect width="100%" height="250" fill="url(#mgTobacco)"></rect>
+              <rect width="100%" height="250" fill="{{ f.fill }}"></rect>
+            </svg>
+          </div>
+          <div style="padding:24px 26px;border-top:1px solid rgba(255,255,255,.1)">
+            <div style="font:800 20px/1 Archivo,sans-serif;letter-spacing:-.015em;color:#F4F2ED">{{ f.name }}</div>
+            <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">{{ f.copy }}</p>
+            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">
+              <div style="background:#0B0B0D;padding:13px 15px">REPEAT<br><span style="color:#F4F2ED">{{ f.repeat }}</span></div>
+              <div style="background:#0B0B0D;padding:13px 15px">USE ON<br><span style="color:#F4F2ED">{{ f.use }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- HEADBAND -->
+  <div style="margin-top:40px;padding-top:34px;border-top:1px solid rgba(255,255,255,.1)">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px">
+      <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E">ON A HEADBAND — 3 MM SPACER KNIT, 320 × 62 MM FLAT</span>
+    </div>
+    <p style="max-width:900px;margin:0 0 22px;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The spacer mesh is already the right material for this — open-cell, wicking, and it holds a stretch without a seam. A headband is one cut piece and a stitched loop, so it is the cheapest way to put your fabric on a body that isn't buying footwear yet, and on a court it is a moving billboard at eye level.<br><br>These four run on <strong style="color:#F4F2ED;font-weight:700">dedicated band tiles</strong>, not the footwear prints above. A 62 mm cut leaves 46 mm between seam allowances, so any tile taller than that loses whatever falls outside — which on 2e and 2f meant the BULL OFF card and the BrAhMa disclosure. Each band tile below is phase-aligned to the band, one whole repeat per cut, with every element between the seam rules.</p>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <sc-for list="{{ headbands }}" as="h" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+          <a href="{{ h.href }}" style="flex:none;font:700 10.5px/1 'JetBrains Mono',monospace;padding:5px 8px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">{{ h.id }}</a>
+          <div style="flex:1;min-width:540px;background:#000;border:1px solid rgba(255,255,255,.1);padding:16px">
+            <svg viewBox="0 0 900 130" style="width:100%;display:block">
+              <rect x="14" y="26" width="872" height="78" rx="14" fill="url(#mgTobacco)" stroke="#5E4714" stroke-width="1.6"></rect>
+              <rect x="14" y="26" width="872" height="78" rx="14" fill="{{ h.fill }}"></rect>
+              <path d="M14 34h872M14 96h872" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".55" stroke-dasharray="6 5"></path>
+              <text x="20" y="20" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.16em">320.0 FLAT · STITCH LOOP AT BOTH ENDS</text>
+              <text x="20" y="122" fill="#8B8780" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.16em">62.0 WIDE · 8.0 SEAM ALLOWANCE INSIDE THE DASHED RULES · {{ h.note }}</text>
+            </svg>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top:22px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)">
+      <div style="background:#0B0B0D;padding:20px 22px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">BULL BANDS</div>
+        <p style="margin:11px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">One cut piece, two stitched loops, 3 mm spacer knit. No printing, no lattice, no 20-hour job — it is the first BullPrint product that isn't printed, and the only one that ships same day.</p>
+      </div>
+      <div style="background:#0B0B0D;padding:20px 22px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#E8B23A">WHY IT FITS THE LINE</div>
+        <p style="margin:11px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">Still feet-adjacent: same fabric, same buyer, same court. It gives you a sub-$30 entry point without breaking the footwear-only rule, because it is made of the material the shoes are lined with.</p>
+      </div>
+      <div style="background:#0B0B0D;padding:20px 22px">
+        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#F7931A">THE HONEST CAVEAT</div>
+        <p style="margin:11px 0 0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">This needs a cut-and-sew partner, which you don't have yet. It is not a printing problem, so nothing on your floor makes it. Price it once you have a quote for 200 units, not before.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="padding:24px 28px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">SENDING THIS TO A FABRIC PRINTER</div>
+      <p style="margin:14px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Give them the repeat tile, not a swatch — one tile at 300 dpi with the repeat type named (all four here are straight repeats). Gold on a 3 mm spacer knit will sink into the pile, so ask for a pigment or sublimation test on the actual mesh before committing a roll: the same file that looks sharp on a flat woven goes soft on an open-cell knit. Keep text above 8 pt on the finished cloth.</p>
+    </div>
+    <div style="padding:24px 28px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">MY CALL</div>
+      <p style="margin:14px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty"><a href="#2a">2a</a> for the drop mesh — it survives being cut into small panels, which the text prints do not. <a href="#2g">2g</a> is the Bitcoin Bull Band — the ₿ and the bull sharing one silhouette is the only mark in the set that lands from across a court. It runs on its own band tile, because a 128 mm repeat cannot fit a 62 mm cut. <a href="#2f">2f</a> is the collector band: denser, rewards a close read, says miner and lab in one glance. <a href="#2e">2e</a> for lining and box wrap, where a close read is rewarded.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TURN 1 — BAND MONOGRAMS ============ -->
+<section style="padding:52px 56px 80px">
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+    <a href="#t1" style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 8px;background:#E8B23A;color:#0B0B0D;border-radius:4px">1</a>
+    <span style="font:600 13px/1.2 Archivo,sans-serif;color:#F4F2ED">BAND MONOGRAM — three directions</span>
+    <span style="font:400 12px/1.2 Archivo,sans-serif;color:#8B8780">debossed 0.6 mm into 90A TPU · gold on gold</span>
+  </div>
+  <p style="max-width:920px;margin:0 0 24px;font:400 13.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">All three are built from marks you already own, so the repeat is yours and the pattern is engineered rather than borrowed. Same relief treatment across all three: 0.6 mm deboss with a shadow wall on the lower edge and a highlight on the upper. That relief is what makes it catch light — the pattern alone is only half the effect.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+    <sc-for list="{{ monograms }}" as="m" hint-placeholder-count="3">
+      <div id="{{ m.id }}" style="flex:none;width:600px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px">
+        <div style="display:flex;align-items:baseline;gap:9px;font:400 11px/1.3 Archivo,sans-serif;color:rgba(255,255,255,.45)">
+          <a href="{{ m.href }}" style="font:700 10.5px/1 'JetBrains Mono',monospace;padding:4px 7px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">{{ m.id }}</a>{{ m.label }}
+        </div>
+        <div style="background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+          <div style="height:250px;overflow:hidden">
+            <svg width="100%" height="250" style="display:block">
+              <rect width="100%" height="250" fill="url(#mgGold)"></rect>
+              <rect width="100%" height="250" fill="{{ m.fill }}"></rect>
+            </svg>
+          </div>
+          <div style="padding:24px 26px;border-top:1px solid rgba(255,255,255,.1)">
+            <div style="font:800 20px/1 Archivo,sans-serif;letter-spacing:-.015em;color:#F4F2ED">{{ m.name }}</div>
+            <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">{{ m.copy }}</p>
+            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">
+              <div style="background:#0B0B0D;padding:13px 15px">CELL PITCH<br><span style="color:#F4F2ED">{{ m.pitch }}</span></div>
+              <div style="background:#0B0B0D;padding:13px 15px">STROKE<br><span style="color:#F4F2ED">1.2 MM</span></div>
+              <div style="background:#0B0B0D;padding:13px 15px">DEBOSS<br><span style="color:#F4F2ED">0.6 MM</span></div>
+              <div style="background:#0B0B0D;padding:13px 15px">MOTIFS<br><span style="color:#F4F2ED">{{ m.motifs }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="margin-top:40px;padding-top:34px;border-top:1px solid rgba(255,255,255,.1)">
+    <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:22px">ON THE BAND — 90A TPU, DEBOSSED, WORDMARK RAISED 0.8 MM</div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <sc-for list="{{ monograms }}" as="m" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+          <a href="{{ m.href }}" style="flex:none;font:700 10.5px/1 'JetBrains Mono',monospace;padding:5px 8px;background:rgba(232,178,58,.14);color:#E8B23A;border-radius:5px">{{ m.id }}</a>
+          <div style="flex:1;min-width:540px;background:#000;border:1px solid rgba(255,255,255,.1);padding:18px">
+            <svg viewBox="0 0 900 150" style="width:100%;display:block">
+              <rect x="10" y="18" width="880" height="114" rx="26" fill="url(#mgGold)" stroke="#7A5C18" stroke-width="2"></rect>
+              <rect x="10" y="18" width="880" height="114" rx="26" fill="{{ m.fill }}"></rect>
+              <rect x="10" y="18" width="880" height="13" rx="6" fill="url(#mgRail)" opacity=".92"></rect>
+              <rect x="10" y="119" width="880" height="13" rx="6" fill="url(#mgRail)" opacity=".92"></rect>
+              <text x="452" y="89" text-anchor="middle" fill="#4A3810" style="font:900 46px Archivo,sans-serif;letter-spacing:.02em">BULLPRINT</text>
+              <text x="450" y="86" text-anchor="middle" fill="url(#mgRaise)" style="font:900 46px Archivo,sans-serif;letter-spacing:.02em">BULLPRINT</text>
+            </svg>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="padding:24px 28px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">HOW THE RELIEF PRINTS</div>
+      <p style="margin:14px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">A 0.6 mm deboss at 0.20 mm layer height is three layers deep — enough to hold a shadow, shallow enough that the band still flexes across it. Keep the stroke at 1.2 mm, three nozzle widths, or the walls between motifs get fragile. The wordmark goes the other way: raised 0.8 mm so it stays proud of the pattern and reads first.</p>
+    </div>
+    <div style="padding:24px 28px;background:#0B0B0D;border:1px solid rgba(255,255,255,.1)">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">MY CALL</div>
+      <p style="margin:14px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty"><a href="#1a">1a</a> for the drop. It carries both of your symbols and earns the monogram read honestly — the ₿ in the repeat is the same argument the insole makes, expression built into geometry rather than laid on top. <a href="#1b">1b</a> is the better pure texture and the stronger second colourway; I'd keep it for the swims, where a quieter pattern suits a wet-environment shoe.</p>
+    </div>
+  </div>
+
+  <p style="margin:28px 0 0;font:400 12px/1.6 Archivo,sans-serif;color:rgba(255,255,255,.45)">Try next: "scale <a href="#1a">1a</a> to 8 mm cells" · "put <a href="#2c">2c</a> on the swims lining" · "draw 1a as a tiling tile for the CAD model"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      monograms: [
+        {
+          id: "1a", href: "#1a", label: "BULL & BIT — the house monogram", name: "BULL & BIT",
+          fill: "url(#mgPatA)", pitch: "12.0 MM", motifs: "BULL · ₿ · DOT",
+          copy: "Bull head and ₿ alternating on a diagonal grid with a punctuation dot on the off-beats. Reads as a monogram from three feet and as your two symbols from six inches — the exact trick a house pattern pulls."
+        },
+        {
+          id: "1b", href: "#1b", label: "HORNFALL — tessellating ogee", name: "HORNFALL",
+          fill: "url(#mgPatB)", pitch: "10.0 MM", motifs: "HORN OGEE",
+          copy: "Two horn curves closing into an ogee, tiled point-to-point so it fills like a lattice rather than a logo grid. Nobody reads it as a bull immediately, which is the point — it works as texture first and pays off on a second look."
+        },
+        {
+          id: "1c", href: "#1c", label: "BP CIPHER — interlocked letters", name: "BP CIPHER",
+          fill: "url(#mgPatC)", pitch: "11.0 MM", motifs: "B + P CIPHER",
+          copy: "B and P overlapped into a cipher, half-drop repeated. The most conventional of the three, which cuts both ways: instantly legible, but it leans on letters instead of the geometry the brand is built from."
+        }
+      ],
+
+      headbands: [
+        { id: "2g", href: "#2g", fill: "url(#bdBtc)", note: "BAND TILE 200 × 78" },
+        { id: "2f", href: "#2f", fill: "url(#bdHash)", note: "BAND TILE 300 × 78" },
+        { id: "2e", href: "#2e", fill: "url(#bdLining)", note: "BAND TILE 330 × 78" },
+        { id: "2a", href: "#2a", fill: "url(#bdField)", note: "BAND TILE 112 × 78" }
+      ],
+
+      fabrics: [
+        {
+          id: "2a", href: "#2a", label: "BULL FIELD — scattered heads", name: "BULL FIELD",
+          fill: "url(#fbField)", repeat: "104 MM STRAIGHT", use: "DROP MESH · LINING",
+          copy: "Bull heads at four scales on a tobacco ground, with BULLISH and BULL ON set small in the gaps. No orientation to get wrong and no text large enough to be cut mid-word, so it survives being panelled into small pieces."
+        },
+        {
+          id: "2b", href: "#2b", label: "RAIL TEXT — the taglines as stripe", name: "RAIL TEXT",
+          fill: "url(#fbRailText)", repeat: "384 × 80 MM", use: "BAND LINING · TAPE",
+          copy: "BULLISH ON THE FAB and BEST IN BULL banded between rules, with BULL ON and SATOSHI BULL alternating below. Built as a horizontal stripe, so it wants to run along a band or a box edge rather than fill a panel."
+        },
+        {
+          id: "2c", href: "#2c", label: "BLOCK HASH — the miner print", name: "BLOCK HASH",
+          fill: "url(#fbHash)", repeat: "486 × 112 MM", use: "SWIMS LINING · BOX",
+          copy: "The genesis hash and a recent block header set as continuous type, with BLOCK FOUND BULL and SATOSHI BULL breaking the run. You mine, so you can print this honestly — the hash is verifiable, which is the only reason it earns a place on the cloth."
+        },
+        {
+          id: "2g", href: "#2g", label: "₿ BULL — the Bitcoin print", name: "₿ BULL",
+          fill: "url(#fbBtcBull)", repeat: "128 MM STRAIGHT", use: "BULL BAND · DROP MESH · LINING",
+          copy: "The ₿ at full tile height with the bull head crossing its stem, so the two marks genuinely interlock rather than sitting side by side. Smallest repeat in the set and the only one that reads instantly at a distance."
+        },
+        {
+          id: "2e", href: "#2e", label: "BrAhMa LINING — spec-sheet scale", name: "BrAhMa LINING",
+          fill: "url(#fbBrahmaLining)", repeat: "420 × 230 MM", use: "LINING · HEADBAND · BOX WRAP",
+          copy: "Full verdict cards at reading scale, one BULL ON and one BULL OFF per repeat, complete with the failure and the millimetre fix. Wrapped around a foot or a forehead it reads like a spec sheet — and publishing the bull off next to the bull on is the whole brand argument in cloth."
+        },
+        {
+          id: "2f", href: "#2f", label: "BrAhMa × HASH — the hybrid", name: "BrAhMa × HASH",
+          fill: "url(#fbBrahmaHash)", repeat: "440 × 150 MM", use: "HEADBAND · SWIMS LINING",
+          copy: "A running hash field with BrAhMa calling BULL ON straight through the middle of it. Ties the mining and the intelligence into one cloth: the machine finds the block, the AI calls the print, a human signs the stamp. Densest of the set and the best at headband width."
+        },
+        {
+          id: "2d", href: "#2d", label: "BrAhMa — the verdict print", name: "BrAhMa",
+          fill: "url(#fbBrahma)", repeat: "324 × 132 MM", use: "PACKAGING · CARE CARD",
+          copy: "BrAhMa with the A and M picked out, THE AI ON THE BULL, and the BULL ON / BULL OFF chips repeating as pattern. The disclosure line is set into the repeat so it travels with the cloth and can't be quietly dropped."
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
