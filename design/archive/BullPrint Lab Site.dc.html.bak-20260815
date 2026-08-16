@@ -20,8 +20,6 @@
   :focus-visible{outline:2px solid #E8B23A;outline-offset:3px}
   input::placeholder,textarea::placeholder{color:#8B8780}
   @keyframes bpTicker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @keyframes bpBullIn{0%{opacity:0;transform:translateY(14px) scale(.985)}60%{opacity:1}100%{opacity:1;transform:none}}
-  [data-herobull]{animation:bpBullIn 2200ms cubic-bezier(.2,.8,.2,1) 250ms both}
 
   @media (max-width:600px){
     [data-tickmeta]{display:none!important}
@@ -35,7 +33,6 @@
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     [data-ticker]{animation:none!important}
-    [data-herobull]{animation:none!important}
     *{transition-duration:.01ms!important}
   }
 </style>
@@ -97,33 +94,17 @@
 
   <!-- ============ HERO ============ -->
   <section id="hero" style="position:relative;background:#000;overflow:hidden;min-height:88vh;display:flex;align-items:center">
-
-    <div data-heroart style="position:absolute;right:-6%;top:16%;width:min(72%,880px);aspect-ratio:1.5;pointer-events:none">
-      <img src="uploads/images-1786710197897-v7um.png" alt="Gold TPU honeycomb insert, three-quarter macro view" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 40px 90px rgba(0,0,0,.92))">
-    </div>
-
+    <img data-heroart src="uploads/images-1786710197897-v7um.png" alt="Gold TPU honeycomb insert, three-quarter macro view" style="position:absolute;right:-6%;top:16%;width:min(72%,880px);filter:drop-shadow(0 40px 90px rgba(0,0,0,.92))">
     <div style="position:absolute;inset:0;background:radial-gradient(74% 96% at 6% 46%,rgba(11,11,13,.97) 0%,rgba(11,11,13,.74) 44%,transparent 76%)"></div>
     <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:64px 64px"></div>
-<svg data-herobull viewBox="0 0 120 100" aria-hidden="true" style="position:absolute;right:-3%;top:-6%;width:min(52%,640px);pointer-events:none">
-      <defs><linearGradient id="hbGold" x1="0" y1="0" x2=".75" y2="1"><stop offset="0" stop-color="#F5D07A"></stop><stop offset=".5" stop-color="#E8B23A"></stop><stop offset="1" stop-color="#8A6A1E"></stop></linearGradient></defs>
-      <g opacity=".14">
-        <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="url(#hbGold)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
-        <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="url(#hbGold)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"></path>
-        <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="url(#hbGold)" stroke-width="1.5" stroke-linejoin="round"></path>
-        <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="url(#hbGold)" stroke-width="1" opacity=".7"></path>
-        <ellipse cx="55" cy="70" rx="1.6" ry="2.2" fill="#E8B23A"></ellipse>
-        <ellipse cx="65" cy="70" rx="1.6" ry="2.2" fill="#E8B23A"></ellipse>
-      </g>
-    </svg>
     <div style="position:relative;width:100%;max-width:1280px;margin:0 auto;padding:96px 24px 72px;box-sizing:border-box">
       <div data-reveal style="max-width:620px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px">
           <span style="width:6px;height:6px;background:#E8B23A;display:block"></span>
           <span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">DROP 001 · GOLD TPU · LIVE</span>
         </div>
-        <h1 style="margin:0;font:900 clamp(40px,7.2vw,76px)/0.94 Archivo,sans-serif;letter-spacing:-.035em;text-wrap:balance;color:#F4F2ED">WE PRINT.</h1>
-        <div style="margin:14px 0 0;max-width:560px;font:500 clamp(8.5px,1.05vw,11px)/1.6 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8A6A1E;word-break:break-all">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</div>
-        <p style="margin:18px 0 0;font:600 clamp(17px,2.2vw,21px)/1.3 Archivo,sans-serif;color:#E8B23A">VibePrints with real utility.</p>
+        <h1 style="margin:0;font:900 clamp(40px,7.2vw,76px)/0.94 Archivo,sans-serif;letter-spacing:-.035em;text-wrap:balance;color:#F4F2ED">WE PRINT WHAT WE'RE BULLISH ON.</h1>
+        <p style="margin:22px 0 0;font:600 clamp(17px,2.2vw,21px)/1.3 Archivo,sans-serif;color:#E8B23A">VibePrints with real utility.</p>
         <p style="margin:20px 0 0;max-width:480px;font:400 clamp(14.5px,1.6vw,15.5px)/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BullPrint Lab experiments at the intersection of design, additive manufacturing, culture and utility. Every object starts as a question about geometry and ends as something you can wear out of the house.</p>
         <div style="margin-top:34px;display:flex;flex-wrap:wrap;gap:12px">
           <a href="#lab" style="padding:16px 26px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;transition:filter 180ms" style-hover="filter:brightness(1.08)">EXPLORE THE LAB</a>
@@ -587,85 +568,12 @@
     </div>
   </section>
 
-  <!-- ============ BULL FABRIC ============ -->
-  <section id="fabric" style="border-top:1px solid rgba(255,255,255,.07);background:#0B0B0D">
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-      <linearGradient id="stTobacco" x1="0" y1="0" x2=".6" y2="1">
-        <stop offset="0" stop-color="#5E4714"></stop><stop offset=".5" stop-color="#3E2F0C"></stop><stop offset="1" stop-color="#241B06"></stop>
-      </linearGradient>
-      <pattern id="stBtcBull" width="128" height="128" patternUnits="userSpaceOnUse">
-        <text x="6" y="78" fill="#E8B23A" style="font:900 74px Archivo,sans-serif;letter-spacing:-.02em">₿</text>
-        <g transform="translate(34,50) scale(1.55)"><g transform="translate(2.192,3.528) scale(0.1635)">
-          <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="#FBE9B0"></path>
-          <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="#FBE9B0"></path>
-          <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="#FBE9B0"></path>
-        </g></g>
-        <text x="98" y="118" fill="#B08C2A" style="font:900 30px Archivo,sans-serif;letter-spacing:-.02em">₿</text>
-        <text x="6" y="100" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.16em">₿ BULL</text>
-        <text x="6" y="120" fill="#8A6A1E" style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.14em">SATOSHI BULL</text>
-      </pattern>
-      <pattern id="stHash" width="486" height="112" patternUnits="userSpaceOnUse">
-        <text x="0" y="16" fill="#8A6A1E" style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.05em">000000000019d6689c085ae165831e934ff763ae46a2a6c1</text>
-        <text x="0" y="37" fill="#F7DFA4" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.05em">72b3f1b60a8ce26f · BLOCK 0 · 03 JAN 2009 ·</text>
-        <text x="0" y="58" fill="#E8B23A" style="font:900 15px Archivo,sans-serif;letter-spacing:.06em">BLOCK FOUND BULL</text>
-        <text x="192" y="58" fill="#8A6A1E" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.18em">SATOSHI BULL · NONCE 2083236893</text>
-        <text x="0" y="79" fill="#8A6A1E" style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.05em">00000000000000000007878ec04bb2b2e12317804810f4c2</text>
-        <text x="0" y="100" fill="#B08C2A" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.2em">SHA-256 · WE MINE IT AND WE PRINT IT ·</text>
-      </pattern>
-      <pattern id="stBrahma" width="324" height="132" patternUnits="userSpaceOnUse">
-        <text x="4" y="24" fill="#E8B23A" style="font:900 23px Archivo,sans-serif;letter-spacing:-.01em">Br<tspan fill="#FBE9B0">A</tspan>h<tspan fill="#FBE9B0">M</tspan>a</text>
-        <text x="106" y="21" fill="#8A6A1E" style="font:700 8.5px 'JetBrains Mono',monospace;letter-spacing:.2em">THE AI ON THE BULL</text>
-        <rect x="4" y="36" width="96" height="24" fill="none" stroke="#E8B23A" stroke-width="1.3"></rect>
-        <text x="30" y="53" fill="#F7DFA4" style="font:900 13px Archivo,sans-serif;letter-spacing:.04em">BULL ON</text>
-        <rect x="110" y="36" width="104" height="24" fill="none" stroke="#8A6A1E" stroke-width="1.3" stroke-dasharray="4 3"></rect>
-        <text x="120" y="53" fill="#B08C2A" style="font:900 13px Archivo,sans-serif;letter-spacing:.04em">BULL OFF</text>
-        <text x="4" y="80" fill="#8A6A1E" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em">PROTO 009 / V8 / INSPECTED</text>
-        <text x="4" y="100" fill="#B08C2A" style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.16em">RIDE AGAIN → GENERATE V9</text>
-        <text x="4" y="126" fill="#B08C2A" style="font:500 9px 'JetBrains Mono',monospace;letter-spacing:.22em">BrAhMa IS AN AI · A HUMAN SIGNS THE STAMP</text>
-      </pattern>
-    </defs></svg>
-
-    <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
-      <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
-        <div>
-          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">09 — BULL FABRIC</div>
-          <h2 style="margin:0;font:900 clamp(30px,4.8vw,56px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">WE PRINT THE CLOTH<br>TOO.</h2>
-        </div>
-        <p style="margin:0;max-width:440px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The mesh that lines the footbed is our own printed fabric. Same argument as the lattice: if the pattern is going to be there, it should be ours and it should say something true.</p>
-      </div>
-
-      <div data-reveal style="margin-top:44px;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px">
-        <sc-for list="{{ fabrics }}" as="fb" hint-placeholder-count="3">
-          <article style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D;display:flex;flex-direction:column;transition:border-color 200ms cubic-bezier(.2,.8,.2,1)" style-hover="border-color:rgba(232,178,58,.34)">
-            <div style="height:190px;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden">
-              <svg width="100%" height="190" role="img" aria-label="{{ fb.name }}" style="display:block">
-                <rect width="100%" height="190" fill="url(#stTobacco)"></rect>
-                <rect width="100%" height="190" fill="{{ fb.fill }}"></rect>
-              </svg>
-            </div>
-            <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:11px;flex:1">
-              <div style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:#8B8780">{{ fb.no }}</div>
-              <h3 style="margin:0;font:800 18px/1.15 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">{{ fb.name }}</h3>
-              <p style="margin:0;font:400 13px/1.65 Archivo,sans-serif;color:#8B8780">{{ fb.copy }}</p>
-              <div style="margin-top:auto;padding-top:14px;font:500 9.5px/1.7 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">{{ fb.spec }}</div>
-            </div>
-          </article>
-        </sc-for>
-      </div>
-
-      <div data-reveal style="margin-top:22px;padding:24px 26px;border:1px solid rgba(232,178,58,.28);background:#0E0E11">
-        <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">BULL BANDS — SAME CLOTH, NO PRINT TIME</div>
-        <p style="margin:12px 0 0;max-width:820px;font:400 14px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">The spacer mesh is already the right material for a headband: open-cell, wicking, holds a stretch without a seam. One cut piece, two stitched loops, 320 × 62 mm — the first BullPrint product that isn't printed and the only one that ships same day. Coming once we have a cut-and-sew partner; nothing on our floor makes it.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ DROPS ============ -->
   <section id="drops" style="border-top:1px solid rgba(255,255,255,.07)">
     <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
       <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap">
         <div>
-          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">10 — DROPS</div>
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">09 — DROPS</div>
           <h2 style="margin:0;font:900 clamp(30px,4.8vw,56px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">BULLPRINT DROPS</h2>
         </div>
         <p style="margin:0;max-width:400px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A">Limited experiments worth releasing into the world. Status is the real status — we don't run countdowns.</p>
@@ -694,7 +602,7 @@
     <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
       <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap">
         <div>
-          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">11 — EDITORIAL</div>
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">10 — EDITORIAL</div>
           <h2 style="margin:0;font:900 clamp(30px,4.8vw,56px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THE BULLPRINT</h2>
           <p style="margin:14px 0 0;font:400 italic 17px/1.4 Archivo,sans-serif;color:#E8B23A">Ideas worth leaving a mark.</p>
         </div>
@@ -747,7 +655,7 @@
     <div style="max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;box-sizing:border-box">
       <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap">
         <div>
-          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">12 — ORDER / FOOT PROFILE</div>
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">11 — ORDER / FOOT PROFILE</div>
           <h2 style="margin:0;font:900 clamp(30px,4.6vw,54px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">TELL US ABOUT<br>YOUR SHOES.</h2>
         </div>
         <p style="margin:0;max-width:440px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">We print each insert to a profile, not a shelf size. Six fields is all it takes — the lattice, the last and the arch geometry are derived from what you tell us here.</p>
@@ -893,7 +801,7 @@
   <section id="about" style="background:#0E0E11;border-top:1px solid rgba(255,255,255,.07)">
     <div data-two data-reveal style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,88px) 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
       <div>
-        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">13 — ABOUT</div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">12 — ABOUT</div>
         <h2 style="margin:0;font:900 clamp(26px,3.6vw,42px)/1.05 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">A SMALL LAB THAT<br>TAKES PRINTING SERIOUSLY.</h2>
         <p style="margin:22px 0 0;max-width:480px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BullPrint Lab lives in the tension between fun and rigor. The idea might make you smile. The execution should make you look twice. We design in CAD, print in house, wear the prototypes ourselves, and put a number on everything that leaves the bench.</p>
         <p style="margin:18px 0 0;max-width:480px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Talk to us about a collaboration, a material, or a print you think should exist.</p>
@@ -916,7 +824,7 @@
     <div style="position:absolute;inset:0;background:radial-gradient(60% 70% at 78% 40%,rgba(232,178,58,.10),transparent 72%)"></div>
     <div data-two data-reveal style="position:relative;max-width:1280px;margin:0 auto;padding:clamp(64px,9vw,100px) 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
       <div>
-        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">14 — CONTACT</div>
+        <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:20px">13 — CONTACT</div>
         <h2 style="margin:0;font:900 clamp(30px,4.8vw,54px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">CONTACT US.</h2>
         <p style="margin:22px 0 0;max-width:470px;font:400 15.5px/1.8 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Orders, custom runs, collaborations, materials, or a print you think should exist. A person from the lab answers — usually within a day.</p>
         <div style="margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.09)">
@@ -978,11 +886,11 @@
       <div style="font:900 clamp(44px,11vw,116px)/0.86 Archivo,sans-serif;letter-spacing:-.04em;background:linear-gradient(115deg,#8A6A1E,#F5D07A 30%,#E8B23A 55%,#A87F24 90%);-webkit-background-clip:text;background-clip:text;color:transparent">BULLPRINT LAB</div>
       <div style="margin-top:22px;display:flex;align-items:flex-end;justify-content:space-between;gap:36px;flex-wrap:wrap">
         <div>
-          <p style="margin:0;font:700 clamp(15px,2vw,17px)/1.3 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">WE PRINT BEST IN BULL.</p>
+          <p style="margin:0;font:700 clamp(15px,2vw,17px)/1.3 Archivo,sans-serif;letter-spacing:-.01em;color:#F4F2ED">WE PRINT WHAT WE'RE BULLISH ON.</p>
           <nav aria-label="Footer" style="margin-top:28px;display:flex;flex-wrap:wrap;gap:14px 26px;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em">
             <a href="https://x.com/bestinbull">X / @BESTINBULL</a>
             <a href="mailto:bullish@bullprintlab.com">BULLISH@BULLPRINTLAB.COM</a>
-            <a href="#journal">THE BULLPRINT</a><a href="#drops">DROPS</a><a href="#fabric">BULL FABRIC</a><a href="#custom">CUSTOM BULL</a><a href="#brahma">BrAhMa</a><a href="#lab">LAB</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
+            <a href="#journal">THE BULLPRINT</a><a href="#drops">DROPS</a><a href="#custom">CUSTOM BULL</a><a href="#brahma">BrAhMa</a><a href="#lab">LAB</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
           </nav>
         </div>
         <div style="display:flex;align-items:center;gap:14px">
@@ -1044,7 +952,7 @@ class Component extends DCLogic {
     window.addEventListener("scroll", this.onScroll, { passive: true });
     this.onScroll();
 
-    const ids = ["hero", "bullprint", "honeycomb", "drop", "exploded", "custom", "lab", "brahma", "bull", "fabric", "drops", "journal", "order", "about", "contact"];
+    const ids = ["hero", "bullprint", "honeycomb", "drop", "exploded", "custom", "lab", "brahma", "bull", "drops", "journal", "order", "about", "contact"];
     this.sectionObs = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) this.setState({ active: e.target.id });
@@ -1126,7 +1034,6 @@ class Component extends DCLogic {
       navItems: [
         { label: "LAB", href: "#lab", id: "lab" },
         { label: "DROPS", href: "#drops", id: "drops" },
-        { label: "FABRIC", href: "#fabric", id: "fabric" },
         { label: "CUSTOM", href: "#custom", id: "custom" },
         { label: "BrAhMa", href: "#brahma", id: "brahma" },
         { label: "THE BULLPRINT", href: "#journal", id: "journal" },
@@ -1155,21 +1062,6 @@ class Component extends DCLogic {
       cellCount: (Math.round(21000 / (cell * cell) / 10) * 10).toLocaleString() + " CELLS",
       massLabel: Math.round(58 + wall * 16 - cell * 2.2) + " G",
       feelLabel: feel,
-
-      fabrics: [
-        {
-          no: "PRINT 01", name: "₿ BULL", fill: "url(#stBtcBull)", spec: "128 MM REPEAT · LINING · BANDS",
-          copy: "The ₿ at full tile height with the bull crossing its stem, so the two marks share one silhouette. Smallest repeat we run and the only one that reads from across a room."
-        },
-        {
-          no: "PRINT 02", name: "BLOCK HASH", fill: "url(#stHash)", spec: "486 MM REPEAT · SWIMS LINING",
-          copy: "The genesis hash and a live block header set as continuous type. We mine, so the numbers are verifiable — which is the only reason they earn a place on the cloth."
-        },
-        {
-          no: "PRINT 03", name: "BrAhMa", fill: "url(#stBrahma)", spec: "324 MM REPEAT · PACKAGING",
-          copy: "The verdict system as pattern: BULL ON and BULL OFF repeating, with the AI disclosure set into the repeat so it travels with the cloth and can't be dropped."
-        }
-      ],
 
       dropFeatures: [
         "Open honeycomb lattice",
@@ -1257,8 +1149,8 @@ class Component extends DCLogic {
           border: "rgba(232,178,58,.34)", nameColor: "#F4F2ED", ctaColor: "#E8B23A"
         },
         {
-          no: "DROP 002", name: "BULL SLIDES", material: "TPU 95A / 90A + MESH", edition: "PROTO 009",
-          note: "Three printed parts, no adhesive in the load path. Band captured between two lattice layers, 38 mm heel, spacer-mesh footbed.", status: "IN THE LAB", cta: "ON THE BENCH",
+          no: "DROP 002", name: "BULL SLIDES", material: "TPU 95A · BLACK", edition: "PROTO 009",
+          note: "Recovery slide. One-piece lattice, 38 mm heel, drawing BPL-SL-013-B.", status: "IN THE LAB", cta: "ON THE BENCH",
           bg: "#101013", bgImg: this.lattice(1), bgSize: "26px 45px", bgPos: "50% 50%",
           statusFg: "#E8B23A", statusBg: "rgba(232,178,58,.12)", statusLine: "rgba(232,178,58,.4)",
           border: "rgba(255,255,255,.09)", nameColor: "#F4F2ED", ctaColor: "#8B8780"

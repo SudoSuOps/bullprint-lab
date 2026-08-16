@@ -3,3 +3,6 @@ node_modules/
 .wrangler/
 __pycache__/
 *.pyc
+
+# handoff copies of images already tracked in assets/ — 5.5 MB of duplicates
+design_handoff_bullprint_lab/assets/*.png

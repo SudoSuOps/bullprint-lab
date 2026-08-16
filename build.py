@@ -93,15 +93,31 @@ ASSETS = {
     "uploads/images-1786710214318-psa4.png": "assets/insert-spec-sheet.webp",
 }
 
-# The mark, as a favicon: the ₿ in brand gold on the brand near-black.
+# The mark, as a favicon: the BULL, line cut, in brand gold on the brand
+# near-black. BRAND.md assigns this cut to exactly this job — "Nav, badges,
+# favicon, emboss, <=32px" — and the modelled master is barred below 40px, so
+# the gradient bull would have turned to mush at 16. Stroke is ON THE PATHS and
+# never inherited through <use>: inherited paint is dropped when the DOM is
+# cloned for screenshot, PDF or PPTX export, and the mark ships blank.
+# Weight 8 is the 16px step of the published stroke scale
+# (2.2@96 · 3.4@48 · 5@30 · 6@24 · 6.5@22 · 8@16).
 # Square — BRAND.md is explicit that there is no border radius anywhere in the
 # system; the only rounded thing the brand makes is the part itself.
+# Paths are the line cut from design_handoff_bullprint_lab/assets/marks.svg.txt,
+# translated +13 in y to centre the silhouette (it spans y 9..84) in a 120 box.
 FAVICON = (
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'
-    '<rect width="64" height="64" fill="#0B0B0D"/>'
-    '<text x="32" y="45" font-family="Archivo,Helvetica,Arial,sans-serif"'
-    ' font-size="42" font-weight="800" fill="#E8B23A"'
-    ' text-anchor="middle">₿</text></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">'
+    '<rect width="120" height="120" fill="#0B0B0D"/>'
+    '<g transform="translate(0,13)" fill="none" stroke="#E8B23A" stroke-width="8"'
+    ' stroke-linejoin="round" stroke-linecap="round">'
+    '<path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39"/>'
+    '<path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39"/>'
+    '<path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67'
+    ' 43 54L41 35C41 29 44 25 50 25Z"/>'
+    '<path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62'
+    ' 52 57 60 57Z"/>'
+    '<path d="M66 44L75 42.5M54 44L45 42.5"/>'
+    '</g></svg>'
 )
 
 HEAD = f"""<title>{TITLE}</title>
@@ -282,7 +298,7 @@ def platform_compute(html: str) -> str:
         ("SOVEREIGN COMPUTE · GPU-01 · ON OUR FLOOR",
          "SOVEREIGN COMPUTE · GPU-01 + GPU-02 · ON OUR FLOOR"),
         ("ONE CARD RUNS THE WHOLE STACK.",
-         "EVERY CARD EARNS ITS JOB."),
+         "ONE CARD HOLDS THE WHOLE MODEL."),
 
         # -- the 96 GB "everything resident" claim does not survive 32 GB
         ("96 GB is enough to keep the interpreter, the concept model and "
@@ -290,25 +306,27 @@ def platform_compute(html: str) -> str:
          "jobs. Geometry itself never touches the GPU: OpenSCAD and CadQuery "
          "run deterministic on the Xeon, so a render burst can't block a part "
          "from generating.",
-         "Two cards serve the public queue and the scheduler routes by "
-         "capability — gpu-01 holds the interpreter, gpu-02 takes overflow. "
-         "The 96 GB workstation card is deliberately not on this path; it is "
-         "reserved for in-house design, where the work is ours and the latency "
-         "is nobody else's problem. Geometry itself never touches the GPU: "
-         "OpenSCAD and CadQuery run deterministic on the CPU, so a render "
-         "burst can't block a part from generating."),
+         "BrAhMa runs on Muse-Glimmer-30B, resident on the 96 GB card at "
+         "Q8_0 and never leaving it — 28 GB of weights against 96 GB of "
+         "board, so there is no eviction, no cold load between jobs, and 66 "
+         "GB still free for context and a second model. A 24 GB RTX 3090 "
+         "registers as gpu-02 and takes overflow at a lower quantisation, so "
+         "a queue degrades precision rather than dropping the job. Geometry "
+         "itself never touches the GPU: OpenSCAD and CadQuery run "
+         "deterministic on the CPU, so a render burst can't block a part "
+         "from generating."),
 
         # -- the rack is now two machines
         ('{ k: "GPU", v: "RTX 6000 BLACKWELL · 96 GB" },\n'
          '        { k: "CPU", v: "XEON W9-3475X · SAPPHIRE RAPIDS · 36C/72T" },\n'
          '        { k: "RAM", v: "256 GB KINGSTON FURY DDR5" },\n'
          '        { k: "STORAGE", v: "4 TB NVME · MODELS + GENERATED ASSETS" },',
-         '{ k: "GPU-01", v: "RTX 5090 · 32 GB · INTERPRETER" },\n'
+         '{ k: "GPU-01", v: "RTX PRO 6000 BLACKWELL · 96 GB · BrAhMa RESIDENT" },\n'
          '        { k: "GPU-02", v: "RTX 3090 · 24 GB · OVERFLOW" },\n'
-         '        { k: "CPU", v: "RYZEN 9 9950X3D 16C/32T · 5900X 12C/24T" },\n'
-         '        { k: "RAM", v: "60 GB + 62 GB DDR5" },\n'
+         '        { k: "CPU", v: "XEON W9-3475X 36C/72T · RYZEN 9 5900X 12C/24T" },\n'
+         '        { k: "RAM", v: "251 GB + 62 GB DDR5" },\n'
          '        { k: "STORAGE", v: "1.8 TB + 915 GB NVME · MODELS + ASSETS" },\n'
-         '        { k: "RESERVED", v: "RTX PRO 6000 96 GB · IN-HOUSE DESIGN ONLY" },'),
+         '        { k: "RUNTIME", v: "LLAMA.CPP B2271 · CUDA 12.8 · SM_120" },'),
 
         # -- worker registration reflects the card that answers
         ('worker: "gpu-01",\n'
@@ -318,15 +336,15 @@ def platform_compute(html: str) -> str:
          '        ram_gb: 256,\n'
          '        capabilities: ["text", "image", "vision", "3d", "render"]',
          'worker: "gpu-01",\n'
-         '        gpu: "RTX 5090",\n'
-         '        vram: 32,\n'
-         '        cpu: "Ryzen 9 9950X3D",\n'
-         '        ram_gb: 60,\n'
+         '        gpu: "RTX PRO 6000 Blackwell",\n'
+         '        vram: 96,\n'
+         '        cpu: "Xeon w9-3475X",\n'
+         '        ram_gb: 251,\n'
          '        capabilities: ["text", "vision", "structured-output"]'),
 
         # -- budget header: 32 GB, and it is a GGUF runtime, not FP8 vLLM
-        ("VRAM BUDGET — 96 GB, FULLY RESIDENT", "VRAM BUDGET — GPU-01 · 32 GB"),
-        ("FP8 · vLLM", "Q6_K · llama.cpp"),
+        ("VRAM BUDGET — 96 GB, FULLY RESIDENT", "VRAM BUDGET — GPU-01 · 96 GB, FULLY RESIDENT"),
+        ("FP8 · vLLM", "Q8_0 · llama.cpp"),
 
         # -- the stack that is actually resident. FLUX and Hunyuan3D are not
         #    deployed on any card in the fleet; listing them as resident on a
@@ -336,21 +354,24 @@ def platform_compute(html: str) -> str:
          '        { name: "FLUX.1-dev · FP8", role: "CONCEPT — visual direction render, never the artifact", gb: 17, pct: "17.7%", fg: "#F4F2ED" },\n'
          '        { name: "Hunyuan3D-2", role: "IMAGE → 3D — photo or sketch to rough mesh, then re-specced as BullSpec", gb: 12, pct: "12.5%", fg: "#F4F2ED" },\n'
          '        { name: "HEADROOM", role: "Burst renders and model swaps without eviction", gb: 9, pct: "9.4%", fg: "#8B8780" }',
-         '{ name: "Qwen3.8-27B · Q6_K", role: "INTERPRETER — prompt → BullSpec → OpenSCAD, structured output", gb: 26, pct: "81.0%", fg: "#F4F2ED" },\n'
-         '        { name: "KV CACHE · 64K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 4, pct: "12.5%", fg: "#F4F2ED" },\n'
-         '        { name: "HEADROOM", role: "Context growth and model swaps", gb: 2, pct: "6.5%", fg: "#8B8780" }'),
+         '{ name: "Muse-Glimmer-30B · Q8_0", role: "INTERPRETER — the model under BrAhMa: prompt → BullSpec → OpenSCAD", gb: 28, pct: "29.4%", fg: "#F4F2ED" },\n'
+         '        { name: "KV CACHE · 16K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 2, pct: "2.1%", fg: "#F4F2ED" },\n'
+         '        { name: "HEADROOM", role: "Context growth, a perception encoder, and a second model without eviction", gb: 66, pct: "68.5%", fg: "#8B8780" }'),
 
         # -- and the model call names the model that answers
         ("Qwen3-32B over anything bigger: at FP8 it leaves room for the entire "
          "visual stack plus a 128K context, and BullSpec generation is a "
          "structured-output problem, not a scale problem. Qwen2.5-Coder-32B is "
          "the drop-in fallback if pure OpenSCAD emission benchmarks better.",
-         "Qwen3.8-27B over anything bigger: BullSpec generation is a "
-         "structured-output problem, not a scale problem, and a 27B that fits "
-         "one card with room for context beats a 70B that pages. It runs at "
-         "Q6_K on gpu-01 and Q4_K_M on gpu-02, so overflow degrades quantisation "
-         "rather than dropping the job. Concept render and image-to-3D are "
-         "specified but not deployed — no card in the fleet holds them today.")
+         "Muse-Glimmer-30B at Q8_0 is the model under BrAhMa — near-lossless, "
+         "because BullSpec generation is a structured-output problem where "
+         "precision on the numbers matters more than parameter count. It is "
+         "too new for vLLM and for Ollama's bundled runtime, so it runs on "
+         "llama.cpp built from master against CUDA 12.8 for sm_120; that is "
+         "the price of being early, and it is paid once. Qwen3.8-27B holds "
+         "gpu-02 at Q4_K_M so overflow degrades quantisation rather than "
+         "dropping the job. Concept render and image-to-3D are specified but "
+         "not deployed — no card in the fleet holds them today.")
     ]
 
     for old, new in subs:
@@ -359,10 +380,10 @@ def platform_compute(html: str) -> str:
         html = html.replace(old, new, 1)
 
     # the retired claims must be gone, not merely edited around
-    for gone in ("ONE CARD RUNS THE WHOLE STACK", "96 GB, FULLY RESIDENT",
-                 "Qwen3-32B", "FLUX.1-dev", "Hunyuan3D-2", "no eviction"):
+    for gone in ("ONE CARD RUNS THE WHOLE STACK", "Qwen3-32B",
+                 "FLUX.1-dev", "Hunyuan3D-2"):
         assert gone not in html, f"platform compute: stale claim survived: {gone}"
-    print("  platform   COMPUTE repointed at the real fleet (gpu-01 5090 / gpu-02 3090)")
+    print("  platform   COMPUTE: BrAhMa on Muse-Glimmer-30B, gpu-01 RTX PRO 6000")
     return html
 
 

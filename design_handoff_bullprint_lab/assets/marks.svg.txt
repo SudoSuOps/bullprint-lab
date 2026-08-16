@@ -1,0 +1,121 @@
+<!-- BULLPRINT LAB — MARKS v2 (the golden bull). Supersedes the flat mark in marks-v1 below. -->
+
+<!-- =========================================================
+     1. GOLDEN BULL — MODELLED MASTER (use at >=40px only)
+     viewBox 0 0 120 100. Gradient-filled. Hero, seals, footer.
+     ========================================================= -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100">
+  <defs>
+    <linearGradient id="bull" x1="0" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#FBE9B0"/><stop offset=".18" stop-color="#F5D07A"/>
+      <stop offset=".44" stop-color="#E8B23A"/><stop offset=".72" stop-color="#A87F24"/><stop offset="1" stop-color="#7A5C18"/>
+    </linearGradient>
+    <linearGradient id="horn" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#8A6A1E"/><stop offset=".4" stop-color="#E8B23A"/>
+      <stop offset=".7" stop-color="#FBE9B0"/><stop offset="1" stop-color="#C39A2C"/>
+    </linearGradient>
+  </defs>
+  <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#horn)"/>
+  <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#horn)"/>
+  <path d="M74 34C82 36 86 42 84 47C79 45 75 41 73 38Z" fill="#A87F24"/>
+  <path d="M46 34C38 36 34 42 36 47C41 45 45 41 47 38Z" fill="#A87F24"/>
+  <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#bull)"/>
+  <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="#8A6A1E" opacity=".55"/>
+  <ellipse cx="55" cy="70" rx="2.6" ry="3.4" fill="#4A3810"/><ellipse cx="65" cy="70" rx="2.6" ry="3.4" fill="#4A3810"/>
+  <path d="M66 44L75 42L73.5 49L66 47.6Z" fill="#3A2C0C"/><path d="M54 44L45 42L46.5 49L54 47.6Z" fill="#3A2C0C"/>
+  <path d="M53 31H67L64 37H56Z" fill="#FBE9B0" opacity=".28"/>
+</svg>
+
+<!-- =========================================================
+     2. GOLDEN BULL — LINE CUT (use at <=32px, and for favicon,
+     emboss and single-colour print). SAME silhouette.
+     Stroke weight scales with size: 2.2@96px · 3.4@48 · 5@30
+     · 6@24 · 6.5@22 · 8@16. Put stroke ON THE PATHS — never
+     inherit through <use>, it is lost in DOM-clone export.
+     ========================================================= -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" fill="none" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="6"/>
+  <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="6"/>
+  <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="6"/>
+  <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="6"/>
+  <path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="6"/>
+</svg>
+
+<!-- =========================================================
+     3. BEST IN BULL™ SEAL — GENESIS RING (use at >=280px)
+     Outer track is the Bitcoin genesis block hash, 03 Jan 2009.
+     Letter-spacing .62em is what closes the 64 chars into a
+     full ring on r=90 — do not change the font size without
+     re-tuning it (target computed length ~562 of 565 units).
+     ids must be unique per instance on a page.
+     ========================================================= -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <path id="hashRing" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"/>
+    <path id="nameRing" d="M100,100 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"/>
+    <linearGradient id="sealGold" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#8A6A1E"/><stop offset=".4" stop-color="#E8B23A"/>
+      <stop offset=".7" stop-color="#FBE9B0"/><stop offset="1" stop-color="#C39A2C"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".5"/>
+  <text fill="#8A6A1E" style="font:500 7.2px 'JetBrains Mono',monospace;letter-spacing:.62em">
+    <textPath href="#hashRing" startOffset="0.4%">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</textPath>
+  </text>
+  <circle cx="100" cy="100" r="81" fill="none" stroke="url(#sealGold)" stroke-width="3"/>
+  <circle cx="100" cy="100" r="52" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"/>
+  <text fill="#E8B23A" style="font:700 11px 'JetBrains Mono',monospace;letter-spacing:.5em">
+    <textPath href="#nameRing" startOffset="1.5%">BEST IN BULL™ · BULLPRINT LAB · </textPath>
+  </text>
+  <!-- modelled bull, scaled 0.78, centred at (100,94) -->
+  <text x="100" y="134" text-anchor="middle" fill="#8A6A1E" style="font:500 7.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED</text>
+</svg>
+
+<!-- Small seal (hero / footer / inline stamp, <=120px): drop the hash ring
+     entirely — 64 hex characters turn to mush. Use a plain r=94 ring at
+     stroke-width 4 with the line-cut bull inside. -->
+
+<!-- ============ MARKS v1 (superseded, kept for reference) ============ -->
+
+<!-- BullPrint Lab marks. Single stroke colour, currentColor-friendly. -->
+
+<!-- bull-mark.svg  (viewBox 0 0 64 64) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
+  <path d="M22 22H42V32L32 43L22 32Z"/>
+  <path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"/>
+  <rect x="26.6" y="26.4" width="3.2" height="3.2" fill="currentColor" stroke="none"/>
+  <rect x="34.2" y="26.4" width="3.2" height="3.2" fill="currentColor" stroke="none"/>
+</svg>
+
+<!-- bull-mark-hex.svg — containment field variant -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+  <path d="M32 3.5L57 18V46L32 60.5L7 46V18Z" opacity=".4"/>
+  <path d="M22 22H42V32L32 43L22 32Z"/>
+  <path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"/>
+  <rect x="26.6" y="26.4" width="3.2" height="3.2" fill="currentColor" stroke="none"/>
+  <rect x="34.2" y="26.4" width="3.2" height="3.2" fill="currentColor" stroke="none"/>
+</svg>
+
+<!-- best-in-bull-seal.svg (viewBox 0 0 200 200). Ring text uses textPath; ids must be unique per instance on a page. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <path id="sealRing" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/>
+    <linearGradient id="sealGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7A5C18"/><stop offset=".3" stop-color="#F7D68C"/>
+      <stop offset=".58" stop-color="#E8B23A"/><stop offset="1" stop-color="#8A6A1E"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="96" fill="none" stroke="url(#sealGold)" stroke-width="1" opacity=".45"/>
+  <circle cx="100" cy="100" r="87" fill="none" stroke="url(#sealGold)" stroke-width="3.4"/>
+  <circle cx="100" cy="100" r="57" fill="none" stroke="url(#sealGold)" stroke-width="1" opacity=".5"/>
+  <text fill="#E8B23A" style="font:700 13.5px 'JetBrains Mono',monospace;letter-spacing:.34em">
+    <textPath href="#sealRing" startOffset="2%">BEST IN BULL™ · BULLPRINT LAB · </textPath>
+  </text>
+  <g transform="translate(100,100) scale(1.3) translate(-32,-30)" fill="none" stroke="url(#sealGold)" stroke-width="2.2" stroke-linejoin="round">
+    <path d="M22 22H42V32L32 43L22 32Z"/>
+    <path d="M22 22L14 15M42 22L50 15M14 15L11 21M50 15L53 21"/>
+    <rect x="26.6" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"/>
+    <rect x="34.2" y="26.4" width="3.2" height="3.2" fill="#E8B23A" stroke="none"/>
+  </g>
+  <text x="100" y="154" text-anchor="middle" fill="#8A6A1E" style="font:500 8.5px 'JetBrains Mono',monospace;letter-spacing:.2em">INSPECTED · SERIALIZED</text>
+</svg>

@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://bullprintlab.com/platform/">
 <meta name="theme-color" content="#0B0B0D">
 <meta name="color-scheme" content="dark">
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMEIwQjBEIi8+PHRleHQgeD0iMzIiIHk9IjQ1IiBmb250LWZhbWlseT0iQXJjaGl2byxIZWx2ZXRpY2EsQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI0MiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI0U4QjIzQSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+4oK/PC90ZXh0Pjwvc3ZnPg==">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iIzBCMEIwRCIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMTMpIiBmaWxsPSJub25lIiBzdHJva2U9IiNFOEIyM0EiIHN0cm9rZS13aWR0aD0iOCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNNzQgMzBDODQgMjggOTYgMjMgMTA0IDEzQzEwNyA5IDExMiAxMSAxMTAgMTZDMTA0IDMwIDkwIDM5IDc2IDM5Ii8+PHBhdGggZD0iTTQ2IDMwQzM2IDI4IDI0IDIzIDE2IDEzQzEzIDkgOCAxMSAxMCAxNkMxNiAzMCAzMCAzOSA0NCAzOSIvPjxwYXRoIGQ9Ik02MCAyNUg3MEM3NiAyNSA3OSAyOSA3OSAzNUw3NyA1NEM3NyA2NyA3MCA3NiA2MCA4MkM1MCA3NiA0MyA2NyA0MyA1NEw0MSAzNUM0MSAyOSA0NCAyNSA1MCAyNVoiLz48cGF0aCBkPSJNNjAgNTdDNjggNTcgNzMgNjIgNzMgNjhDNzMgNzYgNjcgODIgNjAgODRDNTMgODIgNDcgNzYgNDcgNjhDNDcgNjIgNTIgNTcgNjAgNTdaIi8+PHBhdGggZD0iTTY2IDQ0TDc1IDQyLjVNNTQgNDRMNDUgNDIuNSIvPjwvZz48L3N2Zz4=">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BullPrint Lab">
 <meta property="og:url" content="https://bullprintlab.com/platform/">
@@ -769,8 +769,8 @@
         <span data-dc-tpl="200" style="width: 5px; height: 5px; background: rgb(232, 178, 58); display: block;"></span>
         <span data-dc-tpl="201" style="font: 500 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.24em; color: rgb(232, 178, 58);">SOVEREIGN COMPUTE · GPU-01 + GPU-02 · ON OUR FLOOR</span>
       </div>
-      <h1 data-dc-tpl="202" style="margin: 0px; font: 900 clamp(28px, 4.4vw, 46px) / 1 Archivo, sans-serif; letter-spacing: -0.03em; color: rgb(244, 242, 237);">EVERY CARD EARNS ITS JOB.</h1>
-      <p data-dc-tpl="203" style="margin: 16px 0px 0px; max-width: 720px; font: 400 14.5px / 1.75 Archivo, sans-serif; color: rgb(165, 161, 154); text-wrap: pretty;">Two cards serve the public queue and the scheduler routes by capability — gpu-01 holds the interpreter, gpu-02 takes overflow. The 96 GB workstation card is deliberately not on this path; it is reserved for in-house design, where the work is ours and the latency is nobody else's problem. Geometry itself never touches the GPU: OpenSCAD and CadQuery run deterministic on the CPU, so a render burst can't block a part from generating.</p>
+      <h1 data-dc-tpl="202" style="margin: 0px; font: 900 clamp(28px, 4.4vw, 46px) / 1 Archivo, sans-serif; letter-spacing: -0.03em; color: rgb(244, 242, 237);">ONE CARD HOLDS THE WHOLE MODEL.</h1>
+      <p data-dc-tpl="203" style="margin: 16px 0px 0px; max-width: 720px; font: 400 14.5px / 1.75 Archivo, sans-serif; color: rgb(165, 161, 154); text-wrap: pretty;">BrAhMa runs on Muse-Glimmer-30B, resident on the 96 GB card at Q8_0 and never leaving it — 28 GB of weights against 96 GB of board, so there is no eviction, no cold load between jobs, and 66 GB still free for context and a second model. A 24 GB RTX 3090 registers as gpu-02 and takes overflow at a lower quantisation, so a queue degrades precision rather than dropping the job. Geometry itself never touches the GPU: OpenSCAD and CadQuery run deterministic on the CPU, so a render burst can't block a part from generating.</p>
 
       <div data-dc-tpl="204" style="margin-top: 34px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; align-items: start;">
         <div data-dc-tpl="205" style="display: flex; flex-direction: column; gap: 20px;">
@@ -779,7 +779,7 @@
             <div data-dc-tpl="208" style="display: flex; flex-direction: column; gap: 1px; background: rgba(255, 255, 255, 0.08);">
               
                 <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
-                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">GPU-01</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RTX 5090 · 32 GB · INTERPRETER</span></span>
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">GPU-01</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RTX PRO 6000 BLACKWELL · 96 GB · BrAhMa RESIDENT</span></span>
                 </div>
               
                 <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
@@ -787,11 +787,11 @@
                 </div>
               
                 <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
-                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">CPU</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RYZEN 9 9950X3D 16C/32T · 5900X 12C/24T</span></span>
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">CPU</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">XEON W9-3475X 36C/72T · RYZEN 9 5900X 12C/24T</span></span>
                 </div>
               
                 <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
-                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">RAM</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">60 GB + 62 GB DDR5</span></span>
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">RAM</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">251 GB + 62 GB DDR5</span></span>
                 </div>
               
                 <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
@@ -799,7 +799,7 @@
                 </div>
               
                 <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
-                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">RESERVED</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">RTX PRO 6000 96 GB · IN-HOUSE DESIGN ONLY</span></span>
+                  <span data-dc-tpl="211" style="color: rgb(139, 135, 128);"><span class="sc-interp">RUNTIME</span></span><span data-dc-tpl="212" style="color: rgb(244, 242, 237); text-align: right;"><span class="sc-interp">LLAMA.CPP B2271 · CUDA 12.8 · SM_120</span></span>
                 </div>
               
                 <div data-dc-tpl="210" style="background: rgb(11, 11, 13); padding: 12px 16px; display: flex; justify-content: space-between; gap: 14px; font: 500 10.5px / 1.5 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em;">
@@ -816,10 +816,10 @@
             <div data-dc-tpl="214" style="padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font: 700 10px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(139, 135, 128);">WORKER REGISTRATION — SCHEDULER ROUTES BY CAPABILITY</div>
             <pre data-dc-tpl="215" style="margin: 0px; padding: 16px; font: 500 11.5px / 1.7 &quot;JetBrains Mono&quot;, monospace; color: rgb(165, 161, 154); white-space: pre; overflow-x: auto;"><span class="sc-interp">{
   "worker": "gpu-01",
-  "gpu": "RTX 5090",
-  "vram": 32,
-  "cpu": "Ryzen 9 9950X3D",
-  "ram_gb": 60,
+  "gpu": "RTX PRO 6000 Blackwell",
+  "vram": 96,
+  "cpu": "Xeon w9-3475X",
+  "ram_gb": 251,
   "capabilities": [
     "text",
     "vision",
@@ -832,49 +832,49 @@
 
         <div data-dc-tpl="217" style="border: 1px solid rgba(255, 255, 255, 0.09); background: rgb(11, 11, 13);">
           <div data-dc-tpl="218" style="padding: 16px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-            <span data-dc-tpl="219" style="font: 700 10.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);">VRAM BUDGET — GPU-01 · 32 GB</span>
-            <span data-dc-tpl="220" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);">Q6_K · llama.cpp</span>
+            <span data-dc-tpl="219" style="font: 700 10.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.2em; color: rgb(232, 178, 58);">VRAM BUDGET — GPU-01 · 96 GB, FULLY RESIDENT</span>
+            <span data-dc-tpl="220" style="font: 500 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.12em; color: rgb(139, 135, 128);">Q8_0 · llama.cpp</span>
           </div>
           <div data-dc-tpl="221" style="padding: 18px; display: flex; flex-direction: column; gap: 16px;">
             <div data-dc-tpl="222" style="display: flex; height: 14px; border: 1px solid rgba(255, 255, 255, 0.14);">
               
-                <div data-dc-tpl="224" title="Qwen3.8-27B · Q6_K" style="width: 81%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 1;"></div>
+                <div data-dc-tpl="224" title="Muse-Glimmer-30B · Q8_0" style="width: 29.4%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 1;"></div>
               
-                <div data-dc-tpl="224" title="KV CACHE · 64K CTX" style="width: 12.5%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 0.84;"></div>
+                <div data-dc-tpl="224" title="KV CACHE · 16K CTX" style="width: 2.1%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 0.84;"></div>
               
-                <div data-dc-tpl="224" title="HEADROOM" style="width: 6.5%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 0.68;"></div>
+                <div data-dc-tpl="224" title="HEADROOM" style="width: 68.5%; background: linear-gradient(120deg, rgb(245, 208, 122), rgb(232, 178, 58) 55%, rgb(168, 127, 36)); border-right: 1px solid rgb(11, 11, 13); opacity: 0.68;"></div>
               
             </div>
             <div data-dc-tpl="225" style="display: flex; flex-direction: column; gap: 1px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.08);">
               
                 <div data-dc-tpl="227" style="background: rgb(14, 14, 17); padding: 13px 15px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline;">
                   <div data-dc-tpl="228">
-                    <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(244, 242, 237);"><span class="sc-interp">Qwen3.8-27B · Q6_K</span></div>
-                    <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">INTERPRETER — prompt → BullSpec → OpenSCAD, structured output</span></div>
+                    <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(244, 242, 237);"><span class="sc-interp">Muse-Glimmer-30B · Q8_0</span></div>
+                    <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">INTERPRETER — the model under BrAhMa: prompt → BullSpec → OpenSCAD</span></div>
                   </div>
-                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">26</span> GB</span>
+                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">28</span> GB</span>
                 </div>
               
                 <div data-dc-tpl="227" style="background: rgb(14, 14, 17); padding: 13px 15px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline;">
                   <div data-dc-tpl="228">
-                    <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(244, 242, 237);"><span class="sc-interp">KV CACHE · 64K CTX</span></div>
+                    <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(244, 242, 237);"><span class="sc-interp">KV CACHE · 16K CTX</span></div>
                     <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">Long design conversations without re-reading the spec each turn</span></div>
                   </div>
-                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">4</span> GB</span>
+                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">2</span> GB</span>
                 </div>
               
                 <div data-dc-tpl="227" style="background: rgb(14, 14, 17); padding: 13px 15px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline;">
                   <div data-dc-tpl="228">
                     <div data-dc-tpl="229" style="font: 700 12px / 1.3 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.06em; color: rgb(139, 135, 128);"><span class="sc-interp">HEADROOM</span></div>
-                    <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">Context growth and model swaps</span></div>
+                    <div data-dc-tpl="230" style="margin-top: 5px; font: 400 12px / 1.5 Archivo, sans-serif; color: rgb(139, 135, 128);"><span class="sc-interp">Context growth, a perception encoder, and a second model without eviction</span></div>
                   </div>
-                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">2</span> GB</span>
+                  <span data-dc-tpl="231" style="flex: 0 0 auto; font: 700 12px / 1 &quot;JetBrains Mono&quot;, monospace; color: rgb(232, 178, 58);"><span class="sc-interp">66</span> GB</span>
                 </div>
               
             </div>
             <div data-dc-tpl="232" style="padding: 14px 16px; border: 1px solid rgba(232, 178, 58, 0.28); background: rgb(14, 14, 17);">
               <div data-dc-tpl="233" style="font: 700 9.5px / 1 &quot;JetBrains Mono&quot;, monospace; letter-spacing: 0.18em; color: rgb(232, 178, 58);">THE MODEL CALL</div>
-              <p data-dc-tpl="234" style="margin: 10px 0px 0px; font: 400 12.5px / 1.65 Archivo, sans-serif; color: rgb(165, 161, 154); text-wrap: pretty;">Qwen3.8-27B over anything bigger: BullSpec generation is a structured-output problem, not a scale problem, and a 27B that fits one card with room for context beats a 70B that pages. It runs at Q6_K on gpu-01 and Q4_K_M on gpu-02, so overflow degrades quantisation rather than dropping the job. Concept render and image-to-3D are specified but not deployed — no card in the fleet holds them today. No open model emits trustworthy triangles — the models write specs, the CAD engine writes geometry. That split is the product.</p>
+              <p data-dc-tpl="234" style="margin: 10px 0px 0px; font: 400 12.5px / 1.65 Archivo, sans-serif; color: rgb(165, 161, 154); text-wrap: pretty;">Muse-Glimmer-30B at Q8_0 is the model under BrAhMa — near-lossless, because BullSpec generation is a structured-output problem where precision on the numbers matters more than parameter count. It is too new for vLLM and for Ollama's bundled runtime, so it runs on llama.cpp built from master against CUDA 12.8 for sm_120; that is the price of being early, and it is paid once. Qwen3.8-27B holds gpu-02 at Q4_K_M so overflow degrades quantisation rather than dropping the job. Concept render and image-to-3D are specified but not deployed — no card in the fleet holds them today. No open model emits trustworthy triangles — the models write specs, the CAD engine writes geometry. That split is the product.</p>
             </div>
           </div>
         </div>
@@ -1244,8 +1244,8 @@
         <span style="width:5px;height:5px;background:#E8B23A;display:block"></span>
         <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#E8B23A">SOVEREIGN COMPUTE · GPU-01 + GPU-02 · ON OUR FLOOR</span>
       </div>
-      <h1 style="margin:0;font:900 clamp(28px,4.4vw,46px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">EVERY CARD EARNS ITS JOB.</h1>
-      <p style="margin:16px 0 0;max-width:720px;font:400 14.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Two cards serve the public queue and the scheduler routes by capability — gpu-01 holds the interpreter, gpu-02 takes overflow. The 96 GB workstation card is deliberately not on this path; it is reserved for in-house design, where the work is ours and the latency is nobody else's problem. Geometry itself never touches the GPU: OpenSCAD and CadQuery run deterministic on the CPU, so a render burst can't block a part from generating.</p>
+      <h1 style="margin:0;font:900 clamp(28px,4.4vw,46px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">ONE CARD HOLDS THE WHOLE MODEL.</h1>
+      <p style="margin:16px 0 0;max-width:720px;font:400 14.5px/1.75 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">BrAhMa runs on Muse-Glimmer-30B, resident on the 96 GB card at Q8_0 and never leaving it — 28 GB of weights against 96 GB of board, so there is no eviction, no cold load between jobs, and 66 GB still free for context and a second model. A 24 GB RTX 3090 registers as gpu-02 and takes overflow at a lower quantisation, so a queue degrades precision rather than dropping the job. Geometry itself never touches the GPU: OpenSCAD and CadQuery run deterministic on the CPU, so a render burst can't block a part from generating.</p>
 
       <div style="margin-top:34px;display:grid;grid-template-columns:1fr 1.2fr;gap:20px;align-items:start">
         <div style="display:flex;flex-direction:column;gap:20px">
@@ -1268,8 +1268,8 @@
 
         <div style="border:1px solid rgba(255,255,255,.09);background:#0B0B0D">
           <div style="padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:baseline;gap:12px">
-            <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">VRAM BUDGET — GPU-01 · 32 GB</span>
-            <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">Q6_K · llama.cpp</span>
+            <span style="font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">VRAM BUDGET — GPU-01 · 96 GB, FULLY RESIDENT</span>
+            <span style="font:500 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">Q8_0 · llama.cpp</span>
           </div>
           <div style="padding:18px;display:flex;flex-direction:column;gap:16px">
             <div style="display:flex;height:14px;border:1px solid rgba(255,255,255,.14)">
@@ -1290,7 +1290,7 @@
             </div>
             <div style="padding:14px 16px;border:1px solid rgba(232,178,58,.28);background:#0E0E11">
               <div style="font:700 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#E8B23A">THE MODEL CALL</div>
-              <p style="margin:10px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Qwen3.8-27B over anything bigger: BullSpec generation is a structured-output problem, not a scale problem, and a 27B that fits one card with room for context beats a 70B that pages. It runs at Q6_K on gpu-01 and Q4_K_M on gpu-02, so overflow degrades quantisation rather than dropping the job. Concept render and image-to-3D are specified but not deployed — no card in the fleet holds them today. No open model emits trustworthy triangles — the models write specs, the CAD engine writes geometry. That split is the product.</p>
+              <p style="margin:10px 0 0;font:400 12.5px/1.65 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Muse-Glimmer-30B at Q8_0 is the model under BrAhMa — near-lossless, because BullSpec generation is a structured-output problem where precision on the numbers matters more than parameter count. It is too new for vLLM and for Ollama's bundled runtime, so it runs on llama.cpp built from master against CUDA 12.8 for sm_120; that is the price of being early, and it is paid once. Qwen3.8-27B holds gpu-02 at Q4_K_M so overflow degrades quantisation rather than dropping the job. Concept render and image-to-3D are specified but not deployed — no card in the fleet holds them today. No open model emits trustworthy triangles — the models write specs, the CAD engine writes geometry. That split is the product.</p>
             </div>
           </div>
         </div>
@@ -1594,27 +1594,27 @@ class Component extends DCLogic {
       onCompute: s.screen === "compute",
 
       rackRows: [
-        { k: "GPU-01", v: "RTX 5090 · 32 GB · INTERPRETER" },
+        { k: "GPU-01", v: "RTX PRO 6000 BLACKWELL · 96 GB · BrAhMa RESIDENT" },
         { k: "GPU-02", v: "RTX 3090 · 24 GB · OVERFLOW" },
-        { k: "CPU", v: "RYZEN 9 9950X3D 16C/32T · 5900X 12C/24T" },
-        { k: "RAM", v: "60 GB + 62 GB DDR5" },
+        { k: "CPU", v: "XEON W9-3475X 36C/72T · RYZEN 9 5900X 12C/24T" },
+        { k: "RAM", v: "251 GB + 62 GB DDR5" },
         { k: "STORAGE", v: "1.8 TB + 915 GB NVME · MODELS + ASSETS" },
-        { k: "RESERVED", v: "RTX PRO 6000 96 GB · IN-HOUSE DESIGN ONLY" },
+        { k: "RUNTIME", v: "LLAMA.CPP B2271 · CUDA 12.8 · SM_120" },
         { k: "QUEUE", v: "REDIS · CELERY · CAPABILITY-ROUTED" },
         { k: "ISOLATION", v: "CAD RUNS IN A NO-NETWORK CONTAINER" }
       ],
       workerJson: JSON.stringify({
         worker: "gpu-01",
-        gpu: "RTX 5090",
-        vram: 32,
-        cpu: "Ryzen 9 9950X3D",
-        ram_gb: 60,
+        gpu: "RTX PRO 6000 Blackwell",
+        vram: 96,
+        cpu: "Xeon w9-3475X",
+        ram_gb: 251,
         capabilities: ["text", "vision", "structured-output"]
       }, null, 2),
       modelStack: [
-        { name: "Qwen3.8-27B · Q6_K", role: "INTERPRETER — prompt → BullSpec → OpenSCAD, structured output", gb: 26, pct: "81.0%", fg: "#F4F2ED" },
-        { name: "KV CACHE · 64K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 4, pct: "12.5%", fg: "#F4F2ED" },
-        { name: "HEADROOM", role: "Context growth and model swaps", gb: 2, pct: "6.5%", fg: "#8B8780" }
+        { name: "Muse-Glimmer-30B · Q8_0", role: "INTERPRETER — the model under BrAhMa: prompt → BullSpec → OpenSCAD", gb: 28, pct: "29.4%", fg: "#F4F2ED" },
+        { name: "KV CACHE · 16K CTX", role: "Long design conversations without re-reading the spec each turn", gb: 2, pct: "2.1%", fg: "#F4F2ED" },
+        { name: "HEADROOM", role: "Context growth, a perception encoder, and a second model without eviction", gb: 66, pct: "68.5%", fg: "#8B8780" }
       ].map(function (m, i) { m.barOp = i === 4 ? ".25" : String(1 - i * 0.16); return m; }),
       jobStates: ["QUEUED", "INTERPRETING", "GENERATING_GEOMETRY", "RENDERING", "VALIDATING", "COMPLETE"].map((j, i) => ({
         label: j, fg: i === 5 ? "#5FD38A" : i > 0 && i < 5 ? "#E8B23A" : "#8B8780"
