@@ -96,14 +96,25 @@ from `content/bands-static.md`. It is deliberately **not** a prerender that gets
 removed: a visitor who can run the animation still needs to read what the thing
 is made of and what is not settled yet.
 
-**The two promo images are not in the repo.** They live in the design project as
-`uploads/pasted-1786883724308-0.png` (the band) and
-`uploads/pasted-1786883900528-0.png` (the coin), and the design file read caps at
-256 KiB, which neither fits under. Export them and drop them in as
-`assets/bull-band.webp` and `assets/bull-coin.webp` (`.png`/`.jpg` also work).
-Until then `build.py` prints exactly what is missing, does not publish `/bands/`,
-leaves it out of the sitemap, and clears any stale output — a page whose images
-404 is worse than no page.
+**CI never needs node.** The compiled modules and `bands/.sources.sha256` are
+committed, so an ordinary build finds the fingerprint current and reuses them —
+no node, no 3 MB Babel fetch, nothing to compile. The toolchain is only needed
+when `design/*.jsx` actually moves. If it has moved and node is missing, the
+build **stops** rather than publishing a promo that silently disagrees with the
+design it claims to be generated from; the fix it prints is to build locally and
+commit `bands/` with the design change. The fingerprint is content-hashed, not
+mtime-compared — a fresh `git clone` stamps every file with the checkout time
+and mtimes would call a perfectly current tree stale.
+
+**The two promo images are in the repo now.** `assets/bull-band.webp` and
+`assets/bull-coin.webp`, with the PNG originals kept beside them like every other
+asset here. They came out of the design handoff bundle; `coin-best-in-bull.png`
+was verified byte-for-byte against the first 196 KB of the design project's own
+`uploads/pasted-1786883900528-0.png` rather than matched by filename.
+
+If either is ever removed, `build.py` prints exactly what is missing, does not
+publish `/bands/`, leaves it out of the sitemap, and clears the stale output — a
+page whose images 404 is worse than no page.
 
 ## Deploying
 

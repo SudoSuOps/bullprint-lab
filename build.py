@@ -62,6 +62,7 @@ import json
 import os
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -665,8 +666,71 @@ def bands_asset(upload: str, stem: str) -> str | None:
     return None
 
 
-def compile_bands_jsx(images: dict) -> None:
-    """design/*.jsx -> bands/*.js, then the two mechanical corrections."""
+BANDS_STAMP = BANDS_DIR / ".sources.sha256"
+
+
+def bands_fingerprint(images: dict) -> str:
+    """What the compiled modules were built FROM.
+
+    Content-hashed, not mtime-compared: a fresh `git clone` stamps every file
+    with the checkout time, so mtimes would say "stale" on a tree that is
+    perfectly current. The image mapping and the brand correction are folded in
+    because both are applied to the compiled output — change either and the
+    committed .js really is out of date.
+    """
+    h = hashlib.sha256()
+    for n in BANDS_JSX:
+        h.update(n.encode())
+        h.update(hashlib.sha256((ROOT / "design" / n).read_bytes()).digest())
+    h.update(repr(sorted(images.items())).encode())
+    h.update(b"BULL PRINT LABS->BULLPRINT LAB")
+    return h.hexdigest()
+
+
+def bands_output_current(want: str) -> bool:
+    """True when the committed bands/*.js already match the design on disk."""
+    if not BANDS_STAMP.exists():
+        return False
+    if BANDS_STAMP.read_text().strip() != want:
+        return False
+    return all((BANDS_DIR / f"{n[:-4]}.js").exists() for n in BANDS_JSX)
+
+
+def compile_bands_jsx(images: dict) -> bool:
+    """design/*.jsx -> bands/*.js, then the two mechanical corrections.
+
+    The toolchain — node, and a 3 MB Babel fetched over the network — is needed
+    only when the design has actually MOVED. The compiled modules are committed,
+    so the ordinary CI build has nothing to compile and needs neither.
+
+    Three outcomes, in order:
+      current + committed  -> reuse, say so, touch nothing
+      design moved + tools -> recompile
+      design moved, no tools -> STOP. Publishing a page built from source we
+        cannot compile would ship a promo that silently disagrees with the
+        design it claims to be generated from, which is the one thing this
+        build exists to prevent.
+    """
+    want = bands_fingerprint(images)
+    if bands_output_current(want):
+        print(f"  bands      jsx        up to date ({want[:12]}) — "
+              "no node, no Babel, nothing to do")
+        return True
+
+    have_node = shutil.which("node") is not None
+    if not have_node:
+        sys.exit(
+            "bands: design/*.jsx has changed and node is not on PATH.\n"
+            "  The compiled modules in bands/ are committed precisely so a CI\n"
+            "  build never needs a toolchain — but they no longer match the\n"
+            "  design, so publishing them would ship a stale promo.\n"
+            "  Fix: run `python3 build.py` on a machine with node, then commit\n"
+            "  bands/*.js and bands/.sources.sha256 alongside the design change.")
+    if not fetch_babel():
+        sys.exit(
+            "bands: design/*.jsx has changed and the Babel compiler could not be\n"
+            "  fetched. Same fix — build locally and commit bands/.")
+
     srcs = [str(ROOT / "design" / n) for n in BANDS_JSX]
     subprocess.run(["node", str(ROOT / "jsx-compile.js"), str(BABEL_LOCAL),
                     str(BANDS_DIR)] + srcs, check=True, cwd=ROOT)
@@ -693,6 +757,9 @@ def compile_bands_jsx(images: dict) -> None:
     print(f"  bands      brand      {wrong!r} -> {right!r}")
 
     promo.write_text(js)
+    BANDS_STAMP.write_text(want + "\n")
+    print(f"  bands      stamped    {want[:12]} — CI reuses this without node")
+    return True
 
 
 def bands_scene_file(html: str) -> str:
@@ -782,10 +849,6 @@ def build_bands() -> bool:
         if stale:
             print(f"               removed {len(stale)} stale file(s) from "
                   f"{BANDS_DIR.relative_to(ROOT)}/")
-        return False
-
-    if not fetch_babel():
-        print("  bands      SKIP — no build-time compiler and no network")
         return False
 
     compile_bands_jsx(images)
