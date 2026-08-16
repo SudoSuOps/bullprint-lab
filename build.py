@@ -1203,6 +1203,112 @@ def build_merch() -> bool:
     return True
 
 
+
+# ── /vector-kit/ — the marks, as vector ─────────────────────────────────────
+#
+# The kit is the source of truth for geometry, and two of its masters are new:
+# the MODELLED bull (gradient horns, muzzle shadow, eyes) and the SMALL seal
+# (ring plus bull, no type — the right answer for a 3 inch cap panel).
+#
+# Its rasterizer advice is wrong, though, and it is wrong in the direction that
+# silently ruins a print run, so the build corrects it. MEASURED on the kit's
+# own seal-genesis.svg with BOTH xlink:href and href present:
+#
+#     hash ring band  0.00% ink
+#     name ring band  0.46% ink   (that is the r=81 circle, not type)
+#
+# librsvg 2.60 does not implement <textPath> at all — a minimal case renders
+# plain <text> and drops textPath entirely. No attribute spelling changes it.
+# The baked PNG in the bundle DOES carry its rings because it was rasterised in
+# a browser; that part of the note is true and worth keeping.
+
+VKIT_SRC = ROOT / "design" / "BullPrint Vector Kit.dc.html"
+VKIT_OUT = ROOT / "vector-kit" / "index.html"
+
+VKIT_TITLE = "Vector Kit — BullPrint Lab"
+VKIT_DESC = ("The BullPrint Lab marks as vector: the modelled bull, the line cut, "
+             "the genesis seal and the BULLISH lockup, with the print sizes and "
+             "the rasterizer rules that actually hold.")
+
+VKIT_FIX = [
+    ("Every textPath carries xlink:href so rsvg-convert renders the rings.",
+     "The genesis seal sets its rings with textPath, which librsvg does not "
+     "implement \u2014 measured on this file at 0.00% ink in the hash band, with "
+     "both xlink:href and href present. Use the baked PNG, or re-set the rings "
+     "glyph by glyph as art/gen_art.py does.",
+     "rasterizer note: textPath is dropped, not fixed by xlink"),
+    ("TEXTPATHS CARRY XLINK:HREF + HREF (RSVG NEEDS XLINK)",
+     "LIBRSVG 2.60 DROPS TEXTPATH ENTIRELY \u2014 XLINK DOES NOT HELP",
+     "rasterizer rule: corrected to what was measured"),
+    ("PRINT \u2014 seal-genesis-2400.png \u00b7 9 IN AT 267 DPI",
+     "PRINT \u2014 art/print/t01-genesis-seal-gold.png \u00b7 9 IN AT 300 DPI",
+     "seal print file: 300 DPI, rings intact"),
+    ("PRINT \u2014 1920 PX EACH \u00b7 11 IN BACK AT 175 DPI",
+     "PRINT \u2014 art/print/*.png \u00b7 11 IN BACK AT 300 DPI (3300 PX)",
+     "line cut: 175 DPI was under half the target"),
+    ("PRINT \u2014 bullish-lockup-gold-2560.png \u00b7 10.5 IN AT 244 DPI",
+     "PRINT \u2014 art/print/t02-bullish-kit.png \u00b7 10.5 IN AT 300 DPI",
+     "lockup: rebaked at 300"),
+    ("PRINT \u2014 bull-modelled-1920.png",
+     "PRINT \u2014 art/print/t06-bull-mascot.png \u00b7 8 IN AT 300 DPI",
+     "modelled bull: rebaked at 300"),
+]
+
+VKIT_HEAD = f"""<title>{VKIT_TITLE}</title>
+<meta name="description" content="{VKIT_DESC}">
+<link rel="canonical" href="{SITE}/vector-kit/">
+<meta name="theme-color" content="#0B0B0D">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml;base64,{{favicon}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BullPrint Lab">
+<meta property="og:url" content="{SITE}/vector-kit/">
+<meta property="og:title" content="{VKIT_TITLE}">
+<meta property="og:description" content="{VKIT_DESC}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="text/plain" href="/llms.txt">
+<script src="/vendor/react.production.min.js"></script>
+<script src="/vendor/react-dom.production.min.js"></script>"""
+
+
+def build_vector_kit() -> bool:
+    """Publish the vector kit, with its rasterizer claims corrected."""
+    if not VKIT_SRC.exists():
+        print(f"  vkit       SKIP \u2014 no {VKIT_SRC.name}")
+        return False
+    html = VKIT_SRC.read_text()
+
+    for old, new, why in VKIT_FIX:
+        if old not in html:
+            sys.exit(f"vkit: needle gone \u2014 {why}\n  looked for: {old[:80]!r}")
+        html = html.replace(old, new)
+        print(f"  vkit       {why}")
+
+    before = html
+    html = re.sub(r'<link rel="preconnect" href="https://fonts\.gstatic\.com"[^>]*>\s*', "", html)
+    html = re.sub(r'<link href="https://fonts\.googleapis\.com/[^"]*" rel="stylesheet">',
+                  '<link rel="stylesheet" href="/fonts/fonts.css">', html)
+    if html == before:
+        sys.exit("vkit: font links not found")
+
+    marker = '<script src="./support.js"></script>'
+    if marker not in html:
+        sys.exit("vkit: support.js tag not found")
+    head = VKIT_HEAD.replace("{favicon}", base64.b64encode(FAVICON.encode()).decode())
+    html = html.replace(marker, head + '\n<script src="/support.js"></script>', 1)
+    html = add_footer(html, "vkit")
+
+    VKIT_OUT.parent.mkdir(exist_ok=True)
+    VKIT_OUT.write_text(html)
+    print(f"  vkit       wrote {VKIT_OUT.relative_to(ROOT)}  ({len(html)/1024:.0f} KB)")
+
+    assert "./support.js" not in html and "fonts.googleapis.com" not in html
+    assert "RSVG NEEDS XLINK" not in html, "vkit: the false rasterizer rule survived"
+    assert "175 DPI" not in html and "267 DPI" not in html, "vkit: a sub-300 DPI claim survived"
+    return True
+
+
 def check_vendor() -> None:
     for rel, want in VENDOR_SRI.items():
         p = ROOT / rel
@@ -1566,7 +1672,7 @@ def check_brand(html: str) -> None:
     print("  brand      BrAhMa casing + AI disclosure ok")
 
 
-def write_geo(posts, pages=(), bands=False, merch=False) -> None:
+def write_geo(posts, pages=(), bands=False, merch=False, vkit=False) -> None:
     """robots, sitemap and llms.txt — the surface AI search actually reads.
 
     `bands` is passed rather than assumed: /bands/ only publishes once the
@@ -1613,6 +1719,8 @@ Sitemap: {SITE}/sitemap.xml
         urls.append((f"{SITE}/bands/", "weekly", "0.9"))
     if merch:
         urls.append((f"{SITE}/merch/", "monthly", "0.6"))
+    if vkit:
+        urls.append((f"{SITE}/vector-kit/", "monthly", "0.5"))
     # /order/confirmed is a post-payment page; it should never be indexed
     urls += [(f"{SITE}/{m['slug']}/", "monthly", "0.8") for m in pages]
     urls += [(f"{SITE}/blog/{m['slug']}/", "monthly", "0.8") for m in posts]
@@ -1791,12 +1899,13 @@ def main() -> None:
     build_platform()
     bands = build_bands()
     merch = build_merch()
+    vkit = build_vector_kit()
     blog.build_order_confirmed(ROOT)
     posts = blog.build(ROOT)
     pages = blog.build_pages(ROOT)
     print(f"  journal    {len(posts)} post(s) -> blog/"
           + (f", {len(pages)} page(s)" if pages else ""))
-    write_geo(posts, pages, bands, merch)
+    write_geo(posts, pages, bands, merch, vkit)
     check_brand(html)
     published = {"index.html": html,
                  "platform/index.html": PLATFORM_OUT.read_text(),
@@ -1807,6 +1916,8 @@ def main() -> None:
         published["bands/index.html"] = BANDS_OUT.read_text()
     if merch:
         published["merch/index.html"] = MERCH_OUT.read_text()
+    if vkit:
+        published["vector-kit/index.html"] = VKIT_OUT.read_text()
     check_line(published)
     print("  checks     passed")
 

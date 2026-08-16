@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200">
+  
+  <defs>
+    <path id="hashRing" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"></path>
+    <path id="nameRing" d="M100,100 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"></path>
+    <linearGradient id="sealGold" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop>
+      <stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".5"></circle>
+  <text fill="#8A6A1E" font-family="JetBrains Mono, monospace" font-weight="500" font-size="7.2" letter-spacing="4.464">
+    <textPath xlink:href="#hashRing" href="#hashRing" startOffset="0.4%">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</textPath>
+  </text>
+  <circle cx="100" cy="100" r="81" fill="none" stroke="url(#sealGold)" stroke-width="3"></circle>
+  <circle cx="100" cy="100" r="52" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"></circle>
+  <text fill="#E8B23A" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="5.5">
+    <textPath xlink:href="#nameRing" href="#nameRing" startOffset="1.5%">BEST IN BULL™ · BULLPRINT LAB · </textPath>
+  </text>
+  <g transform="translate(100,92) scale(0.8) translate(-60,-50)" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" fill="none" stroke="#E8B23A" stroke-width="6"></path>
+  <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" fill="none" stroke="#E8B23A" stroke-width="6"></path>
+  <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="none" stroke="#E8B23A" stroke-width="6"></path>
+  <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="none" stroke="#E8B23A" stroke-width="6"></path>
+  <path d="M66 44L75 42.5M54 44L45 42.5" fill="none" stroke="#E8B23A" stroke-width="6"></path>
+  </g>
+  <text x="100" y="134" text-anchor="middle" fill="#8A6A1E" font-family="JetBrains Mono, monospace" font-weight="500" font-size="7.5" letter-spacing="1.5">INSPECTED</text>
+</svg>

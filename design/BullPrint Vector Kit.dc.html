@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=JetBrains+Mono:wght@500;700&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#0B0B0D;font-family:Archivo,system-ui,sans-serif}
+  a{color:#E8B23A;text-decoration:none}
+  a:hover{color:#F5D07A}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#0B0B0D;padding:56px 48px 80px;box-sizing:border-box">
+  <div style="max-width:1560px;margin:0 auto">
+    <div style="border-bottom:1px solid rgba(232,178,58,.25);padding-bottom:26px">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.26em;color:#8A6A1E">BULLPRINT LAB — VECTOR KIT · SOURCE OF TRUTH</div>
+      <h1 style="margin:14px 0 0;font:900 clamp(34px,4.5vw,54px)/1 Archivo,sans-serif;letter-spacing:-.03em;color:#F4F2ED">THE MARKS<span style="color:#E8B23A">.</span></h1>
+      <p style="margin:12px 0 0;max-width:720px;font:400 14px/1.65 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Six masters, all vector, all in the handoff at assets/vector/. Every textPath carries xlink:href so rsvg-convert renders the rings. Print PNGs in assets/print/ are baked from these with text rasterized — no font install needed downstream.</p>
+    </div>
+    <div style="margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(560px,1fr));gap:22px">
+
+      <div style="border:1px solid rgba(255,255,255,.09);background:#0E0E11;padding:34px;display:flex;flex-direction:column;gap:20px;align-items:center;grid-row:span 2">
+        <svg id="vkSeal" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200" style="width:600px;max-width:100%">
+          <defs>
+            <path id="vkHashRing" d="M100,100 m-90,0 a90,90 0 1,1 180,0 a90,90 0 1,1 -180,0"></path>
+            <path id="vkNameRing" d="M100,100 m-64,0 a64,64 0 1,1 128,0 a64,64 0 1,1 -128,0"></path>
+            <linearGradient id="vkSealGold" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop>
+              <stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="98" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".5"></circle>
+          <text fill="#8A6A1E" font-family="JetBrains Mono, monospace" font-weight="500" font-size="7.2" letter-spacing="4.464"><textPath xlink:href="#vkHashRing" href="#vkHashRing" startOffset="0.4%">000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</textPath></text>
+          <circle cx="100" cy="100" r="81" fill="none" stroke="url(#vkSealGold)" stroke-width="3"></circle>
+          <circle cx="100" cy="100" r="52" fill="none" stroke="#8A6A1E" stroke-width="1" opacity=".6"></circle>
+          <text fill="#E8B23A" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="5.5"><textPath xlink:href="#vkNameRing" href="#vkNameRing" startOffset="1.5%">BEST IN BULL™ · BULLPRINT LAB · </textPath></text>
+          <g transform="translate(100,92) scale(0.8) translate(-60,-50)" fill="none" stroke="#E8B23A" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke-width="6"></path>
+            <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke-width="6"></path>
+            <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke-width="6"></path>
+            <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke-width="6"></path>
+            <path d="M66 44L75 42.5M54 44L45 42.5" stroke-width="6"></path>
+          </g>
+          <text x="100" y="134" text-anchor="middle" fill="#8A6A1E" font-family="JetBrains Mono, monospace" font-weight="500" font-size="7.5" letter-spacing="1.5">INSPECTED</text>
+        </svg>
+        <div style="text-align:center">
+          <div style="font:900 18px Archivo,sans-serif;color:#F4F2ED">SEAL — GENESIS RING</div>
+          <div style="margin-top:8px;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A6A1E">seal-genesis.svg · ≥280 PX / ≥40 MM · FONTS: JETBRAINS MONO<br>PRINT — seal-genesis-2400.png · 9 IN AT 267 DPI</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(255,255,255,.09);background:#0E0E11;padding:34px;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap">
+        <svg id="vkBullM" viewBox="0 0 120 100" style="width:480px;max-width:100%">
+          <defs>
+            <linearGradient id="vkBull" x1="0" y1="0" x2=".8" y2="1">
+              <stop offset="0" stop-color="#FBE9B0"></stop><stop offset=".18" stop-color="#F5D07A"></stop>
+              <stop offset=".44" stop-color="#E8B23A"></stop><stop offset=".72" stop-color="#A87F24"></stop><stop offset="1" stop-color="#7A5C18"></stop>
+            </linearGradient>
+            <linearGradient id="vkHorn" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#8A6A1E"></stop><stop offset=".4" stop-color="#E8B23A"></stop>
+              <stop offset=".7" stop-color="#FBE9B0"></stop><stop offset="1" stop-color="#C39A2C"></stop>
+            </linearGradient>
+          </defs>
+          <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39Z" fill="url(#vkHorn)"></path>
+          <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39Z" fill="url(#vkHorn)"></path>
+          <path d="M74 34C82 36 86 42 84 47C79 45 75 41 73 38Z" fill="#A87F24"></path>
+          <path d="M46 34C38 36 34 42 36 47C41 45 45 41 47 38Z" fill="#A87F24"></path>
+          <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" fill="url(#vkBull)"></path>
+          <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" fill="#8A6A1E" opacity=".55"></path>
+          <ellipse cx="55" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse><ellipse cx="65" cy="70" rx="2.6" ry="3.4" fill="#4A3810"></ellipse>
+          <path d="M66 44L75 42L73.5 49L66 47.6Z" fill="#3A2C0C"></path><path d="M54 44L45 42L46.5 49L54 47.6Z" fill="#3A2C0C"></path>
+          <path d="M53 31H67L64 37H56Z" fill="#FBE9B0" opacity=".28"></path>
+        </svg>
+        <div>
+          <div style="font:900 18px Archivo,sans-serif;color:#F4F2ED">BULL — MODELLED</div>
+          <div style="margin-top:8px;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A6A1E">bull-modelled.svg · ≥40 PX · NO TEXT, NO FONTS<br>PRINT — bull-modelled-1920.png</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(255,255,255,.09);background:#0E0E11;padding:34px;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap">
+        <svg id="vkBullLG" viewBox="0 0 120 100" style="width:480px;max-width:100%">
+          <g fill="none" stroke="#E8B23A" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke-width="6"></path>
+            <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke-width="6"></path>
+            <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke-width="6"></path>
+            <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke-width="6"></path>
+            <path d="M66 44L75 42.5M54 44L45 42.5" stroke-width="6"></path>
+          </g>
+        </svg>
+        <div style="background:#F7F5F0;padding:14px;display:flex;align-items:center">
+          <svg id="vkBullLB" viewBox="0 0 120 100" style="width:480px;max-width:100%">
+            <g fill="none" stroke="#141414" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke-width="6"></path>
+              <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke-width="6"></path>
+              <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke-width="6"></path>
+              <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke-width="6"></path>
+              <path d="M66 44L75 42.5M54 44L45 42.5" stroke-width="6"></path>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div style="font:900 18px Archivo,sans-serif;color:#F4F2ED">BULL — LINE CUT ×2</div>
+          <div style="margin-top:8px;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A6A1E">bull-linecut-gold.svg / -black.svg · ≤32 PX OK<br>PRINT — 1920 PX EACH · 11 IN BACK AT 175 DPI</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(255,255,255,.09);background:#0E0E11;padding:34px;display:flex;flex-direction:column;gap:20px;align-items:center">
+        <svg id="vkLockup" viewBox="0 0 650 200" style="width:640px;max-width:100%">
+          <g fill="#E8B23A">
+            <rect x="35" y="45" width="9" height="23"></rect><rect x="57" y="45" width="9" height="23"></rect>
+            <rect x="35" y="149" width="9" height="23"></rect><rect x="57" y="149" width="9" height="23"></rect>
+            <text x="10" y="150" style="font:400 118px 'Saira Stencil One',sans-serif">B</text>
+            <text x="98" y="150" style="font:400 118px 'Saira Stencil One',sans-serif;letter-spacing:5.9px">ULLISH</text>
+          </g>
+        </svg>
+        <div style="text-align:center">
+          <div style="font:900 18px Archivo,sans-serif;color:#F4F2ED">BULLISH ₿ — LOCKUP</div>
+          <div style="margin-top:8px;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A6A1E">bullish-lockup-gold.svg · FONT: SAIRA STENCIL ONE · BARS LOCKED 2.0 × 5.0<br>PRINT — bullish-lockup-gold-2560.png · 10.5 IN AT 244 DPI</div>
+        </div>
+      </div>
+
+      <div style="border:1px solid rgba(255,255,255,.09);background:#0E0E11;padding:34px;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap">
+        <svg id="vkSealS" viewBox="0 0 200 200" style="width:320px;max-width:100%">
+          <circle cx="100" cy="100" r="94" fill="none" stroke="#E8B23A" stroke-width="4"></circle>
+          <g transform="translate(100,100) scale(1.1) translate(-60,-52)" fill="none" stroke="#E8B23A" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39" stroke-width="6"></path>
+            <path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39" stroke-width="6"></path>
+            <path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54L41 35C41 29 44 25 50 25Z" stroke-width="6"></path>
+            <path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z" stroke-width="6"></path>
+            <path d="M66 44L75 42.5M54 44L45 42.5" stroke-width="6"></path>
+          </g>
+        </svg>
+        <div>
+          <div style="font:900 18px Archivo,sans-serif;color:#F4F2ED">SEAL — SMALL</div>
+          <div style="margin-top:8px;font:500 10px/1.9 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8A6A1E">seal-small.svg · ≤120 PX · NO TEXT BY DESIGN<br>PRINT — seal-small-1280.png · 3 IN STICKER AT 300+</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:26px;border:1px solid rgba(232,178,58,.28);background:#0E0E11;padding:22px 26px;display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <div style="font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:#E8B23A">RASTERIZER RULES</div>
+      <div style="font:500 10.5px/1.9 'JetBrains Mono',monospace;letter-spacing:.1em;color:#8B8780">TEXTPATHS CARRY XLINK:HREF + HREF (RSVG NEEDS XLINK) · INSTALL JETBRAINS MONO + SAIRA STENCIL BEFORE RASTERIZING SVG · OR USE assets/print/ PNGS — TEXT BAKED · FULL AUDIT IN ASSETS.md</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1560}}"></script>
+</body>
+</html>

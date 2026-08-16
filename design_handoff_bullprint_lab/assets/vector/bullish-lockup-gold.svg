@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 650 200">
+  
+  <g fill="#E8B23A">
+    <rect x="35" y="45" width="9" height="23"></rect><rect x="57" y="45" width="9" height="23"></rect>
+    <rect x="35" y="149" width="9" height="23"></rect><rect x="57" y="149" width="9" height="23"></rect>
+    <text x="10" y="150" font-family="&#39;Saira Stencil One&#39;, sans-serif" font-size="118">B</text>
+    <text x="98" y="150" font-family="&#39;Saira Stencil One&#39;, sans-serif" font-size="118" letter-spacing="5.9">ULLISH</text>
+  </g>
+</svg>
