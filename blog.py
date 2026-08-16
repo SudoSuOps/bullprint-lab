@@ -233,7 +233,7 @@ def shell(title, desc, canonical, body, jsonld, depth=1, scripts=()):
 {body}
 <footer class="foot"><div class="wrap">
   <span class="meta">BEST IN BULL™ · PRINTED IN HOUSE · JUPITER, FLORIDA</span>
-  <span class="meta"><a href="mailto:bullish@bullprintlab.com">BULLISH@BULLPRINTLAB.COM</a> · <a href="tel:+15615327120">561.532.7120</a> · <a href="https://x.com/bestinbull" rel="me">@BESTINBULL</a></span>
+  <span class="meta"><a href="mailto:bullish@bullprintlabs.com">BULLISH@BULLPRINTLABS.COM</a> · <a href="tel:+15615327120">561.532.7120</a> · <a href="https://x.com/bestinbull" rel="me">@BESTINBULL</a></span>
 </div></footer>
 </body>
 </html>"""
@@ -274,7 +274,7 @@ def build_order_confirmed(root: pathlib.Path) -> None:
 
   <h2>Something wrong with the order?</h2>
   <p>Reply to the confirmation email, or write to
-  <a href="mailto:bullish@bullprintlab.com">bullish@bullprintlab.com</a> with your
+  <a href="mailto:bullish@bullprintlabs.com">bullish@bullprintlabs.com</a> with your
   profile ID. A person from the lab answers — usually within a day.</p>
 
   <p class="note">BullPrint Lab makes footwear inserts for comfort and fit

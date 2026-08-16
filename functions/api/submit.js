@@ -15,7 +15,7 @@
  *                               the apex SPF belongs to Proton and there can
  *                               only be one v=spf1 record on a domain)
  *   MAIL_TO_ORDERS    plain   — print@bullprintlab.com
- *   MAIL_TO_GENERAL   plain   — bull@bullprintlab.com
+ *   MAIL_TO_GENERAL   plain   — bull@bullprintlabs.com
  */
 
 const TURNSTILE_VERIFY =
@@ -165,7 +165,7 @@ export async function onRequestPost({ request, env }) {
   const to =
     spec.to === "orders"
       ? env.MAIL_TO_ORDERS || "print@bullprintlab.com"
-      : env.MAIL_TO_GENERAL || "bull@bullprintlab.com";
+      : env.MAIL_TO_GENERAL || "bull@bullprintlabs.com";
 
   const res = await fetch(RESEND_SEND, {
     method: "POST",

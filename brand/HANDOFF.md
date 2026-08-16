@@ -1,7 +1,7 @@
 # Handoff: BULLPRINT LAB — full site
 
 Repo: **github.com/SudoSuOps/bullprint-lab** · Deploy: **Cloudflare Pages** → bullprintlab.com
-Contact: bullish@bullprintlab.com · X: @bestinbull
+Contact: bullish@bullprintlabs.com · X: @bestinbull
 
 ---
 
@@ -110,7 +110,7 @@ The reference stops at the confirmation state. In the repo:
 1. **Stripe** — server-side Checkout Session. One price object for Drop 001 ($99/pair). Put the whole profile in `metadata`: `profile_id, size, width, arch, fit, feel, shoe, notes`. `success_url` returns to `/order/confirmed?session_id=…` and renders the same confirmation panel; `cancel_url` returns to `#order` with state intact.
 2. **Coinbase Commerce** — create a charge with the same metadata, `pricing_type: fixed_price`, USD 99. Show the hosted charge page or embed. Handle the `charge:confirmed` webhook.
 3. **Both rails write one order record.** The print queue needs the profile, not the payment — keep the profile row separate from the payment row and join on `profile_id`.
-4. **Custom requests (05)** and **contact (12)** POST to the same handler with a `type` discriminator. The custom form carries a file (SVG/AI/PDF/PNG) — accept up to ~10 MB to object storage (R2 on Cloudflare) and put the URL in the email to bullish@bullprintlab.com.
+4. **Custom requests (05)** and **contact (12)** POST to the same handler with a `type` discriminator. The custom form carries a file (SVG/AI/PDF/PNG) — accept up to ~10 MB to object storage (R2 on Cloudflare) and put the URL in the email to bullish@bullprintlabs.com.
 5. **No fake scarcity.** Drop status is an enum on content: `IN THE LAB · COMING SOON · LIVE · SOLD OUT · ARCHIVED`. Never a countdown, never a fake stock number. "001 / 100" is a real edition size — only show a serial once one is assigned.
 6. Prices, edition sizes and statuses come from content, not hardcoded JSX.
 

@@ -47,7 +47,7 @@ and not make it. That question is why this list is short.
 <li><b>Stack</b> ≈ 38 mm at the heel</li>
 <li><b>Sizes</b> US M13 first, more to follow</li>
 </ul>
-<p style="margin-top:22px"><a class="lozenge" href="mailto:bullish@bullprintlab.com?subject=Bull%20Slides%20—%20Drop%20002">TELL ME WHEN</a></p>
+<p style="margin-top:22px"><a class="lozenge" href="mailto:bullish@bullprintlabs.com?subject=Bull%20Slides%20—%20Drop%20002">TELL ME WHEN</a></p>
 </div>
 </div>
 
@@ -63,7 +63,7 @@ and not make it. That question is why this list is short.
 <li><b>Assembly</b> Hand sewn</li>
 <li><b>Open</b> Skin-contact and bond basis — Materials Engineer gate, not closed</li>
 </ul>
-<p style="margin-top:22px"><a class="lozenge" href="mailto:bull@bullprintlab.com?subject=Bull%20Headbands%20%E2%80%94%20tell%20me%20when">TELL ME WHEN</a></p>
+<p style="margin-top:22px"><a class="lozenge" href="mailto:bull@bullprintlabs.com?subject=Bull%20Headbands%20%E2%80%94%20tell%20me%20when">TELL ME WHEN</a></p>
 </div>
 <div>
 <p class="role">The rule</p>

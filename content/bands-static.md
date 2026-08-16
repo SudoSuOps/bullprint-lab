@@ -57,4 +57,4 @@ unit, after inspection, re-derivable from its spec and measured off the shipped
 part rather than described. The mark is not applied to a product line. It is
 applied to an object, by a person, after looking at it.
 
-<p class="cta"><a class="lozenge" href="mailto:bull@bullprintlab.com?subject=Bull%20Headbands%20%E2%80%94%20tell%20me%20when">TELL ME WHEN</a></p>
+<p class="cta"><a class="lozenge" href="mailto:bull@bullprintlabs.com?subject=Bull%20Headbands%20%E2%80%94%20tell%20me%20when">TELL ME WHEN</a></p>

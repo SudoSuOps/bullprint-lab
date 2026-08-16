@@ -21,7 +21,7 @@ the site with no hand-patching to redo:
      last third-party request on the page and a privacy dependency the brand
      line does not sit well with. Same typefaces, same weights, served from the
      same origin — so the deployed CSP can forbid external hosts outright.
-  5. Repoints the contact address. The design ships `bullish@bullprintlab.com`,
+  5. Repoints the contact address. The design ships `bullish@bullprintlabs.com`,
      which is not a mailbox that exists; the real ones are `bull@` (general) and
      `print@` (orders and print enquiries). The two "EMAIL THE LAB" buttons that
      sit inside the custom-request and order flows go to `print@`, everything
@@ -71,6 +71,23 @@ ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "design" / "BullPrint Lab Site.dc.html"
 OUT = ROOT / "index.html"
 
+# THE CANONICAL HOST.
+#
+# Mail has already moved: bullprintlabs.com (PLURAL) carries Proton MX, SPF and
+# a protonmail-verification TXT, so bull@ and bullish@ receive there now.
+#
+# The WEB has not. As of this writing bullprintlabs.com answers 301 -> 
+# bullprintlab.com via a Cloudflare redirect rule, so pointing canonical at the
+# plural would aim every search engine, every OG card and every sitemap entry at
+# a redirect. Two dashboard steps flip it:
+#
+#   1. Pages project -> Custom domains -> add bullprintlabs.com
+#   2. bullprintlabs.com -> Rules -> delete/invert the redirect to the singular
+#      (and add the mirror rule pointing bullprintlab.com at the plural)
+#
+# Then change this line and rebuild. check_canonical() below refuses to build if
+# SITE does not answer 200 on its own, so this cannot be flipped early by
+# accident.
 SITE = "https://bullprintlab.com"
 TITLE = "BullPrint Lab — We print what we're bullish on."
 DESC = ("VibePrints with real utility. BullPrint Lab experiments at the "
@@ -623,7 +640,7 @@ def fetch_babel() -> bool:
 # NOTE ON THE ADDRESS: bullprintlab.com, SINGULAR. There is no
 # bullprintlabs.com mailbox, and BRAND.md is explicit that the name is never
 # pluralised. An S here is a bounced enquiry, not a typo.
-CONTACT_EMAIL = "bullish@bullprintlab.com"
+CONTACT_EMAIL = "bullish@bullprintlabs.com"
 CONTACT_X = "bestinbull"
 CONTACT_PHONE = "561.532.7120"
 CONTACT_CITY = "Jupiter"
@@ -1118,7 +1135,7 @@ MERCH_BANNER = """<div id="merch-note">
   could ever become print-on-demand products.</p>
   <p>Nothing here has a price because nothing here has been made yet. When it
   has, it gets a buy button and this paragraph goes away.
-  <a href="mailto:bull@bullprintlab.com?subject=BullPrint%20merch">Ask about a team run</a>.</p>
+  <a href="mailto:bull@bullprintlabs.com?subject=BullPrint%20merch">Ask about a team run</a>.</p>
 </div>
 <style>
   #merch-note{max-width:820px;margin:0 auto;padding:44px 24px 0;
@@ -1307,6 +1324,32 @@ def build_vector_kit() -> bool:
     assert "RSVG NEEDS XLINK" not in html, "vkit: the false rasterizer rule survived"
     assert "175 DPI" not in html and "267 DPI" not in html, "vkit: a sub-300 DPI claim survived"
     return True
+
+
+def check_canonical() -> None:
+    """The canonical host must serve itself, not redirect somewhere else.
+
+    A canonical URL that 301s is worse than no canonical: it tells a crawler the
+    authoritative copy lives at an address that immediately disowns it.
+    """
+    host = SITE.replace("https://", "")
+    try:
+        out = subprocess.run(
+            ["curl", "-sI", "-m", "15", SITE + "/"],
+            capture_output=True, text=True, timeout=25).stdout
+    except Exception as e:
+        print(f"  canonical  SKIP — could not check {host} ({e})")
+        return
+    code = next((l.split()[1] for l in out.splitlines()
+                 if l.upper().startswith("HTTP/")), "?")
+    loc = next((l.split(":", 1)[1].strip() for l in out.splitlines()
+                if l.lower().startswith("location:")), "")
+    if code.startswith("3"):
+        sys.exit(f"canonical {host} answers {code} -> {loc}\n"
+                 f"  SITE must be the host that SERVES the page, not one that\n"
+                 f"  redirects to it. Flip the Cloudflare rule first, or set\n"
+                 f"  SITE back to whichever host answers 200.")
+    print(f"  canonical  {host} answers {code}")
 
 
 def check_vendor() -> None:
@@ -1594,7 +1637,7 @@ ORG_LD = {
     "@context": "https://schema.org",
     "@graph": [
         {"@type": "Organization", "@id": f"{SITE}/#org", "name": "BullPrint Lab",
-         "url": f"{SITE}/", "email": "bullish@bullprintlab.com",
+         "url": f"{SITE}/", "email": "bullish@bullprintlabs.com",
          "telephone": "+1-561-532-7120",
          "address": {"@type": "PostalAddress", "addressLocality": "Jupiter",
                      "addressRegion": "FL", "addressCountry": "US"},
@@ -1797,7 +1840,7 @@ including why each item is printed rather than moulded, is at {SITE}/store/.
 
 ## Contact
 
-- bullish@bullprintlab.com
+- bullish@bullprintlabs.com
 - X: https://x.com/bestinbull
 """)
 
@@ -1805,6 +1848,7 @@ including why each item is printed rather than moulded, is at {SITE}/store/.
 def main() -> None:
     if not SRC.exists():
         sys.exit(f"missing {SRC}")
+    check_canonical()
     check_vendor()
     html = SRC.read_text()
 
