@@ -113,17 +113,19 @@ def ring_text(text: str, cx: float, cy: float, r: float, size: float,
     return "".join(out)
 
 
+BULL_D = ("M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39"
+          "M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39"
+          "M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67 43 54"
+          "L41 35C41 29 44 25 50 25Z"
+          "M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62 52 57 60 57Z"
+          "M66 44L75 42.5M54 44L45 42.5")
+
+
 def bull(stroke: str, w: float = 6.0) -> str:
-    """The modelled bull, line cut. Same paths the favicon and the seal use."""
-    return (f'<g fill="none" stroke="{stroke}" stroke-width="{w}" '
-            'stroke-linejoin="round" stroke-linecap="round">'
-            '<path d="M74 30C84 28 96 23 104 13C107 9 112 11 110 16C104 30 90 39 76 39"/>'
-            '<path d="M46 30C36 28 24 23 16 13C13 9 8 11 10 16C16 30 30 39 44 39"/>'
-            '<path d="M60 25H70C76 25 79 29 79 35L77 54C77 67 70 76 60 82C50 76 43 67'
-            ' 43 54L41 35C41 29 44 25 50 25Z"/>'
-            '<path d="M60 57C68 57 73 62 73 68C73 76 67 82 60 84C53 82 47 76 47 68C47 62'
-            ' 52 57 60 57Z"/>'
-            '<path d="M66 44L75 42.5M54 44L45 42.5"/></g>')
+    """The line-cut bull as ONE path with M-subpaths, per the Print Masters kit.
+    Identical geometry to the five-path version, one node instead of five."""
+    return (f'<path d="{BULL_D}" fill="none" stroke="{stroke}" stroke-width="{w}" '
+            'stroke-linejoin="round" stroke-linecap="round"/>')
 
 
 def kit(name: str) -> str:
@@ -193,24 +195,29 @@ def bull_back(fg: str) -> str:
 
 def bull_on(fg: str) -> str:
     """T-04 front."""
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48">
-<text x="110" y="36" text-anchor="middle" fill="{fg}" style="font:900 35px Archivo,sans-serif;letter-spacing:-.03em">BULL ON.</text>
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 90">
+<text x="200" y="66" text-anchor="middle" fill="{fg}" font-family="Archivo, sans-serif" font-weight="900" font-size="60" letter-spacing="-1.8">BULL ON.</text>
 </svg>'''
 
 
 def bull_off(fg: str) -> str:
     """T-04 back — the nape answer."""
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 34">
-<text x="75" y="14" text-anchor="middle" fill="{fg}" style="font:700 12px 'JetBrains Mono',monospace;letter-spacing:.2em">BULL OFF.</text>
-<text x="75" y="30" text-anchor="middle" fill="{fg}" opacity=".65" style="font:500 8px 'JetBrains Mono',monospace;letter-spacing:.24em">DOES NOT EXIST</text>
-</svg>'''
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+<g fill="{fg}" font-family="JetBrains Mono, monospace">
+<text x="150" y="44" text-anchor="middle" font-weight="700" font-size="22" letter-spacing="4">BULL OFF.</text>
+<text x="150" y="74" text-anchor="middle" font-weight="500" font-size="11" letter-spacing="2.6">DOES NOT EXIST</text>
+</g></svg>'''
 
 
 def genesis_stripe(fg: str) -> str:
     """T-05 — all 64 characters down the side seam. No truncation, ever:
-    a genesis hash missing a character is just a wrong number."""
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 420">
-<text transform="rotate(90 13 10)" x="13" y="10" fill="{fg}" style="font:500 5.4px 'JetBrains Mono',monospace;letter-spacing:.12em">{GENESIS}</text>
+    a genesis hash missing a character is just a wrong number.
+
+    Kit proportions: 32 x 320 at 6.5px. The earlier 26 x 420 crammed the same
+    64 glyphs into a taller, narrower box and the type came out thinner than
+    the sheet drew it."""
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 320">
+<text transform="rotate(90 16 8)" x="16" y="8" fill="{fg}" font-family="JetBrains Mono, monospace" font-weight="500" font-size="6.5" letter-spacing="0.78">{GENESIS}</text>
 </svg>'''
 
 
@@ -223,9 +230,9 @@ def chest_hit(fg: str) -> str:
 
 def collar(fg: str) -> str:
     """Inside back collar — every tee gets it, per the sheet's order notes."""
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40">
-<g transform="translate(70,-4) scale(0.4)">{bull(fg, 7)}</g>
-<text x="100" y="36" text-anchor="middle" fill="{fg}" style="font:700 7px 'JetBrains Mono',monospace;letter-spacing:.24em">BEST IN BULL™</text>
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 134">
+{bull(fg, 6)}
+<text x="60" y="124" text-anchor="middle" fill="{fg}" font-family="JetBrains Mono, monospace" font-weight="700" font-size="9.5" letter-spacing="1">BEST IN BULL™</text>
 </svg>'''
 
 
@@ -238,26 +245,29 @@ def cap_front(fg: str) -> str:
 </svg>'''
 
 
-# name, svg builder, print width in INCHES, colourway
-JOBS = [
-    ("t01-genesis-seal-gold",   seal,           9.0,  GOLD),
-    ("t02-bullish-gold",        bullish,       10.5,  GOLD),
-    ("t03-we-print-front-ink",  we_print,       3.5,  INK),
-    ("t03-bull-back-ink",       bull_back,     11.0,  INK),
-    ("t04-bull-on-ink",         bull_on,        9.0,  INK),
-    ("t04-bull-off-ink",        bull_off,       3.0,  INK),
-    ("t05-genesis-stripe-gold", genesis_stripe, 1.6,  GOLD),
-    ("t05-chest-hit-gold",      chest_hit,      3.0,  GOLD),
-    ("t06-bull-mascot",         lambda _c: kit("bull-modelled"),      8.0,  GOLD),
-    ("t03-bull-back-modelled",  lambda _c: kit("bull-modelled"),     11.0,  GOLD),
-    ("cap-seal-small",          lambda _c: kit("seal-small"),          3.0,  GOLD),
-    ("t02-bullish-kit",         lambda _c: kit("bullish-lockup-gold"),10.5,  GOLD),
-    ("collar-gold",             collar,         2.4,  GOLD),
-    ("cap-bull-gold",           cap_front,      3.0,  GOLD),
-    ("cap-bull-ink",            cap_front,      3.0,  INK),
-    ("cap-bull-bone",           cap_front,      3.0,  BONE),
+# Every piece in all three colourways — the store needs a variant per blank, and
+# a gold picked for black cotton is not the gold you want on bone. Kit sizes.
+PIECES = [
+    ("t01-seal",        seal,           9.0),
+    ("t02-bullish",     bullish,       10.5),
+    ("t03f-we-print",   we_print,       3.5),
+    ("t03b-bull",       bull_back,     11.0),
+    ("t04f-bull-on",    bull_on,        9.0),
+    ("t04b-bull-off",   bull_off,       3.0),
+    ("t05-stripe",      genesis_stripe, 1.6),
+    ("t05-chest",       chest_hit,      3.0),
+    ("cap-bull",        cap_front,      3.0),
+    ("collar",          collar,         2.4),
 ]
+WAYS = (("gold", GOLD), ("bone", BONE), ("ink", INK))
 
+JOBS = [(f"{n}-{w}", fn, inch, c) for n, fn, inch in PIECES for w, c in WAYS]
+# The kit masters carry their own colour and are used as authored.
+JOBS += [
+    ("t06-bull-mascot",        lambda _c: kit("bull-modelled"),       8.0, GOLD),
+    ("t03b-bull-modelled",     lambda _c: kit("bull-modelled"),      11.0, GOLD),
+    ("cap-seal-small",         lambda _c: kit("seal-small"),          3.0, GOLD),
+]
 
 def render(name: str, svg: str, inches: float) -> pathlib.Path:
     px = round(inches * DPI)
