@@ -460,6 +460,7 @@ def build_platform() -> None:
         print("  platform   prerender NONE — run `python3 build.py --prerender`; "
               "non-JS crawlers will see template source")
 
+    html = add_footer(html, "platform")
     PLATFORM_OUT.parent.mkdir(exist_ok=True)
     PLATFORM_OUT.write_text(html)
     print(f"  platform   wrote {PLATFORM_OUT.relative_to(ROOT)}  ({len(html) / 1024:.0f} KB)")
@@ -475,6 +476,515 @@ def build_platform() -> None:
     external = [u for u in sub if u.startswith(("http://", "https://"))
                 and not u.startswith(SITE)]
     assert not external, f"platform: external subresource(s) survived: {external}"
+
+
+# ── /bands/ — the Bull Band promo ────────────────────────────────────────────
+#
+# The first page in this repo to use <x-import>, and it broke two site-wide
+# rules at once the first time it was looked at. Both are fixed HERE, at build
+# time, rather than by loosening the CSP:
+#
+#   1. support.js decides how to load an x-import by file extension. A .jsx
+#      module makes it inject @babel/standalone from unpkg — 3 MB of
+#      third-party script on a page whose CSP is `script-src 'self'`. It does
+#      not load, so the module never runs and the page renders NOTHING.
+#      Fix: jsx-compile.js transforms the three modules to plain .js with the
+#      same Babel and the same options the runtime would have used, so the
+#      runtime takes the "js" branch and never reaches ensureBabel().
+#
+#   2. The helmet carries three INLINE <script> blocks (OM_SCENES, OM_PLAYBACK,
+#      TWEAK_DEFAULTS). The helmet manager re-creates them as real inline
+#      <script> elements in <head>, and `script-src 'self'` has no
+#      'unsafe-inline' — so window.OM_SCENES is never set and the stage mounts
+#      with no scenes. This is the same failure bp-boot.js already records
+#      ("inline was blocked by the site's own CSP the moment it hit
+#      production"), and it takes the same fix: a same-origin FILE. The values
+#      are EXTRACTED from the export, never retyped, so the design stays the
+#      one source.
+#
+# Neither is a hack around the CSP. The CSP is right; the export was authored
+# for a preview host that has no CSP at all.
+
+BANDS_SRC = ROOT / "design" / "Bull Band Promo.dc.html"
+BANDS_OUT = ROOT / "bands" / "index.html"
+BANDS_DIR = ROOT / "bands"
+BANDS_STATIC = ROOT / "content" / "bands-static.md"
+
+# Build-only. Gitignored, fetched on demand, and verified against the exact
+# hash support.js pins for it — so the compiler used here is provably the
+# compiler the browser would have used.
+BABEL_LOCAL = ROOT / "build" / "babel.min.js"
+BABEL_URL = "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+
+# Order matters and is the export's own: animations-v3 defines the globals
+# bull-band-promo destructures off window at module scope.
+BANDS_JSX = ("animations-v3.jsx", "tweaks-panel.jsx", "bull-band-promo.jsx")
+
+# The promo's two uploads, repointed at repo assets. Same treatment the site
+# gives its own two design uploads; the assert below refuses to ship a page
+# that still points at an `uploads/` path that only exists in Claude Design.
+BANDS_IMAGES = {
+    "uploads/pasted-1786883724308-0.png": "bull-band",
+    "uploads/pasted-1786883900528-0.png": "bull-coin",
+}
+
+BANDS_TITLE = "Bull Bands — BullPrint Lab"
+BANDS_DESC = ("A TPU Bull Button sewn into technical spacer mesh, not glued on "
+              "top of it. Headbands and wristbands from BullPrint Lab — printed "
+              "in house, hand sewn, numbered.")
+
+BANDS_HEAD = f"""<title>{BANDS_TITLE}</title>
+<meta name="description" content="{BANDS_DESC}">
+<link rel="canonical" href="{SITE}/bands/">
+<meta name="theme-color" content="#0B0B0D">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml;base64,{{favicon}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BullPrint Lab">
+<meta property="og:url" content="{SITE}/bands/">
+<meta property="og:title" content="{BANDS_TITLE}">
+<meta property="og:description" content="{BANDS_DESC}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{BANDS_TITLE}">
+<meta name="twitter:description" content="{BANDS_DESC}">
+<link rel="alternate" type="text/plain" href="/llms.txt">
+<script type="application/ld+json">{{bandsld}}</script>
+<script src="/vendor/react.production.min.js"></script>
+<script src="/vendor/react-dom.production.min.js"></script>"""
+
+# The written half of the page. It is NOT a prerender — it does not get removed
+# when the runtime mounts, because a visitor who CAN run the promo still needs
+# to read what the thing is made of and what is not settled yet. The promo is
+# the hero; this is the page.
+BANDS_STATIC_CSS = """
+  #bands-copy{max-width:760px;margin:0 auto;padding:64px 24px 96px;
+    color:#F4F2ED;font:400 17px/1.65 Archivo,system-ui,sans-serif}
+  #bands-copy .kicker{font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;
+    color:#E8B23A;text-transform:uppercase;margin:0}
+  #bands-copy h1{font:900 clamp(34px,6vw,58px)/1.03 Archivo,sans-serif;
+    letter-spacing:-.02em;margin:18px 0 14px}
+  #bands-copy h2{font:800 26px/1.2 Archivo,sans-serif;letter-spacing:-.01em;margin:44px 0 12px}
+  #bands-copy .lede{color:#A5A19A;font-size:19px;margin:0 0 8px}
+  #bands-copy p{color:#A5A19A}
+  #bands-copy strong{color:#F4F2ED}
+  #bands-copy ul.spec{list-style:none;padding:0;margin:22px 0;
+    border-top:1px solid rgba(255,255,255,.09)}
+  #bands-copy ul.spec li{display:flex;justify-content:space-between;gap:18px;
+    padding:13px 0;border-bottom:1px solid rgba(255,255,255,.09);
+    font:500 14px/1.4 'JetBrains Mono',monospace;color:#8B8780}
+  #bands-copy ul.spec b{color:#E8B23A;font-weight:700;letter-spacing:.06em}
+  #bands-copy .lozenge{display:inline-block;border:1px solid rgba(232,178,58,.5);
+    padding:15px 28px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em;
+    color:#E8B23A}
+  #bands-copy .lozenge:hover{background:rgba(232,178,58,.1)}
+  #bands-copy .cta{margin-top:34px}
+"""
+
+
+def fetch_babel() -> bool:
+    """Get the build-time compiler, once, and verify it is the right one.
+
+    Gitignored on purpose: 3 MB that never ships, needed only on a machine that
+    is re-compiling the design. `index.html` and `bands/*.js` are committed, so
+    a Pages build with no build command still deploys the right page.
+    """
+    if BABEL_LOCAL.exists():
+        got = "sha384-" + base64.b64encode(
+            hashlib.sha384(BABEL_LOCAL.read_bytes()).digest()).decode()
+        if got == BABEL_SRI:
+            return True
+        print(f"  bands      {BABEL_LOCAL.name} does not match the pinned SRI — refetching")
+    BABEL_LOCAL.parent.mkdir(exist_ok=True)
+    print(f"  bands      fetching {BABEL_URL}")
+    try:
+        subprocess.run(["curl", "-sS", "-L", "-m", "180", "-o", str(BABEL_LOCAL),
+                        BABEL_URL], check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        print(f"  bands      could not fetch Babel ({e})")
+        return False
+    got = "sha384-" + base64.b64encode(
+        hashlib.sha384(BABEL_LOCAL.read_bytes()).digest()).decode()
+    if got != BABEL_SRI:
+        sys.exit(f"fetched Babel does not match the SRI support.js pins\n"
+                 f"  want {BABEL_SRI}\n  got  {got}")
+    return True
+
+
+# ── the contact bar ─────────────────────────────────────────────────────────
+#
+# blog.py carries this on the journal and every markdown page, and the home page
+# has its own from the design. /platform/ and /bands/ shipped with NO footer at
+# all — two of the six pages on this site had no way to reach the lab from the
+# bottom of them.
+#
+# NOTE ON THE ADDRESS: bullprintlab.com, SINGULAR. There is no
+# bullprintlabs.com mailbox, and BRAND.md is explicit that the name is never
+# pluralised. An S here is a bounced enquiry, not a typo.
+CONTACT_EMAIL = "bullish@bullprintlab.com"
+CONTACT_X = "bestinbull"
+CONTACT_PHONE = "561.532.7120"
+CONTACT_CITY = "Jupiter"
+CONTACT_REGION = "FL"
+CONTACT_PLACE = "JUPITER, FLORIDA"
+CONTACT_TEL = "+15615327120"
+
+FOOTER = f"""<footer id="bp-foot"><div>
+  <span>BEST IN BULL&trade; &middot; PRINTED IN HOUSE &middot; {CONTACT_PLACE}</span>
+  <span><a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL.upper()}</a>
+    &middot; <a href="tel:{CONTACT_TEL}">{CONTACT_PHONE}</a>
+    &middot; <a href="https://x.com/{CONTACT_X}" rel="me">@{CONTACT_X.upper()}</a></span>
+</div></footer>
+<style>
+  #bp-foot{{border-top:1px solid rgba(255,255,255,.09);background:#0B0B0D}}
+  #bp-foot>div{{max-width:1180px;margin:0 auto;padding:26px 24px;display:flex;
+    flex-wrap:wrap;gap:12px 26px;align-items:center;justify-content:space-between;
+    font:600 11px/1.6 'JetBrains Mono',monospace;letter-spacing:.14em;color:#6E6B66}}
+  #bp-foot a{{color:#E8B23A;text-decoration:none}}
+  #bp-foot a:hover{{color:#F5D07A}}
+</style>"""
+
+
+def add_footer(html: str, where: str) -> str:
+    """Append the contact bar to a page whose design never had one."""
+    if CONTACT_EMAIL in html:
+        print(f"  {where:<10} footer     already present, left alone")
+        return html
+    if "</body>" not in html:
+        sys.exit(f"{where}: no </body> to append the footer to")
+    print(f"  {where:<10} footer     {CONTACT_EMAIL} · {CONTACT_PHONE} · @{CONTACT_X}")
+    return html.replace("</body>", FOOTER + "\n</body>", 1)
+
+
+def bands_asset(upload: str, stem: str) -> str | None:
+    """Resolve one of the promo's two images to a repo asset, webp first."""
+    for ext in (".webp", ".png", ".jpg"):
+        if (ROOT / "assets" / (stem + ext)).exists():
+            return f"/assets/{stem}{ext}"
+    return None
+
+
+def compile_bands_jsx(images: dict) -> None:
+    """design/*.jsx -> bands/*.js, then the two mechanical corrections."""
+    srcs = [str(ROOT / "design" / n) for n in BANDS_JSX]
+    subprocess.run(["node", str(ROOT / "jsx-compile.js"), str(BABEL_LOCAL),
+                    str(BANDS_DIR)] + srcs, check=True, cwd=ROOT)
+
+    promo = BANDS_DIR / "bull-band-promo.js"
+    js = promo.read_text()
+
+    for upload, url in images.items():
+        if upload not in js:
+            sys.exit(f"bands: the promo no longer references {upload} — "
+                     "re-point BANDS_IMAGES at whatever it uses now")
+        js = js.replace(upload, url)
+        print(f"  bands      repointed {upload} -> {url}")
+
+    # BRAND.md 2: the house is BULLPRINT LAB, one word, never pluralised. The
+    # export's Product Flex slate says "BULL PRINT LABS". Fix it at source in
+    # the design when convenient and this step becomes a no-op — the assert
+    # below will say so loudly if it goes away.
+    wrong, right = "BULL PRINT LABS", "BULLPRINT LAB"
+    if wrong not in js:
+        sys.exit("bands: 'BULL PRINT LABS' not found — fixed at source? "
+                 "delete this correction if so")
+    js = js.replace(wrong, right)
+    print(f"  bands      brand      {wrong!r} -> {right!r}")
+
+    promo.write_text(js)
+
+
+def bands_scene_file(html: str) -> str:
+    """Lift the helmet's inline scripts into a same-origin file.
+
+    Returns the html with the inline blocks replaced by one <script src>. The
+    payload is taken verbatim from the export — the scene list, the durations
+    and the tweak defaults are still authored in Claude Design and never
+    retyped here.
+
+    OM_PLAYBACK is the one line rewritten rather than copied: the export loops a
+    1920x1080 composition forever, which on a phone is a battery drain a visitor
+    never asked for. `{mode:'times',count:N}` is the engine's own documented
+    playback contract, so a reduced-motion visitor gets the film once and then a
+    still frame, and everyone else gets the loop as authored.
+    """
+    blocks = re.findall(r"<script>(window\.OM_[A-Z]+|window\.TWEAK_DEFAULTS)"
+                        r"([^<]*?)</script>\s*", html)
+    if len(blocks) < 2:
+        sys.exit(f"bands: expected the helmet's inline scripts, found {len(blocks)}")
+
+    lines = []
+    for name, rest in blocks:
+        stmt = (name + rest).strip()
+        if name == "window.OM_PLAYBACK":
+            authored = re.search(r"'(.*)'", stmt)
+            lines.append(
+                "// Authored as " + (authored.group(1) if authored else "?") + ".\n"
+                "// prefers-reduced-motion gets one pass instead of an endless one.\n"
+                "window.OM_PLAYBACK = (window.matchMedia &&\n"
+                "  window.matchMedia('(prefers-reduced-motion: reduce)').matches)\n"
+                "  ? '{\"mode\":\"times\",\"count\":1}'\n"
+                "  : " + (authored.group(0) if authored else "'{\"mode\":\"loop\"}'") + ";")
+        else:
+            lines.append(stmt if stmt.endswith(";") else stmt + ";")
+
+    scene = ("/* GENERATED by build.py from design/Bull Band Promo.dc.html.\n"
+             " * Do not edit — change the design and re-run the build.\n"
+             " *\n"
+             " * These three assignments are inline <script> in the export. The\n"
+             " * helmet manager re-creates them as inline scripts in <head>, and\n"
+             " * this site's CSP is `script-src 'self'` with no 'unsafe-inline',\n"
+             " * so on the deployed page they would never execute and the stage\n"
+             " * would mount with no scenes at all.\n"
+             " */\n" + "\n".join(lines) + "\n")
+    (BANDS_DIR / "scene.js").write_text(scene)
+    print(f"  bands      helmet     {len(blocks)} inline script(s) -> /bands/scene.js")
+
+    html = re.sub(r"<script>(?:window\.OM_[A-Z]+|window\.TWEAK_DEFAULTS)[^<]*?</script>\s*",
+                  "", html)
+    return html.replace("</helmet>", '<script src="/bands/scene.js"></script>\n</helmet>')
+
+
+def build_bands() -> bool:
+    """Build /bands/index.html — the Bull Band promo over the written page.
+
+    Returns True when the route was published, so write_geo only lists a page
+    that exists.
+    """
+    if not BANDS_SRC.exists():
+        print(f"  bands      SKIP — no {BANDS_SRC.name}")
+        return False
+
+    images, missing = {}, []
+    for upload, stem in BANDS_IMAGES.items():
+        url = bands_asset(upload, stem)
+        if url:
+            images[upload] = url
+        else:
+            missing.append(stem)
+    if missing:
+        print("  bands      SKIP — the promo's images are not in the repo yet.")
+        for stem in missing:
+            src = next(u for u, s in BANDS_IMAGES.items() if s == stem)
+            print(f"               need assets/{stem}.webp (or .png) "
+                  f"— that is {src} in the design project")
+        print("               /bands/ is not published until they land; nothing"
+              " else in this build is affected.")
+        # A page whose two images 404 is worse than no page, and a compiled
+        # module still carrying a since-deleted image path is worse again. The
+        # whole output directory regenerates from the design in one command, so
+        # take it down rather than leave a half-truth in the repo.
+        stale = sorted(p for p in BANDS_DIR.glob("*") if p.is_file()) \
+            if BANDS_DIR.exists() else []
+        for p in stale:
+            p.unlink()
+        if stale:
+            print(f"               removed {len(stale)} stale file(s) from "
+                  f"{BANDS_DIR.relative_to(ROOT)}/")
+        return False
+
+    if not fetch_babel():
+        print("  bands      SKIP — no build-time compiler and no network")
+        return False
+
+    compile_bands_jsx(images)
+
+    html = BANDS_SRC.read_text()
+    html = bands_scene_file(html)
+
+    before = html
+    html = re.sub(r'<link rel="preconnect" href="https://fonts\.gstatic\.com"[^>]*>\s*', "", html)
+    html = re.sub(r'<link href="https://fonts\.googleapis\.com/[^"]*" rel="stylesheet">',
+                  '<link rel="stylesheet" href="/fonts/fonts.css">', html)
+    if html == before:
+        sys.exit("bands: font links not found — did the export format change?")
+
+    # /bands/ is one level down, and the modules are precompiled, so both the
+    # runtime ref and the x-import list are rewritten root-absolute.
+    marker = '<script src="./support.js"></script>'
+    if marker not in html:
+        sys.exit("bands: support.js script tag not found — export format changed?")
+
+    jsx_list = " ".join("./" + n for n in BANDS_JSX)
+    js_list = " ".join(f"/bands/{n[:-4]}.js" for n in BANDS_JSX)
+    if jsx_list not in html:
+        sys.exit(f"bands: x-import list is not {jsx_list!r} — export changed?")
+    html = html.replace(jsx_list, js_list)
+    print(f"  bands      x-import   .jsx -> precompiled .js (no Babel at runtime)")
+
+    bands_ld = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "@id": f"{SITE}/bands/#product",
+        "name": "Bull Bands",
+        "url": f"{SITE}/bands/",
+        "description": BANDS_DESC,
+        "brand": {"@id": f"{SITE}/#org"},
+        "material": "Thermoplastic polyurethane, technical spacer mesh",
+        "offers": {"@type": "Offer", "url": f"{SITE}/bands/",
+                   "priceCurrency": "USD",
+                   "availability": "https://schema.org/PreOrder"},
+    }
+    head = BANDS_HEAD.replace("{bandsld}", json.dumps(bands_ld, separators=(",", ":")))
+    head = head.replace("{favicon}", base64.b64encode(FAVICON.encode()).decode())
+    html = html.replace(marker, head + '\n<script src="/support.js"></script>', 1)
+
+    if not BANDS_STATIC.exists():
+        sys.exit(f"bands: missing {BANDS_STATIC.relative_to(ROOT)}")
+    m = blog.parse(BANDS_STATIC, required=("title", "summary"))
+    copy = (f'<style>{BANDS_STATIC_CSS}</style>\n'
+            f'<main id="bands-copy">\n'
+            f'  <p class="kicker">{m.get("kicker", "Signal")}</p>\n'
+            f'  <h1>{m["title"]}</h1>\n'
+            f'  <p class="lede">{blog.inline(m["summary"])}</p>\n'
+            f'  {blog.md(m["body"])}\n'
+            f'</main>\n')
+    html = html.replace("</body>", copy + "</body>", 1)
+    print(f"  bands      copy       {BANDS_STATIC.name} -> {len(copy) / 1024:.0f} KB, "
+          "always visible")
+
+    html = add_footer(html, "bands")
+    BANDS_OUT.parent.mkdir(exist_ok=True)
+    BANDS_OUT.write_text(html)
+    print(f"  bands      wrote {BANDS_OUT.relative_to(ROOT)}  ({len(html) / 1024:.0f} KB)")
+
+    for must in ("<x-dc>", "</x-dc>", '"/support.js"', "/vendor/react.production.min.js",
+                 "/fonts/fonts.css", "/bands/scene.js", "/bands/bull-band-promo.js",
+                 'id="bands-copy"', "BEST IN BULL"):
+        assert must in html, f"bands: missing {must}"
+    assert "./support.js" not in html, "bands: a relative support.js ref survived"
+    assert ".jsx" not in html, "bands: a .jsx x-import survived — the page would load Babel"
+    assert "uploads/" not in html, "bands: an upload reference survived the rewrite"
+    assert "fonts.googleapis.com" not in html and "fonts.gstatic.com" not in html, \
+        "bands: a Google Fonts reference survived"
+    # Every EXECUTABLE inline <script> must be gone: this page's CSP has no
+    # 'unsafe-inline'. A data block (application/ld+json) is never executed and
+    # is not what script-src governs, so it stays — the JSON-LD above is one.
+    inline_js = [t for t in re.findall(r"<script\b([^>]*)>(?=\s*\S)", html)
+                 if "src=" not in t and "ld+json" not in t]
+    assert not inline_js, \
+        f"bands: an executable inline <script> survived: {inline_js} — the CSP blocks it"
+    sub = re.findall(r'<(?:script|img)\b[^>]*\bsrc="([^"]+)"', html)
+    sub += re.findall(r'<link\b[^>]*\bhref="([^"]+)"', html)
+    external = [u for u in sub if u.startswith(("http://", "https://"))
+                and not u.startswith(SITE)]
+    assert not external, f"bands: external subresource(s) survived: {external}"
+    for stray in BANDS_DIR.glob("*.jsx"):
+        sys.exit(f"bands: {stray.name} is in the served directory — "
+                 "only compiled .js belongs there")
+    return True
+
+
+# ── the line ────────────────────────────────────────────────────────────────
+#
+# Three products. Insoles, slides, headbands. Nothing else is offered, and the
+# rule that decides it is one sentence: WE DO NOT OFFER WHAT WE DO NOT PRINT.
+#
+# This is not a preference, it is the whole pitch. A lab that lists a water shoe
+# it has never printed, a heel cup parked behind an open question, and a
+# cut-and-sew headband its own copy admits "nothing on our floor makes", is a
+# dropshipper with good typography. The catalogue IS the credibility.
+#
+# RETIRED is enforced, not remembered: check_line() below fails the build if any
+# of these names survives into a built page. The design export still carries
+# some of them, so PURGE fixes them mechanically on the way through — fix them
+# at source in Claude Design and each substitution becomes a no-op, which the
+# asserts will say out loud.
+
+THE_LINE = ("BULL INSOLES", "BULL SLIDES", "BULL HEADBANDS")
+
+RETIRED = {
+    "BULL SWIMS": "water shoe — never printed, never costed against a real machine",
+    "BULL HEEL CUP": "parked behind an open question about the feathered cut",
+    "BULL BITS": "never a product here, only a line in a brief",
+    "BULL LAB": "a category for experiments, which is a catalogue by another name",
+    "BULL SOCKS": "not printed",
+}
+
+# Every mechanical correction the retirement needs, applied to the site export.
+# Each one asserts its needle exists, so a re-export that already fixed it fails
+# loudly rather than rotting in place.
+PURGE = [
+    # 1. The drops rail carried a third drop for a product that does not exist.
+    ('\n        {\n          no: "DROP 003", name: "BULL SWIMS", material: "TPU 95A · BLACK", edition: "RUN SIZE TBC",\n'
+     '          note: "Water shoe. 360° drainage, secure fit collar, nothing in it to stay wet.", status: "COMING SOON", cta: "NOTIFY VIA X",\n'
+     '          bg: "#101013", bgImg: this.lattice(1), bgSize: "20px 35px", bgPos: "50% 50%",\n'
+     '          statusFg: "#A5A19A", statusBg: "rgba(255,255,255,.06)", statusLine: "rgba(255,255,255,.16)",\n'
+     '          border: "rgba(255,255,255,.09)", nameColor: "#F4F2ED", ctaColor: "#8B8780"\n        },',
+     '\n        {\n          no: "DROP 003", name: "BULL HEADBANDS", material: "TPU 90A BUTTON + SPACER MESH", edition: "RUN SIZE TBC",\n'
+     '          note: "Printed TPU Bull Button, stitch channels in the geometry, sewn into technical spacer mesh.", status: "IN THE LAB", cta: "ON THE BENCH",\n'
+     '          bg: "#101013", bgImg: this.lattice(1), bgSize: "20px 35px", bgPos: "50% 50%",\n'
+     '          statusFg: "#E8B23A", statusBg: "rgba(232,178,58,.12)", statusLine: "rgba(232,178,58,.4)",\n'
+     '          border: "rgba(255,255,255,.09)", nameColor: "#F4F2ED", ctaColor: "#8B8780"\n        },',
+     "drops rail: DROP 003 is headbands, not a water shoe"),
+
+    # 2. The page's own meta description sold a product line that is retiring.
+    ("AI-designed, 3D-printed footwear hardware. Insoles, slides and swims in "
+     "bull-grade TPU — serialized, inspected, BEST IN BULL.",
+     "AI-designed, 3D-printed footwear hardware. Insoles, slides and headbands "
+     "in bull-grade TPU — serialized, inspected, BEST IN BULL.",
+     "meta description: three products, and they are the three we print"),
+
+    # 3. A fabric print specified for a lining that has nowhere to line.
+    ('spec: "486 MM REPEAT · SWIMS LINING"',
+     'spec: "486 MM REPEAT · PACKAGING"',
+     "fabric 02: repeat is for packaging now that swims are gone"),
+
+    # 4. THE ONE THAT MATTERS. The export's own Bull Bands block says the
+    #    headband "isn't printed" and that "nothing on our floor makes it" — a
+    #    product the house rule forbids offering, described in the house's own
+    #    words. The Bull Band that IS offered has a printed TPU Bull Button in
+    #    it, which is exactly what makes it ours to sell.
+    ("BULL BANDS — SAME CLOTH, NO PRINT TIME",
+     "BULL HEADBANDS — THE BUTTON IS THE PRINT",
+     "bands: the headband is a printed part, not a cut-and-sew buy-in"),
+    ("The spacer mesh is already the right material for a headband: open-cell, "
+     "wicking, holds a stretch without a seam. One cut piece, two stitched "
+     "loops, 320 × 62 mm — the first BullPrint product that isn't printed and "
+     "the only one that ships same day. Coming once we have a cut-and-sew "
+     "partner; nothing on our floor makes it.",
+     "The spacer mesh is already the right material for a headband: open-cell, "
+     "wicking, holds a stretch without a seam. What makes it ours is the Bull "
+     "Button — a low-profile TPU badge, 20–30 mm, with the stitch channels "
+     "printed into the geometry so it is sewn through rather than glued on, and "
+     "flexes with the cloth instead of fighting it. We print the button. The "
+     "skin-contact and bond questions are open and the Materials Engineer owns "
+     "them, so there is no drop number on this yet.",
+     "bands copy: the Bull Button is the printed part"),
+]
+
+
+def purge_line(html: str) -> str:
+    """Retire everything that is not one of the three, at the source page."""
+    for old, new, why in PURGE:
+        if old not in html:
+            sys.exit(f"purge: needle gone — {why}\n"
+                     f"  fixed at source in the design? delete this entry.\n"
+                     f"  looked for: {old[:90]!r}")
+        html = html.replace(old, new)
+        print(f"  purge      {why}")
+    return html
+
+
+def check_line(pages: dict) -> None:
+    """No retired product may survive into anything this build publishes.
+
+    A promise in a README is not a control. This is: if a re-export, a markdown
+    edit or a new page reintroduces a product the lab does not print, the build
+    stops and names it.
+    """
+    hits = []
+    for where, html in pages.items():
+        upper = html.upper()
+        for name, why in RETIRED.items():
+            if name in upper:
+                hits.append(f"{where}: {name} ({why})")
+    if hits:
+        sys.exit("a retired product survived into a built page:\n  "
+                 + "\n  ".join(hits))
+    print(f"  line       {len(THE_LINE)} products, {len(RETIRED)} retired names "
+          f"absent from {len(pages)} page(s)")
 
 
 def check_vendor() -> None:
@@ -764,6 +1274,9 @@ ORG_LD = {
         {"@type": "Organization", "@id": f"{SITE}/#org", "name": "BullPrint Lab",
          "url": f"{SITE}/", "email": "bullish@bullprintlab.com",
          "telephone": "+1-561-532-7120",
+         "address": {"@type": "PostalAddress", "addressLocality": "Jupiter",
+                     "addressRegion": "FL", "addressCountry": "US"},
+         "areaServed": {"@type": "Country", "name": "United States"},
          "logo": f"{SITE}/assets/insert-spec-sheet.png",
          "slogan": "We print what we're bullish on.",
          "description": DESC,
@@ -837,8 +1350,13 @@ def check_brand(html: str) -> None:
     print("  brand      BrAhMa casing + AI disclosure ok")
 
 
-def write_geo(posts, pages=()) -> None:
-    """robots, sitemap and llms.txt — the surface AI search actually reads."""
+def write_geo(posts, pages=(), bands=False) -> None:
+    """robots, sitemap and llms.txt — the surface AI search actually reads.
+
+    `bands` is passed rather than assumed: /bands/ only publishes once the
+    promo's images are in the repo, and listing a route that 404s is worse than
+    listing nothing.
+    """
     (ROOT / "robots.txt").write_text(f"""User-agent: *
 Allow: /
 
@@ -875,6 +1393,8 @@ Sitemap: {SITE}/sitemap.xml
     # could discover the product it is mostly about.
     urls = [(f"{SITE}/", "weekly", "1.0"), (f"{SITE}/blog/", "daily", "0.9"),
             (f"{SITE}/platform/", "weekly", "0.9")]
+    if bands:
+        urls.append((f"{SITE}/bands/", "weekly", "0.9"))
     # /order/confirmed is a post-payment page; it should never be indexed
     urls += [(f"{SITE}/{m['slug']}/", "monthly", "0.8") for m in pages]
     urls += [(f"{SITE}/blog/{m['slug']}/", "monthly", "0.8") for m in posts]
@@ -893,6 +1413,9 @@ Sitemap: {SITE}/sitemap.xml
     # posts comes away thinking this is a blog with a shop bolted on.
     plines = "\n".join(
         f"- [{m['title']}]({SITE}/{m['slug']}/): {m['summary']}" for m in pages)
+    if bands:
+        bm = blog.parse(BANDS_STATIC, required=("title", "summary"))
+        plines += f"\n- [{bm['title']}]({SITE}/bands/): {bm['summary']}"
     (ROOT / "llms.txt").write_text(f"""# BullPrint Lab
 
 > 3D-printed sneaker inserts, printed in house. TPU 95A, gold, limited drops.
@@ -925,10 +1448,14 @@ shipped with its likely failure modes written down in advance.
 
 ## The line
 
-Three products ship: Bull Insoles ($99, live), Bull Slides ($128, in the lab)
-and Bull Swims ($92, coming). A heel cup and custom runs are designed and
-parked. Everything is made to order — nothing is held in a warehouse — and
-qualified materials are limited to TPU 95A, TPU 80A and PEBA. Full detail,
+Three products, and only three: Bull Insoles ($99, live), Bull Slides ($128, in
+the lab) and Bull Headbands (in the lab). The rule that decides the list is that
+BullPrint Lab does not offer what it does not print — a water shoe and a heel cup
+were both retired for that reason rather than parked. Custom runs put a client's
+mark into the lattice of those same three; they are not a fourth product.
+Everything is made to order — nothing is held in a warehouse — and the qualified
+material is TPU (95A firm, 90A skin-contact). TPU 80A is suspended and PEBA is
+listed but not yet qualified on our machines; nothing ships in either. Full detail,
 including why each item is printed rather than moulded, is at {SITE}/store/.
 
 ## Pages
@@ -959,6 +1486,7 @@ def main() -> None:
         html = html.replace(old, new)
         print(f"  repointed  {old} -> {new}  ({n}x)")
 
+    html = purge_line(html)
     html = wire_forms(html)
     html = link_store(html)
     html = link_footlabos(html)
@@ -1040,13 +1568,22 @@ def main() -> None:
                 and not u.startswith("https://challenges.cloudflare.com/")]
     assert not external, f"external subresource(s) survived: {external}"
     build_platform()
+    bands = build_bands()
     blog.build_order_confirmed(ROOT)
     posts = blog.build(ROOT)
     pages = blog.build_pages(ROOT)
     print(f"  journal    {len(posts)} post(s) -> blog/"
           + (f", {len(pages)} page(s)" if pages else ""))
-    write_geo(posts, pages)
+    write_geo(posts, pages, bands)
     check_brand(html)
+    published = {"index.html": html,
+                 "platform/index.html": PLATFORM_OUT.read_text(),
+                 "llms.txt": (ROOT / "llms.txt").read_text()}
+    for m in list(pages) + [{"slug": f"blog/{p['slug']}"} for p in posts]:
+        published[f"{m['slug']}/index.html"] = (ROOT / m["slug"] / "index.html").read_text()
+    if bands:
+        published["bands/index.html"] = BANDS_OUT.read_text()
+    check_line(published)
     print("  checks     passed")
 
 

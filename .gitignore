@@ -6,3 +6,8 @@ __pycache__/
 
 # handoff copies of images already tracked in assets/ — 5.5 MB of duplicates
 design_handoff_bullprint_lab/assets/*.png
+
+# build-time only: @babel/standalone, 3 MB, fetched on demand and SRI-verified.
+# The compiled bands/*.js it produces ARE committed, so a Pages build with no
+# build command still deploys the right page.
+build/

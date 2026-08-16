@@ -30,16 +30,21 @@ shipped with its likely failure modes written down in advance.
 
 ## The line
 
-Three products ship: Bull Insoles ($99, live), Bull Slides ($128, in the lab)
-and Bull Swims ($92, coming). A heel cup and custom runs are designed and
-parked. Everything is made to order — nothing is held in a warehouse — and
-qualified materials are limited to TPU 95A, TPU 80A and PEBA. Full detail,
+Three products, and only three: Bull Insoles ($99, live), Bull Slides ($128, in
+the lab) and Bull Headbands (in the lab). The rule that decides the list is that
+BullPrint Lab does not offer what it does not print — a water shoe and a heel cup
+were both retired for that reason rather than parked. Custom runs put a client's
+mark into the lattice of those same three; they are not a fourth product.
+Everything is made to order — nothing is held in a warehouse — and the qualified
+material is TPU (95A firm, 90A skin-contact). TPU 80A is suspended and PEBA is
+listed but not yet qualified on our machines; nothing ships in either. Full detail,
 including why each item is printed rather than moulded, is at https://bullprintlab.com/store/.
 
 ## Pages
 
 - [BullMaker & BullTaker](https://bullprintlab.com/bullmaker-bulltaker/): Two ways to be part of this, named. A BullMaker brings a mark and commissions geometry. A BullTaker takes a numbered unit from a drop. Both are earned titles with a number attached — neither is a marketing segment, and nobody gets called either one until something physical exists with their name on it.
-- [The Line](https://bullprintlab.com/store/): Everything we make goes on a foot. The store opens with three products and no catalogue — insoles first because they are the cheapest thing to trust, slides second because they are the easiest to love, swims third because they are seasonal. Everything marked pipeline is designed and costed and parked until a drop earns it a week of its own.
+- [The Line](https://bullprintlab.com/store/): Three products. Insoles, slides, headbands. We do not offer what we do not print, so the list is short by rule rather than by roadmap — and anything parked, unproven or bought in is not on it.
+- [Bull Headbands](https://bullprintlab.com/bands/): A headband built around one construction detail — a flexible TPU Bull Button sewn into technical spacer mesh, not glued on top of it. The promo above is the pitch. This is what is actually true about it today.
 
 ## Journal
 

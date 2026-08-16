@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Line — BullPrint Lab</title>
-<meta name="description" content="Everything we make goes on a foot. The store opens with three products and no catalogue — insoles first because they are the cheapest thing to trust, slides second because they are the easiest to love, swims third because they are seasonal. Everything marked pipeline is designed and costed and parked until a drop earns it a week of its own.">
+<meta name="description" content="Three products. Insoles, slides, headbands. We do not offer what we do not print, so the list is short by rule rather than by roadmap — and anything parked, unproven or bought in is not on it.">
 <link rel="canonical" href="https://bullprintlab.com/store/">
 <meta name="theme-color" content="#0B0B0D">
 <meta name="color-scheme" content="dark">
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="BullPrint Lab">
 <meta property="og:url" content="https://bullprintlab.com/store/">
 <meta property="og:title" content="The Line — BullPrint Lab">
-<meta property="og:description" content="Everything we make goes on a foot. The store opens with three products and no catalogue — insoles first because they are the cheapest thing to trust, slides second because they are the easiest to love, swims third because they are seasonal. Everything marked pipeline is designed and costed and parked until a drop earns it a week of its own.">
+<meta property="og:description" content="Three products. Insoles, slides, headbands. We do not offer what we do not print, so the list is short by rule rather than by roadmap — and anything parked, unproven or bought in is not on it.">
 <meta property="og:image" content="https://bullprintlab.com/assets/insert-spec-sheet.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@bestinbull">
@@ -31,6 +31,20 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;h
 .mark span{color:var(--gold)}
 .nav{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.16em;color:var(--dim)}
 .nav a{margin-left:22px}
+/* the buy form — /store/ only, the one page here that takes money */
+form.buy{margin:26px 0 0;padding:22px;border:1px solid rgba(232,178,58,.32);background:#0E0E11;display:flex;flex-direction:column;gap:14px}
+form.buy .buy-price{margin:0;font:500 13px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780}
+form.buy .buy-price strong{color:#E8B23A;font-size:20px;letter-spacing:0}
+form.buy label{display:flex;flex-direction:column;gap:6px;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780}
+form.buy input,form.buy select{appearance:none;background:#0B0B0D;border:1px solid rgba(255,255,255,.14);color:#F4F2ED;padding:12px 13px;font:400 15px/1.3 Archivo,system-ui,sans-serif;border-radius:0}
+form.buy input:focus,form.buy select:focus{outline:2px solid #E8B23A;outline-offset:1px;border-color:transparent}
+form.buy button{appearance:none;cursor:pointer;border:0;width:100%;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;padding:17px 22px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.2em}
+form.buy button:hover{filter:brightness(1.07)}
+form.buy button:disabled{opacity:.55;cursor:default;filter:none}
+form.buy .bp-buy-error{margin:0;min-height:1em;font:700 11px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em;color:#E8B23A}
+form.buy .bp-buy-error:empty{min-height:0}
+form.buy .buy-note{margin:0;font:400 13px/1.6 Archivo,system-ui,sans-serif;color:#6E6B66}
+#bp-turnstile{position:fixed;left:-9999px;top:0}
 .kicker{font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
 h1{font:900 clamp(34px,6vw,58px)/1.03 Archivo,sans-serif;letter-spacing:-.02em;margin:18px 0 14px}
 h2{font:800 26px/1.2 Archivo,sans-serif;letter-spacing:-.01em;margin:44px 0 12px}
@@ -70,7 +84,9 @@ article img{display:block;width:100%;height:auto;margin:30px 0;border:1px solid 
 @media(max-width:720px){.titles{grid-template-columns:1fr}}
 .note{margin:46px 0 0;padding:16px 18px;border:1px solid var(--line);background:#101013;color:var(--dim);font-size:14px}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The Line","description":"Everything we make goes on a foot. The store opens with three products and no catalogue \u2014 insoles first because they are the cheapest thing to trust, slides second because they are the easiest to love, swims third because they are seasonal. Everything marked pipeline is designed and costed and parked until a drop earns it a week of its own.","url":"https://bullprintlab.com/store/","inLanguage":"en","isPartOf":{"@type":"WebSite","@id":"https://bullprintlab.com/#site"},"publisher":{"@type":"Organization","@id":"https://bullprintlab.com/#org"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The Line","description":"Three products. Insoles, slides, headbands. We do not offer what we do not print, so the list is short by rule rather than by roadmap \u2014 and anything parked, unproven or bought in is not on it.","url":"https://bullprintlab.com/store/","inLanguage":"en","isPartOf":{"@type":"WebSite","@id":"https://bullprintlab.com/#site"},"publisher":{"@type":"Organization","@id":"https://bullprintlab.com/#org"}}</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+<script src="../bp-buy.js" defer></script>
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -80,7 +96,7 @@ article img{display:block;width:100%;height:auto;margin:30px 0;border:1px solid 
 <main class="wrap">
   <p class="kicker" style="margin-top:54px">Store</p>
   <h1>The Line</h1>
-  <p class="lede">Everything we make goes on a foot. The store opens with three products and no catalogue — insoles first because they are the cheapest thing to trust, slides second because they are the easiest to love, swims third because they are seasonal. Everything marked pipeline is designed and costed and parked until a drop earns it a week of its own.</p>
+  <p class="lede">Three products. Insoles, slides, headbands. We do not offer what we do not print, so the list is short by rule rather than by roadmap — and anything parked, unproven or bought in is not on it.</p>
   <p>Every item passes the same test the insole did: **would we use this ourselves, and does the print do something an injection-moulded version couldn't?** If the answer to the second one is no, the honest move is to buy the moulded version and not make it. That question is why this list is short.</p>
 <div class="titles">
 <div>
@@ -95,7 +111,17 @@ article img{display:block;width:100%;height:auto;margin:30px 0;border:1px solid 
 <li><b>Sizes</b> US M13 first, more to follow</li>
 <li><b>Status</b> BEST IN BULL™ eligible</li>
 </ul>
-<p style="margin-top:22px"><a class="lozenge" href="../#order">BUILD YOURS</a></p>
+<form id="bp-buy" class="buy">
+<p class="buy-price"><strong>$99</strong> · a pair, made to order</p>
+<label>EMAIL<input name="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+<label>THE SHOE<input name="shoe" type="text" required maxlength="200" placeholder="Nike Pegasus 41, Dr Martens 1460…"></label>
+<label>US SIZE<select name="size">
+<option>7</option><option>8</option><option>9</option><option>10</option><option selected>11</option><option>12</option><option>13</option>
+</select></label>
+<button type="submit" class="lozenge">BUY — $99</button>
+<p class="bp-buy-error" role="alert"></p>
+<p class="buy-note">Checkout is Stripe — card, Cash App Pay, Klarna, Link or Amazon Pay. Name, address and phone are collected there, never here. Want the full fit pass — width, arch, feel, cell size — before you pay? <a href="../#order">Build yours in the configurator</a> instead; same price, more of your foot in the file.</p>
+</form>
 </div>
 <div>
 <p class="role">Item 02 · Drop 002 · In the lab</p>
@@ -113,61 +139,56 @@ article img{display:block;width:100%;height:auto;margin:30px 0;border:1px solid 
 </div>
 <div class="titles">
 <div>
-<p class="role">Item 03 · Drop 003 · Coming</p>
-<h2>BULL<br>SWIMS</h2>
-<p><strong>$92</strong> · grip, drain, protect. Full-coverage water shoe with 360° drainage, a flexible toe, side protection and a secure fit collar. Quick dry because there is nothing in it to stay wet.</p>
-<p><em>Why print it:</em> every part of a wet-environment shoe wants to be a hole, which is exactly what a lattice already is. Nothing moulded drains like a printed one.</p>
+<p class="role">Item 03 · Drop 003 · In the lab</p>
+<h2>BULL<br>HEADBANDS</h2>
+<p><strong>Price TBC</strong> · the Bull Button, sewn in. A low-profile TPU badge with the stitch channels printed into the geometry, sewn through technical spacer mesh rather than glued on top of it.</p>
+<p><em>Why print it:</em> a moulded badge is a hard disc on a soft band and it fights the cloth. A printed one carries its own stitch channels, flexes with the mesh, and changes per project without tooling.</p>
 <ul class="spec">
-<li><b>Material</b> TPU 95A</li>
-<li><b>Print</b> 7.1 h per pair</li>
-<li><b>Stack</b> Heel 8 mm · forefoot 6 mm</li>
-<li><b>Sizes</b> US M13 first, more to follow</li>
+<li><b>Material</b> TPU 90A button, 3 mm spacer mesh</li>
+<li><b>Button</b> 20–30 mm, printed</li>
+<li><b>Assembly</b> Hand sewn</li>
+<li><b>Open</b> Skin-contact and bond basis — Materials Engineer gate, not closed</li>
 </ul>
+<p style="margin-top:22px"><a class="lozenge" href="mailto:bull@bullprintlab.com?subject=Bull%20Headbands%20%E2%80%94%20tell%20me%20when">TELL ME WHEN</a></p>
 </div>
 <div>
-<p class="role">Item 04 · Pipeline</p>
-<h2>BULL<br>HEEL CUP</h2>
-<p><strong>$62</strong> · a half-length cup that takes the heel and the arch and stops before the forefoot. It slides under a footbed the wearer already likes instead of replacing it.</p>
-<p><em>Why print it:</em> it fits boots and dress shoes where a full-length insole crowds the toe box. Same profile data, half the print time.</p>
-<ul class="spec">
-<li><b>Material</b> TPU 95A</li>
-<li><b>Print</b> 2.6 h per pair</li>
-<li><b>Geometry</b> Wall 22 mm · cut line 128 mm</li>
-<li><b>Open question</b> Whether the feathered cut survives repeated insertion into a tight shoe</li>
-</ul>
-<p style="margin-top:22px">That last line is why it is in the pipeline and not in a drop slot. We will not put it in a box until we know.</p>
+<p class="role">The rule</p>
+<h2>WE DON'T<br>OFFER WHAT<br>WE DON'T<br>PRINT.</h2>
+<p>There is no fourth item, and the ones that used to be here are gone rather than parked. A water shoe we never printed, a heel cup sitting behind an open question about its own cut line, a headband our own copy admitted nothing on our floor could make — none of that is a product, it is a plan with a price next to it.</p>
+<p>Three is not a launch strategy. It is the number of things we can print, inspect and stand behind today. When a fourth earns it, it gets a drop number that never resets and never skips.</p>
 </div>
 </div>
 <h2>Custom Bull</h2>
-<p><strong>From $240.</strong> Your mark engineered into the lattice of any of the above — team, shop or brand. Sample first, run second, and the run does not start until you have held the sample. It is the clearest proof that a BullPrint is geometry rather than a print laid on top of a product.</p>
+<p><strong>From $240.</strong> Not a fourth product — the same three, with your mark engineered into the lattice. Team, shop or brand. Sample first, run second, and the run does not start until you have held the sample. It is the clearest proof that a BullPrint is geometry rather than a print laid on top of a product.</p>
 <p><a href="../bullmaker-bulltaker/">Start a custom run →</a></p>
 <hr>
 <h2>Bull-Grade</h2>
 <p>A joke that turned into a spec. Bull-Grade is our qualified materials list, and it is short on purpose. We print nothing else. If a product needs a material outside this list it needs a qualification run before it can be sold — a bench decision, not a marketing one.</p>
-<table><thead><tr><th>Code</th><th>Material</th><th>What it is for</th></tr></thead><tbody><tr><td>BG-01</td><td>TPU 95A</td><td>The firm one. Footbeds, insoles and anything that has to hold an arch under load.</td></tr><tr><td>BG-02</td><td>TPU 80A</td><td>The soft one. Qualified and held for a plush variant — nothing in the current line ships in it.</td></tr><tr><td>BG-03</td><td>PEBA</td><td>The performance material. Lighter and springier than TPU, with better rebound over long wear.</td></tr></tbody></table>
-<p>BG-02 is on the list with nothing shipping in it, and that is the point of having a list: qualifying a material and choosing to use it are two different decisions.</p>
+<table><thead><tr><th>Code</th><th>Material</th><th>What it is for</th></tr></thead><tbody><tr><td>BG-01</td><td>TPU 95A</td><td>The firm one. Footbeds, insoles and anything that has to hold an arch under load.</td></tr><tr><td>BG-02</td><td>TPU 80A</td><td><strong>Suspended.</strong> The machine vendor's own guide says 85A and softer should not be fed through our extruder at all, so this was listed as qualified against hardware that will not run it. It comes back when a coupon proves otherwise, not before.</td></tr><tr><td>BG-01b</td><td>TPU 90A</td><td>The skin-contact one. White is doctrine, not preference: a white part shows dirt and wear immediately. Bull Button and any wear surface.</td></tr><tr><td>BG-03</td><td>PEBA</td><td>The performance material — lighter and springier than TPU. Listed, <strong>not yet qualified on our machines</strong>: no coupon has been run for it. Nothing ships in it until one has.</td></tr></tbody></table>
+<p>Two entries here are honest about not being finished, and that is the point of having a list: qualifying a material and wanting to use it are different decisions, and only one of them is ours to make by deciding.</p>
 <h2>Four finishes</h2>
-<p>Gold is the signature and stays the hero — insoles ship in it. Three supporting finishes let the slides and swims read as everyday footwear rather than trophies, and every one of them is a filament we already qualify.</p>
-<table><thead><tr><th>Code</th><th>Finish</th><th>Where it goes</th></tr></thead><tbody><tr><td>CW-01</td><td>Gold</td><td>The signature. Loud on purpose. Insoles.</td></tr><tr><td>CW-02</td><td>Graphite</td><td>Equipment finish, matte near-black. Slides and swims.</td></tr><tr><td>CW-03</td><td>Bone</td><td>The contrast run. Limited only.</td></tr><tr><td>CW-04</td><td>Titanium</td><td>Industrial grey for premium runs, in PEBA.</td></tr></tbody></table>
+<p>Gold is the signature and stays the hero — insoles ship in it. Three supporting finishes let the slides read as everyday footwear rather than trophies.</p>
+<table><thead><tr><th>Code</th><th>Finish</th><th>Where it goes</th></tr></thead><tbody><tr><td>CW-01</td><td>Gold</td><td>The signature. Loud on purpose. Insoles.</td></tr><tr><td>CW-02</td><td>Graphite</td><td>Equipment finish, matte near-black. Slides.</td></tr><tr><td>CW-03</td><td>Bone</td><td>The contrast run. Limited only.</td></tr><tr><td>CW-04</td><td>Titanium</td><td>Industrial grey for premium runs, in PEBA.</td></tr></tbody></table>
 <p><strong>One finish per object.</strong> No two-tone prints, no colour-change gimmicks. Where a bull mark needs to contrast — a gold bull on a black slide, a black bull on a white one — it is printed as its own part and seated flush into a pocket, so the two colours are two prints that never meet on one plate.</p>
 <p>Bitcoin orange is a filament we do not stock. ₿ appears as geometry, never as a colour.</p>
 <p>&lt;p class="pull"&gt;Rainbow, silk, glitter and colour-shift filaments print beautifully and make the object look like a hobby print — which is the exact impression this whole brand is built to avoid.&lt;/p&gt;</p>
 <h2>Three drops, not a catalogue</h2>
 <p>A full-catalogue launch reads as a dropshipper. Three drops read as a lab with a point of view. Each one gets its own week, its own story and its own verdict.</p>
-<ul><li><strong>Wave 01 — the thesis.</strong> Insoles, slides, swims. Three footwear products</li></ul>
-<p>  prove the lattice is a system rather than a one-off.</p>
-<ul><li><strong>Wave 02 — the fit range.</strong> Heel cup, custom runs, seasonal colourways. Once</li></ul>
-<p>  the profile exists, everything else is a variation on it.</p>
-<ul><li><strong>Wave 03 — the programme.</strong> Team and shop runs, and reprints for worn pairs.</li></ul>
-<p>  Owning the file is the whole advantage: a worn pair becomes a repeat order   rather than a lost customer.</p>
+<ul><li><strong>Drop 001 — Bull Insoles.</strong> Live. The thesis: a lattice tuned per foot with</li></ul>
+<p>  no tooling cost, because there is no tool.</p>
+<ul><li><strong>Drop 002 — Bull Slides.</strong> In the lab. Three printed parts, no adhesive in</li></ul>
+<p>  the load path.</p>
+<ul><li><strong>Drop 003 — Bull Headbands.</strong> In the lab. The Bull Button sewn through</li></ul>
+<p>  spacer mesh, with its materials gate still open.</p>
+<p>After that: reprints for worn pairs and custom runs on the same three. Owning the file is the whole advantage — a worn pair is a repeat order rather than a lost customer. There is no wave four written down, because writing one down is how a lab talks itself into a catalogue.</p>
 <p>Editions stay small because we choose to, not because we can't print more. That distinction has to stay true or the scarcity becomes theatre.</p>
 <h2>What we won't sell</h2>
 <p>Anything carrying a safety burden we can't back with testing. No orthotic claims, no protective footwear, no climbing, no safety toe. A footbed that fails is an uncomfortable afternoon; those other things fail differently. The line is there on purpose and it does not move for a good quarter.</p>
-<p>&lt;p class="note"&gt;Prices are in USD. Card and USDC at checkout. Every item is made to order — nothing on this page exists in a warehouse, which is why the print hours are listed next to the price. BEST IN BULL™ is issued by a person at inspection, never by the checkout.&lt;/p&gt;</p>
+<p>&lt;p class="note"&gt;Only Bull Insoles can be bought today, and that is on purpose: slides and headbands are in the lab, and a button that takes money for something we cannot print yet is the one thing this whole page is arranged to prevent. Prices are in USD. Card, Cash App Pay, Klarna, Link and Amazon Pay at checkout — whatever is enabled on the account shows up automatically, because the session does not pin a payment method list. Every item is made to order — nothing on this page exists in a warehouse, which is why the print hours are listed next to the price. BEST IN BULL™ is issued by a person at inspection, never by the checkout.&lt;/p&gt;</p>
 </main>
 <footer class="foot"><div class="wrap">
-  <span class="meta">BEST IN BULL™ · PRINTED IN HOUSE</span>
-  <span class="meta"><a href="mailto:bullish@bullprintlab.com">BULLISH@BULLPRINTLAB.COM</a> · <a href="https://x.com/bestinbull">@BESTINBULL</a></span>
+  <span class="meta">BEST IN BULL™ · PRINTED IN HOUSE · JUPITER, FLORIDA</span>
+  <span class="meta"><a href="mailto:bullish@bullprintlab.com">BULLISH@BULLPRINTLAB.COM</a> · <a href="tel:+15615327120">561.532.7120</a> · <a href="https://x.com/bestinbull" rel="me">@BESTINBULL</a></span>
 </div></footer>
 </body>
 </html>
