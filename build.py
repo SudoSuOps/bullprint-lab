@@ -1050,6 +1050,159 @@ def check_line(pages: dict) -> None:
           f"absent from {len(pages)} page(s)")
 
 
+# ── /merch/ — the merch spec sheet ──────────────────────────────────────────
+#
+# NOT A PRODUCT PAGE, and the copy on it says so. THE_LINE is three things that
+# go on a foot and are printed in this building. A tee is neither, so a
+# storefront here would retire D-04 the week after it was written.
+#
+# What this IS: the production handoff. Seven prints and two pinbacks with the
+# blank, the ink, the placement, the method and the run split — the sheet a
+# screen printer quotes from. Publishing it fits the house habit of showing the
+# numbers rather than describing them, and it costs nothing to be honest about
+# what is not for sale yet.
+#
+# The screen-print half is not print-on-demand work: PMS 7555C spot gold, a
+# halftone ring, a 16-inch side-seam run and an inside-collar hit are things POD
+# does not do. T-06 and T-07 are the only two that could ever be POD products,
+# and that store does not exist yet — so there is no BUY here, and the sheet
+# says which is which.
+
+MERCH_SRC = ROOT / "design" / "BullPrint Merch Tees.dc.html"
+MERCH_OUT = ROOT / "merch" / "index.html"
+
+MERCH_IMAGES = {
+    "uploads/layer-bull-head-logo-cbe0a67e.png": "bull-head-mascot",
+    "uploads/layer-bitcoin-symbol (1).png": "bull-btc-gold",
+    "uploads/layer-circular-button (1).png": "pinback-sendit",
+    "uploads/layer-green-striped-cracked-button (1).png": "pinback-est2024",
+}
+
+MERCH_TITLE = "Merch — BullPrint Lab"
+MERCH_DESC = ("The BullPrint Lab merch spec sheet: seven V-neck tee prints and "
+              "two pinbacks, with the blank, the ink, the placement and the "
+              "method for each. A production handoff, not a storefront.")
+
+MERCH_HEAD = f"""<title>{MERCH_TITLE}</title>
+<meta name="description" content="{MERCH_DESC}">
+<link rel="canonical" href="{SITE}/merch/">
+<meta name="theme-color" content="#0B0B0D">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml;base64,{{favicon}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BullPrint Lab">
+<meta property="og:url" content="{SITE}/merch/">
+<meta property="og:title" content="{MERCH_TITLE}">
+<meta property="og:description" content="{MERCH_DESC}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{MERCH_TITLE}">
+<meta name="twitter:description" content="{MERCH_DESC}">
+<link rel="alternate" type="text/plain" href="/llms.txt">
+<script type="application/ld+json">{{merchld}}</script>
+<script src="/vendor/react.production.min.js"></script>
+<script src="/vendor/react-dom.production.min.js"></script>"""
+
+# Above the sheet so nobody reads it as a shop, and in plain HTML so a crawler
+# that never runs the template still gets the point.
+MERCH_BANNER = """<div id="merch-note">
+  <p class="k">MERCH 01 &middot; SPEC SHEET &middot; NOT FOR SALE YET</p>
+  <p>This is the production sheet, not a shop. <b>The line is three things &mdash;
+  insoles, slides, headbands</b> &mdash; and every one of them is printed in this
+  building. Merch is merch: it does not join the line and it never carries a
+  drop number.</p>
+  <p><b>T-01 to T-05 are screen prints</b>, deliberately &mdash; spot gold
+  PMS 7555C, a halftone ring, a sixteen-inch side-seam run, an inside-collar
+  hit. No print-on-demand service does any of that, so those five quote out to a
+  screen printer. <b>T-06 and T-07 are the DTG pair</b> and the only two that
+  could ever become print-on-demand products.</p>
+  <p>Nothing here has a price because nothing here has been made yet. When it
+  has, it gets a buy button and this paragraph goes away.
+  <a href="mailto:bull@bullprintlab.com?subject=BullPrint%20merch">Ask about a team run</a>.</p>
+</div>
+<style>
+  #merch-note{max-width:820px;margin:0 auto;padding:44px 24px 0;
+    font:400 15px/1.7 Archivo,system-ui,sans-serif;color:#A5A19A}
+  #merch-note .k{font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;
+    color:#E8B23A;margin:0 0 14px}
+  #merch-note p{margin:0 0 12px}
+  #merch-note b{color:#F4F2ED}
+  #merch-note a{color:#E8B23A}
+</style>"""
+
+
+def build_merch() -> bool:
+    """Build /merch/ from the spec-sheet export. Returns True when published."""
+    if not MERCH_SRC.exists():
+        print(f"  merch      SKIP — no {MERCH_SRC.name}")
+        return False
+
+    missing = [s for s in MERCH_IMAGES.values() if not bands_asset("", s)]
+    if missing:
+        print(f"  merch      SKIP — missing assets: {', '.join(missing)}")
+        if MERCH_OUT.exists():
+            MERCH_OUT.unlink()
+        return False
+
+    html = MERCH_SRC.read_text()
+    for upload, stem in MERCH_IMAGES.items():
+        if upload not in html:
+            sys.exit(f"merch: the sheet no longer references {upload}")
+        html = html.replace(upload, bands_asset("", stem))
+    print(f"  merch      repointed  {len(MERCH_IMAGES)} uploads -> /assets/")
+
+    # Saira Stencil One joins Archivo and JetBrains Mono in fonts/fonts.css, so
+    # the whole sheet — stencil face included — is served from this origin.
+    before = html
+    html = re.sub(r'<link rel="preconnect" href="https://fonts\.gstatic\.com"[^>]*>\s*', "", html)
+    html = re.sub(r'<link href="https://fonts\.googleapis\.com/[^"]*" rel="stylesheet">',
+                  '<link rel="stylesheet" href="/fonts/fonts.css">', html)
+    if html == before:
+        sys.exit("merch: font links not found — did the export format change?")
+    if "Saira Stencil One" not in (ROOT / "fonts" / "fonts.css").read_text():
+        sys.exit("merch: the sheet sets type in Saira Stencil One but "
+                 "fonts/fonts.css does not serve it")
+
+    marker = '<script src="./support.js"></script>'
+    if marker not in html:
+        sys.exit("merch: support.js script tag not found — export format changed?")
+
+    merch_ld = {
+        "@context": "https://schema.org", "@type": "CreativeWork",
+        "@id": f"{SITE}/merch/#sheet",
+        "name": "BullPrint Lab Merch 01 — spec sheet",
+        "url": f"{SITE}/merch/", "description": MERCH_DESC,
+        "creator": {"@id": f"{SITE}/#org"}, "genre": "Production specification",
+    }
+    head = MERCH_HEAD.replace("{merchld}", json.dumps(merch_ld, separators=(",", ":")))
+    head = head.replace("{favicon}", base64.b64encode(FAVICON.encode()).decode())
+    html = html.replace(marker, head + '\n<script src="/support.js"></script>', 1)
+    html = html.replace("<x-dc>", MERCH_BANNER + "\n<x-dc>", 1)
+    html = add_footer(html, "merch")
+
+    MERCH_OUT.parent.mkdir(exist_ok=True)
+    MERCH_OUT.write_text(html)
+    print(f"  merch      wrote {MERCH_OUT.relative_to(ROOT)}  ({len(html) / 1024:.0f} KB)")
+
+    for must in ("<x-dc>", "</x-dc>", '"/support.js"', "/vendor/react.production.min.js",
+                 "/fonts/fonts.css", 'id="merch-note"', "T-01", "T-07",
+                 "NOT FOR SALE YET", "BEST IN BULL"):
+        assert must in html, f"merch: missing {must}"
+    assert "./support.js" not in html, "merch: a relative support.js ref survived"
+    assert "uploads/" not in html, "merch: an upload reference survived the rewrite"
+    assert "fonts.googleapis.com" not in html and "fonts.gstatic.com" not in html, \
+        "merch: a Google Fonts reference survived"
+    inline_js = [t for t in re.findall(r"<script\b([^>]*)>(?=\s*\S)", html)
+                 if "src=" not in t and "ld+json" not in t and "text/x-dc" not in t]
+    assert not inline_js, f"merch: an executable inline <script> survived: {inline_js}"
+    sub = re.findall(r'<(?:script|img|image)\b[^>]*\b(?:src|href)="([^"]+)"', html)
+    sub += re.findall(r'<link\b[^>]*\bhref="([^"]+)"', html)
+    external = [u for u in sub if u.startswith(("http://", "https://"))
+                and not u.startswith(SITE)]
+    assert not external, f"merch: external subresource(s) survived: {external}"
+    return True
+
+
 def check_vendor() -> None:
     for rel, want in VENDOR_SRI.items():
         p = ROOT / rel
@@ -1413,7 +1566,7 @@ def check_brand(html: str) -> None:
     print("  brand      BrAhMa casing + AI disclosure ok")
 
 
-def write_geo(posts, pages=(), bands=False) -> None:
+def write_geo(posts, pages=(), bands=False, merch=False) -> None:
     """robots, sitemap and llms.txt — the surface AI search actually reads.
 
     `bands` is passed rather than assumed: /bands/ only publishes once the
@@ -1458,6 +1611,8 @@ Sitemap: {SITE}/sitemap.xml
             (f"{SITE}/platform/", "weekly", "0.9")]
     if bands:
         urls.append((f"{SITE}/bands/", "weekly", "0.9"))
+    if merch:
+        urls.append((f"{SITE}/merch/", "monthly", "0.6"))
     # /order/confirmed is a post-payment page; it should never be indexed
     urls += [(f"{SITE}/{m['slug']}/", "monthly", "0.8") for m in pages]
     urls += [(f"{SITE}/blog/{m['slug']}/", "monthly", "0.8") for m in posts]
@@ -1479,6 +1634,9 @@ Sitemap: {SITE}/sitemap.xml
     if bands:
         bm = blog.parse(BANDS_STATIC, required=("title", "summary"))
         plines += f"\n- [{bm['title']}]({SITE}/bands/): {bm['summary']}"
+    if merch:
+        plines += (f"\n- [Merch 01 — spec sheet]({SITE}/merch/): {MERCH_DESC} "
+                   "Not part of the three-product line and not for sale yet.")
     (ROOT / "llms.txt").write_text(f"""# BullPrint Lab
 
 > 3D-printed sneaker inserts, printed in house. TPU 95A, gold, limited drops.
@@ -1632,12 +1790,13 @@ def main() -> None:
     assert not external, f"external subresource(s) survived: {external}"
     build_platform()
     bands = build_bands()
+    merch = build_merch()
     blog.build_order_confirmed(ROOT)
     posts = blog.build(ROOT)
     pages = blog.build_pages(ROOT)
     print(f"  journal    {len(posts)} post(s) -> blog/"
           + (f", {len(pages)} page(s)" if pages else ""))
-    write_geo(posts, pages, bands)
+    write_geo(posts, pages, bands, merch)
     check_brand(html)
     published = {"index.html": html,
                  "platform/index.html": PLATFORM_OUT.read_text(),
@@ -1646,6 +1805,8 @@ def main() -> None:
         published[f"{m['slug']}/index.html"] = (ROOT / m["slug"] / "index.html").read_text()
     if bands:
         published["bands/index.html"] = BANDS_OUT.read_text()
+    if merch:
+        published["merch/index.html"] = MERCH_OUT.read_text()
     check_line(published)
     print("  checks     passed")
 
