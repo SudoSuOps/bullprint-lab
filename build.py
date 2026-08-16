@@ -182,6 +182,7 @@ PLATFORM_HEAD = f"""<title>{PLATFORM_TITLE}</title>
 <meta name="twitter:title" content="{PLATFORM_TITLE}">
 <meta name="twitter:description" content="{PLATFORM_DESC}">
 <link rel="alternate" type="text/plain" href="/llms.txt">
+<script type="application/ld+json">{{platformld}}</script>
 <script src="/vendor/react.production.min.js"></script>
 <script src="/vendor/react-dom.production.min.js"></script>
 <script src="/bp-prerender.js" defer></script>"""
@@ -417,7 +418,32 @@ def build_platform() -> None:
     marker = '<script src="./support.js"></script>'
     if marker not in html:
         sys.exit("platform: support.js script tag not found — export format changed?")
+    # The platform page had zero structured data. An AI answering "who does
+    # AI-driven CAD for footwear" cannot cite what it cannot type.
+    platform_ld = {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "@id": f"{SITE}/platform/#app",
+        "name": "BullPrint Lab Platform",
+        "applicationCategory": "DesignApplication",
+        "applicationSubCategory": "Computer-aided design",
+        "operatingSystem": "Web",
+        "url": f"{SITE}/platform/",
+        "description": PLATFORM_DESC,
+        "publisher": {"@id": f"{SITE}/#org"},
+        "featureList": [
+            "Describe a part in plain language and receive a readable BullSpec",
+            "Generate real parametric geometry from the spec",
+            "Edit any dimension by typing",
+            "Export STL, OpenSCAD source and BullSpec JSON",
+        ],
+        "offers": {"@type": "Offer", "price": "0",
+                   "priceCurrency": "USD",
+                   "availability": "https://schema.org/PreOrder"},
+    }
     head = PLATFORM_HEAD.replace(
+        "{platformld}", json.dumps(platform_ld, separators=(",", ":")))
+    head = head.replace(
         "{favicon}", base64.b64encode(FAVICON.encode()).decode())
     html = html.replace(marker, head + '\n<script src="/support.js"></script>', 1)
 
@@ -784,7 +810,11 @@ Allow: /
 Sitemap: {SITE}/sitemap.xml
 """)
 
-    urls = [(f"{SITE}/", "weekly", "1.0"), (f"{SITE}/blog/", "daily", "0.9")]
+    # /platform/ is a first-class page, not an appendix — it shipped and was
+    # then left out of the sitemap entirely, so nothing crawling this site
+    # could discover the product it is mostly about.
+    urls = [(f"{SITE}/", "weekly", "1.0"), (f"{SITE}/blog/", "daily", "0.9"),
+            (f"{SITE}/platform/", "weekly", "0.9")]
     # /order/confirmed is a post-payment page; it should never be indexed
     urls += [(f"{SITE}/{m['slug']}/", "monthly", "0.8") for m in pages]
     urls += [(f"{SITE}/blog/{m['slug']}/", "monthly", "0.8") for m in posts]
