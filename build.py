@@ -530,7 +530,7 @@ BANDS_IMAGES = {
     "uploads/pasted-1786883900528-0.png": "bull-coin",
 }
 
-BANDS_TITLE = "Bull Bands — BullPrint Lab"
+BANDS_TITLE = "Bull Headbands — BullPrint Lab"
 BANDS_DESC = ("A TPU Bull Button sewn into technical spacer mesh, not glued on "
               "top of it. Headbands and wristbands from BullPrint Lab — printed "
               "in house, hand sewn, numbered.")
@@ -880,7 +880,7 @@ def build_bands() -> bool:
         "@context": "https://schema.org",
         "@type": "Product",
         "@id": f"{SITE}/bands/#product",
-        "name": "Bull Bands",
+        "name": "Bull Headbands",
         "url": f"{SITE}/bands/",
         "description": BANDS_DESC,
         "brand": {"@id": f"{SITE}/#org"},
