@@ -199,6 +199,20 @@ def art_size(stem: str) -> tuple[int, int]:
     return Image.open(HERE / "print" / f"{stem}.png").size
 
 
+def art_url(stem: str) -> str:
+    """Content-hashed, because Printful CACHES a print file by URL.
+
+    It fetched the artwork once at create time and kept its own copy. Fixing the
+    PNG in this repo does nothing to a product already created — it will happily
+    keep printing the clipped BULLPRIN version forever. A URL that changes when
+    the bytes change is what forces the re-fetch, and it only changes when the
+    art actually does.
+    """
+    import hashlib
+    h = hashlib.sha256((HERE / "print" / f"{stem}.png").read_bytes()).hexdigest()[:8]
+    return f"{ART}/{stem}.png?v={h}"
+
+
 _cache: dict = {}
 
 
@@ -254,7 +268,7 @@ def build() -> list[dict]:
             top = round(p["top_in"] * dpi)
             if top + h > ah:
                 top = max(0, (ah - h) // 2)
-            url = f"{ART}/{stem}.png"
+            url = art_url(stem)
             slug = colour.lower().replace("/", "").replace(" ", "")
             opts = []
             if p.get("embroidery"):
@@ -351,6 +365,27 @@ def cmd_mockup(sku: str) -> None:
     sys.exit("  timed out")
 
 
+def cmd_update() -> None:
+    """Re-PUT every live product so Printful re-fetches changed artwork."""
+    live = live_names()
+    ok = miss = fail = 0
+    for p in build():
+        pid = live.get(p["name"])
+        if not pid:
+            miss += 1
+            continue
+        r = call("PUT", f"/store/products/{pid}",
+                 {"sync_product": {"name": p["name"], "thumbnail": p["url"]},
+                  "sync_variants": p["variants"]})
+        good = r.get("code") in (200, 201)
+        ok += good
+        fail += not good
+        print(f"  {p['name'][:54]:<54} {'ok' if good else 'FAIL ' + str(r.get('code'))}"
+              f"  {p['stem']}")
+        time.sleep(0.5)
+    print(f"\n  updated {ok} · not live {miss} · failed {fail}")
+
+
 def cmd_delete(pid: str) -> None:
     print(" ", call("DELETE", f"/store/products/{pid}"))
 
@@ -359,5 +394,6 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "check"
     {"check": cmd_check, "products": cmd_products,
      "plan": lambda: cmd_plan(False), "create": lambda: cmd_plan(True),
+     "update": cmd_update,
      "mockup": lambda: cmd_mockup(sys.argv[2]),
      "delete": lambda: cmd_delete(sys.argv[2])}[cmd]()
