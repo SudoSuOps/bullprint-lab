@@ -490,6 +490,35 @@ def check_vendor() -> None:
         print(f"  vendor ok  {rel}")
 
 
+def link_footlabos(html: str) -> str:
+    """AT-RISK FEET in the header nav, pointing at footlabos.com.
+
+    Same mechanism as STORE: the nav is authored as in-page anchors, so an
+    off-page route has to be added here to survive the next import.
+
+    The LABEL is doing compliance work. In the footer this link sits beside
+    "NO MEDICAL CLAIMS" and reads as a handoff. In the header it sits inside
+    the product nav, one item away from DROPS, where a bare brand name would
+    imply the two labs sell the same kind of thing. "AT-RISK FEET" names who
+    it is for and, by omission, who BullPrint is not for — the distinction
+    survives even when someone only skims the nav.
+
+    footlabos.com is requested explicitly. It 301s to openfootlab.com, which
+    the footer links directly, so this spends one redirect — worth knowing,
+    not worth overriding.
+    """
+    anchor = '{ label: "STORE", href: "/store/", id: "store" },'
+    if '"AT-RISK FEET"' in html:
+        return html
+    if anchor not in html:
+        raise SystemExit("STORE nav item not found — link_store must run first")
+    print("  footlabos  AT-RISK FEET added to the header nav -> footlabos.com")
+    return html.replace(
+        anchor,
+        anchor + '\n        { label: "AT-RISK FEET", href: "https://footlabos.com",'
+                 ' id: "footlabos" },', 1)
+
+
 def link_openfootlab(html: str) -> str:
     """Point at-risk feet at the clinical lab, in the footer, beside the non-claim.
 
@@ -932,6 +961,7 @@ def main() -> None:
 
     html = wire_forms(html)
     html = link_store(html)
+    html = link_footlabos(html)
     html = link_openfootlab(html)
     html = route_ticker(html)
 
@@ -985,7 +1015,8 @@ def main() -> None:
     # cheap guards against shipping something obviously broken
     for must in ("<x-dc>", "</x-dc>", "bp-prerender", "support.js", "react.production.min.js",
                  "bp-forms.js", "bp-turnstile", "bpSend(", "bs-email", '"/store/"',
-                 "openfootlab.com", "NO MEDICAL CLAIMS"):
+                 "openfootlab.com", "NO MEDICAL CLAIMS", "footlabos.com",
+                 "AT-RISK FEET"):
         assert must in html, must
     assert "uploads/" not in html, "an upload reference survived the rewrite"
     # The design started carrying its own <title> and description; if build.py
