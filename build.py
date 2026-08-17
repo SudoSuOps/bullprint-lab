@@ -1563,6 +1563,159 @@ def wire_forms(html: str) -> str:
     html = html.replace("</body>", '<div id="bp-turnstile"></div>\n</body>', 1)
     return html
 
+
+# ---- booking ---------------------------------------------------------------
+# Windows, not times. The lab confirms one by reply.
+#
+# The obvious build is a slot picker showing live availability, and it is the
+# wrong one here: real slots need somewhere to store them, and there is no KV or
+# D1 bound to this project. A picker backed by nothing hands out times the lab
+# has not agreed to, which is worse than no booking at all. A third-party embed
+# was the other option and it costs two CSP directives plus a copy of every
+# booker's name and email in someone else's system — the exact trade
+# functions/api/submit.js exists to refuse.
+#
+# So: the visitor names up to three windows that suit them, it lands in the
+# lab's inbox through the same Turnstile-gated endpoint as everything else, and
+# a person replies with a time. No new infra, no CSP change, no vendor.
+#
+# One runtime rule this cost an hour to find, so it is written down: the design
+# runtime replaces a `{{ }}` by wrapping it in <span class="sc-interp">, which
+# it can only do when the expression OWNS its element. `TEXT · {{ bTz }}` in one
+# text node renders as `TEXT · ` with the value silently dropped — no error, no
+# warning, and the binding is provably present and correct. Every {{ }} added
+# here therefore sits alone inside its own tag, which is what the design's own
+# 83 interpolations do.
+BOOK_WINDOWS = ["MON AM", "MON PM", "TUE AM", "TUE PM", "WED AM",
+                "WED PM", "THU AM", "THU PM", "FRI AM", "FRI PM"]
+
+BOOK_BLOCK = """        <div style="margin-top:26px;border:1px solid rgba(232,178,58,.28);background:#0E0E11;padding:24px">
+          <div style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.24em;color:#8A6A1E;margin-bottom:14px">BOOK A CALL</div>
+          <sc-if value="{{ bookOpen }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onBookSubmit }}" style="display:flex;flex-direction:column;gap:20px">
+            <p style="margin:0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A;text-wrap:pretty">Pick up to three windows that suit you and we confirm one by reply — usually within a day. Times are read in your own timezone.</p>
+            <fieldset style="margin:0;padding:0;border:none">
+              <legend style="padding:0;margin-bottom:12px;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F4F2ED">HOW LONG</legend>
+              <div role="radiogroup" aria-label="Call length" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px">
+                <sc-for list="{{ bMinsOpts }}" as="opt" hint-placeholder-count="2">
+                  <div role="radio" tabindex="0" aria-checked="{{ opt.checked }}" onClick="{{ opt.onClick }}" onKeyDown="{{ opt.onKey }}" style="{{ opt.style }}">{{ opt.label }}</div>
+                </sc-for>
+              </div>
+            </fieldset>
+            <fieldset style="margin:0;padding:0;border:none">
+              <legend style="padding:0;margin-bottom:12px;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F4F2ED">WHAT'S IT ABOUT?</legend>
+              <div role="radiogroup" aria-label="Call topic" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px">
+                <sc-for list="{{ bTopicOpts }}" as="opt" hint-placeholder-count="4">
+                  <div role="radio" tabindex="0" aria-checked="{{ opt.checked }}" onClick="{{ opt.onClick }}" onKeyDown="{{ opt.onKey }}" style="{{ opt.style }}">{{ opt.label }}</div>
+                </sc-for>
+              </div>
+            </fieldset>
+            <fieldset style="margin:0;padding:0;border:none">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+                <legend style="padding:0;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F4F2ED">WHEN SUITS YOU</legend>
+                <span style="font:500 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#8B8780">{{ bSlotCount }}</span>
+              </div>
+              <div role="group" aria-label="Preferred windows" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px">
+                <sc-for list="{{ bSlotOpts }}" as="opt" hint-placeholder-count="10">
+                  <div role="checkbox" tabindex="0" aria-checked="{{ opt.checked }}" onClick="{{ opt.onClick }}" onKeyDown="{{ opt.onKey }}" style="{{ opt.style }}">{{ opt.label }}</div>
+                </sc-for>
+              </div>
+              <div style="margin-top:10px;font:500 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em;color:#8B8780">YOUR TIMEZONE · <span>{{ bTz }}</span></div>
+            </fieldset>
+            <div>
+              <label for="bs-bemail" style="display:block;margin-bottom:12px;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#F4F2ED">YOUR EMAIL</label>
+              <input id="bs-bemail" type="email" inputmode="email" autocomplete="email" value="{{ bEmail }}" onChange="{{ onBEmail }}" aria-describedby="bs-berr" placeholder="NAME@DOMAIN.COM" style="width:100%;box-sizing:border-box;padding:14px;background:#101013;border:1px solid {{ bEmailBorder }};color:#F4F2ED;font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.1em;outline:none;transition:border-color 180ms" style-focus="border-color:#E8B23A">
+              <div id="bs-berr" role="status" style="margin-top:9px;min-height:15px;font:600 10px/1.5 'JetBrains Mono',monospace;letter-spacing:.12em;color:#F7931A">{{ bError }}</div>
+            </div>
+            <button type="submit" style="padding:17px 26px;background:linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24);color:#0B0B0D;border:none;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.16em;cursor:pointer;transition:filter 180ms" style-hover="filter:brightness(1.08)">REQUEST A TIME →</button>
+          </form>
+          </sc-if>
+          <sc-if value="{{ bookSent }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div style="font:700 13px/1.6 'JetBrains Mono',monospace;letter-spacing:.06em;color:#E8B23A">REQUEST IN. WE'LL CONFIRM A TIME BY EMAIL.</div>
+              <p style="margin:12px 0 0;font:400 13.5px/1.7 Archivo,sans-serif;color:#A5A19A">Nothing is held yet — a person from the lab picks one of your windows and replies, usually within a day.</p>
+              <div role="button" tabindex="0" onClick="{{ onBookEdit }}" onKeyDown="{{ onBookEditKey }}" style="margin-top:16px;display:inline-block;cursor:pointer;font:700 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.18em;color:#8B8780">← ASK FOR ANOTHER</div>
+            </div>
+          </sc-if>
+        </div>
+"""
+
+
+def add_booking(html: str) -> str:
+    """Add the BOOK A CALL block to the contact section, and wire it.
+
+    Markup, state, bindings and submit — the same four moves wire_forms makes,
+    against anchors that are asserted rather than assumed, so a re-exported
+    design that has moved underneath this fails the build instead of silently
+    dropping the feature.
+    """
+    seal = '<div style="margin-top:26px;display:flex;align-items:center;gap:14px">'
+    if html.count(seal) != 1:
+        sys.exit("contact seal block not found — the design changed")
+    html = html.replace(seal, BOOK_BLOCK + "        " + seal, 1)
+
+    state = 'kEmail: "", kTopic: "ORDER", kMsg: "", kError: "", contactSent: false'
+    if html.count(state) != 1:
+        sys.exit("contact form state not found — the design changed")
+    html = html.replace(
+        state,
+        state + ',\n    bMins: "30 MIN", bTopic: "CUSTOM", bSlots: [], bEmail: "",'
+        ' bError: "", bookSent: false', 1)
+
+    # A window chip is multi-select and capped at three, so it cannot reuse
+    # chips(), which is a radio. Picking a fourth replaces the oldest rather
+    # than silently doing nothing — a dead chip reads as a broken page.
+    binds = 'topicOpts: this.chips("kTopic", ["ORDER", "CUSTOM", "PRESS", "OTHER"]),'
+    if html.count(binds) != 1:
+        sys.exit("contact topic chips not found — the design changed")
+    windows = ", ".join(f'"{w}"' for w in BOOK_WINDOWS)
+    html = html.replace(binds, binds + f"""
+      bookOpen: !s.bookSent, bookSent: s.bookSent,
+      bEmail: s.bEmail, bError: s.bError,
+      bEmailBorder: s.bError ? "#F7931A" : "rgba(255,255,255,.14)",
+      bSlotCount: s.bSlots.length + " / 3",
+      bTz: (typeof Intl !== "undefined" && Intl.DateTimeFormat
+        ? (Intl.DateTimeFormat().resolvedOptions().timeZone || "UNKNOWN")
+        : "UNKNOWN"),
+      bMinsOpts: this.chips("bMins", ["30 MIN", "60 MIN"]),
+      bTopicOpts: this.chips("bTopic", ["ORDER", "CUSTOM", "PRESS", "OTHER"]),
+      bSlotOpts: [{windows}].map((w) => {{
+        const on = s.bSlots.indexOf(w) >= 0;
+        const pick = () => {{
+          const next = on ? s.bSlots.filter((x) => x !== w) : s.bSlots.concat([w]);
+          this.setState({{ bSlots: next.slice(-3), bError: "" }});
+        }};
+        return {{
+          label: w, checked: on, onClick: pick,
+          onKey: (e) => {{ if (e.key === " " || e.key === "Enter") {{ e.preventDefault(); pick(); }} }},
+          style: "padding:11px;text-align:center;cursor:pointer;user-select:none;min-height:44px;"
+            + "box-sizing:border-box;display:flex;align-items:center;justify-content:center;"
+            + "font:700 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;"
+            + "border:1px solid " + (on ? "#E8B23A" : "rgba(255,255,255,.14)") + ";"
+            + "background:" + (on ? "linear-gradient(120deg,#F5D07A,#E8B23A 45%,#A87F24)" : "#101013") + ";"
+            + "color:" + (on ? "#0B0B0D" : "#A5A19A") + ";transition:all 170ms cubic-bezier(.2,.8,.2,1)"
+        }};
+      }}),
+      onBEmail: (e) => this.setState({{ bEmail: e.target.value, bError: "" }}),
+      onBookEdit: () => this.setState({{ bookSent: false }}),
+      onBookEditKey: (e) => {{ if (e.key === " " || e.key === "Enter") {{ e.preventDefault(); this.setState({{ bookSent: false }}); }} }},
+      onBookSubmit: (e) => {{
+        if (e && e.preventDefault) e.preventDefault();
+        if (!/.+@.+\\..+/.test(s.bEmail)) {{ this.setState({{ bError: "ADD AN EMAIL SO WE CAN CONFIRM" }}); return; }}
+        if (!s.bSlots.length) {{ this.setState({{ bError: "PICK AT LEAST ONE WINDOW THAT SUITS YOU" }}); return; }}
+        this.setState({{ bError: "" }});
+        var tz = "UNKNOWN";
+        try {{ tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UNKNOWN"; }} catch (err) {{}}
+        window.bpSend("book", {{ email: s.bEmail, mins: s.bMins, topic: s.bTopic,
+          slots: s.bSlots, tz: tz }})
+          .then(() => this.setState({{ bookSent: true }}))
+          .catch((err) => this.setState({{ bError: err.message }}));
+      }},""", 1)
+    print(f"  booking    BOOK A CALL -> POST /api/submit kind=book "
+          f"({len(BOOK_WINDOWS)} windows, max 3)")
+    return html
+
+
 PRERENDER = ROOT / "prerender.html"
 # The runtime hides the raw template itself, but only once JavaScript runs. This
 # hides it for everyone, so a non-executing crawler is never shown both the
@@ -1861,6 +2014,7 @@ def main() -> None:
 
     html = purge_line(html)
     html = wire_forms(html)
+    html = add_booking(html)
     html = link_store(html)
     html = link_footlabos(html)
     html = link_openfootlab(html)

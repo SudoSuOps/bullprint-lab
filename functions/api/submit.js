@@ -117,6 +117,42 @@ const FORMS = {
       ],
     };
   },
+  /**
+   * A meeting REQUEST, not a booking. The person names windows that suit them
+   * and a human confirms one, so nothing here reserves anything and there is no
+   * calendar state to fall out of step with reality. That is the whole design:
+   * a picker that hands out confirmed times needs somewhere to store them, and
+   * storing them badly is worse than not offering the feature at all.
+   *
+   * Windows arrive as an array of short labels. They are cleaned, de-duplicated
+   * and capped HERE rather than trusted from the page, because the page is not
+   * the only thing that can POST to this endpoint.
+   */
+  book: (d) => {
+    const email = clean(d.email, LIMITS.email);
+    const slots = (Array.isArray(d.slots) ? d.slots : [])
+      .map((v) => clean(v, 24))
+      .filter(Boolean);
+    const uniq = [...new Set(slots)].slice(0, 3);
+    if (!isEmail(email)) return { error: "ADD AN EMAIL SO WE CAN CONFIRM" };
+    if (!uniq.length) return { error: "PICK AT LEAST ONE WINDOW THAT SUITS YOU" };
+    const topic = clean(d.topic, 20) || "OTHER";
+    return {
+      // an order or a custom run is a print conversation; press and anything
+      // else is not. Same split the other three forms already use.
+      to: topic === "ORDER" || topic === "CUSTOM" ? "orders" : "general",
+      replyTo: email,
+      subject: `CALL REQUEST · ${clean(d.mins, 12) || "30 MIN"} · ${topic} · ${email}`,
+      pairs: [
+        ["EMAIL", email],
+        ["LENGTH", clean(d.mins, 12)],
+        ["ABOUT", topic],
+        ["WINDOWS", uniq.join("  ·  ")],
+        ["TIMEZONE", clean(d.tz, 60)],
+        ["NOTES", clean(d.notes, LIMITS.long)],
+      ],
+    };
+  },
 };
 
 async function verifyTurnstile(token, ip, secret) {
